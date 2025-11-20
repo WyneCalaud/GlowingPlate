@@ -1,0 +1,106 @@
+[gd_scene load_steps=13 format=3 uid="uid://k701y0pnbadu"]
+
+[ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://scripts/lobbycanteen.gd" id="1_v6pln"]
+[ext_resource type="Texture2D" uid="uid://bbi8lrleu7bf6" path="res://Background/canteen lobby final.png" id="2_0rhmy"]
+[ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/fade_transition.tscn" id="2_c8ofj"]
+[ext_resource type="Texture2D" uid="uid://p2ljfq2ev8b7" path="res://Resources Glowing Plate/fantasy_pixelart_ui (1)/panels/wood_panel.png" id="3_0rhmy"]
+[ext_resource type="Texture2D" uid="uid://cfh1fo1li1vni" path="res://Resources Glowing Plate/fantasy_pixelart_ui (1)/buttons/gold_button_normal.png" id="3_aok1l"]
+[ext_resource type="Texture2D" uid="uid://dw2uvywwqxe4v" path="res://Resources Glowing Plate/fantasy_pixelart_ui (1)/buttons/gold_button_pressed.png" id="4_0rhmy"]
+[ext_resource type="Texture2D" uid="uid://c3viryfi86vmf" path="res://Icons/Book.png" id="5_aok1l"]
+[ext_resource type="Texture2D" uid="uid://iypawa85qj08" path="res://Resources Glowing Plate/fantasy_pixelart_ui (1)/buttons/silver_button_normal.png" id="5_s8tnj"]
+[ext_resource type="Texture2D" uid="uid://dxgsrkjlc8pvg" path="res://Resources Glowing Plate/fantasy_pixelart_ui (1)/buttons/silver_button_pressed.png" id="6_0obsd"]
+[ext_resource type="Texture2D" uid="uid://hf76uay37hnf" path="res://Icons/Option.png" id="9_s8tnj"]
+[ext_resource type="FontFile" uid="uid://cjilf40vbxmxa" path="res://fonts/Archivo_Black,Rowdies/Archivo_Black/ArchivoBlack-Regular.ttf" id="11_aok1l"]
+[ext_resource type="Texture2D" uid="uid://dj2unohvlp1qb" path="res://Humble Gift - Paper UI System/Humble Gift - Paper UI System v1.1/Sprites/Book Desk/5.png" id="11_s8tnj"]
+
+[node name="Lobby" type="Node2D"]
+script = ExtResource("1_v6pln")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="ColorRect" type="TextureRect" parent="Background"]
+offset_right = 1200.0
+offset_bottom = 720.0
+texture = ExtResource("2_0rhmy")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="BottomButtons" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="BottomButtons"]
+visible = false
+position = Vector2(601.5, 604.5)
+scale = Vector2(25.0625, 4.77083)
+texture = ExtResource("3_0rhmy")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomButtons"]
+offset_left = 155.0
+offset_top = 611.0
+offset_right = 331.0
+offset_bottom = 722.0
+
+[node name="Almanac" type="TextureButton" parent="BottomButtons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("3_aok1l")
+texture_pressed = ExtResource("4_0rhmy")
+stretch_mode = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="BottomButtons/HBoxContainer/Almanac"]
+position = Vector2(90, 48)
+scale = Vector2(4.82813, 4.63281)
+texture = ExtResource("5_aok1l")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="BottomButtons"]
+offset_left = 323.0
+offset_top = 610.0
+offset_right = 499.0
+offset_bottom = 721.0
+
+[node name="Bulletin Board" type="TextureButton" parent="BottomButtons/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("5_s8tnj")
+texture_pressed = ExtResource("6_0obsd")
+stretch_mode = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="BottomButtons/HBoxContainer3/Bulletin Board"]
+position = Vector2(88, 52)
+scale = Vector2(5.5, 4.3125)
+texture = ExtResource("9_s8tnj")
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="BottomButtons"]
+offset_left = 969.0
+offset_top = 623.0
+offset_right = 1180.0
+offset_bottom = 711.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Day Button" type="TextureButton" parent="BottomButtons/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("11_s8tnj")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Day No" type="Label" parent="BottomButtons/HBoxContainer5/Day Button"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 12.0
+offset_right = 206.0
+offset_bottom = 67.0
+theme_override_fonts/font = ExtResource("11_aok1l")
+theme_override_font_sizes/font_size = 50
+text = "DAY 1"
+
+[node name="Fade_transition" parent="." instance=ExtResource("2_c8ofj")]
+offset_top = -3.0
+offset_right = 1200.0
+offset_bottom = 720.0
+
+[node name="Fade_timer" type="Timer" parent="Fade_transition"]
+
+[connection signal="pressed" from="BottomButtons/HBoxContainer/Almanac" to="." method="_on_almanac_pressed"]
+[connection signal="pressed" from="BottomButtons/HBoxContainer5/Day Button" to="." method="_on_day_button_pressed"]
+[connection signal="timeout" from="Fade_transition/Fade_timer" to="." method="_on_fade_timer_timeout"]

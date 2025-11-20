@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmd2cpd4jqysu"]
+
+[ext_resource type="FontFile" uid="uid://cjilf40vbxmxa" path="res://fonts/Archivo_Black,Rowdies/Archivo_Black/ArchivoBlack-Regular.ttf" id="1_2kqmf"]
+[ext_resource type="Script" uid="uid://bxeqi7g1nlf1d" path="res://Scenes/chatbox.gd" id="1_4qijp"]
+[ext_resource type="Script" uid="uid://dj8ha12v2ehbi" path="res://Scenes/rich_text_label.gd" id="3_1wxv7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esfjl"]
+bg_color = Color(0.662787, 0.583546, 0.355795, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="chatbox" type="CanvasLayer"]
+script = ExtResource("1_4qijp")
+
+[node name="TextboxContainer" type="MarginContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -159.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Panel" type="Panel" parent="TextboxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_esfjl")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextboxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Panel" type="Panel" parent="TextboxContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextboxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Start" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 5
+theme_override_fonts/font = ExtResource("1_2kqmf")
+theme_override_font_sizes/font_size = 49
+text = "|"
+
+[node name="Label" type="RichTextLabel" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(1100, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("1_2kqmf")
+theme_override_font_sizes/normal_font_size = 30
+text = "TEXT! THUS THY WORLD BEND TO ME, FORE IT IS MINE"
+autowrap_mode = 2
+vertical_alignment = 1
+
+[node name="End" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(7, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+theme_override_fonts/font = ExtResource("1_2kqmf")
+theme_override_font_sizes/font_size = 49
+text = "|"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_1wxv7")

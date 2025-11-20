@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://du6kd2g4u6epa"]
+
+[ext_resource type="Script" uid="uid://dlnjg76pcymn" path="res://scripts/Main_menu.gd" id="1_f7j37"]
+[ext_resource type="Texture2D" uid="uid://jrcka5sbfhqa" path="res://Background/Main Menu.png" id="2_ihofj"]
+[ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/fade_transition.tscn" id="3_ihofj"]
+[ext_resource type="Texture2D" uid="uid://cyd5sucvpckhf" path="res://Buttons/Start button.png" id="4_xwboo"]
+
+[node name="Main Menu" type="Node2D"]
+script = ExtResource("1_f7j37")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="ColorRect" type="TextureRect" parent="Background"]
+offset_right = 1200.0
+offset_bottom = 720.0
+texture = ExtResource("2_ihofj")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="MenuButtons" type="Node2D" parent="UI"]
+
+[node name="Control" type="Control" parent="UI/MenuButtons"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Start" type="TextureButton" parent="UI/MenuButtons/Control"]
+layout_mode = 0
+offset_left = 395.0
+offset_top = 511.0
+offset_right = 793.0
+offset_bottom = 743.0
+texture_normal = ExtResource("4_xwboo")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Emitters" type="Node2D" parent="."]
+
+[node name="Globals" type="Node2D" parent="."]
+
+[node name="fade_transition" parent="." instance=ExtResource("3_ihofj")]
+offset_top = 0.0
+offset_right = 1200.0
+offset_bottom = 720.0
+
+[node name="Fade_timer" type="Timer" parent="fade_transition"]
+
+[connection signal="pressed" from="UI/MenuButtons/Control/Start" to="." method="_on_start_pressed"]
+[connection signal="timeout" from="fade_transition/Fade_timer" to="." method="_on_fade_timer_timeout"]
