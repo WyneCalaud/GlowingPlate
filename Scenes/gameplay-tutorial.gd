@@ -2,49 +2,52 @@ extends Node2D
 
 @onready var dialogue_box = $DialogueBox
 @onready var plate = $Plate
+@onready var foodplate = $FoodPlate
 @onready var pointer = $Pointer
 
 # --- Section Labels (from before) ---
+# NOTE: Keeping these @onready vars for now, even if not used in the match block, 
+# to avoid errors if they are used elsewhere.
 @onready var go_label = $Plate/Go
 @onready var grow_label = $Plate/Grow
 @onready var glow_veggie_label = $Plate/GlowV
 @onready var glow_fruit_label = $Plate/GlowF
 
-# --- NEW: References to Stations and Tabs ---
+# --- NEW: References to Stations (Tabs and Buttons removed) ---
 @onready var go_station = $GoStation
 @onready var grow_station = $GrowStation
 @onready var glow_station = $GlowStation
-@onready var tab_buttons_container = $Tabs
-@onready var go_button = $Tabs/Label/Go
-@onready var grow_button = $Tabs/Label2/Grow
-@onready var glow_button = $Tabs/Label3/Glow
+# @onready var tab_buttons_container = $Tabs # REMOVED
+# @onready var go_button = $Tabs/Label/Go # REMOVED
+# @onready var grow_button = $Tabs/Label2/Grow # REMOVED
+# @onready var glow_button = $Tabs/Label3/Glow # REMOVED
 
-# --- CHANGED: Define unique positions for each station ---
-var go_station_pos = Vector2(697.0, 236.0) # The original position
-var grow_station_pos = Vector2(403.0, 197.0) # The new position
-var glow_station_pos = Vector2(403.0, 197.0) # The new position
-
-func _ready():
-	# --- NEW: Connect button signals to our functions ---
-	go_button.pressed.connect(show_go_station)
-	grow_button.pressed.connect(show_grow_station)
-	glow_button.pressed.connect(show_glow_station)
+# --- NEW/FIXED: Initialize scene state on load ---
+func _ready() -> void:
+	# 1. Hide all stations immediately when the scene starts
+	hide_all_stations()
+	# 2. Hide tabs container (if it still exists in the scene tree)
+	# If $Tabs no longer exists, delete this line: $Tabs.hide() 
 	
-	# --- NEW: Set up the initial scene state ---
+# --- REVISED Helper function to hide section labels (used in match block) ---
+# NOTE: You need this to clear the labels before showing the pointer.
+func hide_all_section_labels():
+	go_label.hide()
+	grow_label.hide()
+	glow_veggie_label.hide()
+	glow_fruit_label.hide()
+
+# --- NEW/FIXED: Helper function to hide stations ---
+func hide_all_stations():
 	go_station.hide()
 	grow_station.hide()
 	glow_station.hide()
-	tab_buttons_container.hide()
-	
-	# --- CHANGED: Set all stations to their unique positions ---
-	go_station.position = go_station_pos
-	grow_station.position = grow_station_pos
-	glow_station.position = glow_station_pos
 
 # --- This is your main tutorial logic function ---
 func _on_dialogue_box_line_changed(text_line: String):
+	
 	pointer.hide()
-	hide_all_section_labels()
+	hide_all_section_labels() # Keep this to clear labels from previous lines
 	
 	match text_line:
 		"This is the plate, which has 4 sections, one for each food group.":
@@ -77,44 +80,15 @@ func _on_dialogue_box_line_changed(text_line: String):
 			pointer.show()
 			glow_veggie_label.show()
 			
-		"Great! Now let's prepare the GO foods.":
+		"Great! Now let's try now with the full set!":
 			# This line's ONLY job is to start the animation.
+			plate.hide()
 			transition_to_stations()
-			
-		"This is a rice cooker. We use it to cook rice,":
-			# This line points at the rice cooker (which is inside GoStation)
-			pointer.position = Vector2(610.0, 252.0)
-			pointer.rotation_degrees = 180.0
-			pointer.show()
-			
-		"also a measuring cup for the rice.":
-			# This line points at the rice cup
-			pointer.position = Vector2(610.0, 420.0)
-			pointer.rotation_degrees = 180.0
-			pointer.show()
-			
-		"This is a locked Go food that you will need to play more to unlock!":
-			pointer.position = Vector2(1013.0, 308.0)
-			pointer.rotation_degrees = -90.0
-			pointer.show()
 			
 		_:
 			pointer.hide()
 
-# --- Helper function to hide labels ---
-func hide_all_section_labels():
-	go_label.hide()
-	grow_label.hide()
-	glow_veggie_label.hide()
-	glow_fruit_label.hide()
-
-# --- NEW: Helper function to hide stations ---
-func hide_all_stations():
-	go_station.hide()
-	grow_station.hide()
-	glow_station.hide()
-
-# --- NEW: Functions called by button presses ---
+# --- NEW: Helper functions to show stations (Simplified) ---
 func show_go_station():
 	hide_all_stations()
 	go_station.show()
@@ -128,17 +102,13 @@ func show_glow_station():
 	glow_station.show()
 
 # --- REVISED Transition Function ---
-# Note: This function still needs the 'async' keyword to use 'await'.
-# If you are still having trouble with 'async', you must fix the indentation
-# of the function directly BEFORE this one.
 func transition_to_stations():
 	var tween = create_tween()
-	tween.tween_property($Plate, "position", Vector2(280.0, $Plate.position.y), 1.0).set_ease(Tween.EASE_IN_OUT)
+	# The FoodPlate is already the root of the plate assets, so moving it is sufficient
+	tween.tween_property($FoodPlate, "position", Vector2(280.0, $FoodPlate.position.y), 1.0).set_ease(Tween.EASE_IN_OUT)
 	
 	# Wait for the plate to finish moving
 	await tween.finished
-	
-	# --- NEW: After animation, show the stations and tabs ---
-	tab_buttons_container.show() # Show the "Go, Grow, Glow" buttons
 	show_go_station() # Show the Go station by default
-	
+	show_grow_station()
+	show_glow_station()
