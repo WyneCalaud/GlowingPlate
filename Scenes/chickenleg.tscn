@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ki054hlg3asx"]
+
+[ext_resource type="Script" uid="uid://bggd0jxip6wlu" path="res://Scenes/chicken_leg_drag.gd" id="1_3ki77"]
+
+[node name="Sprite2D" type="Sprite2D"]
+script = ExtResource("1_3ki77")

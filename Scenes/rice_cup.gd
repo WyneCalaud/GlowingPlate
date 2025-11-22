@@ -1,73 +1,26 @@
-extends Sprite2D
+# rice_cup.gd
+extends "res://scripts/food_item_base.gd"
 
-# --- Variables ---
-var is_dragging = false
-var start_position: Vector2
-var current_hovered_area: Area2D = null
-
-# --- Exports ---
-@export var food_type: String = "Go" 
-@export var plated_texture: Texture2D 
-@export var full_cup_texture: Texture2D 
+# --- UNIQUE EXPORTS ---
+@export var full_cup_texture: Texture2D
 @export var empty_cup_texture: Texture2D
 @export var full_cup_scale_factor: float = 0.3
 
-func _ready() -> void:
-	start_position = global_position
-	z_index = 20
+# --- OVERRIDE: Plate success logic ---
+func on_plate_placement_success():
+	# Unique Rice Logic: Set to empty texture and reset scale
+	texture = empty_cup_texture
+	scale = Vector2(0.5, 0.5)
+	return_to_start()
 
-func _process(delta: float) -> void:
-	if is_dragging:
-		global_position = get_global_mouse_position()
-
-func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT) or (event is InputEventScreenTouch):
-		if event.is_pressed():
-			is_dragging = true
-		elif event.is_released():
-			is_dragging = false
-			handle_drop()
-
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	current_hovered_area = area
-
-func _on_area_2d_area_exited(area: Area2D) -> void:
-	if current_hovered_area == area:
-		current_hovered_area = null
-
-func handle_drop():
-	if current_hovered_area == null:
-		return_to_start()
-		return
-
-	# --- PLATE LOGIC ---
-	if current_hovered_area.has_method("try_place_food"):
-		
-		var texture_to_send = plated_texture
-		if texture_to_send == null:
-			texture_to_send = texture
-			
-		var success = current_hovered_area.try_place_food(food_type, texture_to_send)
-		
-		if success:
-			print("Placed on plate!")
-			texture = empty_cup_texture 
-			scale = Vector2(0.5, 0.5) 
-			return_to_start()
-			
-		else:
-			return_to_start()
-			
-	# --- COOKER LOGIC ---
-	elif current_hovered_area.get_parent().name == "RiceCooker":
+# --- OVERRIDE: Unique drop zone check (Cooker) ---
+func on_unique_drop_zone_check():
+	# Unique Rice Logic: Check for RiceCooker
+	if current_hovered_area.get_parent().name == "RiceCooker":
 		texture = full_cup_texture
 		scale = Vector2(full_cup_scale_factor, full_cup_scale_factor)
-		plated_texture = plated_texture
+		# Note: plated_texture is already set via the Inspector or base class
 		return_to_start()
-		
 	else:
+		# Fallback to base behavior: return to start
 		return_to_start()
-
-func return_to_start():
-	var tween = create_tween()
-	tween.tween_property(self, "global_position", start_position, 0.3).set_ease(Tween.EASE_OUT)

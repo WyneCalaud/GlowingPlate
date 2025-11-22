@@ -38,15 +38,11 @@ func _ready() -> void:
 	# Add all your dialogue lines here
 	queue_text("You are building a balanced meal.")
 	queue_text("This is the plate, which has 4 sections, one for each food group.")
-	queue_text("This is for GO food.")
-	queue_text("This is for GROW food.")
-	queue_text("This is for GLOW food, like fruits.")
-	queue_text("And this is for other GLOW food, like vegetables.")
-	queue_text("Great! Now let's prepare the GO foods.")
-	queue_text("This is a rice cooker. We use it to cook rice,") 
-	queue_text("also a measuring cup for the rice.") 
-	queue_text("This is a locked Go food that you will need to play more to unlock!")  
-	queue_text("Now try scooping once with the rice cup, simple DRAG the cup to the rice cooker!")
+	queue_text("This is for the GO food.")
+	queue_text("This is for the GROW food.")
+	queue_text("This is for the GLOW food, like fruits.")
+	queue_text("And this is for the other GLOW food, like vegetables.")
+	queue_text("Great! Now let's try with the full set!")
 	
 # --- This is our "Command Center" for Player Input ---
 func handle_player_input():

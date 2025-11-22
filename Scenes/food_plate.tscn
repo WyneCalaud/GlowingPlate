@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cumqgtoajakm4"]
 
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Resources Glowing Plate/Plate Final.png" id="1_xct1h"]
-[ext_resource type="Script" uid="uid://pslk33kfpq4a" path="res://plate_slot.gd" id="2_xwyst"]
+[ext_resource type="Script" uid="uid://pslk33kfpq4a" path="res://scripts/plate_slot.gd" id="2_xwyst"]
 
 [node name="FoodPlate" type="Node2D"]
 
