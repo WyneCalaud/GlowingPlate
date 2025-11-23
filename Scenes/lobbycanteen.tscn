@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://b8g2nwbtspjgv" path="res://Icons/Document.png" id="9_0obsd"]
 [ext_resource type="Texture2D" uid="uid://hf76uay37hnf" path="res://Icons/Option.png" id="9_s8tnj"]
 [ext_resource type="FontFile" uid="uid://cjilf40vbxmxa" path="res://fonts/Archivo_Black,Rowdies/Archivo_Black/ArchivoBlack-Regular.ttf" id="11_aok1l"]
-[ext_resource type="Texture2D" uid="uid://dj2unohvlp1qb" path="res://Humble Gift - Paper UI System/Humble Gift - Paper UI System v1.1/Sprites/Book Desk/5.png" id="11_s8tnj"]
+[ext_resource type="Texture2D" uid="uid://dj2unohvlp1qb" path="res://Buttons/5.png" id="11_s8tnj"]
 [ext_resource type="Texture2D" uid="uid://ct2bd3kh0fuyd" path="res://Resources Glowing Plate/Basic_GUI_Bundle/ButtonsIcons/IconButton_Large_Background_Circle.png" id="12_ol5i2"]
 [ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/almanacUI.tscn" id="15_ol5i2"]
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/bulletinboardUI.tscn" id="16_wjl3r"]
