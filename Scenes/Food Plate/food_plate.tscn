@@ -33,7 +33,6 @@ polygon = PackedVector2Array(-173, -28, -164, -36, 45, -37, 58, -27, 65, -17, 62
 [node name="SlotGrow" type="Area2D" parent="." node_paths=PackedStringArray("linked_image")]
 position = Vector2(128, 108)
 script = ExtResource("2_xwyst")
-accepted_food_type = "Grow"
 linked_image = NodePath("../GrowFood")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotGrow"]

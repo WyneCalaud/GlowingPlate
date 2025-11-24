@@ -1,7 +1,7 @@
 # plate_slot.gd
 extends Area2D
 
-@export var accepted_food_type: String = "Go"
+@export var accepted_food_type: String = "Grow"
 @export var linked_image: Sprite2D # The empty sprite for this section
 @export var plated_scale_factor: float = 0.4 
 
