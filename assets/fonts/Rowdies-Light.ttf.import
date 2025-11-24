@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://bl13xs8g1rj5i"
-path="res://.godot/imported/Rowdies-Light.ttf-ff421e01fc7ed72a0e01d07911ff31a7.fontdata"
+path="res://.godot/imported/Rowdies-Light.ttf-5c90191f85a505a27931bbde372614f5.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/Rowdies-Light.ttf"
-dest_files=["res://.godot/imported/Rowdies-Light.ttf-ff421e01fc7ed72a0e01d07911ff31a7.fontdata"]
+source_file="res://Assets/fonts/Rowdies-Light.ttf"
+dest_files=["res://.godot/imported/Rowdies-Light.ttf-5c90191f85a505a27931bbde372614f5.fontdata"]
 
 [params]
 
@@ -21,6 +21,7 @@ msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
+modulate_color_glyphs=false
 hinting=1
 subpixel_positioning=4
 keep_rounding_remainders=true

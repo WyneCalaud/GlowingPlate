@@ -1,5 +1,5 @@
 # rice_cup.gd
-extends "res://scripts/food_item_base.gd"
+extends "res://Scripts/Food Data/food_item_base.gd"
 
 # --- UNIQUE EXPORTS ---
 @export var full_cup_texture: Texture2D
