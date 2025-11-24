@@ -25,12 +25,12 @@ func _ready() -> void:
 	else:
 		pass
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_dragging:
 		global_position = get_global_mouse_position()
 
 # --- INPUT LOGIC (Identical for all items) ---
-func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT) or (event is InputEventScreenTouch):
 		if event.is_pressed():
 			is_dragging = true
