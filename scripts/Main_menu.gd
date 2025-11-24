@@ -22,5 +22,5 @@ func _on_exit_pressed() -> void:
 
 func _on_fade_timer_timeout() -> void:
 	if button_type == "start" :
-		get_tree().change_scene_to_file("res://Scenes/lobbycanteen.tscn")
+		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 	

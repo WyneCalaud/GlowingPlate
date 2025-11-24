@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="2_r8bcl"]
 [ext_resource type="PackedScene" uid="uid://cumqgtoajakm4" path="res://Scenes/Food Plate/food_plate.tscn" id="3_p1ih8"]
 [ext_resource type="PackedScene" uid="uid://bmd2cpd4jqysu" path="res://Scenes/DialogueBox/dialoguebox.tscn" id="4_kwrm5"]
-[ext_resource type="FontFile" uid="uid://cjilf40vbxmxa" path="res://Fonts/Archivo_Black,Rowdies/Archivo_Black/ArchivoBlack-Regular.ttf" id="4_urrcd"]
+[ext_resource type="FontFile" uid="uid://cjilf40vbxmxa" path="res://fonts/Archivo_Black,Rowdies/Archivo_Black/ArchivoBlack-Regular.ttf" id="4_urrcd"]
 [ext_resource type="PackedScene" uid="uid://ofku35fj1btt" path="res://Scenes/Pointer/pointing.tscn" id="5_r8bcl"]
 [ext_resource type="Texture2D" uid="uid://bpj2de6ck62tq" path="res://Items/Rice Cooker/RiceCooker.png" id="8_urrcd"]
 [ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="9_5i20n"]
