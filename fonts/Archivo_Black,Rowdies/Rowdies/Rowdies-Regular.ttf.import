@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://834hq41b77kd"
-path="res://.godot/imported/Rowdies-Regular.ttf-57794956e5e8bf69d889e24469f81a05.fontdata"
+path="res://.godot/imported/Rowdies-Regular.ttf-6322d0f2dbff3f0142c80f8bfb417990.fontdata"
 
 [deps]
 
-source_file="res://fonts/Archivo_Black,Rowdies/Rowdies/Rowdies-Regular.ttf"
-dest_files=["res://.godot/imported/Rowdies-Regular.ttf-57794956e5e8bf69d889e24469f81a05.fontdata"]
+source_file="res://Fonts/Archivo_Black,Rowdies/Rowdies/Rowdies-Regular.ttf"
+dest_files=["res://.godot/imported/Rowdies-Regular.ttf-6322d0f2dbff3f0142c80f8bfb417990.fontdata"]
 
 [params]
 
@@ -21,6 +21,7 @@ msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
+modulate_color_glyphs=false
 hinting=1
 subpixel_positioning=4
 keep_rounding_remainders=true

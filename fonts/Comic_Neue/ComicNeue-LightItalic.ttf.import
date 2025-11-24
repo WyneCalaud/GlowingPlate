@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://ckhnl0a45of3n"
-path="res://.godot/imported/ComicNeue-LightItalic.ttf-4901874ac3644ce0141f4657eba00f87.fontdata"
+path="res://.godot/imported/ComicNeue-LightItalic.ttf-475ada3ac010fef09fdbfc78a94b0447.fontdata"
 
 [deps]
 
-source_file="res://fonts/Comic_Neue/ComicNeue-LightItalic.ttf"
-dest_files=["res://.godot/imported/ComicNeue-LightItalic.ttf-4901874ac3644ce0141f4657eba00f87.fontdata"]
+source_file="res://Fonts/Comic_Neue/ComicNeue-LightItalic.ttf"
+dest_files=["res://.godot/imported/ComicNeue-LightItalic.ttf-475ada3ac010fef09fdbfc78a94b0447.fontdata"]
 
 [params]
 
@@ -21,6 +21,7 @@ msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
+modulate_color_glyphs=false
 hinting=1
 subpixel_positioning=4
 keep_rounding_remainders=true
