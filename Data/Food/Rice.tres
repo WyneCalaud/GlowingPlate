@@ -1,10 +1,14 @@
-[gd_resource type="Resource" script_class="FoodItemData" load_steps=2 format=3 uid="uid://0swaooqdh4n5"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=4 format=3 uid="uid://0swaooqdh4n5"]
 
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="1_hs4bu"]
+[ext_resource type="Texture2D" uid="uid://cegi0241vcsfs" path="res://Assets/Resized/ricecup.png" id="1_j1gdr"]
+[ext_resource type="Texture2D" uid="uid://nulqsmfl3bq0" path="res://Assets/Resized/CupOfRice.png" id="2_j1gdr"]
 
 [resource]
 script = ExtResource("1_hs4bu")
 item_name = "Rice"
 internal_key = "RICE"
 food_category = "Go"
+base_texture = ExtResource("1_j1gdr")
+plated_texture = ExtResource("2_j1gdr")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"
