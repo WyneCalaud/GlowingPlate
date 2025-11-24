@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://clbki6vphqy7t"]
+
+[ext_resource type="Script" uid="uid://buuoq4bsevlop" path="res://Scripts/Lobby/almanac_ui.gd" id="1_8l0e0"]
+[ext_resource type="Texture2D" uid="uid://cxex32u0rklsy" path="res://Background/bookalmanac.png" id="1_p4uhw"]
+
+[node name="AlmanacUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8l0e0")
+
+[node name="Almanac" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -288.0
+offset_right = 640.0
+offset_bottom = 288.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_p4uhw")
+
+[node name="Exitbutton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 992.0
+offset_top = 499.0
+offset_right = 1056.0
+offset_bottom = 546.0
+
+[connection signal="pressed" from="Exitbutton" to="." method="_on_texture_button_pressed"]

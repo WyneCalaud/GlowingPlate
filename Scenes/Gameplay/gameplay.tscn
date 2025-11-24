@@ -1,0 +1,237 @@
+[gd_scene load_steps=21 format=3 uid="uid://ck0cugef154c3"]
+
+[ext_resource type="PackedScene" uid="uid://ctdosdqx3kc1c" path="res://Scenes/Transition/circle_transition.tscn" id="1_kwrm5"]
+[ext_resource type="Script" uid="uid://5rlrod35ww0q" path="res://Scripts/Tutorial Items/gameplay-tutorial.gd" id="1_r8bcl"]
+[ext_resource type="Texture2D" uid="uid://d13b2qdhxlnim" path="res://Items/Countertop/Kitchen Countertop.png" id="2_1qnfl"]
+[ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="2_r8bcl"]
+[ext_resource type="PackedScene" uid="uid://cumqgtoajakm4" path="res://Scenes/Food Plate/food_plate.tscn" id="3_p1ih8"]
+[ext_resource type="PackedScene" uid="uid://bmd2cpd4jqysu" path="res://Scenes/DialogueBox/dialoguebox.tscn" id="4_kwrm5"]
+[ext_resource type="FontFile" uid="uid://cjilf40vbxmxa" path="res://Fonts/Archivo_Black,Rowdies/Archivo_Black/ArchivoBlack-Regular.ttf" id="4_urrcd"]
+[ext_resource type="PackedScene" uid="uid://ofku35fj1btt" path="res://Scenes/Pointer/pointing.tscn" id="5_r8bcl"]
+[ext_resource type="Texture2D" uid="uid://bpj2de6ck62tq" path="res://Items/Rice Cooker/RiceCooker.png" id="8_urrcd"]
+[ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="9_5i20n"]
+[ext_resource type="Texture2D" uid="uid://bvgv3dwfpfnt7" path="res://OwnAssets/rectangepanclosed.png" id="9_jb71e"]
+[ext_resource type="Texture2D" uid="uid://cegi0241vcsfs" path="res://OwnAssets/Resized/ricecup.png" id="10_gb8q7"]
+[ext_resource type="Texture2D" uid="uid://bgupyi0hei5qe" path="res://OwnAssets/Resized/fullrice.png" id="11_1ff3a"]
+[ext_resource type="Texture2D" uid="uid://3l3g8onhhook" path="res://assets/GrowSection/Adobe Express - file.png" id="12_r5xtw"]
+[ext_resource type="Texture2D" uid="uid://dtrhs0t88wcvg" path="res://assets/GlowSection/Adobe Express - file (1).png" id="13_decfu"]
+[ext_resource type="Script" uid="uid://bmqthaey15h7l" path="res://Scripts/Gameplay Items/chickens.gd" id="15_1ff3a"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jb71e"]
+radius = 301.864
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rg35f"]
+radius = 102.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1ih8"]
+size = Vector2(352.639, 254.207)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v2eey"]
+size = Vector2(739.13, 549.296)
+
+[node name="GamePlay-Tutorial" type="Node2D"]
+script = ExtResource("1_r8bcl")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="ColorRect" type="TextureRect" parent="Background"]
+offset_right = 1200.0
+offset_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_1qnfl")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="FoodPlate" parent="." instance=ExtResource("3_p1ih8")]
+position = Vector2(-222, 251)
+scale = Vector2(0.517, 0.517)
+
+[node name="Plate" type="Sprite2D" parent="."]
+position = Vector2(-210, 631)
+scale = Vector2(0.517, 0.517)
+texture = ExtResource("2_r8bcl")
+
+[node name="Go" type="Label" parent="Plate"]
+visible = false
+offset_left = -282.398
+offset_top = 23.2108
+offset_right = -74.3985
+offset_bottom = 162.21
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = ExtResource("4_urrcd")
+theme_override_font_sizes/font_size = 50
+text = "GO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Grow" type="Label" parent="Plate"]
+visible = false
+offset_left = -11.6054
+offset_top = 23.2108
+offset_right = 196.395
+offset_bottom = 162.21
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = ExtResource("4_urrcd")
+theme_override_font_sizes/font_size = 50
+text = "GROW"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GlowF" type="Label" parent="Plate"]
+visible = false
+offset_left = -34.8163
+offset_top = -193.424
+offset_right = 173.184
+offset_bottom = -54.424
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = ExtResource("4_urrcd")
+theme_override_font_sizes/font_size = 50
+text = "GLOW"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GlowV" type="Label" parent="Plate"]
+visible = false
+offset_left = -282.398
+offset_top = -187.621
+offset_right = -74.3985
+offset_bottom = -48.6213
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = ExtResource("4_urrcd")
+theme_override_font_sizes/font_size = 50
+text = "GLOW"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pointer" parent="." instance=ExtResource("5_r8bcl")]
+position = Vector2(1546, 251)
+
+[node name="DialogueBox" parent="." instance=ExtResource("4_kwrm5")]
+layer = 0
+
+[node name="GoStation" type="Node2D" parent="."]
+position = Vector2(880, 148)
+
+[node name="RiceCooker" type="Sprite2D" parent="GoStation"]
+position = Vector2(194, 7.62938e-06)
+scale = Vector2(0.377016, 0.358901)
+texture = ExtResource("8_urrcd")
+
+[node name="Area2D" type="Area2D" parent="GoStation/RiceCooker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoStation/RiceCooker/Area2D"]
+shape = SubResource("CircleShape2D_jb71e")
+
+[node name="RiceCup" type="Sprite2D" parent="GoStation"]
+position = Vector2(43, 219)
+scale = Vector2(0.5, 0.446)
+texture = ExtResource("10_gb8q7")
+script = ExtResource("9_5i20n")
+full_cup_texture = ExtResource("11_1ff3a")
+empty_cup_texture = ExtResource("10_gb8q7")
+
+[node name="Area2D" type="Area2D" parent="GoStation/RiceCup"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoStation/RiceCup/Area2D"]
+shape = SubResource("CircleShape2D_rg35f")
+one_way_collision_margin = 0.0
+
+[node name="LockedGoFood" type="Sprite2D" parent="GoStation"]
+position = Vector2(224, 219)
+scale = Vector2(0.479, 0.442)
+texture = ExtResource("9_jb71e")
+
+[node name="GrowStation" type="Node2D" parent="."]
+position = Vector2(477, 439)
+
+[node name="Chickens" type="Sprite2D" parent="GrowStation"]
+position = Vector2(238, 56)
+scale = Vector2(0.478786, 0.441667)
+texture = ExtResource("12_r5xtw")
+script = ExtResource("15_1ff3a")
+
+[node name="Area2D" type="Area2D" parent="GrowStation/Chickens"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrowStation/Chickens/Area2D"]
+position = Vector2(-0.231445, -1.75598)
+shape = SubResource("RectangleShape2D_p1ih8")
+
+[node name="LockedGrowFood1" type="Sprite2D" parent="GrowStation"]
+position = Vector2(238, 213)
+scale = Vector2(0.479, 0.442)
+texture = ExtResource("9_jb71e")
+
+[node name="LockedGrowFood2" type="Sprite2D" parent="GrowStation"]
+position = Vector2(432, 55)
+scale = Vector2(0.479, 0.442)
+texture = ExtResource("9_jb71e")
+
+[node name="LockedGrowFood3" type="Sprite2D" parent="GrowStation"]
+position = Vector2(431, 213)
+scale = Vector2(0.479, 0.442)
+texture = ExtResource("9_jb71e")
+
+[node name="LockedGrowFood4" type="Sprite2D" parent="GrowStation"]
+position = Vector2(627, 54)
+scale = Vector2(0.479, 0.442)
+texture = ExtResource("9_jb71e")
+
+[node name="LockedGrowFood5" type="Sprite2D" parent="GrowStation"]
+position = Vector2(625, 213)
+scale = Vector2(0.479, 0.442)
+texture = ExtResource("9_jb71e")
+
+[node name="GlowStation" type="Node2D" parent="."]
+position = Vector2(-102, 439)
+
+[node name="Ubas" type="Sprite2D" parent="GlowStation"]
+position = Vector2(238, 64)
+scale = Vector2(0.23, 0.213)
+texture = ExtResource("13_decfu")
+
+[node name="Area2D" type="Area2D" parent="GlowStation/Ubas"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GlowStation/Ubas/Area2D"]
+position = Vector2(-26.0869, -44.6011)
+shape = SubResource("RectangleShape2D_v2eey")
+
+[node name="LockedGrowFood1" type="Sprite2D" parent="GlowStation"]
+position = Vector2(238, 213)
+scale = Vector2(0.479, 0.442)
+texture = ExtResource("9_jb71e")
+
+[node name="LockedGrowFood2" type="Sprite2D" parent="GlowStation"]
+position = Vector2(432, 55)
+scale = Vector2(0.479, 0.442)
+texture = ExtResource("9_jb71e")
+
+[node name="LockedGrowFood3" type="Sprite2D" parent="GlowStation"]
+position = Vector2(431, 213)
+scale = Vector2(0.479, 0.442)
+texture = ExtResource("9_jb71e")
+
+[node name="LockedGrowFood4" type="Sprite2D" parent="GlowStation"]
+position = Vector2(626, 54)
+scale = Vector2(0.479, 0.442)
+texture = ExtResource("9_jb71e")
+
+[node name="LockedGrowFood5" type="Sprite2D" parent="GlowStation"]
+position = Vector2(624, 213)
+scale = Vector2(0.479, 0.442)
+texture = ExtResource("9_jb71e")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+visible = false
+
+[node name="CircleIntroTransition" parent="CanvasLayer" instance=ExtResource("1_kwrm5")]
+
+[connection signal="line_changed" from="DialogueBox" to="." method="_on_dialogue_box_line_changed"]
+[connection signal="area_entered" from="GoStation/RiceCup/Area2D" to="GoStation/RiceCup" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="GoStation/RiceCup/Area2D" to="GoStation/RiceCup" method="_on_area_2d_area_exited"]
+[connection signal="input_event" from="GoStation/RiceCup/Area2D" to="GoStation/RiceCup" method="_on_area_2d_input_event"]
