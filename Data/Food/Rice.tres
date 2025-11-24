@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FoodItemData" load_steps=2 format=3 uid="uid://0swaooqdh4n5"]
+
+[ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://scripts/FoodItemData.gd" id="1_hs4bu"]
+
+[resource]
+script = ExtResource("1_hs4bu")
+item_name = "Rice"
+internal_key = "RICE"
+food_category = "Go"
+metadata/_custom_type_script = "uid://jdcig8g3adhl"

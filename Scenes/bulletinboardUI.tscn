@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ejkgyhmbfm6x" path="res://scripts/bulletinboard_ui.gd" id="1_1v4b8"]
 [ext_resource type="Texture2D" uid="uid://cxbfp7b4djmo8" path="res://assets/BulletinBoard/image 41.png" id="2_kg0bl"]
-[ext_resource type="Texture2D" uid="uid://ds0sfr0usdb0s" path="res://Resources Glowing Plate/Basic_GUI_Bundle/Icons/Icon_Small_WhiteOutline_X.png" id="3_tij8g"]
+[ext_resource type="Texture2D" uid="uid://ds0sfr0usdb0s" path="res://Icons/Icon_Small_WhiteOutline_X.png" id="3_tij8g"]
 
 [node name="BulletinBoardUI" type="Control"]
 layout_mode = 3
