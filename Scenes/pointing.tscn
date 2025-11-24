@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ofku35fj1btt"]
 
-[ext_resource type="Texture2D" uid="uid://bgix3uhj1rj4n" path="res://Resources Glowing Plate/Basic_GUI_Bundle/Sliders/ScrollSlider_Blank_Arrow.png" id="1_3v6vs"]
+[ext_resource type="Texture2D" uid="uid://bgix3uhj1rj4n" path="res://Icons/ScrollSlider_Blank_Arrow.png" id="1_3v6vs"]
 
 [sub_resource type="Animation" id="Animation_rrmuv"]
 loop_mode = 1

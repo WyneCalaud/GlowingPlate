@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj2unohvlp1qb"
-path="res://.godot/imported/5.png-e6a9755187fe679f1a5e9a0b614e2e70.ctex"
+uid="uid://bgix3uhj1rj4n"
+path="res://.godot/imported/ScrollSlider_Blank_Arrow.png-f5e22fbfd54a3edb4987a90cdbe61f65.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Buttons/5.png"
-dest_files=["res://.godot/imported/5.png-e6a9755187fe679f1a5e9a0b614e2e70.ctex"]
+source_file="res://Icons/ScrollSlider_Blank_Arrow.png"
+dest_files=["res://.godot/imported/ScrollSlider_Blank_Arrow.png-f5e22fbfd54a3edb4987a90cdbe61f65.ctex"]
 
 [params]
 

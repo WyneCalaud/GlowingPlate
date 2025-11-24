@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="FoodItemData" load_steps=2 format=3 uid="uid://b2oeopgun652k"]
+
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+[ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://scripts/FoodItemData.gd" id="1_jjco8"]
+=======
+[ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://FoodItemData.gd" id="1_jjco8"]
+>>>>>>> Stashed changes
+=======
+[ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://FoodItemData.gd" id="1_jjco8"]
+>>>>>>> Stashed changes
+
+[resource]
+script = ExtResource("1_jjco8")
+metadata/_custom_type_script = "uid://jdcig8g3adhl"

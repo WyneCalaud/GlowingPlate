@@ -1,31 +1,36 @@
-# GameData.gd (Autoload)
+# GameData.gd
 extends Node
 
 # --- Core Progression Variables ---
-var current_day: int = 1
-const TOTAL_DAYS: int = 30
+var current_day: int = 1         # The current day the player is on (starts at 1)
+const TOTAL_DAYS: int = 30       # Total duration of the game
+var money: int = 0               # Player's currency
+var reputation_score: float = 0.0 # Customer satisfaction/reputation (influences difficulty/reactions)
 
 # --- Tracking Data ---
-var customer_history: Array = [] # Stores results of previous days
-var money: int = 0
-var reputation_score: float = 0.0 # Influences future customer reactions/difficulty
+# Array to store results of previous days (e.g., accuracy, money earned)
+var customer_history: Array = [] 
+
+# --- Food Database Placeholder (To be completed in Task 1.2) ---
+# This dictionary will hold preloaded FoodItemData resources
+const FOOD_DB: Dictionary = {}
 
 # --- Core Methods ---
+
+# Called to start the next day's gameplay loop
 func start_new_day():
 	if current_day <= TOTAL_DAYS:
 		print("Starting Day " + str(current_day))
-		# 1. Generate the order logic here (or call a function that does)
-		var new_order = generate_order_for_day(current_day) 
 		
-		# 2. Transition to the main gameplay scene (e.g., LobbyCanteen.tscn)
-		get_tree().change_scene_to_file("res://Scenes/LobbyCanteen.tscn")
+		# NOTE: In a finished game, you would change scenes here
+		# get_tree().change_scene_to_file("res://Scenes/LobbyCanteen.tscn")
+		
 	else:
-		print("Game finished!")
-		# Trigger the final results scene
+		print("Game finished! Showing results.")
+		# NOTE: Transition to the final score/ending scene
 
+# Called by the GameplayManager when a plate is served and scored
 func end_day(day_result: Dictionary):
-	# This is called by the GameplayManager when the plate is served.
-	
 	# 1. Update Game State
 	customer_history.append(day_result)
 	money += day_result.get("earned_money", 0)
@@ -34,23 +39,23 @@ func end_day(day_result: Dictionary):
 	# 2. Advance the Day
 	current_day += 1
 	
-	# 3. Transition to a break screen or start the next day
-	# For now, just print the result:
-	print("Day ended. Accuracy: " + str(day_result.get("accuracy", 0)))
+	var day_end_message = "Day %s ended. New Money: %s, New Reputation: %s" % [current_day - 1, money, reputation_score]
+	print(day_end_message)
 	
-	# Example: You would usually fade out, show a daily summary, then call start_new_day()
+	# Optional: Wait for a summary screen before starting the next day
+	# start_new_day() 
 	
-# --- Order Generation ---
+# Called by the GameplayManager to fetch the required order
 func generate_order_for_day(day: int) -> Dictionary:
-	# Use the day number, difficulty, and reputation to determine the order.
-	# Day 1: Always Rice, Chicken, Veggies, Watermelon.
+	# This will be fully implemented in Task 1.2, but we need the placeholder
+	print("Generating order for Day %s" % day)
+	
+	# Placeholder for Day 1 Order (uses temporary strings)
 	if day == 1:
 		return {
-			"Go": "Rice",
-			"Grow": "Chicken",
-			"GlowVeg": "Mixed Veggies",
-			"GlowFru": "Watermelon"
+			"Go": "RICE",
+			"Grow": "CHICKEN_LEG",
+			"GlowVeg": "MIXED_VEGGIES",
+			"GlowFru": "WATERMELON"
 		}
-	else:
-		# Implement complex order generation based on unlocked foods or a fixed list
-		return {}
+	return {}
