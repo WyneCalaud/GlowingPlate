@@ -23,7 +23,7 @@ func _on_day_button_pressed() -> void:
 
 func _on_fade_timer_timeout() -> void:
 	if button_type == "day" :
-		get_tree().change_scene_to_file("res://Scenes/Gameplay/gameplay.tscn")
+		get_tree().change_scene_to_file("res://Scenes/Gameplay/fullgameplay.tscn")
 	elif button_type == "menu" :
 		get_tree().change_scene_to_file("res://Scenes/Main Menu/Main_menu.tscn")
 

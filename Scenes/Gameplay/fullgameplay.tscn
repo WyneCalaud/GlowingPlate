@@ -1,17 +1,22 @@
-[gd_scene load_steps=17 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=23 format=3 uid="uid://dspwcgo3enhkn"]
 
-[ext_resource type="Script" uid="uid://5rlrod35ww0q" path="res://Scripts/Tutorial Items/gameplay-tutorial.gd" id="1_wh3fg"]
+[ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/fullgameplay.gd" id="1_2rsrt"]
 [ext_resource type="Texture2D" uid="uid://d13b2qdhxlnim" path="res://Items/Countertop/Kitchen Countertop.png" id="2_ldjib"]
+[ext_resource type="Texture2D" uid="uid://dnidw4uyysxr5" path="res://Items/Countertop/Stripped Lines Square.png" id="3_2rsrt"]
 [ext_resource type="PackedScene" uid="uid://cumqgtoajakm4" path="res://Scenes/Food Plate/food_plate.tscn" id="3_mi1wp"]
 [ext_resource type="Texture2D" uid="uid://bpj2de6ck62tq" path="res://Items/Rice Cooker/RiceCooker.png" id="4_0k4rc"]
 [ext_resource type="Texture2D" uid="uid://cegi0241vcsfs" path="res://Assets/Resized/ricecup.png" id="5_oq5xs"]
 [ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="6_m6ato"]
+[ext_resource type="Texture2D" uid="uid://bbq38x5wphjca" path="res://Items/Countertop/bg.png" id="6_x6gy3"]
 [ext_resource type="Texture2D" uid="uid://bgupyi0hei5qe" path="res://Assets/Resized/fullrice.png" id="7_e5334"]
 [ext_resource type="Texture2D" uid="uid://3l3g8onhhook" path="res://Assets/GrowSection/Adobe Express - file.png" id="8_f8cqh"]
 [ext_resource type="Script" uid="uid://bmqthaey15h7l" path="res://Scripts/Gameplay Items/chickens.gd" id="9_7k3bq"]
-[ext_resource type="Texture2D" uid="uid://bvgv3dwfpfnt7" path="res://Assets/rectangepanclosed.png" id="10_gs0om"]
-[ext_resource type="Texture2D" uid="uid://dtrhs0t88wcvg" path="res://Assets/GlowSection/Adobe Express - file (1).png" id="11_jfvh1"]
+[ext_resource type="Resource" uid="uid://0swaooqdh4n5" path="res://Data/Food/Rice.tres" id="10_x6gy3"]
+[ext_resource type="Texture2D" uid="uid://6cneikd3dt2d" path="res://Assets/GlowSection/MixedVeggies.png" id="12_lw1oc"]
 [ext_resource type="PackedScene" uid="uid://ctdosdqx3kc1c" path="res://Scenes/Transition/circle_transition.tscn" id="12_xg3i5"]
+[ext_resource type="Texture2D" uid="uid://ca72q23mbfxvv" path="res://Assets/GlowSection/Watermelons.png" id="13_7p7c3"]
+[ext_resource type="Texture2D" uid="uid://ct2bd3kh0fuyd" path="res://Icons/IconButton_Large_Background_Circle.png" id="16_7p7c3"]
+[ext_resource type="Texture2D" uid="uid://7ryngig7rcom" path="res://Icons/Exit.png" id="17_6d1sq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jb71e"]
 radius = 301.864
@@ -22,16 +27,19 @@ radius = 102.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p1ih8"]
 size = Vector2(352.639, 254.207)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v2eey"]
-size = Vector2(739.13, 549.296)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6d1sq"]
+size = Vector2(360.9624, 269.9756)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2bomb"]
+size = Vector2(463.33966, 341.50644)
 
 [node name="GamePlay-Tutorial" type="Node2D"]
-script = ExtResource("1_wh3fg")
+script = ExtResource("1_2rsrt")
 
 [node name="Background" type="Node2D" parent="."]
 
 [node name="ColorRect" type="TextureRect" parent="Background"]
-offset_right = 1200.0
+offset_right = 1280.0
 offset_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -39,95 +47,95 @@ texture = ExtResource("2_ldjib")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="FoodPlate" parent="." instance=ExtResource("3_mi1wp")]
-position = Vector2(-222, 251)
+[node name="Mat" type="Node2D" parent="."]
+
+[node name="RiceCupMat1" type="Sprite2D" parent="Mat"]
+position = Vector2(503, 521.00006)
+scale = Vector2(0.35370243, 0.40153316)
+texture = ExtResource("3_2rsrt")
+
+[node name="RiceCupMat2" type="Sprite2D" parent="Mat"]
+position = Vector2(875.00006, 523.00006)
+scale = Vector2(0.35370243, 0.40153316)
+texture = ExtResource("3_2rsrt")
+
+[node name="Plate" type="Node2D" parent="."]
+
+[node name="FoodPlate" parent="Plate" instance=ExtResource("3_mi1wp")]
+position = Vector2(502, 511)
 scale = Vector2(0.517, 0.517)
 
-[node name="GoStation" type="Node2D" parent="."]
-position = Vector2(29, 145)
+[node name="Go Section" type="Node2D" parent="."]
 
-[node name="RiceCooker" type="Sprite2D" parent="GoStation"]
-position = Vector2(194, 7.62938e-06)
-scale = Vector2(0.377016, 0.358901)
+[node name="RiceCooker" type="Sprite2D" parent="Go Section"]
+position = Vector2(170.00006, 499.24985)
+scale = Vector2(0.45362893, 0.42282173)
 texture = ExtResource("4_0k4rc")
 
-[node name="Area2D" type="Area2D" parent="GoStation/RiceCooker"]
+[node name="Area2D" type="Area2D" parent="Go Section/RiceCooker"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GoStation/RiceCooker/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Go Section/RiceCooker/Area2D"]
 shape = SubResource("CircleShape2D_jb71e")
 
-[node name="RiceCup" type="Sprite2D" parent="GoStation"]
-position = Vector2(69, 200)
+[node name="RiceCupMat" type="Sprite2D" parent="Go Section"]
+position = Vector2(186, 225)
+scale = Vector2(0.86181647, 0.68404007)
+texture = ExtResource("6_x6gy3")
+
+[node name="RiceCup" type="Sprite2D" parent="Go Section"]
+position = Vector2(185, 215)
 scale = Vector2(0.5, 0.446)
 texture = ExtResource("5_oq5xs")
 script = ExtResource("6_m6ato")
 full_cup_texture = ExtResource("7_e5334")
 empty_cup_texture = ExtResource("5_oq5xs")
+food_data = ExtResource("10_x6gy3")
 
-[node name="Area2D" type="Area2D" parent="GoStation/RiceCup"]
+[node name="Area2D" type="Area2D" parent="Go Section/RiceCup"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GoStation/RiceCup/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Go Section/RiceCup/Area2D"]
 shape = SubResource("CircleShape2D_rg35f")
 one_way_collision_margin = 0.0
 
-[node name="GrowStation" type="Node2D" parent="."]
-position = Vector2(203, 70)
+[node name="Grow Section" type="Node2D" parent="."]
 
-[node name="Chickens" type="Sprite2D" parent="GrowStation"]
-position = Vector2(238, 56)
-scale = Vector2(0.478786, 0.441667)
+[node name="Chickens" type="Sprite2D" parent="Grow Section"]
+position = Vector2(465, 193)
+scale = Vector2(0.79261315, 0.7659724)
 texture = ExtResource("8_f8cqh")
 script = ExtResource("9_7k3bq")
 
-[node name="Area2D" type="Area2D" parent="GrowStation/Chickens"]
+[node name="Area2D" type="Area2D" parent="Grow Section/Chickens"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GrowStation/Chickens/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Grow Section/Chickens/Area2D"]
 position = Vector2(-0.231445, -1.75598)
 shape = SubResource("RectangleShape2D_p1ih8")
 
-[node name="LockedGrowFood1" type="Sprite2D" parent="GrowStation"]
-position = Vector2(238, 213)
-scale = Vector2(0.479, 0.442)
-texture = ExtResource("10_gs0om")
+[node name="GlowVeggie Section" type="Node2D" parent="."]
 
-[node name="GlowStation" type="Node2D" parent="."]
-position = Vector2(399, 67)
+[node name="MixedVeggies" type="Sprite2D" parent="GlowVeggie Section"]
+position = Vector2(753, 179)
+scale = Vector2(0.7341487, 0.7630319)
+texture = ExtResource("12_lw1oc")
 
-[node name="Ubas" type="Sprite2D" parent="GlowStation"]
-position = Vector2(238, 64)
-scale = Vector2(0.23, 0.213)
-texture = ExtResource("11_jfvh1")
+[node name="Area2D" type="Area2D" parent="GlowVeggie Section/MixedVeggies"]
 
-[node name="Area2D" type="Area2D" parent="GlowStation/Ubas"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GlowVeggie Section/MixedVeggies/Area2D"]
+position = Vector2(2.0430908, 17.037292)
+shape = SubResource("RectangleShape2D_6d1sq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GlowStation/Ubas/Area2D"]
-position = Vector2(-26.0869, -44.6011)
-shape = SubResource("RectangleShape2D_v2eey")
+[node name="GlowFruit Section" type="Node2D" parent="."]
 
-[node name="LockedGrowFood1" type="Sprite2D" parent="GlowStation"]
-position = Vector2(238, 213)
-scale = Vector2(0.479, 0.442)
-texture = ExtResource("10_gs0om")
+[node name="Watermelons" type="Sprite2D" parent="GlowFruit Section"]
+position = Vector2(1024, 179)
+scale = Vector2(0.55035233, 0.5973533)
+texture = ExtResource("13_7p7c3")
 
-[node name="LockedGrowFood2" type="Sprite2D" parent="GlowStation"]
-position = Vector2(432, 55)
-scale = Vector2(0.479, 0.442)
-texture = ExtResource("10_gs0om")
+[node name="Area2D" type="Area2D" parent="GlowFruit Section/Watermelons"]
 
-[node name="LockedGrowFood3" type="Sprite2D" parent="GlowStation"]
-position = Vector2(431, 213)
-scale = Vector2(0.479, 0.442)
-texture = ExtResource("10_gs0om")
-
-[node name="LockedGrowFood4" type="Sprite2D" parent="GlowStation"]
-position = Vector2(626, 54)
-scale = Vector2(0.479, 0.442)
-texture = ExtResource("10_gs0om")
-
-[node name="LockedGrowFood5" type="Sprite2D" parent="GlowStation"]
-position = Vector2(624, 213)
-scale = Vector2(0.479, 0.442)
-texture = ExtResource("10_gs0om")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GlowFruit Section/Watermelons/Area2D"]
+position = Vector2(3.1855469, 23.674225)
+shape = SubResource("RectangleShape2D_2bomb")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10
@@ -135,6 +143,27 @@ visible = false
 
 [node name="CircleIntroTransition" parent="CanvasLayer" instance=ExtResource("12_xg3i5")]
 
-[connection signal="area_entered" from="GoStation/RiceCup/Area2D" to="GoStation/RiceCup" method="_on_area_2d_area_entered"]
-[connection signal="area_exited" from="GoStation/RiceCup/Area2D" to="GoStation/RiceCup" method="_on_area_2d_area_exited"]
-[connection signal="input_event" from="GoStation/RiceCup/Area2D" to="GoStation/RiceCup" method="_on_area_2d_input_event"]
+[node name="Main Menu" type="HBoxContainer" parent="."]
+offset_left = 1211.0
+offset_top = 7.0
+offset_right = 1268.0
+offset_bottom = 59.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Exit" type="TextureButton" parent="Main Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("16_7p7c3")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Exit" type="Sprite2D" parent="Main Menu/Exit"]
+position = Vector2(32, 25)
+scale = Vector2(1.96875, 2.0625)
+texture = ExtResource("17_6d1sq")
+
+[connection signal="area_entered" from="Go Section/RiceCup/Area2D" to="Go Section/RiceCup" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Go Section/RiceCup/Area2D" to="Go Section/RiceCup" method="_on_area_2d_area_exited"]
+[connection signal="input_event" from="Go Section/RiceCup/Area2D" to="Go Section/RiceCup" method="_on_area_2d_input_event"]
+[connection signal="pressed" from="Main Menu/Exit" to="." method="_on_exit_pressed"]
