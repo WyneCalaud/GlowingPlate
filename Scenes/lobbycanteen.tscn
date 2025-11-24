@@ -14,7 +14,11 @@
 [ext_resource type="FontFile" uid="uid://cjilf40vbxmxa" path="res://fonts/Archivo_Black,Rowdies/Archivo_Black/ArchivoBlack-Regular.ttf" id="11_aok1l"]
 [ext_resource type="Texture2D" uid="uid://dj2unohvlp1qb" path="res://Buttons/5.png" id="11_s8tnj"]
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 [ext_resource type="Texture2D" uid="uid://ct2bd3kh0fuyd" path="res://Resources Glowing Plate/Basic_GUI_Bundle/ButtonsIcons/IconButton_Large_Background_Circle.png" id="12_ol5i2"]
+=======
+[ext_resource type="Texture2D" uid="uid://ct2bd3kh0fuyd" path="res://Icons/IconButton_Large_Background_Circle.png" id="12_ol5i2"]
+>>>>>>> Stashed changes
 =======
 [ext_resource type="Texture2D" uid="uid://ct2bd3kh0fuyd" path="res://Icons/IconButton_Large_Background_Circle.png" id="12_ol5i2"]
 >>>>>>> Stashed changes
