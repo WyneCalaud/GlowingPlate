@@ -1,5 +1,5 @@
 # chicken_leg_drag.gd
-extends "res://Scripts/food_item_base.gd" # Use your actual path!
+extends "res://Scripts/Food Data/food_item_base.gd" # Use your actual path!
 
 # --- EXPORTS (Set these in the Inspector of ChickenLeg.tscn) ---
 @export var single_leg_texture: Texture2D 
