@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpavdiqi6pvs3"]
+
+[ext_resource type="Texture2D" uid="uid://bui7qvqamw185" path="res://Assets/Resized/ChckenLeg.png" id="1_w6luu"]
+[ext_resource type="Script" uid="uid://b4rshslud6xd4" path="res://Scripts/Food Data/chicken_draggable.gd" id="2_w8qkh"]
+[ext_resource type="Resource" uid="uid://b2oeopgun652k" path="res://Data/Food/Chicken.tres" id="3_w6luu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w8qkh"]
+radius = 115.992966
+
+[node name="ChickenDraggable" type="Sprite2D"]
+position = Vector2(215.5193, 133.23306)
+scale = Vector2(0.3104714, 0.3272146)
+texture = ExtResource("1_w6luu")
+script = ExtResource("2_w8qkh")
+food_data = ExtResource("3_w6luu")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1.5482817, -28.217157)
+shape = SubResource("CircleShape2D_w8qkh")

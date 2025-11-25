@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="FoodItemData" load_steps=2 format=3 uid="uid://b2oeopgun652k"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=3 format=3 uid="uid://b2oeopgun652k"]
 
+[ext_resource type="Texture2D" uid="uid://c41cxktmv2g2r" path="res://Assets/Resized/chickenleg1000.png" id="1_742rq"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="1_jjco8"]
 
 [resource]
 script = ExtResource("1_jjco8")
 item_name = "Chicken"
 internal_key = "CHICKEN_LEG"
+base_texture = ExtResource("1_742rq")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

@@ -135,6 +135,7 @@ texture = ExtResource("10_gb8q7")
 script = ExtResource("9_5i20n")
 full_cup_texture = ExtResource("11_1ff3a")
 empty_cup_texture = ExtResource("10_gb8q7")
+full_cup_scale_factor = null
 
 [node name="Area2D" type="Area2D" parent="GoStation/RiceCup"]
 
@@ -158,10 +159,14 @@ script = ExtResource("15_1ff3a")
 draggable_scene = ExtResource("15_pulc7")
 
 [node name="Area2D" type="Area2D" parent="GrowStation/ChickenStatic"]
+input_pickable = false
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrowStation/ChickenStatic/Area2D"]
 position = Vector2(6.265869, -9.056625)
 shape = SubResource("RectangleShape2D_p1ih8")
+disabled = true
 
 [node name="LockedGrowFood1" type="Sprite2D" parent="GrowStation"]
 position = Vector2(238, 213)
