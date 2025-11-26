@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bui7qvqamw185"
-path="res://.godot/imported/ChckenLeg.png-70c887adf1370f5bef651c6fe5d1459c.ctex"
+uid="uid://cvyxh0d0u5vwu"
+path="res://.godot/imported/veggieselected.png-183955d7d7df3164ccdc208fb97b25a1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Resized/ChckenLeg.png"
-dest_files=["res://.godot/imported/ChckenLeg.png-70c887adf1370f5bef651c6fe5d1459c.ctex"]
+source_file="res://Assets/Resized/veggieselected.png"
+dest_files=["res://.godot/imported/veggieselected.png-183955d7d7df3164ccdc208fb97b25a1.ctex"]
 
 [params]
 

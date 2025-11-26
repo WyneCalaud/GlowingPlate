@@ -1,12 +1,10 @@
-[gd_scene load_steps=34 format=3 uid="uid://dspwcgo3enhkn"]
-[gd_scene load_steps=24 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=26 format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/fullgameplay.gd" id="1_2rsrt"]
 [ext_resource type="Texture2D" uid="uid://d13b2qdhxlnim" path="res://Items/Countertop/Kitchen Countertop.png" id="2_ldjib"]
 [ext_resource type="Texture2D" uid="uid://dnidw4uyysxr5" path="res://Items/Countertop/Stripped Lines Square.png" id="3_2rsrt"]
 [ext_resource type="PackedScene" uid="uid://cumqgtoajakm4" path="res://Scenes/Food Plate/food_plate.tscn" id="3_mi1wp"]
 [ext_resource type="Texture2D" uid="uid://bpj2de6ck62tq" path="res://Items/Rice Cooker/RiceCooker.png" id="4_0k4rc"]
-[ext_resource type="Script" uid="uid://d3gd8n1g16fj3" path="res://Scenes/Food Plate/food_plate_draggable.gd" id="5_hhl0g"]
 [ext_resource type="Texture2D" uid="uid://cegi0241vcsfs" path="res://Assets/Resized/ricecup.png" id="5_oq5xs"]
 [ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="6_m6ato"]
 [ext_resource type="Texture2D" uid="uid://bbq38x5wphjca" path="res://Items/Countertop/bg.png" id="6_x6gy3"]
@@ -16,21 +14,12 @@
 [ext_resource type="Resource" uid="uid://0swaooqdh4n5" path="res://Data/Food/Rice.tres" id="10_x6gy3"]
 [ext_resource type="Texture2D" uid="uid://6cneikd3dt2d" path="res://Assets/GlowSection/MixedVeggies.png" id="12_lw1oc"]
 [ext_resource type="PackedScene" uid="uid://ctdosdqx3kc1c" path="res://Scenes/Transition/circle_transition.tscn" id="12_xg3i5"]
+[ext_resource type="Texture2D" path="res://Assets/Resized/ChckenLeg.png" id="13_2bomb"]
 [ext_resource type="PackedScene" uid="uid://bpavdiqi6pvs3" path="res://Scenes/Chicken/ChickenDraggable.tscn" id="13_6d1sq"]
 [ext_resource type="Texture2D" uid="uid://ca72q23mbfxvv" path="res://Assets/GlowSection/Watermelons.png" id="13_7p7c3"]
-[ext_resource type="Texture2D" uid="uid://cogjbtykxk56l" path="res://Assets/Resized/ChckenLeg512.png" id="13_g5id8"]
 [ext_resource type="Resource" uid="uid://b2oeopgun652k" path="res://Data/Food/Chicken.tres" id="15_dliw2"]
 [ext_resource type="Texture2D" uid="uid://ct2bd3kh0fuyd" path="res://Icons/IconButton_Large_Background_Circle.png" id="16_7p7c3"]
 [ext_resource type="Texture2D" uid="uid://7ryngig7rcom" path="res://Icons/Exit.png" id="17_6d1sq"]
-[ext_resource type="Script" uid="uid://dm87mnebn341w" path="res://Scripts/Gameplay Items/mixed_veggies.gd" id="17_7a7by"]
-[ext_resource type="Texture2D" uid="uid://cvyxh0d0u5vwu" path="res://Assets/Resized/veggieselected.png" id="18_g5id8"]
-[ext_resource type="Resource" uid="uid://coys2w4jp08ys" path="res://Data/Food/MixedVeggies.tres" id="19_voq3r"]
-[ext_resource type="Script" uid="uid://c5m5wc13htxun" path="res://Scripts/Gameplay Items/watermelons.gd" id="21_voq3r"]
-[ext_resource type="Texture2D" uid="uid://fic127tmj588" path="res://Assets/GlowSection/watermelons_selected.png" id="22_gv0a0"]
-[ext_resource type="Resource" uid="uid://dw3v4m5y7nbwm" path="res://Data/Food/Watermelon.tres" id="23_hhl0g"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_hhl0g"]
-radius = 151.08276
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jb71e"]
 radius = 301.864
@@ -63,31 +52,21 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Mat" type="Node2D" parent="."]
 
-[node name="RiceCupMat2" type="Sprite2D" parent="Mat"]
-position = Vector2(872.00006, 523.00006)
+[node name="RiceCupMat1" type="Sprite2D" parent="Mat"]
+position = Vector2(503, 521.00006)
 scale = Vector2(0.35370243, 0.40153316)
 texture = ExtResource("3_2rsrt")
 
-[node name="RiceCupMat3" type="Sprite2D" parent="Mat"]
-position = Vector2(507, 523.00006)
+[node name="RiceCupMat2" type="Sprite2D" parent="Mat"]
+position = Vector2(875.00006, 523.00006)
 scale = Vector2(0.35370243, 0.40153316)
 texture = ExtResource("3_2rsrt")
 
 [node name="Plate" type="Node2D" parent="."]
 
 [node name="FoodPlate" parent="Plate" instance=ExtResource("3_mi1wp")]
-z_index = 1
 position = Vector2(502, 511)
 scale = Vector2(0.517, 0.517)
-script = ExtResource("5_hhl0g")
-
-[node name="Area2D" type="Area2D" parent="Plate/FoodPlate"]
-position = Vector2(0, 1.9342651)
-scale = Vector2(1.9342359, 1.9342359)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Plate/FoodPlate/Area2D"]
-position = Vector2(0, 10)
-shape = SubResource("CircleShape2D_hhl0g")
 
 [node name="Go Section" type="Node2D" parent="."]
 
@@ -124,18 +103,18 @@ one_way_collision_margin = 0.0
 [node name="Grow Section" type="Node2D" parent="."]
 
 [node name="Chickens" type="Sprite2D" parent="Grow Section"]
-position = Vector2(464.99997, 182)
+position = Vector2(465, 193)
 scale = Vector2(0.79261315, 0.7659724)
 texture = ExtResource("8_f8cqh")
 script = ExtResource("9_7k3bq")
-chicken_leg = ExtResource("13_g5id8")
+chicken_leg = ExtResource("13_2bomb")
 draggable_scene = ExtResource("13_6d1sq")
 food_data = ExtResource("15_dliw2")
 
 [node name="Area2D" type="Area2D" parent="Grow Section/Chickens"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Grow Section/Chickens/Area2D"]
-position = Vector2(-0.23144501, 13.910387)
+position = Vector2(-0.231445, -1.75598)
 shape = SubResource("RectangleShape2D_p1ih8")
 
 [node name="GlowVeggie Section" type="Node2D" parent="."]
@@ -144,9 +123,6 @@ shape = SubResource("RectangleShape2D_p1ih8")
 position = Vector2(753, 179)
 scale = Vector2(0.7341487, 0.7630319)
 texture = ExtResource("12_lw1oc")
-script = ExtResource("17_7a7by")
-selected_texture = ExtResource("18_g5id8")
-food_data = ExtResource("19_voq3r")
 
 [node name="Area2D" type="Area2D" parent="GlowVeggie Section/MixedVeggies"]
 
@@ -160,9 +136,6 @@ shape = SubResource("RectangleShape2D_6d1sq")
 position = Vector2(1024, 179)
 scale = Vector2(0.55035233, 0.5973533)
 texture = ExtResource("13_7p7c3")
-script = ExtResource("21_voq3r")
-selected_texture = ExtResource("22_gv0a0")
-food_data = ExtResource("23_hhl0g")
 
 [node name="Area2D" type="Area2D" parent="GlowFruit Section/Watermelons"]
 
