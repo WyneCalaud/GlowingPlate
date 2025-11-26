@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=24 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://bbi8lrleu7bf6" path="res://Background/canteen lobby final.png" id="2_x0cxb"]
@@ -16,6 +16,13 @@
 [ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/Transition/fade_transition.tscn" id="14_hcpvu"]
 [ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="15_sgopm"]
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/Bulletin Board/bulletinboardUI.tscn" id="16_vrvqj"]
+[ext_resource type="Script" uid="uid://bhyi7niihpfqg" path="res://Scripts/Lobby/day_scene.gd" id="17_wdy5h"]
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="18_k43ou"]
+[ext_resource type="Resource" uid="uid://b6ci40o28mdgx" path="res://Data/Customer/CustomerOrderTest2.tres" id="19_606uc"]
+[ext_resource type="Texture2D" uid="uid://culj7mr60jktk" path="res://Assets/Protein/Protein/Protein (21).png" id="19_wdy5h"]
+[ext_resource type="Resource" uid="uid://dihvb44sq660n" path="res://Data/Customer/CustomerOrderTest.tres" id="20_4edj8"]
+[ext_resource type="PackedScene" uid="uid://cjn07fdlbx2nm" path="res://Scenes/Customer/Customer.tscn" id="20_5fhlb"]
+[ext_resource type="Script" uid="uid://fti83bbe01wh" path="res://Scripts/Customer/customer_manager.gd" id="20_k43ou"]
 
 [node name="Lobby" type="Node2D"]
 script = ExtResource("1_8p2f5")
@@ -147,6 +154,48 @@ visible = false
 [node name="BulletinBoardUI" parent="OverlayCanvas" instance=ExtResource("16_vrvqj")]
 visible = false
 
+[node name="NextCustomer" type="Button" parent="."]
+offset_left = 1100.0
+offset_top = 436.0
+offset_right = 1268.0
+offset_bottom = 604.0
+icon = ExtResource("19_wdy5h")
+
+[node name="DayScene" type="Node2D" parent="."]
+script = ExtResource("17_wdy5h")
+
+[node name="DialogueBox" type="Panel" parent="DayScene"]
+visible = false
+offset_left = 435.0
+offset_top = 63.0
+offset_right = 1106.0
+offset_bottom = 286.0
+
+[node name="CustomerNameLabel" type="Label" parent="DayScene/DialogueBox"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="OrderText" type="RichTextLabel" parent="DayScene/DialogueBox"]
+layout_mode = 0
+offset_right = 670.0
+offset_bottom = 225.0
+
+[node name="BtnAccept" type="Button" parent="DayScene"]
+visible = false
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="BtnContinue" type="Button" parent="DayScene"]
+visible = false
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="CustomerManager" type="Node" parent="DayScene"]
+script = ExtResource("20_k43ou")
+customer_scene = ExtResource("20_5fhlb")
+orders = Array[ExtResource("18_k43ou")]([ExtResource("19_606uc"), ExtResource("20_4edj8")])
+
 [connection signal="pressed" from="BottomButtons/Almanac/Almanac" to="." method="_on_almanac_pressed"]
 [connection signal="pressed" from="BottomButtons/Bulletin Board/Bulletin Board" to="." method="_on_bulletin_board_pressed"]
 [connection signal="pressed" from="BottomButtons/Day/Day Button" to="." method="_on_day_button_pressed"]
@@ -154,3 +203,6 @@ visible = false
 [connection signal="timeout" from="Fade_transition/Fade_timer" to="." method="_on_fade_timer_timeout"]
 [connection signal="closed" from="OverlayCanvas/AlmanacUI" to="." method="_on_almanac_ui_closed"]
 [connection signal="closed" from="OverlayCanvas/BulletinBoardUI" to="." method="_on_bulletin_board_ui_closed"]
+[connection signal="pressed" from="NextCustomer" to="DayScene" method="_on_next_customer_pressed"]
+[connection signal="pressed" from="DayScene/BtnAccept" to="DayScene" method="_on_btn_accept_pressed"]
+[connection signal="pressed" from="DayScene/BtnContinue" to="DayScene" method="_on_btn_continue_pressed"]

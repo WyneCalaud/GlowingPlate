@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=24 format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/fullgameplay.gd" id="1_2rsrt"]
 [ext_resource type="Texture2D" uid="uid://d13b2qdhxlnim" path="res://Items/Countertop/Kitchen Countertop.png" id="2_ldjib"]
@@ -14,6 +14,7 @@
 [ext_resource type="Resource" uid="uid://0swaooqdh4n5" path="res://Data/Food/Rice.tres" id="10_x6gy3"]
 [ext_resource type="Texture2D" uid="uid://6cneikd3dt2d" path="res://Assets/GlowSection/MixedVeggies.png" id="12_lw1oc"]
 [ext_resource type="PackedScene" uid="uid://ctdosdqx3kc1c" path="res://Scenes/Transition/circle_transition.tscn" id="12_xg3i5"]
+[ext_resource type="PackedScene" uid="uid://bpavdiqi6pvs3" path="res://Scenes/Chicken/ChickenDraggable.tscn" id="13_6d1sq"]
 [ext_resource type="Texture2D" uid="uid://ca72q23mbfxvv" path="res://Assets/GlowSection/Watermelons.png" id="13_7p7c3"]
 [ext_resource type="Texture2D" uid="uid://ct2bd3kh0fuyd" path="res://Icons/IconButton_Large_Background_Circle.png" id="16_7p7c3"]
 [ext_resource type="Texture2D" uid="uid://7ryngig7rcom" path="res://Icons/Exit.png" id="17_6d1sq"]
@@ -100,15 +101,16 @@ one_way_collision_margin = 0.0
 [node name="Grow Section" type="Node2D" parent="."]
 
 [node name="Chickens" type="Sprite2D" parent="Grow Section"]
-position = Vector2(465, 193)
+position = Vector2(464.99997, 182)
 scale = Vector2(0.79261315, 0.7659724)
 texture = ExtResource("8_f8cqh")
 script = ExtResource("9_7k3bq")
+draggable_scene = ExtResource("13_6d1sq")
 
 [node name="Area2D" type="Area2D" parent="Grow Section/Chickens"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Grow Section/Chickens/Area2D"]
-position = Vector2(-0.231445, -1.75598)
+position = Vector2(-0.23144501, 13.910387)
 shape = SubResource("RectangleShape2D_p1ih8")
 
 [node name="GlowVeggie Section" type="Node2D" parent="."]

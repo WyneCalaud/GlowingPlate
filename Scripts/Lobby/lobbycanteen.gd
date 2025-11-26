@@ -5,6 +5,7 @@ extends Node2D
 @onready var almanac_ui = $OverlayCanvas/AlmanacUI
 @onready var bulletin_board_ui = $OverlayCanvas/BulletinBoardUI # <-- ADD THIS
 
+
 # --- State Variables ---
 # Replaced 'almanac_is_open' with a variable that can track ANY popup
 var current_open_popup: Control = null 
