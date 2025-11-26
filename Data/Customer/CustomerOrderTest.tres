@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://dihvb44sq660n"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_tdewu"]
+
+[resource]
+script = ExtResource("1_tdewu")
+customer_name = "Vien"
+order_text = "I wan't chicken"
+expanded_text = "c h i c k e n"
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"
