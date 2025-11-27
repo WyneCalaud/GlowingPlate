@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://c4o2dqtsa1ibb"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_1ewka"]
+
+[resource]
+script = ExtResource("1_1ewka")
+customer_name = "Glep"
+order_text = "Vegetables and Fruits only Please"
+expanded_text = "No chicken"
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

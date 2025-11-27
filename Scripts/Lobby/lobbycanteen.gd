@@ -20,12 +20,15 @@ func _start_transition(type: String):
 	$Fade_transition/AnimationPlayer.play("Fade_In")
 
 func _on_day_button_pressed() -> void:
-	_start_transition("day")
-
+	$NextCustomer.show()
+	$BottomButtons/Almanac/Almanac.hide()
+	$"BottomButtons/Bulletin Board/Bulletin Board".hide()
+	$"BottomButtons/Day/Day Button".hide()
+	
 func _on_fade_timer_timeout() -> void:
-	if button_type == "day" :
-		get_tree().change_scene_to_file("res://Scenes/Gameplay/fullgameplay.tscn")
-	elif button_type == "menu" :
+	#if button_type == "day" :
+		#get_tree().change_scene_to_file("res://Scenes/Gameplay/fullgameplay.tscn")
+	if button_type == "menu" :
 		get_tree().change_scene_to_file("res://Scenes/Main Menu/Main_menu.tscn")
 
 func _on_settings_button_pressed() -> void:

@@ -27,7 +27,6 @@ func _on_customer_arrived(order: CustomerOrder):
 	$BtnAccept.show()
 	$BtnContinue.show()
 
-	$DialogueBox/CustomerNameLabel.text = order.customer_name
 	$DialogueBox/OrderText.text = order.order_text
 
 
