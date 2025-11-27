@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_1ewka")
-customer_name = "Glep"
+customer_name = "Niko"
 order_text = "Vegetables and Fruits only Please"
 expanded_text = "No chicken"
 metadata/_custom_type_script = "uid://b6ratnvhx4aau"

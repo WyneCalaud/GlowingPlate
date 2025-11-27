@@ -12,25 +12,27 @@ signal customer_left
 
 var current_customer: Node2D = null
 
-func spawn_customer(order: CustomerOrder):
-	if orders.is_empty():
-		print("NO ORDERS IN MANAGER ‼")
-		return
-
-
-	#order_index += 1  # optional if you want linear progression later
+func spawn_customer(order: CustomerOrder, texture: Texture2D):
+	if current_customer:
+		current_customer.queue_free()
 
 	current_customer = customer_scene.instantiate()
 	add_child(current_customer)
 	current_customer.position = Vector2(offscreen_x, spawn_y)
 
+	# Assign customer sprite texture
+	var sprite = current_customer.get_node("CustomerSprite")
+	sprite.texture = texture
+
+	# Slide in animation
 	var tween = create_tween()
 	tween.tween_property(current_customer, "position:x", onscreen_x, move_duration)\
 		.set_ease(Tween.EASE_OUT)
 
 	tween.finished.connect(func():
-		customer_arrived.emit(order)  # ✅ This is the important fix
+		customer_arrived.emit(order)
 	)
+
 	
 func next_customer():
 	if not current_customer:

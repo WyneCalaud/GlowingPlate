@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_yjwy3")
-customer_name = "Schnitzel"
+customer_name = "Niko"
 order_text = "radaradaradaradaradarada"
 expanded_text = "radaradaradaradaradarada"
 metadata/_custom_type_script = "uid://b6ratnvhx4aau"
