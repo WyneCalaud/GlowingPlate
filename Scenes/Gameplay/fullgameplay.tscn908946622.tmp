@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=34 format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/fullgameplay.gd" id="1_2rsrt"]
 [ext_resource type="Texture2D" uid="uid://d13b2qdhxlnim" path="res://Items/Countertop/Kitchen Countertop.png" id="2_ldjib"]
@@ -13,13 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://3l3g8onhhook" path="res://Assets/GrowSection/Adobe Express - file.png" id="8_f8cqh"]
 [ext_resource type="Script" uid="uid://bmqthaey15h7l" path="res://Scripts/Gameplay Items/chickens.gd" id="9_7k3bq"]
 [ext_resource type="Resource" uid="uid://0swaooqdh4n5" path="res://Data/Food/Rice.tres" id="10_x6gy3"]
-[ext_resource type="Texture2D" uid="uid://oj0oes3vf6cp" path="res://Assets/GoSection/lowrice512.png" id="11_4f3sq"]
 [ext_resource type="Texture2D" uid="uid://6cneikd3dt2d" path="res://Assets/GlowSection/MixedVeggies.png" id="12_lw1oc"]
-[ext_resource type="Texture2D" uid="uid://58c3ov3a6qju" path="res://Assets/GoSection/medrice512.png" id="12_tdms1"]
 [ext_resource type="PackedScene" uid="uid://ctdosdqx3kc1c" path="res://Scenes/Transition/circle_transition.tscn" id="12_xg3i5"]
 [ext_resource type="PackedScene" uid="uid://bpavdiqi6pvs3" path="res://Scenes/Chicken/ChickenDraggable.tscn" id="13_6d1sq"]
 [ext_resource type="Texture2D" uid="uid://ca72q23mbfxvv" path="res://Assets/GlowSection/Watermelons.png" id="13_7p7c3"]
-[ext_resource type="Texture2D" uid="uid://vg6jplsit2nt" path="res://Assets/GoSection/toohighrice 512.png" id="13_da56h"]
 [ext_resource type="Texture2D" uid="uid://cogjbtykxk56l" path="res://Assets/Resized/ChckenLeg512.png" id="13_g5id8"]
 [ext_resource type="Resource" uid="uid://b2oeopgun652k" path="res://Data/Food/Chicken.tres" id="15_dliw2"]
 [ext_resource type="Texture2D" uid="uid://ct2bd3kh0fuyd" path="res://Icons/IconButton_Large_Background_Circle.png" id="16_7p7c3"]
@@ -30,8 +27,6 @@
 [ext_resource type="Script" uid="uid://c5m5wc13htxun" path="res://Scripts/Gameplay Items/watermelons.gd" id="21_voq3r"]
 [ext_resource type="Texture2D" uid="uid://fic127tmj588" path="res://Assets/GlowSection/watermelons_selected.png" id="22_gv0a0"]
 [ext_resource type="Resource" uid="uid://dw3v4m5y7nbwm" path="res://Data/Food/Watermelon.tres" id="23_hhl0g"]
-[ext_resource type="Texture2D" uid="uid://mp7t74bnefg6" path="res://Assets/ServeOrTrash/Serve.png" id="28_da56h"]
-[ext_resource type="Texture2D" uid="uid://rqmcamclgsht" path="res://Assets/ServeOrTrash/trash.png" id="29_yb5e7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhl0g"]
 radius = 151.08276
@@ -51,13 +46,7 @@ size = Vector2(360.9624, 269.9756)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2bomb"]
 size = Vector2(463.33966, 341.50644)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2rc42"]
-size = Vector2(1160.9492, 226.62889)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_brkib"]
-size = Vector2(1161.2372, 208.96828)
-
-[node name="GamePlayFull" type="Node2D"]
+[node name="GamePlay-Tutorial" type="Node2D"]
 script = ExtResource("1_2rsrt")
 
 [node name="Background" type="Node2D" parent="."]
@@ -82,11 +71,6 @@ texture = ExtResource("3_2rsrt")
 position = Vector2(507, 523.00006)
 scale = Vector2(0.35370243, 0.40153316)
 texture = ExtResource("3_2rsrt")
-
-[node name="RiceCupMat" type="Sprite2D" parent="Mat"]
-position = Vector2(186, 225)
-scale = Vector2(0.86181647, 0.68404007)
-texture = ExtResource("6_x6gy3")
 
 [node name="Plate" type="Node2D" parent="."]
 
@@ -116,16 +100,19 @@ texture = ExtResource("4_0k4rc")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Go Section/RiceCooker/Area2D"]
 shape = SubResource("CircleShape2D_jb71e")
 
+[node name="RiceCupMat" type="Sprite2D" parent="Go Section"]
+position = Vector2(186, 225)
+scale = Vector2(0.86181647, 0.68404007)
+texture = ExtResource("6_x6gy3")
+
 [node name="RiceCup" type="Sprite2D" parent="Go Section"]
 position = Vector2(185, 215)
 scale = Vector2(0.5, 0.446)
 texture = ExtResource("5_oq5xs")
 script = ExtResource("6_m6ato")
-empty_cup_texture = ExtResource("5_oq5xs")
-small_scoop_texture = ExtResource("11_4f3sq")
-medium_scoop_texture = ExtResource("12_tdms1")
 full_cup_texture = ExtResource("7_e5334")
-too_high_texture = ExtResource("13_da56h")
+empty_cup_texture = ExtResource("5_oq5xs")
+full_cup_scale_factor = null
 food_data = ExtResource("10_x6gy3")
 
 [node name="Area2D" type="Area2D" parent="Go Section/RiceCup"]
@@ -159,6 +146,7 @@ scale = Vector2(0.7341487, 0.7630319)
 texture = ExtResource("12_lw1oc")
 script = ExtResource("17_7a7by")
 selected_texture = ExtResource("18_g5id8")
+selected_scale_factor = null
 food_data = ExtResource("19_voq3r")
 
 [node name="Area2D" type="Area2D" parent="GlowVeggie Section/MixedVeggies"]
@@ -175,6 +163,7 @@ scale = Vector2(0.55035233, 0.5973533)
 texture = ExtResource("13_7p7c3")
 script = ExtResource("21_voq3r")
 selected_texture = ExtResource("22_gv0a0")
+selected_scale_factor = null
 food_data = ExtResource("23_hhl0g")
 
 [node name="Area2D" type="Area2D" parent="GlowFruit Section/Watermelons"]
@@ -182,33 +171,6 @@ food_data = ExtResource("23_hhl0g")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GlowFruit Section/Watermelons/Area2D"]
 position = Vector2(3.1855469, 23.674225)
 shape = SubResource("RectangleShape2D_2bomb")
-
-[node name="ServeOrTrash" type="Node2D" parent="."]
-
-[node name="Serve" type="Sprite2D" parent="ServeOrTrash"]
-visible = false
-position = Vector2(672, 40)
-scale = Vector2(0.379, 0.353)
-texture = ExtResource("28_da56h")
-
-[node name="Area2D" type="Area2D" parent="ServeOrTrash/Serve"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ServeOrTrash/Serve/Area2D"]
-position = Vector2(10.554077, 1.5258789e-05)
-scale = Vector2(1.0000008, 1)
-shape = SubResource("RectangleShape2D_2rc42")
-
-[node name="Trash" type="Sprite2D" parent="ServeOrTrash"]
-visible = false
-position = Vector2(672.00006, 680.00006)
-scale = Vector2(0.37890625, 0.42111644)
-texture = ExtResource("29_yb5e7")
-
-[node name="Area2D" type="Area2D" parent="ServeOrTrash/Trash"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ServeOrTrash/Trash/Area2D"]
-position = Vector2(10.556519, 9.498413)
-shape = SubResource("RectangleShape2D_brkib")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10

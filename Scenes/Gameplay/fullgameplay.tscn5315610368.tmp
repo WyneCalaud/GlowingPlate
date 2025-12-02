@@ -83,11 +83,6 @@ position = Vector2(507, 523.00006)
 scale = Vector2(0.35370243, 0.40153316)
 texture = ExtResource("3_2rsrt")
 
-[node name="RiceCupMat" type="Sprite2D" parent="Mat"]
-position = Vector2(186, 225)
-scale = Vector2(0.86181647, 0.68404007)
-texture = ExtResource("6_x6gy3")
-
 [node name="Plate" type="Node2D" parent="."]
 
 [node name="FoodPlate" parent="Plate" instance=ExtResource("3_mi1wp")]
@@ -115,6 +110,11 @@ texture = ExtResource("4_0k4rc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Go Section/RiceCooker/Area2D"]
 shape = SubResource("CircleShape2D_jb71e")
+
+[node name="RiceCupMat" type="Sprite2D" parent="Go Section"]
+position = Vector2(186, 225)
+scale = Vector2(0.86181647, 0.68404007)
+texture = ExtResource("6_x6gy3")
 
 [node name="RiceCup" type="Sprite2D" parent="Go Section"]
 position = Vector2(185, 215)
@@ -183,30 +183,29 @@ food_data = ExtResource("23_hhl0g")
 position = Vector2(3.1855469, 23.674225)
 shape = SubResource("RectangleShape2D_2bomb")
 
-[node name="ServeOrTrash" type="Node2D" parent="."]
-
-[node name="Serve" type="Sprite2D" parent="ServeOrTrash"]
+[node name="Serve or Trash" type="Node2D" parent="."]
 visible = false
+
+[node name="Serve" type="Sprite2D" parent="Serve or Trash"]
 position = Vector2(672, 40)
 scale = Vector2(0.379, 0.353)
 texture = ExtResource("28_da56h")
 
-[node name="Area2D" type="Area2D" parent="ServeOrTrash/Serve"]
+[node name="Area2D" type="Area2D" parent="Serve or Trash/Serve"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ServeOrTrash/Serve/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Serve or Trash/Serve/Area2D"]
 position = Vector2(10.554077, 1.5258789e-05)
 scale = Vector2(1.0000008, 1)
 shape = SubResource("RectangleShape2D_2rc42")
 
-[node name="Trash" type="Sprite2D" parent="ServeOrTrash"]
-visible = false
+[node name="Trash" type="Sprite2D" parent="Serve or Trash"]
 position = Vector2(672.00006, 680.00006)
 scale = Vector2(0.37890625, 0.42111644)
 texture = ExtResource("29_yb5e7")
 
-[node name="Area2D" type="Area2D" parent="ServeOrTrash/Trash"]
+[node name="Area2D" type="Area2D" parent="Serve or Trash/Trash"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ServeOrTrash/Trash/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Serve or Trash/Trash/Area2D"]
 position = Vector2(10.556519, 9.498413)
 shape = SubResource("RectangleShape2D_brkib")
 

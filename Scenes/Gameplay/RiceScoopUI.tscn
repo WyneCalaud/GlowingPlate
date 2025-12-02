@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl6vkdqxfye3a"]
+
+[ext_resource type="Texture2D" uid="uid://bi2ovbyadhffw" path="res://Buttons/Hold-Button512.png" id="1_o6flf"]
+
+[node name="RiceScoopUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1280.0
+offset_bottom = -720.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 494.0
+offset_top = 264.0
+offset_right = 1006.0
+offset_bottom = 584.0
+scale = Vector2(0.6, 0.6)
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("1_o6flf")
