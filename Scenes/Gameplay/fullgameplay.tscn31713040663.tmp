@@ -95,6 +95,9 @@ z_index = 1
 position = Vector2(502, 511)
 scale = Vector2(0.517, 0.517)
 script = ExtResource("5_hhl0g")
+slot_paths = Array[NodePath]([NodePath("../../Go Section"), NodePath("../../Grow Section"), NodePath("../../GlowVeggie Section"), NodePath("../../GlowFruit Section")])
+serve_zone_path = NodePath("../../ServeOrTrash/Serve/Area2D")
+trash_zone_path = NodePath("../../ServeOrTrash/Trash/Area2D")
 
 [node name="Area2D" type="Area2D" parent="Plate/FoodPlate"]
 position = Vector2(0, 1.9342651)
