@@ -21,7 +21,7 @@ var original_position: Vector2
 func _ready():
 	self.input_pickable = true
 	# Ensure the slot is in a group so the plate can find all slots easily.
-	add_to_group(&"plate_slot") 
+	add_to_group(&"plate_slot")
 	
 	if linked_image == null:
 		print("FATAL ERROR [Plate Slot]: 'linked_image' Sprite2D is NOT assigned in the Inspector!")
@@ -73,6 +73,10 @@ func try_place_food(incoming_data: Variant) -> bool:
 	# CRITICAL: SET is_filled = true
 	is_filled = true
 	item_resource = food_resource # Set the resource!
+	
+	# --- DEBUG: CHECK IF RESOURCE WAS SET ---
+	if item_resource == null:
+		print("FATAL DEBUG [Plate Slot]: item_resource is NULL immediately after placement!")
 	
 	linked_image.texture = final_texture
 	linked_image.scale = Vector2(plated_scale_factor, plated_scale_factor)

@@ -99,6 +99,8 @@ script = ExtResource("5_hhl0g")
 [node name="Area2D" type="Area2D" parent="Plate/FoodPlate"]
 position = Vector2(0, 1.9342651)
 scale = Vector2(1.9342359, 1.9342359)
+collision_mask = 2
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plate/FoodPlate/Area2D"]
 position = Vector2(0, 10)
@@ -184,14 +186,16 @@ position = Vector2(3.1855469, 23.674225)
 shape = SubResource("RectangleShape2D_2bomb")
 
 [node name="ServeOrTrash" type="Node2D" parent="."]
+visible = false
 
 [node name="Serve" type="Sprite2D" parent="ServeOrTrash"]
-visible = false
 position = Vector2(672, 40)
 scale = Vector2(0.379, 0.353)
 texture = ExtResource("28_da56h")
 
 [node name="Area2D" type="Area2D" parent="ServeOrTrash/Serve"]
+collision_layer = 2
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ServeOrTrash/Serve/Area2D"]
 position = Vector2(10.554077, 1.5258789e-05)
@@ -199,12 +203,13 @@ scale = Vector2(1.0000008, 1)
 shape = SubResource("RectangleShape2D_2rc42")
 
 [node name="Trash" type="Sprite2D" parent="ServeOrTrash"]
-visible = false
 position = Vector2(672.00006, 680.00006)
 scale = Vector2(0.37890625, 0.42111644)
 texture = ExtResource("29_yb5e7")
 
 [node name="Area2D" type="Area2D" parent="ServeOrTrash/Trash"]
+collision_layer = 2
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ServeOrTrash/Trash/Area2D"]
 position = Vector2(10.556519, 9.498413)
@@ -236,6 +241,8 @@ position = Vector2(32, 25)
 scale = Vector2(1.96875, 2.0625)
 texture = ExtResource("17_6d1sq")
 
+[connection signal="area_entered" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_exited"]
 [connection signal="area_entered" from="Go Section/RiceCup/Area2D" to="Go Section/RiceCup" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Go Section/RiceCup/Area2D" to="Go Section/RiceCup" method="_on_area_2d_area_exited"]
 [connection signal="pressed" from="Main Menu/Exit" to="." method="_on_exit_pressed"]
