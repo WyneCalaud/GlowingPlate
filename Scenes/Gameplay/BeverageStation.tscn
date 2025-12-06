@@ -1,0 +1,81 @@
+[gd_scene load_steps=9 format=3 uid="uid://chaqv2o4rajlv"]
+
+[ext_resource type="Texture2D" uid="uid://d13b2qdhxlnim" path="res://Items/Countertop/Kitchen Countertop.png" id="1_4d635"]
+[ext_resource type="Texture2D" uid="uid://b87mwo8lyepyk" path="res://Assets/Beverages/WaterStation/cold-flask.png" id="2_5jm72"]
+[ext_resource type="Texture2D" uid="uid://dkf7n84xjlqnt" path="res://Assets/Beverages/WaterStation/flask.png" id="3_mcnup"]
+[ext_resource type="Texture2D" uid="uid://bw73ndg0emhcj" path="res://Assets/Beverages/WaterStation/hot-flask.png" id="4_vjurt"]
+[ext_resource type="Texture2D" uid="uid://dhmlql2w7kf5o" path="res://Assets/Beverages/MilkStation/Milk512.png" id="5_xsyws"]
+[ext_resource type="Texture2D" uid="uid://ba826ogp85jji" path="res://Assets/Beverages/Mat/lines-square.png" id="6_3v2pv"]
+[ext_resource type="Texture2D" uid="uid://b3hlqvfmhgp8v" path="res://Assets/Beverages/Glasses/stackglass720.png" id="7_rft6r"]
+[ext_resource type="Script" uid="uid://dl5b6gat7441v" path="res://Scenes/Gameplay/stack_glass_spawner.gd" id="8_mcnup"]
+
+[node name="BeveragesStation" type="Node2D"]
+
+[node name="Background" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="ColorRect" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_4d635")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="WaterStation" type="Node2D" parent="."]
+position = Vector2(368, 72)
+
+[node name="ColdWater" type="Sprite2D" parent="WaterStation"]
+position = Vector2(88.000015, 88.00002)
+scale = Vector2(0.45444438, 0.45555553)
+texture = ExtResource("2_5jm72")
+
+[node name="LukewarmWater" type="Sprite2D" parent="WaterStation"]
+position = Vector2(272, 87.99999)
+scale = Vector2(0.45444438, 0.45555553)
+texture = ExtResource("3_mcnup")
+
+[node name="HotWater" type="Sprite2D" parent="WaterStation"]
+position = Vector2(456, 87.99999)
+scale = Vector2(0.45444438, 0.45555553)
+texture = ExtResource("4_vjurt")
+
+[node name="MilkStation" type="Node2D" parent="."]
+position = Vector2(984, 64)
+
+[node name="MilkCarton" type="Sprite2D" parent="MilkStation"]
+position = Vector2(52, 109.24999)
+scale = Vector2(1.078125, 1.2372013)
+texture = ExtResource("5_xsyws")
+
+[node name="MilkCarton2" type="Sprite2D" parent="MilkStation"]
+position = Vector2(204, 109.24999)
+scale = Vector2(1.078125, 1.2372013)
+texture = ExtResource("5_xsyws")
+
+[node name="Mat" type="Node2D" parent="."]
+position = Vector2(408, 480)
+
+[node name="Mat1" type="Sprite2D" parent="Mat"]
+position = Vector2(95.99999, 95.99997)
+scale = Vector2(0.25830182, 0.29435477)
+texture = ExtResource("6_3v2pv")
+
+[node name="Mat2" type="Sprite2D" parent="Mat"]
+position = Vector2(335, 96)
+scale = Vector2(0.25830182, 0.29435477)
+texture = ExtResource("6_3v2pv")
+
+[node name="Glasses" type="Node2D" parent="."]
+position = Vector2(200, 200)
+
+[node name="StackGlass" type="Sprite2D" parent="Glasses"]
+light_mask = 3
+visibility_layer = 9
+position = Vector2(-8, 15.999996)
+scale = Vector2(0.53333336, 0.51666665)
+texture = ExtResource("7_rft6r")
+script = ExtResource("8_mcnup")

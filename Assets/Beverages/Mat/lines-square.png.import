@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bw73ndg0emhcj"
-path="res://.godot/imported/hot-flask.png-d09b85455dcb94e74c33c1a64cd5ad5e.ctex"
+uid="uid://ba826ogp85jji"
+path="res://.godot/imported/lines-square.png-e3ebd499cd77507deefaf34df8c09d8f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Beverages/hot-flask.png"
-dest_files=["res://.godot/imported/hot-flask.png-d09b85455dcb94e74c33c1a64cd5ad5e.ctex"]
+source_file="res://Assets/Beverages/Mat/lines-square.png"
+dest_files=["res://.godot/imported/lines-square.png-e3ebd499cd77507deefaf34df8c09d8f.ctex"]
 
 [params]
 
