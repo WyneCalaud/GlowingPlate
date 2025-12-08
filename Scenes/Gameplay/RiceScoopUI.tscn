@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dl6vkdqxfye3a"]
+[gd_scene load_steps=4 format=3 uid="uid://dl6vkdqxfye3a"]
 
 [ext_resource type="Texture2D" uid="uid://bi2ovbyadhffw" path="res://Buttons/Hold-Button512.png" id="1_o6flf"]
+[ext_resource type="Script" uid="uid://db22l0kqy82ml" path="res://Scenes/Gameplay/hold_button.gd" id="1_tyl08"]
+[ext_resource type="FontFile" uid="uid://btg6v4f2xjtf8" path="res://monogram.ttf" id="2_5kias"]
 
 [node name="RiceScoopUI" type="Control"]
 layout_mode = 3
@@ -11,18 +13,24 @@ offset_right = -1280.0
 offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_tyl08")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 494.0
-offset_top = 264.0
-offset_right = 1006.0
-offset_bottom = 584.0
+offset_right = 512.0
+offset_bottom = 377.0
 scale = Vector2(0.6, 0.6)
+theme_override_constants/separation = -70
 alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.27781153, 0.20125344, 0.066862345, 1)
+theme_override_fonts/font = ExtResource("2_5kias")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="TextureButton" type="TextureButton" parent="VBoxContainer"]
 layout_mode = 2
