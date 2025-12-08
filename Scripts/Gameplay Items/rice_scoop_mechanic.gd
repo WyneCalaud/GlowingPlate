@@ -48,10 +48,10 @@ func start_scoop_hold(cup_node: Node, cooker_name: String, _empty_texture: Textu
 	if cooker_node and cooker_node is Node2D:
 		var cooker_position = cooker_node.global_position
 		# Offset it to place it under the rice cooker
-		ui_instance.global_position = cooker_position + Vector2(-50, 350)
+		ui_instance.global_position = cooker_position + Vector2(168, 232)
 		print("DEBUG: Setting UI position under cooker.")
 	else:
-		ui_instance.global_position = Vector2(-480, 300)
+		ui_instance.global_position = Vector2(20, 520)
 
 	# 4. Connect Button Signals
 	hold_button = ui_instance.find_child("TextureButton") # Find the button in the UI scene

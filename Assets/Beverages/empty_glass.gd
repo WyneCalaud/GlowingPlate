@@ -1,20 +1,107 @@
-extends Node2D 
+extends Area2D
 
-# This script will be attached to the root node of EmptyGlass.tscn (the 'Glass' node).
+# --- STATE ---
+var is_ui_active: bool = false
+var spawner_controller: Node = null
+# FIX: Added state to remember which liquid initiated the hold
+var active_liquid_type: String = "" 
 
-# --- PROPERTIES ---
-var is_filled: bool = false
-var beverage_type: String = ""
+func _ready():
+	# 1. Find the Global Controller
+	var controllers = get_tree().get_nodes_in_group("global_controller")
+	if controllers.size() > 0:
+		spawner_controller = controllers[0]
+	
+	# 2. Ensure Input is active
+	set_pickable(true)
 
-# --- DRAGGING LOGIC (Optional, but often needed for item interaction) ---
-# For now, we'll keep it simple to handle filling.
+# --- INPUT HANDLING ---
+func _input_event(_viewport, event, _shape_idx):
+	# DEBUG: Check if the click is even registering
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+		var current_liquid = "None"
+		if spawner_controller:
+			current_liquid = spawner_controller.selected_liquid
+		print("DEBUG: EmptyGlass clicked! Current Liquid: %s" % current_liquid)
 
-func fill_with_beverage(type: String):
-	if is_filled:
-		print("ERROR: Glass is already filled.")
+	if is_ui_active: return # Prevent double clicks while UI is open
+	
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+		get_viewport().set_input_as_handled()
+		try_start_filling()
+
+# --- LOGIC ---
+func try_start_filling():
+	if not spawner_controller: 
+		print("ERROR: No Spawner Controller found!")
 		return
+	
+	# FIX: Convert to lower case to handle "Water", "water", "Hot", "hot" consistently
+	var sel = spawner_controller.selected_liquid.to_lower()
+	print("DEBUG: Checking liquid match for: %s" % sel)
+	
+	# FIX: Explicitly check for all water types (Hot, Cold, Lukewarm, Water)
+	if sel.begins_with("water") or sel.begins_with("hot") or sel.begins_with("cold") or sel.begins_with("lukewarm"):
 		
-	beverage_type = type
-	is_filled = true
-	# TODO: Update the Sprite2D's texture or modulate color to show liquid.
-	print("Glass filled with: ", beverage_type)
+		# FIX: Capture the specific liquid string (e.g. "Cold") so we remember it even if global state changes
+		active_liquid_type = spawner_controller.selected_liquid
+		
+		# 2. Get the Hold Button Scene from the Spawner
+		var ui_scene = spawner_controller.HOLD_BUTTON_SCENE
+		if ui_scene:
+			spawn_hold_button(ui_scene)
+		else:
+			print("ERROR: HOLD_BUTTON_SCENE not found in Spawner.")
+			
+	elif spawner_controller.selected_liquid != "":
+		print("ACTION: Wrong liquid type (%s). Select Water, Hot, Cold, or Lukewarm." % spawner_controller.selected_liquid)
+	else:
+		print("ACTION: Select a liquid first.")
+
+func spawn_hold_button(ui_scene: PackedScene):
+	is_ui_active = true
+	print("DEBUG: Spawning Hold Button UI")
+	
+	# 1. Instantiate the UI
+	var hold_button = ui_scene.instantiate()
+	
+	# 2. Add it to the scene
+	add_child(hold_button)
+	
+	# 3. CRITICAL VISIBILITY FIX: Make it Top Level
+	if hold_button is CanvasItem:
+		hold_button.top_level = true
+	
+	# 4. Position it: TIE TO MAT POSITION (PARENT)
+	# Instead of using self.global_position, we use get_parent().global_position.
+	var parent_node = get_parent()
+	var target_pos = Vector2.ZERO
+	
+	if parent_node:
+		target_pos = parent_node.global_position
+		print("DEBUG: Anchoring UI to Parent Mat: %s at %s" % [parent_node.name, target_pos])
+	else:
+		# Fallback if for some reason it has no parent
+		target_pos = global_position
+	
+	# Add an offset (e.g., -145 X, -50 Y) to float it ABOVE the mat/glass
+	hold_button.global_position = target_pos + Vector2(-145, -50)
+	
+	# 5. Force Z-Index to Max
+	hold_button.z_index = 4096 
+	
+	# 6. Connect the signal
+	if hold_button.has_signal("fill_finished"):
+		hold_button.connect("fill_finished", Callable(self, "_on_fill_finished"))
+	else:
+		print("ERROR: HoldButton scene is missing 'fill_finished' signal!")
+
+	print("DEBUG: Button spawned at global pos: ", hold_button.global_position)
+
+# --- CALLBACK ---
+func _on_fill_finished(_amount_str: String, amount_int: int):
+	is_ui_active = false
+	
+	# Ask the spawner to swap this glass for a filled one based on the result
+	# FIX: Pass the 'active_liquid_type' we remembered earlier
+	spawner_controller.replace_glass_with_filled(self, amount_int, active_liquid_type)
