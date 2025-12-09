@@ -7,7 +7,7 @@ extends "res://Scripts/Food Data/food_item_base.gd"
 @export var full_cup_texture: Texture2D
 @export var too_high_texture: Texture2D
 @export var empty_cup_texture_factor: float = 0.4
-@export var full_cup_scale_factor: float = 0.2
+@export var full_cup_scale_factor: float = 0.25
 
 # --- RICE SCOOP MECHANIC CONFIGURATION ---
 const RICE_COOKER_NAME = "RiceCooker" 
