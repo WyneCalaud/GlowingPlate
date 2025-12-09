@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://d13b2qdhxlnim" path="res://Items/Countertop/Kitchen Countertop.png" id="1_4d635"]
 [ext_resource type="Texture2D" uid="uid://b87mwo8lyepyk" path="res://Assets/Beverages/WaterStation/cold-flask.png" id="2_5jm72"]
 [ext_resource type="Texture2D" uid="uid://dkf7n84xjlqnt" path="res://Assets/Beverages/WaterStation/flask.png" id="3_mcnup"]
-[ext_resource type="Script" uid="uid://drf28y3466o7l" path="res://Scenes/Gameplay/LiquidDispenser.gd" id="3_vjurt"]
+[ext_resource type="Script" path="res://Scenes/Gameplay/LiquidDispenser.gd" id="3_vjurt"]
 [ext_resource type="Texture2D" uid="uid://bw73ndg0emhcj" path="res://Assets/Beverages/WaterStation/hot-flask.png" id="4_vjurt"]
 [ext_resource type="Texture2D" uid="uid://8j2hpvqsac1y" path="res://Assets/Beverages/WaterStation/selected-coldwater.png" id="4_xsyws"]
 [ext_resource type="Texture2D" uid="uid://dhmlql2w7kf5o" path="res://Assets/Beverages/MilkStation/Milk512.png" id="5_xsyws"]

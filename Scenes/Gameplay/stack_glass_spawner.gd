@@ -123,7 +123,12 @@ func replace_glass_with_filled(empty_glass: Node2D, fill_level: int, liquid_type
 			
 			filled_glass.global_position = global_pos
 			filled_glass.scale = FILLED_GLASS_SCALE 
-			print("DEBUG: Swapped nodes on parent: %s" % parent.name)
+			# THIS IS THE LINE THAT SETS THE FINAL RETURN POINT:
+			if filled_glass.get("start_position") != null:
+				# global_pos is the current location: Mat + Vector2(0, -50)
+				# You can add an adjustment here if needed: global_pos + Vector2(X_ADJUST, Y_ADJUST)
+				filled_glass.set("start_position", global_pos) 
+				print("DEBUG: Overwriting start_position to: ", global_pos)
 		else:
 			print("ERROR: Empty Glass has no parent! Cannot swap.")
 			
