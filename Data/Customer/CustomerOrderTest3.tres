@@ -5,6 +5,12 @@
 [resource]
 script = ExtResource("1_1ewka")
 customer_name = "Niko"
-order_text = "Vegetables and Fruits only Please"
-expanded_text = "No chicken"
+order_text = "One meal but no fruits please"
+expanded_text = "add vegetables only"
+needs = {
+"GlowFru": "",
+"GlowVeg": "MIXED_VEGGIES",
+"Go": "RICE",
+"Grow": "CHICKEN_LEG"
+}
 metadata/_custom_type_script = "uid://b6ratnvhx4aau"

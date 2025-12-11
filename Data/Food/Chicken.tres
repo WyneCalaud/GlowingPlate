@@ -9,5 +9,5 @@ script = ExtResource("1_jjco8")
 item_name = "Chicken"
 internal_key = "CHICKEN_LEG"
 base_texture = ExtResource("1_742rq")
-plated_texture = ExtResource("2_phlly")
+default_plated_texture = ExtResource("2_phlly")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"
