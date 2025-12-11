@@ -147,3 +147,14 @@ func generate_order_for_day(day: int) -> Dictionary:
 	current_customer_order.required_beverage = order_data.get("Beverage", "")
 	
 	return order_data
+
+var saved_customer_order: CustomerOrder = null
+var saved_customer_texture: Texture2D = null
+
+func save_customer(order: CustomerOrder, tex: Texture2D):
+	saved_customer_order = order
+	saved_customer_texture = tex
+
+func clear_customer():
+	saved_customer_order = null
+	saved_customer_texture = null

@@ -23,13 +23,13 @@ func _on_next_customer_pressed():
 		#_:
 			#tex = preload("res://Assets/Customers/customer_student.png")  # fallback default
 
+	var GD = get_node("/root/GameData")
+	GD.save_customer(order, tex)  # <-- SAVE THE CUSTOMER
 
 	# Spawn & move customer
 	$CustomerManager.next_customer()
 	await get_tree().create_timer(0.6).timeout
 	$CustomerManager.spawn_customer(order, tex)
-
-
 
 
 func _ready():
@@ -41,6 +41,14 @@ func _ready():
 	$BtnAccept.hide()
 	$BtnContinue.hide()
 
+	var GD = get_node("/root/GameData")
+
+	if GD.saved_customer_order != null:
+		# Respawn SAME CUSTOMER
+		$CustomerManager.spawn_customer(GD.saved_customer_order, GD.saved_customer_texture)
+	else:
+		# Normal flow if no saved customer
+		pass
 
 
 func _on_customer_arrived(order: CustomerOrder):
@@ -62,7 +70,7 @@ func _on_customer_left():
 
 
 func _on_btn_accept_pressed() -> void:
-	$CustomerManager.next_customer()  # ✅ slide out
+
 	order_index += 1
 	get_tree().change_scene_to_file("res://Scenes/Gameplay/fullgameplay.tscn")
 
