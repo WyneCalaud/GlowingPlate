@@ -64,7 +64,7 @@ func _on_customer_left():
 func _on_btn_accept_pressed() -> void:
 	$CustomerManager.next_customer()  # ✅ slide out
 	order_index += 1
-
+	get_tree().change_scene_to_file("res://Scenes/Gameplay/fullgameplay.tscn")
 
 func _on_btn_continue_pressed() -> void:
 	if active_order == null:

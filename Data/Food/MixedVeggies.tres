@@ -8,7 +8,7 @@
 script = ExtResource("1_gyk7q")
 item_name = "Mixed Veggies"
 internal_key = "MIXED_VEGGIES"
-food_category = "GlowVeggie"
+food_category = "GlowVeg"
 base_texture = ExtResource("1_5io2w")
-plated_texture = ExtResource("1_15gpq")
+default_plated_texture = ExtResource("1_15gpq")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

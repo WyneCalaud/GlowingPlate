@@ -6,5 +6,11 @@
 script = ExtResource("1_tdewu")
 customer_name = "Vien"
 order_text = "I want chicken"
-expanded_text = "c h i c k e n"
+expanded_text = "a normal meal"
+needs = {
+"GlowFru": "WATERMELON",
+"GlowVeg": "MIXED_VEGGIES",
+"Go": "RICE",
+"Grow": "CHICKEN_LEG"
+}
 metadata/_custom_type_script = "uid://b6ratnvhx4aau"

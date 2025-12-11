@@ -9,7 +9,7 @@ class_name CustomItemData
 
 # --- Visuals ---
 @export var base_texture: Texture2D # Inventory/Uncooked state texture
-@export var plated_texture: Texture2D # Default texture for when the item is successfully plated ("RightAmount" rice)
+@export var default_plated_texture: Texture2D # Default texture for when the item is successfully plated ("RightAmount" rice)
 
 # --- Rice Mechanic Specific Plated Textures (New additions for RICE item) ---
 @export var plated_texture_small: Texture2D # Texture for a "Small" scoop of rice

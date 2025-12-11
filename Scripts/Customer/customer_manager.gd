@@ -16,6 +16,14 @@ func spawn_customer(order: CustomerOrder, texture: Texture2D):
 	if current_customer:
 		current_customer.queue_free()
 
+	# store the order globally so kitchen can read it
+	if order != null and is_instance_valid(get_node("/root/GameData")):
+		var GD = get_node("/root/GameData")
+		GD.current_customer_order.required_plate = order.needs.duplicate(true)
+		# Optionally store other fields:
+		GD.current_customer_order["order_text"] = order.order_text
+		GD.current_customer_order["customer_name"] = order.customer_name
+
 	current_customer = customer_scene.instantiate()
 	add_child(current_customer)
 	current_customer.position = Vector2(offscreen_x, spawn_y)
@@ -26,12 +34,12 @@ func spawn_customer(order: CustomerOrder, texture: Texture2D):
 
 	# Slide in animation
 	var tween = create_tween()
-	tween.tween_property(current_customer, "position:x", onscreen_x, move_duration)\
-		.set_ease(Tween.EASE_OUT)
+	tween.tween_property(current_customer, "position:x", onscreen_x, move_duration).set_ease(Tween.EASE_OUT)
 
 	tween.finished.connect(func():
 		customer_arrived.emit(order)
 	)
+
 
 	
 func next_customer():

@@ -8,7 +8,7 @@
 script = ExtResource("1_hyut4")
 item_name = "Watermelon"
 internal_key = "WATERMELON"
-food_category = "GlowFruit"
+food_category = "GlowFru"
 base_texture = ExtResource("1_fa45a")
-plated_texture = ExtResource("2_xmieb")
+default_plated_texture = ExtResource("2_xmieb")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"
