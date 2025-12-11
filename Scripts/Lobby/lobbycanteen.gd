@@ -97,9 +97,9 @@ func _on_bulletin_board_ui_closed() -> void:
 	close_popup()
 
 func _ready():
-	# existing code...
 	# AFTER your popup setup, check if we returned from kitchen with a plate
 	_check_for_returned_plate()
+
 
 func _check_for_returned_plate():
 	if not is_instance_valid(get_node("/root/GameData")):
