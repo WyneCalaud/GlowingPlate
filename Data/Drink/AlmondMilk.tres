@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=2 format=3 uid="uid://cfdy0ujtix86g"]
+
+[ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="1_f4fu0"]
+
+[resource]
+script = ExtResource("1_f4fu0")
+item_name = "Almond Milk"
+internal_key = "ALMOND_MILK"
+food_category = "Milk"

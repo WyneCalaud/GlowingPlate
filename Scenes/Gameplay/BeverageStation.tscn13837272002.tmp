@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://chaqv2o4rajlv"]
+[gd_scene load_steps=19 format=3 uid="uid://chaqv2o4rajlv"]
 
 [ext_resource type="Texture2D" uid="uid://d13b2qdhxlnim" path="res://Items/Countertop/Kitchen Countertop.png" id="1_4d635"]
 [ext_resource type="Texture2D" uid="uid://b87mwo8lyepyk" path="res://Assets/Beverages/WaterStation/cold-flask.png" id="2_5jm72"]
@@ -6,15 +6,12 @@
 [ext_resource type="Script" uid="uid://drf28y3466o7l" path="res://Scenes/Gameplay/LiquidDispenser.gd" id="3_vjurt"]
 [ext_resource type="Texture2D" uid="uid://bw73ndg0emhcj" path="res://Assets/Beverages/WaterStation/hot-flask.png" id="4_vjurt"]
 [ext_resource type="Texture2D" uid="uid://8j2hpvqsac1y" path="res://Assets/Beverages/WaterStation/selected-coldwater.png" id="4_xsyws"]
+[ext_resource type="Texture2D" uid="uid://dhmlql2w7kf5o" path="res://Assets/Beverages/MilkStation/Milk512.png" id="5_xsyws"]
 [ext_resource type="Texture2D" uid="uid://ba826ogp85jji" path="res://Assets/Beverages/Mat/lines-square.png" id="6_3v2pv"]
 [ext_resource type="Texture2D" uid="uid://y8k45mndrx15" path="res://Assets/Beverages/WaterStation/selected-lukewarm.png" id="6_rft6r"]
 [ext_resource type="Texture2D" uid="uid://b3hlqvfmhgp8v" path="res://Assets/Beverages/Glasses/stackglass720.png" id="7_rft6r"]
 [ext_resource type="Texture2D" uid="uid://dro3fi8ofnxwk" path="res://Assets/Beverages/WaterStation/selected-hotwater (3).png" id="8_3v2pv"]
 [ext_resource type="Script" uid="uid://dl5b6gat7441v" path="res://Scenes/Gameplay/stack_glass_spawner.gd" id="8_mcnup"]
-[ext_resource type="Texture2D" uid="uid://bwf1i4irynbwg" path="res://Assets/Beverages/MilkStation/RegularMilk/Milk512.png" id="9_0fyd5"]
-[ext_resource type="Texture2D" uid="uid://cdsee1ndcwmht" path="res://Assets/Beverages/MilkStation/RegularMilk/MilkSelected512.png" id="10_5tifh"]
-[ext_resource type="Texture2D" uid="uid://ctiu7io6mov7l" path="res://Assets/Beverages/MilkStation/AlmondMilk/AlmondMilk512.png" id="11_xqbgv"]
-[ext_resource type="Texture2D" uid="uid://btmgv2fmqcuh0" path="res://Assets/Beverages/MilkStation/AlmondMilk/AlmondMilkSelected512.png" id="12_0fyd5"]
 [ext_resource type="Texture2D" uid="uid://mp7t74bnefg6" path="res://Assets/ServeOrTrash/Serve.png" id="13_tdqx7"]
 [ext_resource type="Texture2D" uid="uid://rqmcamclgsht" path="res://Assets/ServeOrTrash/trash.png" id="14_4sdqy"]
 
@@ -105,34 +102,22 @@ position = Vector2(984, 64)
 [node name="MilkCarton" type="Sprite2D" parent="MilkStation"]
 position = Vector2(52, 109.24999)
 scale = Vector2(1.078125, 1.2372013)
-texture = ExtResource("9_0fyd5")
+texture = ExtResource("5_xsyws")
 
 [node name="Area2D" type="Area2D" parent="MilkStation/MilkCarton"]
-collision_mask = 2
-monitorable = false
-script = ExtResource("3_vjurt")
-liquid_type = "RegularMilk"
-unselected_texture = ExtResource("9_0fyd5")
-selected_texture = ExtResource("10_5tifh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MilkStation/MilkCarton/Area2D"]
 position = Vector2(-1.8550725, -5.8600006)
 shape = SubResource("CapsuleShape2D_3v2pv")
 
-[node name="AlmondCarton" type="Sprite2D" parent="MilkStation"]
+[node name="MilkCarton2" type="Sprite2D" parent="MilkStation"]
 position = Vector2(204, 109.24999)
 scale = Vector2(1.078125, 1.2372013)
-texture = ExtResource("11_xqbgv")
+texture = ExtResource("5_xsyws")
 
-[node name="Area2D" type="Area2D" parent="MilkStation/AlmondCarton"]
-collision_mask = 2
-monitorable = false
-script = ExtResource("3_vjurt")
-liquid_type = "AlmondMilk"
-unselected_texture = ExtResource("11_xqbgv")
-selected_texture = ExtResource("12_0fyd5")
+[node name="Area2D" type="Area2D" parent="MilkStation/MilkCarton2"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MilkStation/AlmondCarton/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MilkStation/MilkCarton2/Area2D"]
 position = Vector2(-1.8550725, -5.8600006)
 shape = SubResource("CapsuleShape2D_3v2pv")
 

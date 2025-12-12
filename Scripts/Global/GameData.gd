@@ -1,17 +1,15 @@
 extends Node
 
-# --- Core Progression Variables (User's Existing) ---
+# --- Core Progression Variables ---
 var current_day: int = 1         # The current day the player is on (starts at 1)
-const TOTAL_DAYS: int = 30       # Total duration of the game
+const TOTAL_DAYS: int = 7        # Total duration of the game (Updated from 30)
 var money: int = 0               # Player's currency
 var reputation_score: float = 0.0 # Customer satisfaction/reputation
 
-# --- Tracking Data (User's Existing) ---
+# --- Tracking Data ---
 var customer_history: Array = [] # Array to store results of previous days
 
-# --- SERVICE STATE MANAGEMENT (NEW: Data Transfer and Customer Order) ---
-
-# Stores the results of the preparation stages (set by Kitchen/Beverage scenes)
+# --- SERVICE STATE MANAGEMENT ---
 var prepared_plate_contents: Array = []
 var prepared_beverage_data: Dictionary = {}
 
@@ -22,24 +20,28 @@ var current_customer_order: Dictionary = {
 	"required_beverage": "" # Beverage internal key (e.g., "MILK")
 }
 
-# --- Food Database (User's Existing) ---
+# --- Food Database (User's Existing + Milk/Almond Milk) ---
 # Preloads all FoodItemData resources for instant access
 const FOOD_DB: Dictionary = {
-	# NOTE: The keys must match the 'internal_key' property set in your .tres files!
+	# Food Items
 	"RICE": preload("res://Data/Food/Rice.tres"),
 	"CHICKEN_LEG": preload("res://Data/Food/Chicken.tres"),
 	"MIXED_VEGGIES": preload("res://Data/Food/MixedVeggies.tres"),
 	"WATERMELON": preload("res://Data/Food/Watermelon.tres"),
+	
+	# NEW BEVERAGE ITEMS
+	"REGULAR_MILK": preload("res://Data/Drink/RegularMilk.tres"),
+	"ALMOND_MILK": preload("res://Data/Drink/AlmondMilk.tres"),
 }
 
-# --- SCENE PATHS (NEW: Critical for transitions) ---
+# --- SCENE PATHS (Critical for transitions) ---
 const KITCHEN_SCENE_PATH = "res://Scenes/Gameplay/fullgameplay.tscn"
 const BEVERAGE_SCENE_PATH = "res://Scenes/Gameplay/BeveragesStation.tscn"
 const LOBBY_CANTEEN_PATH = "res://Scenes/Lobby Canteen/lobbycanteen.tscn"
 
 
 # ====================================================================
-# --- DATA TRANSFER FUNCTIONS: Used by preparation scenes (Kitchen/Beverage) ---
+# --- DATA TRANSFER FUNCTIONS ---
 # ====================================================================
 
 # 1. Called by the Plate's script in the Kitchen scene when dropped on the Serve Zone.
@@ -61,26 +63,25 @@ func store_beverage_data(data: Dictionary):
 	prepared_beverage_data = data
 	print("GAME_DATA: Beverage data stored. Transitioning to Canteen Serve.")
 	
-	# Transition back to the Canteen for final assembly and serving
 	transition_to_canteen_serve() 
 
 
 # ====================================================================
-# --- SCENE TRANSITION FUNCTIONS ---
+# --- SCENE TRANSITION FUNCTIONS (Standardized to use constants) ---
 # ====================================================================
 
 func transition_to_plate_prep():
-	get_tree().change_scene_to_file("res://Scenes/Gameplay/fullgameplay.tscn")
+	get_tree().change_scene_to_file(KITCHEN_SCENE_PATH)
 
 func transition_to_beverage_prep():
-	get_tree().change_scene_to_file("res://Scenes/Gameplay/BeverageStation.tscn")
+	get_tree().change_scene_to_file(BEVERAGE_SCENE_PATH)
 
 func transition_to_canteen_serve():
-	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+	get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
 
 
 # ====================================================================
-# --- Core Methods (User's Existing + Updates) ---
+# --- Core Methods ---
 # ====================================================================
 
 # Called to start the next day's gameplay loop
@@ -88,7 +89,6 @@ func start_new_day():
 	if current_day <= TOTAL_DAYS:
 		print("Starting Day %s" % current_day)
 		
-		# Start customer interaction flow (e.g., transition to Canteen)
 		get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
 		
 	else:
@@ -97,7 +97,7 @@ func start_new_day():
 
 # Called by the Canteen scene AFTER the customer interaction and scoring is complete
 func finalize_service(day_result: Dictionary):
-	# 1. Update Game State (from original end_day logic)
+	# 1. Update Game State
 	customer_history.append(day_result)
 	money += day_result.get("earned_money", 0)
 	reputation_score += day_result.get("reputation_change", 0.0)
@@ -108,20 +108,17 @@ func finalize_service(day_result: Dictionary):
 	current_customer_order.required_plate.clear()
 	current_customer_order.required_beverage = ""
 	
-	# 3. Advance the Day (The quiz/day logic goes here based on your flow)
+	# 3. Advance the Day 
 	current_day += 1
 	
-	# Use GDScript's % format for clean output
 	var day_end_message = "Service finalized. New Money: %s, New Reputation: %s" % [money, reputation_score]
 	print(day_end_message)
 	
 	# TODO: Trigger Quiz/Next Customer/Day transition here.
 	# Example: start_new_day()
 
-# NOTE: The original `end_day` is now repurposed to call `finalize_service` if needed, 
-# or removed if all score/clear logic is moved to `finalize_service`.
+# NOTE: Retaining this function name for compatibility.
 func end_day(day_result: Dictionary):
-	# Retaining this function name for compatibility, but its purpose is now service finalization.
 	finalize_service(day_result)
 
 # Called by the GameplayManager to fetch the required order
@@ -138,13 +135,15 @@ func generate_order_for_day(day: int) -> Dictionary:
 			"Grow": "CHICKEN_LEG",
 			"GlowVeg": "MIXED_VEGGIES",
 			"GlowFru": "WATERMELON",
-			"Beverage1": "WATER",
-			"Beverage2": "MILK_CARTON"
+			"Beverage": "ALMOND_MILK" # Using Almond Milk as the example beverage
 		}
 	
 	# Store the required order in the global state for later scoring
-	current_customer_order.required_plate = order_data.filter(func(k, _v): return k != "Beverage")
+	current_customer_order.required_plate.clear()
 	current_customer_order.required_beverage = order_data.get("Beverage", "")
+	for k in order_data.keys():
+		if k != "Beverage":
+			current_customer_order.required_plate[k] = order_data[k]
 	
 	return order_data
 

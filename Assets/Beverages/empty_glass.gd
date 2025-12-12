@@ -36,14 +36,20 @@ func try_start_filling():
 		print("ERROR: No Spawner Controller found!")
 		return
 	
-	# FIX: Convert to lower case to handle "Water", "water", "Hot", "hot" consistently
+	# FIX: Convert to lower case to handle liquid names consistently
 	var sel = spawner_controller.selected_liquid.to_lower()
 	print("DEBUG: Checking liquid match for: %s" % sel)
 	
-	# FIX: Explicitly check for all water types (Hot, Cold, Lukewarm, Water)
-	if sel.begins_with("water") or sel.begins_with("hot") or sel.begins_with("cold") or sel.begins_with("lukewarm"):
+	# UPDATED FIX: Check for all water types, AND check if the selected liquid CONTAINS "milk" 
+	# (or starts with specific milk prefixes) for broader compatibility.
+	var is_water_type = sel.begins_with("water") or sel.begins_with("hot") or sel.begins_with("cold") or sel.begins_with("lukewarm")
+	
+	# CRITICAL FIX HERE: Check if the selection starts with 'milk', 'regular_milk', or 'almond_milk'
+	var is_milk_type = sel.begins_with("milk") or sel.begins_with("regularmilk") or sel.begins_with("almondmilk")
+	
+	if is_water_type or is_milk_type:
 		
-		# FIX: Capture the specific liquid string (e.g. "Cold") so we remember it even if global state changes
+		# FIX: Capture the specific liquid string (e.g. "Cold" or "Regular Milk") so we remember it
 		active_liquid_type = spawner_controller.selected_liquid
 		
 		# 2. Get the Hold Button Scene from the Spawner
@@ -54,7 +60,8 @@ func try_start_filling():
 			print("ERROR: HOLD_BUTTON_SCENE not found in Spawner.")
 			
 	elif spawner_controller.selected_liquid != "":
-		print("ACTION: Wrong liquid type (%s). Select Water, Hot, Cold, or Lukewarm." % spawner_controller.selected_liquid)
+		# UPDATED ERROR MESSAGE to reflect correct naming conventions
+		print("ACTION: Wrong liquid type (%s). Select a valid Water, Milk, or Almond Milk type." % spawner_controller.selected_liquid)
 	else:
 		print("ACTION: Select a liquid first.")
 
