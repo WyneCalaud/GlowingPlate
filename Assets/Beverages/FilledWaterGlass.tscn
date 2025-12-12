@@ -16,6 +16,8 @@ script = ExtResource("2_x88r1")
 water_data = ExtResource("3_60ayi")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(9.330452, -25.829596)

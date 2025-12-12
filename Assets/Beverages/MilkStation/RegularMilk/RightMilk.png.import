@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhmlql2w7kf5o"
-path="res://.godot/imported/Milk512.png-c9d754970ff6f12e563b107e018388c6.ctex"
+uid="uid://sman7q2hc1w4"
+path="res://.godot/imported/RightMilk.png-a1ea615c5496ce4b1e9f49d008703388.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Beverages/MilkStation/Milk512.png"
-dest_files=["res://.godot/imported/Milk512.png-c9d754970ff6f12e563b107e018388c6.ctex"]
+source_file="res://Assets/Beverages/MilkStation/RegularMilk/RightMilk.png"
+dest_files=["res://.godot/imported/RightMilk.png-a1ea615c5496ce4b1e9f49d008703388.ctex"]
 
 [params]
 
