@@ -99,10 +99,10 @@ func _get_placement_data(incoming_data: Variant) -> Variant:
 	
 	if incoming_data is Resource:
 		food_resource = incoming_data
-		if food_resource.has_method("get") and food_resource.get("plated_texture") != null:
-			final_texture = food_resource.plated_texture
+		if food_resource.has_method("get") and food_resource.get("default_plated_texture") != null:
+			final_texture = food_resource.default_plated_texture
 		else:
-			print("WARNING: Resource is missing 'plated_texture' property.")
+			print("WARNING: Resource is missing 'default_plated_texture' property.")
 			return null
 	elif incoming_data is Node:
 		# Rice Cup Drop
@@ -113,7 +113,7 @@ func _get_placement_data(incoming_data: Variant) -> Variant:
 			if not food_resource: print("ERROR: Rice Cup food_data is null."); return null
 			
 			match amount:
-				"RightAmount": final_texture = food_resource.plated_texture
+				"RightAmount": final_texture = food_resource.default_plated_texture
 				"Small": final_texture = food_resource.plated_texture_small
 				"Medium": final_texture = food_resource.plated_texture_medium
 				"TooHigh": final_texture = food_resource.plated_texture_too_high
@@ -121,10 +121,10 @@ func _get_placement_data(incoming_data: Variant) -> Variant:
 		# Generic Draggable Item
 		elif incoming_data.has_method("get_food_resource"):
 			food_resource = incoming_data.get_food_resource()
-			if food_resource and food_resource.has_method("get") and food_resource.get("plated_texture") != null:
-				final_texture = food_resource.plated_texture
+			if food_resource and food_resource.has_method("get") and food_resource.get("default_plated_texture") != null:
+				final_texture = food_resource.default_plated_texture
 			else:
-				print("ERROR: Generic draggable item resource is missing plated_texture.")
+				print("ERROR: Generic draggable item resource is missing default_plated_texture.")
 				return null
 		else:
 			print("ERROR: Dropped node is neither Rice Cup nor a standard Food Item.")

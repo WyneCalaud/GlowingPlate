@@ -45,11 +45,18 @@ const LOBBY_CANTEEN_PATH = "res://Scenes/Lobby Canteen/lobbycanteen.tscn"
 # ====================================================================
 
 # 1. Called by the Plate's script in the Kitchen scene when dropped on the Serve Zone.
-func store_plate_contents(contents: Array):
+# GameData.gd
+# Call store_plate_contents(contents, go_to_beverage=false) to return to canteen.
+func store_plate_contents(contents: Array, go_to_beverage: bool = false) -> void:
 	prepared_plate_contents = contents
-	print("GAME_DATA: Plate contents stored. Transitioning to Beverage Prep.")
-	
-	transition_to_beverage_prep() 
+	print("GAME_DATA: Plate contents stored. go_to_beverage=%s" % go_to_beverage)
+
+	# Decide next scene depending on the flag
+	if go_to_beverage:
+		transition_to_beverage_prep()
+	else:
+		transition_to_canteen_serve()
+
 
 # 2. Called by the Beverage scene when the drink is completed.
 func store_beverage_data(data: Dictionary):
@@ -139,3 +146,14 @@ func generate_order_for_day(day: int) -> Dictionary:
 			current_customer_order.required_plate[k] = order_data[k]
 	
 	return order_data
+
+var saved_customer_order: CustomerOrder = null
+var saved_customer_texture: Texture2D = null
+
+func save_customer(order: CustomerOrder, tex: Texture2D):
+	saved_customer_order = order
+	saved_customer_texture = tex
+
+func clear_customer():
+	saved_customer_order = null
+	saved_customer_texture = null
