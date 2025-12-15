@@ -13,6 +13,8 @@ var customer_history: Array = [] # Array to store results of previous days
 var prepared_plate_contents: Array = []
 var prepared_beverage_data: Dictionary = {}
 
+var prepared_is_correct: bool = false
+
 # Placeholder for the current customer's requirements 
 var current_customer_order: Dictionary = {
 	"age_group": "6-9",
@@ -47,7 +49,7 @@ const LOBBY_CANTEEN_PATH = "res://Scenes/Lobby Canteen/lobbycanteen.tscn"
 # 1. Called by the Plate's script in the Kitchen scene when dropped on the Serve Zone.
 # GameData.gd
 # Call store_plate_contents(contents, go_to_beverage=false) to return to canteen.
-func store_plate_contents(contents: Array, go_to_beverage: bool = false) -> void:
+func store_plate_contents(contents: Array, go_to_beverage: bool = true) -> void:
 	prepared_plate_contents = contents
 	print("GAME_DATA: Plate contents stored. go_to_beverage=%s" % go_to_beverage)
 
@@ -65,6 +67,16 @@ func store_beverage_data(data: Dictionary):
 	
 	transition_to_canteen_serve() 
 
+# Called from BeverageStation when a glass is completed (or skipped)
+func add_beverage_to_plate(beverage_resource: Resource):
+	if beverage_resource == null:
+		print("ERROR: Tried to add null beverage")
+		return
+	
+	var key = beverage_resource.internal_key
+	prepared_beverage_data[key] = beverage_resource
+	print("GAME_DATA: Added beverage to prepared_beverage_data:", key)
+
 
 # ====================================================================
 # --- SCENE TRANSITION FUNCTIONS (Standardized to use constants) ---
@@ -74,7 +86,7 @@ func transition_to_plate_prep():
 	get_tree().change_scene_to_file(KITCHEN_SCENE_PATH)
 
 func transition_to_beverage_prep():
-	get_tree().change_scene_to_file(BEVERAGE_SCENE_PATH)
+	get_tree().change_scene_to_file("res://Scenes/Gameplay/BeverageStation.tscn")
 
 func transition_to_canteen_serve():
 	get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
@@ -157,3 +169,31 @@ func save_customer(order: CustomerOrder, tex: Texture2D):
 func clear_customer():
 	saved_customer_order = null
 	saved_customer_texture = null
+	
+func is_plate_correct() -> bool:
+	print("PLATED:", prepared_plate_contents)
+	print("REQUIRED:", current_customer_order.required_plate)
+
+	var plated_map := {
+		"Go": "",
+		"Grow": "",
+		"GlowVeg": "",
+		"GlowFru": ""
+	}
+
+	for entry in prepared_plate_contents:
+		var res := entry["item"] as CustomItemData
+		var slot : String = entry["accepted_type"].strip_edges() # remove accidental whitespace
+		print("DEBUG SLOT:", slot, "| internal_key:", res.internal_key)
+		plated_map[slot] = res.internal_key
+
+	for key in current_customer_order.required_plate.keys():
+		var required : String = current_customer_order.required_plate[key].strip_edges()
+		var plated : String = plated_map.get(key, "").strip_edges()
+		print("COMPARING:", key, "| plated:", plated, "| required:", required)
+		if plated != required:
+			print("❌ MISMATCH:", key)
+			return false
+
+	print("✅ Plate correct!")
+	return true

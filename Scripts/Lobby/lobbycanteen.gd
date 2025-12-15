@@ -163,33 +163,25 @@ func show_final_plate(contents: Array) -> void:
 			sprite.scale = food_scale  # <-- THIS MAKES IT SMALLER
 			sprite.show()
 
-
-
-func _on_BtnFinalServe_pressed():
-	# Final serving: evaluate, finalize service, show reaction then clean.
+func _on_btn_final_serve_pressed() -> void:
 	var GD = get_node("/root/GameData")
-	# OPTION: Evaluate correctness again here by comparing prepared_plate_contents vs current_customer_order
-	var correct = true
-	# (If you stored 'correct' earlier in GameData you can use it; else re-run a small check.)
-	# For now assume Kitchen already determined correctness; you can set GameData.prepared_is_correct before transition.
-	if GD.has("prepared_is_correct") and GD.prepared_is_correct == true:
-		correct = true
-	else:
-		# fallback: assume correct, or implement a re-check as above
-		correct = true
 
-	# Play reaction (simple text update or animation)
+	var correct: bool = GD.prepared_is_correct
+
 	if correct:
 		print("Customer happy!")
 	else:
 		print("Customer unhappy!")
 
-	# finalize day result: compute earned money/reputation
-	var day_result = {"earned_money": 10 if correct else 0, "reputation_change": 1.0 if correct else -0.5}
+	var day_result = {
+		"earned_money": 10 if correct else 0,
+		"reputation_change": 1.0 if correct else -0.5
+	}
+
 	GD.finalize_service(day_result)
 
-	# cleanup UI and stored plate
 	GD.prepared_plate_contents.clear()
-	if GD.has("prepared_is_correct"):
-		GD.prepared_is_correct = null
+	GD.prepared_is_correct = false
 	$FinalPlateDisplay.hide()
+
+	GD.clear_customer()

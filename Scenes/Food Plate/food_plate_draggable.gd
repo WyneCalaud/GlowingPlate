@@ -126,7 +126,10 @@ func _on_drop():
 			
 			# This is where the scene transition is triggered.
 			if is_instance_valid(GameData):
+				GameData.prepared_plate_contents = plate_contents
+				GameData.prepared_is_correct = GameData.is_plate_correct()
 				GameData.store_plate_contents(plate_contents)
+
 			else:
 				print("FATAL ERROR: GameData Autoload not found. Cannot proceed with serving.")
 				is_returning = true
@@ -223,114 +226,3 @@ func is_point_inside_area(point: Vector2) -> bool:
 
 
 # Place near bottom of food_plate_draggable.gd
-
-func check_plate_and_serve():
-	# Build plated_map from get_plate_contents()
-	var plate_contents = get_plate_contents() # returns array of { "item": Resource, "accepted_type": "Go"/"Grow"/... }
-	var plated_map := {
-		"Go": null,
-		"Grow": null,
-		"GlowVeg": null,
-		"GlowFru": null
-	}
-
-	# Extract internal_key from each resource safely
-	for entry in plate_contents:
-		var res = entry.get("item", null)
-		var accepted_type = entry.get("accepted_type", "")
-		if res == null:
-			continue
-
-	# Safely read resource-exported identifiers
-		var key := ""   # MUST be a string, cannot be null in Godot 4
-
-		if res.has_property("internal_key"):
-			key = res.internal_key
-		elif res.has_property("item_name"):
-			key = res.item_name
-		else:
-		# fallback: use resource name or path
-			key = res.resource_name if res.resource_name != "" else res.resource_path
-
-		if key == "":
-			print("WARNING: item resource has no valid identifier: ", res)
-			continue
-
-	# Assign to plated_map based on type
-		if accepted_type in plated_map:
-			plated_map[accepted_type] = key
-		else:
-		# Optional fallback handling
-			print("Unknown accepted_type: ", accepted_type)
-
-
-		match accepted_type:
-			"Go":
-				plated_map["Go"] = key
-			"Grow":
-				plated_map["Grow"] = key
-			"GlowVeg":
-				plated_map["GlowVeg"] = key
-			"GlowFru":
-				plated_map["GlowFru"] = key
-			_:
-				# If unknown accepted_type, heuristically assign
-				if key.to_lower().find("veg") != -1:
-					plated_map["GlowVeg"] = key
-				elif key.to_lower().find("water") != -1 or key.to_lower().find("melon") != -1:
-					plated_map["GlowFru"] = key
-				else:
-					# fallback to GlowVeg
-					if plated_map["GlowVeg"] == null:
-						plated_map["GlowVeg"] = key
-					else:
-						plated_map["GlowFru"] = key
-
-	print("DEBUG [Plate Serve] plated_map = %s" % plated_map)
-
-	# Read required order from GameData
-	if not is_instance_valid(GameData):
-		print("FATAL: GameData autoload missing!")
-		return
-
-	var required_plate = GameData.current_customer_order.get("required_plate", {}) if typeof(GameData.current_customer_order) == TYPE_DICTIONARY else {}
-	print("DEBUG [Plate Serve] required_plate = %s" % required_plate)
-
-	# Compare: require exact matches for keys that are non-empty
-	var correct := true
-	for req_key in required_plate.keys():
-		var required_internal = required_plate[req_key]
-		if required_internal == null or required_internal == "":
-			continue # customer doesn't require this slot
-		# Glow compatibility: if required key uses "Glow" generic, accept both veggie/fruit
-		if req_key == "Glow" or req_key == "GlowVeg" or req_key == "GlowFru":
-			var ok = false
-			if plated_map.has("GlowVeg") and plated_map["GlowVeg"] == required_internal:
-				ok = true
-			if plated_map.has("GlowFru") and plated_map["GlowFru"] == required_internal:
-				ok = true
-			if !ok:
-				correct = false
-				break
-		else:
-			if plated_map.has(req_key) and plated_map[req_key] == required_internal:
-				pass
-			else:
-				correct = false
-				break
-
-	# Optional Reaction icon (ensure this node exists in your plate scene)
-	#if has_node("ReactionIcon"):
-		#var icon = $ReactionIcon
-		#if correct:
-			#icon.texture = preload("res://Assets/smile.png")
-		#else:
-			#icon.texture = preload("res://Assets/angry.png")
-		#icon.visible = true
-
-	# Store raw plate contents for lobby display and call GameData
-	GameData.prepared_plate_contents = plate_contents.duplicate(true)
-	print("GAME_DATA: prepared_plate_contents stored for return-to-lobby: ", GameData.prepared_plate_contents)
-
-	# Now call GameData to transition; pass false to go to canteen serve
-	GameData.store_plate_contents(GameData.prepared_plate_contents, false)

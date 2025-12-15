@@ -9,6 +9,7 @@ const FoodDispenserGlobals = preload("res://Scripts/Global/FoodDispenserGlobal.g
 @export var is_filled: bool = false
 @export var linked_image: Sprite2D # The sprite that shows the food on the plate
 @export var plated_scale_factor: float = 0.4
+@export var slot_type: String = "Go" # options: Go, Grow, GlowVeg, GlowFru
 
 # --- SIGNAL ---
 # This signal notifies the parent plate when data changes (placement or clear)
@@ -55,7 +56,8 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 # --- CORE PLACEMENT FUNCTION (For Click-to-Place and Rice Drop) ---
 # Incoming data can be a Resource (for dispenser click) or the food item Node itself (for drag/drop)
 func try_place_food(incoming_data: Variant) -> bool:
-	if is_filled: return false
+	if is_filled:
+		return false
 	
 	var placement_data = _get_placement_data(incoming_data)
 	if placement_data == null:
@@ -70,24 +72,37 @@ func try_place_food(incoming_data: Variant) -> bool:
 		print("ERROR [Plate Slot]: Final texture is null for %s." % food_resource.get("item_name"))
 		return false
 	
-	# CRITICAL: SET is_filled = true
-	is_filled = true
-	item_resource = food_resource # Set the resource!
 	
-	# --- DEBUG: CHECK IF RESOURCE WAS SET ---
-	if item_resource == null:
-		print("FATAL DEBUG [Plate Slot]: item_resource is NULL immediately after placement!")
+# --- CHECK: Ensure the food matches this slot ---
+	var category : String = food_resource.get("food_category")
+	if category == null:
+		print("ERROR: food_resource missing 'food_category'.")
+		return false
+# Soft validation only (allow mistakes)
+	if category != slot_type:
+		print("⚠️ WARNING: Placed %s (%s) into %s slot"
+		% [food_resource.item_name, category, slot_type])
+
+		
+	print("DEBUG SLOT:", slot_type, "FOOD:", category)
+
+	
+	# --- PLACE THE ITEM ---
+	item_resource = food_resource
+	is_filled = true
 	
 	linked_image.texture = final_texture
 	linked_image.scale = Vector2(plated_scale_factor, plated_scale_factor)
 	linked_image.visible = true
 	
-	print("DEBUG [Plate Slot]: Placed on slot: %s (Amount: %s). Is Filled: %s" % [food_resource.get("item_name"), amount, is_filled])
+	print("DEBUG [Plate Slot]: Placed %s on slot %s (Amount: %s). Is Filled: %s" %
+		[food_resource.get("item_name"), slot_type, amount, is_filled])
 	
-	# Emit signal to update parent/game manager after successful placement
+	# Emit signal to notify parent plate
 	emit_signal("slot_updated", item_resource, is_filled)
 	
 	return true
+
 
 # --- HELPER FUNCTION: Extracts resource and texture from incoming data ---
 # (Keep this function as it handles the different ways food can be placed)

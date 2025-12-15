@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=30 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://bbi8lrleu7bf6" path="res://Background/canteen lobby final.png" id="2_x0cxb"]
@@ -16,17 +16,19 @@
 [ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/Transition/fade_transition.tscn" id="14_hcpvu"]
 [ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="15_sgopm"]
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/Bulletin Board/bulletinboardUI.tscn" id="16_vrvqj"]
+[ext_resource type="Texture2D" uid="uid://cmv6ly3ua881x" path="res://Assets/Buttons/calln (1).png" id="17_cmvyw"]
 [ext_resource type="Script" uid="uid://bhyi7niihpfqg" path="res://Scripts/Lobby/day_scene.gd" id="17_wdy5h"]
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="18_k43ou"]
 [ext_resource type="Resource" uid="uid://b6ci40o28mdgx" path="res://Data/Customer/CustomerOrderTest2.tres" id="19_606uc"]
 [ext_resource type="Texture2D" uid="uid://crkg7i8lp1a4o" path="res://Assets/Buttons/Got it.png" id="19_myl55"]
-[ext_resource type="Texture2D" uid="uid://culj7mr60jktk" path="res://Assets/Protein/Protein/Protein (21).png" id="19_wdy5h"]
 [ext_resource type="Resource" uid="uid://dihvb44sq660n" path="res://Data/Customer/CustomerOrderTest.tres" id="20_4edj8"]
 [ext_resource type="PackedScene" uid="uid://cjn07fdlbx2nm" path="res://Scenes/Customer/Customer.tscn" id="20_5fhlb"]
 [ext_resource type="Texture2D" uid="uid://beae2ebcdkcgf" path="res://Assets/Buttons/What.png" id="20_cmvyw"]
 [ext_resource type="Script" uid="uid://fti83bbe01wh" path="res://Scripts/Customer/customer_manager.gd" id="20_k43ou"]
 [ext_resource type="Resource" uid="uid://c4o2dqtsa1ibb" path="res://Data/Customer/CustomerOrderTest3.tres" id="24_606uc"]
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="27_cmvyw"]
+[ext_resource type="Texture2D" uid="uid://daqtdvdiuidiq" path="res://Assets/Serving Tray/Serving Tray.png" id="27_hcpvu"]
+[ext_resource type="Texture2D" uid="uid://caogeod1xs5e6" path="res://Assets/Buttons/serve (1).png" id="28_gadot"]
 
 [node name="Lobby" type="Node2D"]
 script = ExtResource("1_8p2f5")
@@ -160,11 +162,12 @@ visible = false
 
 [node name="NextCustomer" type="Button" parent="."]
 visible = false
-offset_left = 1100.0
-offset_top = 436.0
-offset_right = 1268.0
-offset_bottom = 604.0
-icon = ExtResource("19_wdy5h")
+offset_left = 1015.0
+offset_top = 476.0
+offset_right = 1263.0
+offset_bottom = 578.0
+icon = ExtResource("17_cmvyw")
+flat = true
 
 [node name="DayScene" type="Node2D" parent="."]
 script = ExtResource("17_wdy5h")
@@ -193,6 +196,7 @@ offset_top = 305.0
 offset_right = 728.0
 offset_bottom = 374.0
 icon = ExtResource("19_myl55")
+flat = true
 expand_icon = true
 
 [node name="BtnContinue" type="Button" parent="DayScene"]
@@ -202,6 +206,7 @@ offset_top = 304.0
 offset_right = 1009.0
 offset_bottom = 378.0
 icon = ExtResource("20_cmvyw")
+flat = true
 expand_icon = true
 
 [node name="CustomerManager" type="Node" parent="DayScene"]
@@ -218,29 +223,36 @@ offset_top = 508.0
 offset_right = 924.0
 offset_bottom = 678.0
 
+[node name="TrayDisplay" type="Sprite2D" parent="FinalPlateDisplay"]
+position = Vector2(108.00001, 148.99998)
+scale = Vector2(0.89027786, 0.42222223)
+texture = ExtResource("27_hcpvu")
+
 [node name="PlateDisplay" type="Sprite2D" parent="FinalPlateDisplay"]
-position = Vector2(123.00002, 129.00003)
+position = Vector2(50.000023, 123.00003)
 scale = Vector2(0.23195688, 0.24479164)
 texture = ExtResource("27_cmvyw")
 
 [node name="PlateSpriteGo" type="Sprite2D" parent="FinalPlateDisplay"]
-position = Vector2(83, 150)
+position = Vector2(11, 149)
 
 [node name="PlateSpriteGrow" type="Sprite2D" parent="FinalPlateDisplay"]
-position = Vector2(145, 150)
+position = Vector2(71, 150)
 
 [node name="PlateSpriteVeg" type="Sprite2D" parent="FinalPlateDisplay"]
-position = Vector2(85, 92)
+position = Vector2(12, 92)
 
 [node name="PlateSpriteFru" type="Sprite2D" parent="FinalPlateDisplay"]
-position = Vector2(142, 91)
+position = Vector2(65, 91)
 
 [node name="BtnFinalServe" type="Button" parent="FinalPlateDisplay"]
 layout_mode = 0
-offset_left = 364.0
-offset_top = 130.0
-offset_right = 480.0
-offset_bottom = 177.0
+offset_left = 311.0
+offset_top = 106.0
+offset_right = 559.0
+offset_bottom = 208.0
+icon = ExtResource("28_gadot")
+flat = true
 
 [connection signal="pressed" from="BottomButtons/Almanac/Almanac" to="." method="_on_almanac_pressed"]
 [connection signal="pressed" from="BottomButtons/Bulletin Board/Bulletin Board" to="." method="_on_bulletin_board_pressed"]
@@ -252,3 +264,4 @@ offset_bottom = 177.0
 [connection signal="pressed" from="NextCustomer" to="DayScene" method="_on_next_customer_pressed"]
 [connection signal="pressed" from="DayScene/BtnAccept" to="DayScene" method="_on_btn_accept_pressed"]
 [connection signal="pressed" from="DayScene/BtnContinue" to="DayScene" method="_on_btn_continue_pressed"]
+[connection signal="pressed" from="FinalPlateDisplay/BtnFinalServe" to="." method="_on_btn_final_serve_pressed"]
