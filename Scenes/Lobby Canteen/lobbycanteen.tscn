@@ -237,10 +237,10 @@ texture = ExtResource("27_cmvyw")
 position = Vector2(11, 149)
 
 [node name="PlateSpriteGrow" type="Sprite2D" parent="FinalPlateDisplay"]
-position = Vector2(71, 150)
+position = Vector2(12, 91)
 
 [node name="PlateSpriteVeg" type="Sprite2D" parent="FinalPlateDisplay"]
-position = Vector2(12, 92)
+position = Vector2(70, 146)
 
 [node name="PlateSpriteFru" type="Sprite2D" parent="FinalPlateDisplay"]
 position = Vector2(65, 91)
@@ -253,6 +253,21 @@ offset_right = 559.0
 offset_bottom = 208.0
 icon = ExtResource("28_gadot")
 flat = true
+
+[node name="FinalBeverageDisplay" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 664.0
+offset_top = 531.0
+offset_right = 769.0
+offset_bottom = 666.0
+
+[node name="BeverageSprite1" type="Sprite2D" parent="FinalBeverageDisplay"]
+position = Vector2(17, 71)
+
+[node name="BeverageSprite2" type="Sprite2D" parent="FinalBeverageDisplay"]
+position = Vector2(78, 71)
 
 [connection signal="pressed" from="BottomButtons/Almanac/Almanac" to="." method="_on_almanac_pressed"]
 [connection signal="pressed" from="BottomButtons/Bulletin Board/Bulletin Board" to="." method="_on_bulletin_board_pressed"]

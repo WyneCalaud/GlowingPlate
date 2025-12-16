@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://chaqv2o4rajlv"]
+[gd_scene load_steps=24 format=3 uid="uid://chaqv2o4rajlv"]
 
 [ext_resource type="Texture2D" uid="uid://d13b2qdhxlnim" path="res://Items/Countertop/Kitchen Countertop.png" id="1_4d635"]
+[ext_resource type="Script" uid="uid://bteybm5j11cxh" path="res://Scripts/Gameplay/beverage_station.gd" id="1_xqbgv"]
 [ext_resource type="Texture2D" uid="uid://b87mwo8lyepyk" path="res://Assets/Beverages/WaterStation/cold-flask.png" id="2_5jm72"]
 [ext_resource type="Texture2D" uid="uid://dkf7n84xjlqnt" path="res://Assets/Beverages/WaterStation/flask.png" id="3_mcnup"]
 [ext_resource type="Script" uid="uid://drf28y3466o7l" path="res://Scenes/Gameplay/LiquidDispenser.gd" id="3_vjurt"]
@@ -17,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://btmgv2fmqcuh0" path="res://Assets/Beverages/MilkStation/AlmondMilk/AlmondMilkSelected512.png" id="12_0fyd5"]
 [ext_resource type="Texture2D" uid="uid://mp7t74bnefg6" path="res://Assets/ServeOrTrash/Serve.png" id="13_tdqx7"]
 [ext_resource type="Texture2D" uid="uid://rqmcamclgsht" path="res://Assets/ServeOrTrash/trash.png" id="14_4sdqy"]
+[ext_resource type="Texture2D" uid="uid://blobu2nbtq44c" path="res://Assets/Buttons/Finish (1).png" id="18_0fyd5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xsyws"]
 radius = 138.63086
@@ -33,6 +35,7 @@ size = Vector2(1160.9492, 226.62889)
 size = Vector2(1161.2372, 208.96828)
 
 [node name="BeveragesStation" type="Node2D"]
+script = ExtResource("1_xqbgv")
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -189,3 +192,13 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ServeOrTrash/Trash/Area2D"]
 position = Vector2(10.556519, 9.498413)
 shape = SubResource("RectangleShape2D_5tifh")
+
+[node name="BtnFinish" type="Button" parent="."]
+offset_left = 997.0
+offset_top = 599.0
+offset_right = 1245.0
+offset_bottom = 701.0
+icon = ExtResource("18_0fyd5")
+flat = true
+
+[connection signal="pressed" from="BtnFinish" to="." method="_on_btn_finish_pressed"]

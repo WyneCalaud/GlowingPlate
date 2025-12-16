@@ -76,15 +76,41 @@ func _on_area_2d_area_exited(area: Area2D) -> void:
 
 # --- OVERRIDE: Plate success logic ---
 func on_plate_placement_success():
-	print("ACTION: Filled glass served/placed successfully.")
+	print("ACTION: Filled glass served successfully.")
+
+	var gd := get_tree().get_first_node_in_group("GameData")
+	if not gd:
+		push_error("GameData not found while serving beverage!")
+		queue_free()
+		return
+
+	# Determine beverage type from food_data
+	var beverage_res := food_data
+	if not beverage_res:
+		push_warning("Filled glass has no food_data!")
+		queue_free()
+		return
+
+	# Store drink amount
+	if current_liquid_amount != "":
+		beverage_res.set_meta("DrinkAmount", current_liquid_amount)
+
 	queue_free()
+
 
 # --- OVERRIDE: Handle unique drop zones (Trash) ---
 func on_unique_drop_zone_check():
+	
 	if current_hovered_area:
 		# Check for the trash area name or its parent's name
 		var area_name = current_hovered_area.name.to_lower()
 		var parent_name = current_hovered_area.get_parent().name.to_lower()
+		
+		if area_name.contains("serve") or parent_name.contains("serve"):
+			print("ACTION: Beverage served.")
+			on_plate_placement_success()
+			return
+
 		
 		# Log the area being checked just before the swap attempt
 		print("DEBUG [Drop Check]: Hovering over Area: ", area_name, " (Parent: ", parent_name, ")")

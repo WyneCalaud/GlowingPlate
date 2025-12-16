@@ -6,6 +6,7 @@ extends Node2D
 @onready var bulletin_board_ui = $OverlayCanvas/BulletinBoardUI # <-- ADD THIS
 
 
+
 # --- State Variables ---
 # Replaced 'almanac_is_open' with a variable that can track ANY popup
 var current_open_popup: Control = null 
@@ -20,11 +21,14 @@ func _start_transition(type: String):
 	$Fade_transition/AnimationPlayer.play("Fade_In")
 
 func _on_day_button_pressed() -> void:
+	var gd := get_node("/root/GameData")
+	gd.day_started = true
+
 	$NextCustomer.show()
 	$BottomButtons/Almanac/Almanac.hide()
 	$"BottomButtons/Bulletin Board/Bulletin Board".hide()
 	$"BottomButtons/Day/Day Button".hide()
-	
+
 func _on_fade_timer_timeout() -> void:
 	#if button_type == "day" :
 		#get_tree().change_scene_to_file("res://Scenes/Gameplay/fullgameplay.tscn")
@@ -98,17 +102,40 @@ func _on_bulletin_board_ui_closed() -> void:
 
 func _ready():
 	# AFTER your popup setup, check if we returned from kitchen with a plate
-	_check_for_returned_plate()
+	_check_for_returned_items()
+	_restore_day_ui_state()
+
+func _restore_day_ui_state():
+	var gd := get_node("/root/GameData")
+
+	if gd.day_started:
+		$NextCustomer.show()
+		$BottomButtons/Almanac/Almanac.hide()
+		$"BottomButtons/Bulletin Board/Bulletin Board".hide()
+		$"BottomButtons/Day/Day Button".hide()
+	else:
+		# Optional: initial state clarity
+		$NextCustomer.hide()
 
 
-func _check_for_returned_plate():
+func _check_for_returned_items():
 	if not is_instance_valid(get_node("/root/GameData")):
 		return
+
 	var GD = get_node("/root/GameData")
+
+	# ---- PLATE ----
 	if GD.prepared_plate_contents.size() > 0:
 		show_final_plate(GD.prepared_plate_contents)
 	else:
 		$FinalPlateDisplay.hide()
+
+	# ---- BEVERAGES ----
+	if GD.prepared_beverage_data.size() > 0:
+		show_final_beverages(GD.prepared_beverage_data)
+	else:
+		$FinalBeverageDisplay.hide()
+
 
 func show_final_plate(contents: Array) -> void:
 	$FinalPlateDisplay.show()
@@ -181,7 +208,61 @@ func _on_btn_final_serve_pressed() -> void:
 	GD.finalize_service(day_result)
 
 	GD.prepared_plate_contents.clear()
+	GD.prepared_beverage_data.clear()
 	GD.prepared_is_correct = false
+	$FinalBeverageDisplay.hide()
 	$FinalPlateDisplay.hide()
 
 	GD.clear_customer()
+
+func show_final_beverages(beverage_data: Dictionary) -> void:
+	$FinalBeverageDisplay.show()
+
+	# Hide all beverage sprites first
+	$FinalBeverageDisplay/BeverageSprite1.hide()
+	$FinalBeverageDisplay/BeverageSprite2.hide()
+
+	# Adjust this to control drink size
+	var drink_scale := Vector2(0.3, 0.3)
+
+	var index := 0
+	for entry in beverage_data.values():
+		if index >= 2:
+			break # Only support 2 drinks visually
+		
+		var res: CustomItemData = entry.get("item")
+		if not res:
+			continue
+
+		var tex: Texture2D = null
+
+		# --- DEFAULT (Right amount) ---
+		if "default_plated_texture" in res:
+			tex = res.default_plated_texture
+
+		# --- LIQUID AMOUNT OVERRIDE (like rice) ---
+		if res.has_meta("DrinkAmount"):
+			match res.get_meta("DrinkAmount"):
+				"Low":
+					if res.has("plated_texture_small"):
+						tex = res.plated_texture_small
+				"Medium":
+					if res.has("plated_texture_medium"):
+						tex = res.plated_texture_medium
+				"TooHigh":
+					if res.has("plated_texture_too_high"):
+						tex = res.plated_texture_too_high
+
+		var sprite: Sprite2D = null
+		match index:
+			0:
+				sprite = $FinalBeverageDisplay/BeverageSprite1
+			1:
+				sprite = $FinalBeverageDisplay/BeverageSprite2
+
+		if sprite and tex:
+			sprite.texture = tex
+			sprite.scale = drink_scale
+			sprite.show()
+
+		index += 1

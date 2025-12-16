@@ -15,6 +15,9 @@ var prepared_beverage_data: Dictionary = {}
 
 var prepared_is_correct: bool = false
 
+# --- Lobby UI State ---
+var day_started: bool = false
+
 # Placeholder for the current customer's requirements 
 var current_customer_order: Dictionary = {
 	"age_group": "6-9",
@@ -34,6 +37,7 @@ const FOOD_DB: Dictionary = {
 	# NEW BEVERAGE ITEMS
 	"REGULAR_MILK": preload("res://Data/Drink/RegularMilk.tres"),
 	"ALMOND_MILK": preload("res://Data/Drink/AlmondMilk.tres"),
+	"WATER": preload("res://Data/Drink/Water.tres")
 }
 
 # --- SCENE PATHS (Critical for transitions) ---
@@ -67,6 +71,19 @@ func store_beverage_data(data: Dictionary):
 	
 	transition_to_canteen_serve() 
 
+# Adds ONE prepared beverage to the current service
+func add_prepared_beverage(beverage_res: CustomItemData) -> void:
+	if beverage_res == null:
+		push_warning("Tried to add null beverage")
+		return
+
+	prepared_beverage_data[beverage_res.internal_key] = {
+		"item": beverage_res
+	}
+
+	print("GAME_DATA: Beverage added:", beverage_res.internal_key)
+
+
 # Called from BeverageStation when a glass is completed (or skipped)
 func add_beverage_to_plate(beverage_resource: Resource):
 	if beverage_resource == null:
@@ -77,7 +94,6 @@ func add_beverage_to_plate(beverage_resource: Resource):
 	prepared_beverage_data[key] = beverage_resource
 	print("GAME_DATA: Added beverage to prepared_beverage_data:", key)
 
-
 # ====================================================================
 # --- SCENE TRANSITION FUNCTIONS (Standardized to use constants) ---
 # ====================================================================
@@ -86,6 +102,7 @@ func transition_to_plate_prep():
 	get_tree().change_scene_to_file(KITCHEN_SCENE_PATH)
 
 func transition_to_beverage_prep():
+	prepared_beverage_data.clear()
 	get_tree().change_scene_to_file("res://Scenes/Gameplay/BeverageStation.tscn")
 
 func transition_to_canteen_serve():
@@ -118,7 +135,7 @@ func finalize_service(day_result: Dictionary):
 	prepared_plate_contents.clear()
 	prepared_beverage_data.clear()
 	current_customer_order.required_plate.clear()
-	current_customer_order.required_beverage = ""
+	current_customer_order.required_beverage = ["WATER"] # array for multiple drinks
 	
 	# 3. Advance the Day 
 	current_day += 1
@@ -197,3 +214,25 @@ func is_plate_correct() -> bool:
 
 	print("✅ Plate correct!")
 	return true
+
+
+func is_beverage_correct() -> bool:
+	if current_customer_order.required_beverage.empty():
+		return true # customer didn't ask for any
+
+	var required_list = []
+	if typeof(current_customer_order.required_beverage) == TYPE_STRING:
+		required_list = [current_customer_order.required_beverage]
+	else:
+		required_list = current_customer_order.required_beverage
+
+	for bev_key in required_list:
+		if not prepared_beverage_data.has(bev_key):
+			print("❌ Missing beverage:", bev_key)
+			return false
+
+	print("✅ All required beverages prepared!")
+	return true
+
+func _ready():
+	add_to_group("GameData")

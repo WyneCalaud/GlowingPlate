@@ -1,9 +1,18 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=2 format=3 uid="uid://n40hs8itaxie"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=6 format=3 uid="uid://n40hs8itaxie"]
 
+[ext_resource type="Texture2D" uid="uid://sman7q2hc1w4" path="res://Assets/Beverages/MilkStation/RegularMilk/RightMilk.png" id="1_6nme3"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="1_dcntu"]
+[ext_resource type="Texture2D" uid="uid://o1sskmvmybfo" path="res://Assets/Beverages/MilkStation/RegularMilk/MedMilk.png" id="2_v4ryi"]
+[ext_resource type="Texture2D" uid="uid://bnr3yncn5ku0b" path="res://Assets/Beverages/MilkStation/RegularMilk/LowMilk.png" id="3_bg3vl"]
+[ext_resource type="Texture2D" uid="uid://uwd3t5vxhvyd" path="res://Assets/Beverages/MilkStation/RegularMilk/TooHighMilk.png" id="4_tnoyi"]
 
 [resource]
 script = ExtResource("1_dcntu")
 item_name = "Regular Milk"
 internal_key = "REGULAR_MILK"
 food_category = "Milk"
+base_texture = ExtResource("1_6nme3")
+default_plated_texture = ExtResource("1_6nme3")
+plated_texture_small = ExtResource("3_bg3vl")
+plated_texture_medium = ExtResource("2_v4ryi")
+plated_texture_too_high = ExtResource("4_tnoyi")
