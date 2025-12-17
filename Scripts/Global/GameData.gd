@@ -14,6 +14,25 @@ var prepared_plate_contents: Array = []
 var prepared_beverage_data: Dictionary = {}
 
 var prepared_is_correct: bool = false
+var returning_from_beverage: bool = false
+var force_hide_accept_buttons: bool = false
+
+
+enum ServiceState {
+	IDLE,
+	CUSTOMER_PRESENT,
+	IN_KITCHEN,
+	SERVED
+}
+
+var service_state: ServiceState = ServiceState.IDLE
+var remaining_customers: Array[CustomerOrder] = []
+
+func start_day_with_orders(orders: Array[CustomerOrder]):
+	remaining_customers = orders.duplicate()
+	service_state = ServiceState.IDLE
+	day_started = true
+
 
 # --- Lobby UI State ---
 var day_started: bool = false
@@ -22,7 +41,7 @@ var day_started: bool = false
 var current_customer_order: Dictionary = {
 	"age_group": "6-9",
 	"required_plate": {}, # Actual food internal keys (e.g., "RICE")
-	"required_beverage": "" # Beverage internal key (e.g., "MILK")
+	"required_beverage": [] # Beverage internal key (e.g., "MILK")
 }
 
 # --- Food Database (User's Existing + Milk/Almond Milk) ---
@@ -61,6 +80,7 @@ func store_plate_contents(contents: Array, go_to_beverage: bool = true) -> void:
 	if go_to_beverage:
 		transition_to_beverage_prep()
 	else:
+		returning_from_beverage = true  # <-- set flag here
 		transition_to_canteen_serve()
 
 
@@ -68,7 +88,7 @@ func store_plate_contents(contents: Array, go_to_beverage: bool = true) -> void:
 func store_beverage_data(data: Dictionary):
 	prepared_beverage_data = data
 	print("GAME_DATA: Beverage data stored. Transitioning to Canteen Serve.")
-	
+	returning_from_beverage = true  # <-- customer already accepted
 	transition_to_canteen_serve() 
 
 # Adds ONE prepared beverage to the current service
@@ -169,7 +189,8 @@ func generate_order_for_day(day: int) -> Dictionary:
 	
 	# Store the required order in the global state for later scoring
 	current_customer_order.required_plate.clear()
-	current_customer_order.required_beverage = order_data.get("Beverage", "")
+	var bev = order_data.get("Beverage", "")
+	current_customer_order.required_beverage = [] if bev == "" else [bev]
 	for k in order_data.keys():
 		if k != "Beverage":
 			current_customer_order.required_plate[k] = order_data[k]
@@ -217,14 +238,10 @@ func is_plate_correct() -> bool:
 
 
 func is_beverage_correct() -> bool:
-	if current_customer_order.required_beverage.empty():
-		return true # customer didn't ask for any
+	var required_list: Array = current_customer_order.required_beverage
 
-	var required_list = []
-	if typeof(current_customer_order.required_beverage) == TYPE_STRING:
-		required_list = [current_customer_order.required_beverage]
-	else:
-		required_list = current_customer_order.required_beverage
+	if required_list.is_empty():
+		return true # customer didn't ask for any drink
 
 	for bev_key in required_list:
 		if not prepared_beverage_data.has(bev_key):
@@ -233,6 +250,7 @@ func is_beverage_correct() -> bool:
 
 	print("✅ All required beverages prepared!")
 	return true
+
 
 func _ready():
 	add_to_group("GameData")

@@ -160,10 +160,8 @@ visible = false
 [node name="BulletinBoardUI" parent="OverlayCanvas" instance=ExtResource("16_vrvqj")]
 visible = false
 
-[node name="DayScene" type="Node2D" parent="."]
-script = ExtResource("17_wdy5h")
-
-[node name="NextCustomer" type="Button" parent="DayScene"]
+[node name="NextCustomer" type="Button" parent="."]
+visible = false
 offset_left = 1015.0
 offset_top = 476.0
 offset_right = 1263.0
@@ -171,7 +169,11 @@ offset_bottom = 578.0
 icon = ExtResource("17_cmvyw")
 flat = true
 
+[node name="DayScene" type="Node2D" parent="."]
+script = ExtResource("17_wdy5h")
+
 [node name="DialogueBox" type="Panel" parent="DayScene"]
+visible = false
 offset_left = 435.0
 offset_top = 63.0
 offset_right = 1106.0
@@ -188,6 +190,7 @@ offset_right = 670.0
 offset_bottom = 225.0
 
 [node name="BtnAccept" type="Button" parent="DayScene"]
+visible = false
 offset_left = 568.0
 offset_top = 305.0
 offset_right = 728.0
@@ -197,6 +200,7 @@ flat = true
 expand_icon = true
 
 [node name="BtnContinue" type="Button" parent="DayScene"]
+visible = false
 offset_left = 837.0
 offset_top = 304.0
 offset_right = 1009.0
@@ -272,7 +276,7 @@ position = Vector2(78, 71)
 [connection signal="timeout" from="Fade_transition/Fade_timer" to="." method="_on_fade_timer_timeout"]
 [connection signal="closed" from="OverlayCanvas/AlmanacUI" to="." method="_on_almanac_ui_closed"]
 [connection signal="closed" from="OverlayCanvas/BulletinBoardUI" to="." method="_on_bulletin_board_ui_closed"]
-[connection signal="pressed" from="DayScene/NextCustomer" to="DayScene" method="_on_next_customer_pressed"]
+[connection signal="pressed" from="NextCustomer" to="DayScene" method="_on_next_customer_pressed"]
 [connection signal="pressed" from="DayScene/BtnAccept" to="DayScene" method="_on_btn_accept_pressed"]
 [connection signal="pressed" from="DayScene/BtnContinue" to="DayScene" method="_on_btn_continue_pressed"]
 [connection signal="pressed" from="FinalPlateDisplay/BtnFinalServe" to="." method="_on_btn_final_serve_pressed"]

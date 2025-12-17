@@ -7,28 +7,31 @@ var order_index := 0
 
 
 func _on_next_customer_pressed():
-	# Pick the order data
-	var order = $CustomerManager.orders.pick_random()
+	$NextCustomer.hide()
 
-	# Decide the sprite texture based on the order
-	var tex: Texture2D = null
+	# 🔴 HARD UI RESET (THIS IS THE KEY)
+	$DialogueBox.hide()
+	$BtnAccept.hide()
+	$BtnContinue.hide()
 
+	var GD := get_node("/root/GameData")
+
+	if GD.remaining_customers.is_empty():
+		_end_day()
+		return
+
+	var order: CustomerOrder = GD.remaining_customers.pop_front()
+
+	var tex: Texture2D
 	match order.customer_name:
 		"Niko":
 			tex = preload("res://Assets/Customers/boy final.png")
 		"Vien":
 			tex = preload("res://Assets/Customers/girl final.png")
-		#"Bomboclat":
-			#tex = preload("res://Assets/Customers/customer_gia.png")
-		#_:
-			#tex = preload("res://Assets/Customers/customer_student.png")  # fallback default
 
-	var GD = get_node("/root/GameData")
-	GD.save_customer(order, tex)  # <-- SAVE THE CUSTOMER
+	GD.save_customer(order, tex)
+	GD.service_state = GameData.ServiceState.CUSTOMER_PRESENT
 
-	# Spawn & move customer
-	$CustomerManager.next_customer()
-	await get_tree().create_timer(0.6).timeout
 	$CustomerManager.spawn_customer(order, tex)
 
 
@@ -36,46 +39,67 @@ func _ready():
 	$CustomerManager.customer_arrived.connect(_on_customer_arrived)
 	$CustomerManager.customer_left.connect(_on_customer_left)
 
-	# Hide UI at start if needed
-	$DialogueBox.hide()
-	$BtnAccept.hide()
-	$BtnContinue.hide()
+	var GD := get_node("/root/GameData")
 
-	var GD = get_node("/root/GameData")
+	# HARD OVERRIDE
+	if GD.force_hide_accept_buttons:
+		$BtnAccept.hide()
+		$BtnContinue.hide()
+	else:
+		$BtnAccept.hide()
+		$BtnContinue.hide()
+
+	$DialogueBox.hide()
 
 	if GD.saved_customer_order != null:
-		# Respawn SAME CUSTOMER
-		$CustomerManager.spawn_customer(GD.saved_customer_order, GD.saved_customer_texture)
-	else:
-		# Normal flow if no saved customer
-		pass
+		$CustomerManager.spawn_customer(
+			GD.saved_customer_order,
+			GD.saved_customer_texture
+		)
 
 
 func _on_customer_arrived(order: CustomerOrder):
-	active_order = order #storing order
-	
+	active_order = order
+
 	$DialogueBox.show()
+	$DialogueBox/OrderText.text = order.order_text
+
 	$BtnAccept.show()
 	$BtnContinue.show()
+	
 	$DialogueBox/OrderText.text = order.order_text
 
 
-
-
 func _on_customer_left():
-	# Hide UI again when customer leaves
 	$DialogueBox.hide()
 	$BtnAccept.hide()
 	$BtnContinue.hide()
+	$NextCustomer.show()
 
 
 func _on_btn_accept_pressed() -> void:
+	var GD := get_node("/root/GameData")
+	GD.service_state = GameData.ServiceState.IN_KITCHEN
 
-	order_index += 1
+	$BtnAccept.hide()
+	$BtnContinue.hide()
+
 	get_tree().change_scene_to_file("res://Scenes/Gameplay/fullgameplay.tscn")
+
 
 func _on_btn_continue_pressed() -> void:
 	if active_order == null:
 		return
 	# Replace the dialogue text with the expanded clarification
 	$DialogueBox/OrderText.text = active_order.expanded_text
+
+func _end_day():
+	var GD := get_node("/root/GameData")
+	GD.day_started = false
+	GD.service_state = GameData.ServiceState.IDLE
+
+	# Optional: advance day counter here if needed
+	# GD.current_day += 1
+
+	# Return to lobby
+	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")

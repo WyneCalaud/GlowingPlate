@@ -21,13 +21,19 @@ func _start_transition(type: String):
 	$Fade_transition/AnimationPlayer.play("Fade_In")
 
 func _on_day_button_pressed() -> void:
-	var gd := get_node("/root/GameData")
-	gd.day_started = true
+	var GD := get_node("/root/GameData")
 
-	$NextCustomer.show()
+	var day_orders: Array[CustomerOrder] = []
+	day_orders.append(preload("res://Data/Customer/CustomerOrderTest2.tres"))
+	day_orders.append(preload("res://Data/Customer/CustomerOrderTest3.tres"))
+	day_orders.append(preload("res://Data/Customer/CustomerOrderTest.tres"))
+
+	GD.start_day_with_orders(day_orders)
+	$DayScene/NextCustomer.show()
 	$BottomButtons/Almanac/Almanac.hide()
 	$"BottomButtons/Bulletin Board/Bulletin Board".hide()
 	$"BottomButtons/Day/Day Button".hide()
+
 
 func _on_fade_timer_timeout() -> void:
 	#if button_type == "day" :
@@ -109,13 +115,19 @@ func _restore_day_ui_state():
 	var gd := get_node("/root/GameData")
 
 	if gd.day_started:
-		$NextCustomer.show()
+		if gd.service_state == GameData.ServiceState.IDLE:
+			$DayScene/NextCustomer.show()
+		else:
+			$DayScene/NextCustomer.hide()
 		$BottomButtons/Almanac/Almanac.hide()
 		$"BottomButtons/Bulletin Board/Bulletin Board".hide()
 		$"BottomButtons/Day/Day Button".hide()
 	else:
-		# Optional: initial state clarity
-		$NextCustomer.hide()
+		$DayScene/NextCustomer.hide()
+		$BottomButtons/Almanac/Almanac.show()
+		$"BottomButtons/Bulletin Board/Bulletin Board".show()
+		$"BottomButtons/Day/Day Button".show()
+
 
 
 func _check_for_returned_items():
@@ -193,7 +205,7 @@ func show_final_plate(contents: Array) -> void:
 func _on_btn_final_serve_pressed() -> void:
 	var GD = get_node("/root/GameData")
 
-	var correct: bool = GD.prepared_is_correct
+	var correct : bool = GD.is_plate_correct() and GD.is_beverage_correct()
 
 	if correct:
 		print("Customer happy!")
@@ -206,14 +218,23 @@ func _on_btn_final_serve_pressed() -> void:
 	}
 
 	GD.finalize_service(day_result)
+	GD.service_state = GameData.ServiceState.SERVED
 
-	GD.prepared_plate_contents.clear()
-	GD.prepared_beverage_data.clear()
-	GD.prepared_is_correct = false
 	$FinalBeverageDisplay.hide()
 	$FinalPlateDisplay.hide()
 
-	GD.clear_customer()
+	# <--- IMMEDIATELY SHOW NEXT CUSTOMER BUTTON
+	$DayScene/NextCustomer.show()
+
+
+func _emit_customer_exit():
+	var manager := get_tree().get_first_node_in_group("CustomerManager")
+	if manager and manager.current_customer:
+		print("Telling customer to leave")  # <--- debug line
+		manager.customer_leave()
+
+
+
 
 func show_final_beverages(beverage_data: Dictionary) -> void:
 	$FinalBeverageDisplay.show()
