@@ -9,16 +9,19 @@ var order_index := 0
 func _on_next_customer_pressed():
 	$NextCustomer.hide()
 
-	# 🔴 HARD UI RESET (THIS IS THE KEY)
+	var GD := get_node("/root/GameData")
+
+	print("Remaining customers:", GD.remaining_customers.size()) # 🔥 DEBUG BACK
+
+	if GD.remaining_customers.is_empty():
+		# No customer to spawn — day is done
+		_end_day()
+		return
+
+	# UI reset
 	$DialogueBox.hide()
 	$BtnAccept.hide()
 	$BtnContinue.hide()
-
-	var GD := get_node("/root/GameData")
-
-	if GD.remaining_customers.is_empty():
-		_end_day()
-		return
 
 	var order: CustomerOrder = GD.remaining_customers.pop_front()
 
@@ -33,6 +36,7 @@ func _on_next_customer_pressed():
 	GD.service_state = GameData.ServiceState.CUSTOMER_PRESENT
 
 	$CustomerManager.spawn_customer(order, tex)
+
 
 
 func _ready():
@@ -74,7 +78,11 @@ func _on_customer_left():
 	$DialogueBox.hide()
 	$BtnAccept.hide()
 	$BtnContinue.hide()
-	$NextCustomer.show()
+
+	var GD := get_node("/root/GameData")
+	if not GD.remaining_customers.is_empty():
+		$NextCustomer.show()
+
 
 
 func _on_btn_accept_pressed() -> void:

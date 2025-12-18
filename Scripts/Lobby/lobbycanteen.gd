@@ -207,10 +207,7 @@ func _on_btn_final_serve_pressed() -> void:
 
 	var correct : bool = GD.is_plate_correct() and GD.is_beverage_correct()
 
-	if correct:
-		print("Customer happy!")
-	else:
-		print("Customer unhappy!")
+	print("Customer happy!" if correct else "Customer unhappy!")
 
 	var day_result = {
 		"earned_money": 10 if correct else 0,
@@ -218,13 +215,23 @@ func _on_btn_final_serve_pressed() -> void:
 	}
 
 	GD.finalize_service(day_result)
+	GD.clear_customer()
 	GD.service_state = GameData.ServiceState.SERVED
 
 	$FinalBeverageDisplay.hide()
 	$FinalPlateDisplay.hide()
 
-	# <--- IMMEDIATELY SHOW NEXT CUSTOMER BUTTON
-	$DayScene/NextCustomer.show()
+	# 🔥 FORCE CUSTOMER EXIT
+	var manager := $DayScene/CustomerManager
+	manager.next_customer()
+
+
+# 🔥 HANDLE END-OF-DAY PROPERLY
+	if GD.remaining_customers.is_empty():
+		$DayScene._end_day()
+	else:
+		$DayScene/NextCustomer.show()
+
 
 
 func _emit_customer_exit():
