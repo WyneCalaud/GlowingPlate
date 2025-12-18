@@ -29,9 +29,9 @@ texture = ExtResource("1_p4uhw")
 
 [node name="Exitbutton" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 992.0
-offset_top = 499.0
-offset_right = 1056.0
-offset_bottom = 546.0
+offset_left = 1032.0
+offset_top = 496.0
+offset_right = 1096.0
+offset_bottom = 552.0
 
 [connection signal="pressed" from="Exitbutton" to="." method="_on_texture_button_pressed"]

@@ -22,10 +22,10 @@ expand_mode = 1
 
 [node name="ExitButton" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 1017.0
-offset_top = 109.0
+offset_left = 1008.0
+offset_top = 104.0
 offset_right = 1047.0
-offset_bottom = 139.0
+offset_bottom = 144.0
 texture_normal = ExtResource("3_tij8g")
 ignore_texture_size = true
 stretch_mode = 0

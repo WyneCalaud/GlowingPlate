@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameData="*res://Scripts/Global/GameData.gd"
+QuizSystem="*res://Scripts/Global/QuizSystem.gd"
 FoodDispenserGlobal="*res://Scripts/Global/FoodDispenserGlobal.gd"
 Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
 
@@ -37,3 +38,5 @@ enabled=PackedStringArray("res://addons/SignalVisualizer/plugin.cfg", "res://add
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true

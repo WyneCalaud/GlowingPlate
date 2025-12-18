@@ -1,0 +1,106 @@
+[gd_resource type="Resource" script_class="QuizDataResource" load_steps=17 format=3 uid="uid://dwv5ldrcctc1x"]
+
+[ext_resource type="Script" path="res://Scripts/Quiz/QuizQuestionResource.gd" id="1_gp4oc"]
+[ext_resource type="Script" uid="uid://bvcdcfa3fv760" path="res://Scripts/Quiz/QuizAnswerResource.gd" id="2_p0igg"]
+[ext_resource type="Script" path="res://Scripts/Quiz/QuizDataResource.gd" id="3_2qif3"]
+
+[sub_resource type="Resource" id="Resource_we3h4"]
+script = ExtResource("2_p0igg")
+answer_key = "Go Foods"
+texture_path = "\"\""
+metadata/_custom_type_script = "uid://cuksga1b1gcyo"
+
+[sub_resource type="Resource" id="Resource_if45p"]
+script = ExtResource("2_p0igg")
+text_label = "Grow Foods"
+answer_key = "Grow Foods"
+texture_path = "\"\""
+metadata/_custom_type_script = "uid://cuksga1b1gcyo"
+
+[sub_resource type="Resource" id="Resource_15raa"]
+script = ExtResource("2_p0igg")
+text_label = "Glow Foods"
+answer_key = "Glow Foods"
+texture_path = "\"\""
+metadata/_custom_type_script = "uid://cuksga1b1gcyo"
+
+[sub_resource type="Resource" id="Resource_jdbhn"]
+script = ExtResource("1_gp4oc")
+question_id = "Q001"
+question_text = "What food group helps you run faster?"
+image_path = "\"\""
+correct_answer_key = "Go Foods"
+answers = Array[ExtResource("2_p0igg")]([SubResource("Resource_we3h4"), SubResource("Resource_if45p"), SubResource("Resource_15raa")])
+metadata/_custom_type_script = "uid://v742h0ht2cul"
+
+[sub_resource type="Resource" id="Resource_8o882"]
+script = ExtResource("2_p0igg")
+answer_key = "Grow Foods"
+texture_path = "\"\""
+metadata/_custom_type_script = "uid://cuksga1b1gcyo"
+
+[sub_resource type="Resource" id="Resource_pw1dv"]
+script = ExtResource("2_p0igg")
+text_label = "Glow Foods"
+answer_key = "Grow Foods"
+texture_path = "\"\""
+metadata/_custom_type_script = "uid://cuksga1b1gcyo"
+
+[sub_resource type="Resource" id="Resource_7c2xh"]
+script = ExtResource("2_p0igg")
+text_label = "Grow Foods"
+answer_key = "Grow Foods"
+texture_path = "\"\""
+metadata/_custom_type_script = "uid://cuksga1b1gcyo"
+
+[sub_resource type="Resource" id="Resource_iw7fb"]
+script = ExtResource("1_gp4oc")
+question_id = "Q002"
+question_text = "What food group is the Chicken in?"
+image_path = "\"\""
+correct_answer_key = "Grow Foods"
+answers = Array[ExtResource("2_p0igg")]([SubResource("Resource_8o882"), SubResource("Resource_pw1dv"), SubResource("Resource_7c2xh")])
+metadata/_custom_type_script = "uid://v742h0ht2cul"
+
+[sub_resource type="Resource" id="Resource_6chss"]
+script = ExtResource("2_p0igg")
+text_label = "Chicken"
+answer_key = "Watermelon"
+texture_path = "\"\""
+metadata/_custom_type_script = "uid://cuksga1b1gcyo"
+
+[sub_resource type="Resource" id="Resource_fpaye"]
+script = ExtResource("2_p0igg")
+text_label = "Rice"
+answer_key = "Watermelon"
+texture_path = "\"\""
+metadata/_custom_type_script = "uid://cuksga1b1gcyo"
+
+[sub_resource type="Resource" id="Resource_pqn14"]
+script = ExtResource("2_p0igg")
+text_label = "Mixed Veggies"
+answer_key = "Watermelon"
+texture_path = "\"\""
+metadata/_custom_type_script = "uid://cuksga1b1gcyo"
+
+[sub_resource type="Resource" id="Resource_ieojw"]
+script = ExtResource("2_p0igg")
+text_label = "Watermelon"
+answer_key = "Watermelon"
+texture_path = "\"\""
+metadata/_custom_type_script = "uid://cuksga1b1gcyo"
+
+[sub_resource type="Resource" id="Resource_1iod2"]
+script = ExtResource("1_gp4oc")
+question_id = "Q003"
+question_text = "What Fruit is in the Glow Foods?"
+image_path = "\"\""
+correct_answer_key = "Watermelon"
+answers = Array[ExtResource("2_p0igg")]([SubResource("Resource_6chss"), SubResource("Resource_fpaye"), SubResource("Resource_pqn14"), SubResource("Resource_ieojw")])
+metadata/_custom_type_script = "uid://v742h0ht2cul"
+
+[resource]
+script = ExtResource("3_2qif3")
+quiz_name = "Day One"
+questions = Array[ExtResource("1_gp4oc")]([SubResource("Resource_jdbhn"), SubResource("Resource_iw7fb"), SubResource("Resource_1iod2")])
+metadata/_custom_type_script = "uid://csiktlsb2m4mk"
