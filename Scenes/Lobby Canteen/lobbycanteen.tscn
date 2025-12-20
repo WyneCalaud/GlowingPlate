@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=26 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://bbi8lrleu7bf6" path="res://Background/canteen lobby final.png" id="2_x0cxb"]
@@ -18,14 +18,10 @@
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/Bulletin Board/bulletinboardUI.tscn" id="16_vrvqj"]
 [ext_resource type="Texture2D" uid="uid://cmv6ly3ua881x" path="res://Assets/Buttons/calln (1).png" id="17_cmvyw"]
 [ext_resource type="Script" uid="uid://bhyi7niihpfqg" path="res://Scripts/Lobby/day_scene.gd" id="17_wdy5h"]
-[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="18_k43ou"]
-[ext_resource type="Resource" uid="uid://b6ci40o28mdgx" path="res://Data/Customer/CustomerOrderTest2.tres" id="19_606uc"]
 [ext_resource type="Texture2D" uid="uid://crkg7i8lp1a4o" path="res://Assets/Buttons/Got it.png" id="19_myl55"]
-[ext_resource type="Resource" uid="uid://dihvb44sq660n" path="res://Data/Customer/CustomerOrderTest.tres" id="20_4edj8"]
 [ext_resource type="PackedScene" uid="uid://cjn07fdlbx2nm" path="res://Scenes/Customer/Customer.tscn" id="20_5fhlb"]
 [ext_resource type="Texture2D" uid="uid://beae2ebcdkcgf" path="res://Assets/Buttons/What.png" id="20_cmvyw"]
 [ext_resource type="Script" uid="uid://fti83bbe01wh" path="res://Scripts/Customer/customer_manager.gd" id="20_k43ou"]
-[ext_resource type="Resource" uid="uid://c4o2dqtsa1ibb" path="res://Data/Customer/CustomerOrderTest3.tres" id="24_606uc"]
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="27_cmvyw"]
 [ext_resource type="Texture2D" uid="uid://daqtdvdiuidiq" path="res://Assets/Serving Tray/Serving Tray.png" id="27_hcpvu"]
 [ext_resource type="Texture2D" uid="uid://caogeod1xs5e6" path="res://Assets/Buttons/serve (1).png" id="28_gadot"]
@@ -115,10 +111,10 @@ theme_override_font_sizes/font_size = 35
 text = "DAY 1"
 
 [node name="Main Menu" type="HBoxContainer" parent="BottomButtons"]
-offset_left = 1211.0
+offset_left = 1192.0
 offset_top = 15.0
 offset_right = 1268.0
-offset_bottom = 67.0
+offset_bottom = 80.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -130,8 +126,8 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Exit" type="Sprite2D" parent="BottomButtons/Main Menu/Exit"]
-position = Vector2(33, 25)
-scale = Vector2(1.96875, 2.0625)
+position = Vector2(40.625, 32.75)
+scale = Vector2(2.921875, 3.03125)
 texture = ExtResource("13_8p2f5")
 
 [node name="Fade_transition" parent="." instance=ExtResource("14_hcpvu")]
@@ -208,7 +204,6 @@ expand_icon = true
 [node name="CustomerManager" type="Node" parent="DayScene"]
 script = ExtResource("20_k43ou")
 customer_scene = ExtResource("20_5fhlb")
-orders = Array[ExtResource("18_k43ou")]([ExtResource("19_606uc"), ExtResource("20_4edj8"), ExtResource("24_606uc")])
 
 [node name="FinalPlateDisplay" type="Control" parent="."]
 visible = false

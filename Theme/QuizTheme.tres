@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b5mpvf81owwdn"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_2uchn"]
+
+[resource]
+HSeparator/styles/separator = SubResource("StyleBoxLine_2uchn")
+Label/colors/font_color = Color(0, 0, 0, 1)

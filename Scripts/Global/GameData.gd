@@ -3,8 +3,13 @@ extends Node
 # --- Core Progression Variables ---
 var current_day: int = 1         # The current day the player is on (starts at 1)
 const TOTAL_DAYS: int = 7        # Total duration of the game (Updated from 30)
-var money: int = 0               # Player's currency
+var money: int = 0               # Player's TOTAL currency
 var reputation_score: float = 0.0 # Customer satisfaction/reputation
+
+# --- DAILY TRACKING (FIXED: Added these variables) ---
+# These are reset at the start of each day and used by EndDayResults.gd
+var daily_money_earned: int = 0
+var daily_reputation_gained: float = 0.0
 
 # --- Tracking Data ---
 var customer_history: Array = [] # Array to store results of previous days
@@ -26,13 +31,7 @@ enum ServiceState {
 }
 
 var service_state: ServiceState = ServiceState.IDLE
-var remaining_customers: Array[CustomerOrder] = []
-
-func start_day_with_orders(orders: Array[CustomerOrder]):
-	remaining_customers = orders.duplicate()
-	service_state = ServiceState.IDLE
-	day_started = true
-
+var remaining_customers: Array = []
 
 # --- Lobby UI State ---
 var day_started: bool = false
@@ -63,6 +62,8 @@ const FOOD_DB: Dictionary = {
 const KITCHEN_SCENE_PATH = "res://Scenes/Gameplay/fullgameplay.tscn"
 const BEVERAGE_SCENE_PATH = "res://Scenes/Gameplay/BeveragesStation.tscn"
 const LOBBY_CANTEEN_PATH = "res://Scenes/Lobby Canteen/lobbycanteen.tscn"
+const END_DAY_SCENE_PATH = "res://Scenes/Results/EndDayResults.tscn" 
+const QUIZ_SCENE_PATH = "res://Scenes/Quiz/QuizScene.tscn"
 
 
 # ====================================================================
@@ -92,7 +93,7 @@ func store_beverage_data(data: Dictionary):
 	transition_to_canteen_serve() 
 
 # Adds ONE prepared beverage to the current service
-func add_prepared_beverage(beverage_res: CustomItemData) -> void:
+func add_prepared_beverage(beverage_res: Resource) -> void:
 	if beverage_res == null:
 		push_warning("Tried to add null beverage")
 		return
@@ -127,6 +128,12 @@ func transition_to_beverage_prep():
 
 func transition_to_canteen_serve():
 	get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
+	
+func transition_to_end_day():
+	get_tree().change_scene_to_file(END_DAY_SCENE_PATH)
+
+func transition_to_quiz():
+	get_tree().change_scene_to_file(QUIZ_SCENE_PATH)
 
 
 # ====================================================================
@@ -135,6 +142,10 @@ func transition_to_canteen_serve():
 
 # Called to start the next day's gameplay loop
 func start_new_day():
+	# Reset daily counters at the start of a new day
+	daily_money_earned = 0
+	daily_reputation_gained = 0.0
+	
 	if current_day <= TOTAL_DAYS:
 		print("Starting Day %s" % current_day)
 		
@@ -144,6 +155,11 @@ func start_new_day():
 		print("Game finished! Showing results.")
 		# NOTE: Transition to the final score/ending scene
 
+func start_day_with_orders(orders: Array):
+	remaining_customers = orders.duplicate()
+	service_state = ServiceState.IDLE
+	day_started = true
+
 # Called by the Canteen scene AFTER the customer interaction and scoring is complete
 func finalize_service(day_result: Dictionary):
 	# 1. Update Game State
@@ -151,20 +167,27 @@ func finalize_service(day_result: Dictionary):
 	money += day_result.get("earned_money", 0)
 	reputation_score += day_result.get("reputation_change", 0.0)
 	
+	# Update DAILY TRACKER (Fixes EndDayResult Error)
+	daily_money_earned += day_result.get("earned_money", 0)
+	daily_reputation_gained += day_result.get("reputation_change", 0.0)
+	
 	# 2. Clear stored preparation data for the next customer/service
 	prepared_plate_contents.clear()
 	prepared_beverage_data.clear()
 	current_customer_order.required_plate.clear()
 	current_customer_order.required_beverage = ["WATER"] # array for multiple drinks
 	
-	# 3. Advance the Day 
-	current_day += 1
-	
 	var day_end_message = "Service finalized. New Money: %s, New Reputation: %s" % [money, reputation_score]
 	print(day_end_message)
-	
-	# TODO: Trigger Quiz/Next Customer/Day transition here.
-	# Example: start_new_day()
+
+	# 3. Check if all customers are served
+	if remaining_customers.is_empty():
+		print("Day complete! Transitioning to End Day Results.")
+		current_day += 1
+		transition_to_end_day()
+	else:
+		print("Customer served. Remaining: %d" % remaining_customers.size())
+		# Do NOT advance day yet; wait for Lobby to spawn next customer
 
 # NOTE: Retaining this function name for compatibility.
 func end_day(day_result: Dictionary):
@@ -197,10 +220,10 @@ func generate_order_for_day(day: int) -> Dictionary:
 	
 	return order_data
 
-var saved_customer_order: CustomerOrder = null
+var saved_customer_order: Resource = null
 var saved_customer_texture: Texture2D = null
 
-func save_customer(order: CustomerOrder, tex: Texture2D):
+func save_customer(order: Resource, tex: Texture2D):
 	saved_customer_order = order
 	saved_customer_texture = tex
 
@@ -220,7 +243,7 @@ func is_plate_correct() -> bool:
 	}
 
 	for entry in prepared_plate_contents:
-		var res := entry["item"] as CustomItemData
+		var res = entry["item"]
 		var slot : String = entry["accepted_type"].strip_edges() # remove accidental whitespace
 		print("DEBUG SLOT:", slot, "| internal_key:", res.internal_key)
 		plated_map[slot] = res.internal_key
