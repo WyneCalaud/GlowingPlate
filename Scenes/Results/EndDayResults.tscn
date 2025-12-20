@@ -1,0 +1,138 @@
+[gd_scene load_steps=10 format=3 uid="uid://ccvy7eyr4ht8l"]
+
+[ext_resource type="Script" uid="uid://c05tk15qol8jt" path="res://Scripts/Results/EndDayResults.gd" id="1_rhjxp"]
+[ext_resource type="Texture2D" uid="uid://bbi8lrleu7bf6" path="res://Background/canteen lobby final.png" id="2_ep7c6"]
+[ext_resource type="Theme" uid="uid://b5mpvf81owwdn" path="res://Theme/QuizTheme.tres" id="3_464tc"]
+[ext_resource type="FontFile" uid="uid://btg6v4f2xjtf8" path="res://monogram.ttf" id="3_ej7a3"]
+[ext_resource type="Texture2D" uid="uid://crkg7i8lp1a4o" path="res://Assets/Buttons/Got it.png" id="3_l3ycq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ej7a3"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+expand_margin_top = 20.0
+expand_margin_bottom = 20.0
+shadow_size = 20
+
+[sub_resource type="Theme" id="Theme_ej7a3"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ej7a3"]
+thickness = 5
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_464tc"]
+thickness = 5
+
+[node name="EndDayResult" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rhjxp")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ep7c6")
+expand_mode = 1
+
+[node name="DarkenBG" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.08235294, 0.08235294, 0.08235294, 0.70980394)
+
+[node name="CenterContainer" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -259.75
+offset_top = -160.25
+offset_right = 259.75
+offset_bottom = 165.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_464tc")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ej7a3")
+
+[node name="Layout" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ej7a3")
+
+[node name="Title" type="Label" parent="CenterContainer/Layout"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_ej7a3")
+theme_override_font_sizes/font_size = 32
+text = "End of the Day
+Results"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 50
+theme_override_styles/separator = SubResource("StyleBoxLine_ej7a3")
+
+[node name="MoneyRow" type="HBoxContainer" parent="CenterContainer/Layout"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TotalEarned" type="Label" parent="CenterContainer/Layout/MoneyRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_ej7a3")
+theme_override_font_sizes/font_size = 32
+text = "Total Earned:"
+
+[node name="MoneyLabel" type="Label" parent="CenterContainer/Layout/MoneyRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_ej7a3")
+theme_override_font_sizes/font_size = 32
+
+[node name="ReputationRow" type="HBoxContainer" parent="CenterContainer/Layout"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="Reputation" type="Label" parent="CenterContainer/Layout/ReputationRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_ej7a3")
+theme_override_font_sizes/font_size = 32
+text = "Reputation Gained:"
+
+[node name="RepLabel" type="Label" parent="CenterContainer/Layout/ReputationRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_ej7a3")
+theme_override_font_sizes/font_size = 32
+
+[node name="HSeparator2" type="HSeparator" parent="CenterContainer/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 50
+theme_override_styles/separator = SubResource("StyleBoxLine_464tc")
+
+[node name="EndDayButton" type="TextureButton" parent="CenterContainer/Layout"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("3_l3ycq")

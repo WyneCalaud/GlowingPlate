@@ -68,15 +68,20 @@ texture = ExtResource("2_ptfrc")
 expand_mode = 1
 
 [node name="QuestionPanel" type="Sprite2D" parent="QuizPanel/BackgroundPanel"]
-position = Vector2(586.4769, 233.45197)
-scale = Vector2(0.5389513, 0.33569965)
+position = Vector2(582.2064, 210.67616)
+scale = Vector2(0.5614868, 0.26472604)
 texture = ExtResource("3_0rq5n")
 
 [node name="QuestionLabel" type="Label" parent="QuizPanel/BackgroundPanel/QuestionPanel"]
-offset_left = -274.6866
-offset_top = -186.57582
-offset_right = 274.6865
-offset_bottom = 182.66835
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -282.68607
+offset_top = -169.63184
+offset_right = -985.20764
+offset_bottom = -521.93134
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_8s52k")
 theme_override_font_sizes/font_size = 90
@@ -97,20 +102,16 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -302.0
-offset_top = -70.99997
-offset_right = 329.0
-offset_bottom = 295.0
+offset_top = -120.0
+offset_right = 317.0
+offset_bottom = 304.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/v_separation = -5
-columns = 2
 
 [node name="ContainerA" type="MarginContainer" parent="AnswerPanel"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_right = -20
 
 [node name="A" type="TextureButton" parent="AnswerPanel/ContainerA"]
 layout_mode = 2
@@ -157,7 +158,6 @@ expand_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = -20
 
 [node name="B" type="TextureButton" parent="AnswerPanel/ContainerB"]
 layout_mode = 2
@@ -204,7 +204,6 @@ expand_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_right = -20
 
 [node name="C" type="TextureButton" parent="AnswerPanel/ContainerC"]
 layout_mode = 2
@@ -251,7 +250,6 @@ expand_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = -20
 
 [node name="D" type="TextureButton" parent="AnswerPanel/ContainerD"]
 layout_mode = 2
