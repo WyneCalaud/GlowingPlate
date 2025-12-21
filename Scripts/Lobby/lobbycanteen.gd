@@ -107,6 +107,10 @@ func _on_bulletin_board_ui_closed() -> void:
 	close_popup()
 
 func _ready():
+	$DayScene/DialogueBox.hide()
+	$DayScene/BtnAccept.hide()
+	$DayScene/BtnContinue.hide()
+
 	# AFTER your popup setup, check if we returned from kitchen with a plate
 	_check_for_returned_items()
 	_restore_day_ui_state()
@@ -223,6 +227,13 @@ func _on_btn_final_serve_pressed() -> void:
 
 	# 🔥 FORCE CUSTOMER EXIT
 	var manager := $DayScene/CustomerManager
+	# --- SHOW REACTION ---
+	$DayScene/DialogueBox.show()
+	$DayScene/BtnAccept.hide()
+	$DayScene/BtnContinue.hide()
+
+	var emoji := "😊" if correct else "😢"
+	$DayScene/DialogueBox/OrderText.text = emoji
 	manager.next_customer()
 
 

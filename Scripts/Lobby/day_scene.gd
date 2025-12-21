@@ -56,18 +56,31 @@ func _ready():
 			GameData.saved_customer_order,
 			GameData.saved_customer_texture
 		)
+		
+		GameData.returning_from_beverage = false
 
 
 func _on_customer_arrived(order: CustomerOrder):
 	active_order = order
 
-	$DialogueBox.show()
-	$DialogueBox/OrderText.text = order.order_text
+	var GD := get_node("/root/GameData")
 
-	$BtnAccept.show()
-	$BtnContinue.show()
-	
-	$DialogueBox/OrderText.text = order.order_text
+	# 🚫 If returning from kitchen/beverage, DO NOT show dialogue/buttons
+	if GD.service_state == GameData.ServiceState.IN_KITCHEN \
+	or GD.returning_from_beverage \
+	or GD.service_state == GameData.ServiceState.SERVED:
+		$DialogueBox.hide()
+		$BtnAccept.hide()
+		$BtnContinue.hide()
+		return
+
+	# ✅ FIRST ARRIVAL ONLY
+	if GD.service_state == GameData.ServiceState.CUSTOMER_PRESENT:
+		$DialogueBox.show()
+		$DialogueBox/OrderText.text = order.order_text
+		$BtnAccept.show()
+		$BtnContinue.show()
+
 
 
 func _on_customer_left():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=27 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://bbi8lrleu7bf6" path="res://Background/canteen lobby final.png" id="2_x0cxb"]
@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dxgsrkjlc8pvg" path="res://Items/fantasy_pixelart_ui (1)/buttons/silver_button_pressed.png" id="8_k43ou"]
 [ext_resource type="Texture2D" uid="uid://b8g2nwbtspjgv" path="res://Icons/Document.png" id="9_606uc"]
 [ext_resource type="Texture2D" uid="uid://dj2unohvlp1qb" path="res://Buttons/5.png" id="10_4edj8"]
-[ext_resource type="FontFile" uid="uid://cjilf40vbxmxa" path="res://Fonts/Archivo_Black,Rowdies/Archivo_Black/ArchivoBlack-Regular.ttf" id="11_myl55"]
+[ext_resource type="FontFile" uid="uid://cjilf40vbxmxa" path="res://fonts/Archivo_Black,Rowdies/Archivo_Black/ArchivoBlack-Regular.ttf" id="11_myl55"]
 [ext_resource type="Texture2D" uid="uid://ct2bd3kh0fuyd" path="res://Icons/IconButton_Large_Background_Circle.png" id="12_cmvyw"]
 [ext_resource type="Texture2D" uid="uid://7ryngig7rcom" path="res://Icons/Exit.png" id="13_8p2f5"]
 [ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/Transition/fade_transition.tscn" id="14_hcpvu"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/Bulletin Board/bulletinboardUI.tscn" id="16_vrvqj"]
 [ext_resource type="Texture2D" uid="uid://cmv6ly3ua881x" path="res://Assets/Buttons/calln (1).png" id="17_cmvyw"]
 [ext_resource type="Script" uid="uid://bhyi7niihpfqg" path="res://Scripts/Lobby/day_scene.gd" id="17_wdy5h"]
+[ext_resource type="FontFile" uid="uid://d1hn2vdo2ci5w" path="res://Assets/fonts/PixelOperator8.ttf" id="19_cmvyw"]
 [ext_resource type="Texture2D" uid="uid://crkg7i8lp1a4o" path="res://Assets/Buttons/Got it.png" id="19_myl55"]
 [ext_resource type="PackedScene" uid="uid://cjn07fdlbx2nm" path="res://Scenes/Customer/Customer.tscn" id="20_5fhlb"]
 [ext_resource type="Texture2D" uid="uid://beae2ebcdkcgf" path="res://Assets/Buttons/What.png" id="20_cmvyw"]
@@ -180,8 +181,12 @@ offset_bottom = 23.0
 
 [node name="OrderText" type="RichTextLabel" parent="DayScene/DialogueBox"]
 layout_mode = 0
-offset_right = 670.0
-offset_bottom = 225.0
+offset_left = 112.0
+offset_top = 44.0
+offset_right = 537.0
+offset_bottom = 159.0
+theme_override_fonts/normal_font = ExtResource("19_cmvyw")
+theme_override_font_sizes/normal_font_size = 25
 
 [node name="BtnAccept" type="Button" parent="DayScene"]
 offset_left = 568.0
