@@ -126,8 +126,9 @@ func _on_drop():
 			
 			# This is where the scene transition is triggered.
 			if is_instance_valid(GameData):
-				GameData.prepared_plate_contents = plate_contents
-				GameData.prepared_is_correct = GameData.is_plate_correct()
+				# FIX: Use wrapper only. Removed direct assignments to GameData properties 
+				# (like prepared_plate_contents) because they were moved to OrderSystem.
+				# store_plate_contents handles the transfer safely.
 				GameData.store_plate_contents(plate_contents)
 
 			else:
@@ -223,6 +224,3 @@ func is_point_inside_area(point: Vector2) -> bool:
 		return texture_rect.has_point(local_point)
 
 	return false
-
-
-# Place near bottom of food_plate_draggable.gd

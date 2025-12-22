@@ -134,7 +134,10 @@ func _on_fill_finished(_amount_str: String, amount_int: int):
 		return
 
 	# 3. Fetch resource
-	var base_res: CustomItemData = gd.FOOD_DB.get(beverage_key)
+	# FIX: Access FOOD_DB from OrderSystem instead of GameData
+	# GameData.FOOD_DB no longer exists.
+	var base_res: CustomItemData = OrderSystem.FOOD_DB.get(beverage_key)
+	
 	if not base_res:
 		push_warning("Beverage not found in FOOD_DB: " + beverage_key)
 		return
@@ -145,5 +148,5 @@ func _on_fill_finished(_amount_str: String, amount_int: int):
 	# 4. Store amount (THIS IS CORRECT)
 	beverage_res.set_meta("DrinkAmount", _amount_str)
 
-	# 5. Store in GameData
+	# 5. Store in GameData (via wrapper)
 	gd.add_prepared_beverage(beverage_res)
