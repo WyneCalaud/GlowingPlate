@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://drm0v28wv3d51"
-path="res://.godot/imported/Rowdies-Bold.ttf-a36f9cbc03d026b69179409595f68d4c.fontdata"
+path="res://.godot/imported/Rowdies-Bold.ttf-24b4e9edf7af75ed0fe8e6c31e544ff8.fontdata"
 
 [deps]
 
-source_file="res://fonts/Archivo_Black,Rowdies/Rowdies/Rowdies-Bold.ttf"
-dest_files=["res://.godot/imported/Rowdies-Bold.ttf-a36f9cbc03d026b69179409595f68d4c.fontdata"]
+source_file="res://Fonts/Archivo_Black,Rowdies/Rowdies/Rowdies-Bold.ttf"
+dest_files=["res://.godot/imported/Rowdies-Bold.ttf-24b4e9edf7af75ed0fe8e6c31e544ff8.fontdata"]
 
 [params]
 
