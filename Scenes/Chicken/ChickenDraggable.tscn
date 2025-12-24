@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cogjbtykxk56l" path="res://Assets/Resized/ChckenLeg512.png" id="1_w6luu"]
 [ext_resource type="Script" uid="uid://b4rshslud6xd4" path="res://Scripts/Food Data/chicken_draggable.gd" id="2_w8qkh"]
-[ext_resource type="Resource" uid="uid://b2oeopgun652k" path="res://Data/Food/Chicken.tres" id="3_w6luu"]
+[ext_resource type="Resource" uid="uid://b2oeopgun652k" path="res://Data/Food/Grow/Chicken.tres" id="3_w6luu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w8qkh"]
 radius = 115.992966

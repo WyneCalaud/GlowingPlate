@@ -1,29 +1,62 @@
 extends Node
 
 # --- FOOD DATABASE ---
-# Transferred from GameData.gd
+# Holds the links to all possible food items in the game.
 const FOOD_DB: Dictionary = {
-	# Food Items
-	"RICE": preload("res://Data/Food/Rice.tres"),
-	"CHICKEN_LEG": preload("res://Data/Food/Chicken.tres"),
-	"MIXED_VEGGIES": preload("res://Data/Food/MixedVeggies.tres"),
-	"WATERMELON": preload("res://Data/Food/Watermelon.tres"),
+	# --- GO (Energy/Carbs) ---
+	"RICE": preload("res://Data/Food/Go/Rice.tres"),
 	
-	# Beverage Items
+	# --- GROW (Body Building/Protein) ---
+	"CHICKEN_LEG": preload("res://Data/Food/Grow/Chicken.tres"),
+	"FISH_FILLET": preload("res://Data/Food/Grow/FishFillet.tres"), # NEW (Assumed path)
+	
+	# --- GLOW VEGETABLES (Body Regulating) ---
+	"MIXED_VEGGIES": preload("res://Data/Food/GlowVeg/MixedVeggies.tres"),
+	"SITAW": preload("res://Data/Food/GlowVeg/Sitaw.tres"),         # NEW (Assumed path)
+	
+	# --- GLOW FRUITS (Body Regulating) ---
+	"WATERMELON": preload("res://Data/Food/GlowFru/Watermelon.tres"),
+	"MANGO": preload("res://Data/Food/GlowFru/Mango.tres"),         # NEW (Assumed path)
+	
+	# --- BEVERAGES ---
 	"REGULAR_MILK": preload("res://Data/Drink/RegularMilk.tres"),
 	"ALMOND_MILK": preload("res://Data/Drink/AlmondMilk.tres"),
 	"WATER": preload("res://Data/Drink/Water.tres")
 }
 
+# --- WEEKLY MENU SCHEDULE ---
+# This dictionary defines exactly what is served on which day.
+# Format: Day Number : { Category : Internal_Key_In_FOOD_DB }
+const MENU_SCHEDULE: Dictionary = {
+	# DAY 1: Chicken / Mixed Veg / Watermelon
+	1: {
+		"Go": "RICE",
+		"Grow": "CHICKEN_LEG",
+		"GlowVeg": "MIXED_VEGGIES",
+		"GlowFru": "WATERMELON",
+		"Beverage1": "ALMOND_MILK",
+		"Beverage2": "REGULAR_MILK"
+	},
+	
+	# DAY 2: Fish / Sitaw / Mango (NEW MENU - ADDED)
+	2: {
+		"Go": "RICE",
+		"Grow": "FISH_FILLET",
+		"GlowVeg": "SITAW",
+		"GlowFru": "MANGO",
+		"Beverage": "REGULAR_MILK"
+	}
+	
+	# You can add Day 3, 4, 5 here...
+}
+
 # --- STATE VARIABLES ---
-# Holds what the customer wants right now
 var current_customer_order: Dictionary = {
 	"age_group": "6-9",
 	"required_plate": {}, 
 	"required_beverage": [] 
 }
 
-# Holds what the player has actually prepared
 var prepared_plate_contents: Array = []
 var prepared_beverage_data: Dictionary = {}
 
@@ -32,7 +65,6 @@ var prepared_beverage_data: Dictionary = {}
 func clear_prepared_data():
 	prepared_plate_contents.clear()
 	prepared_beverage_data.clear()
-	# We reset the required lists here to be safe
 	current_customer_order.required_plate.clear()
 	current_customer_order.required_beverage = ["WATER"]
 
@@ -41,22 +73,43 @@ func add_prepared_beverage(beverage_res: Resource) -> void:
 	prepared_beverage_data[beverage_res.internal_key] = { "item": beverage_res }
 	print("OrderSystem: Beverage added:", beverage_res.internal_key)
 
-# --- LOGIC TRANSFER ---
+# --- CORE LOGIC ---
 
 func generate_order_for_day(day: int) -> Dictionary:
 	print("OrderSystem: Generating order for Day %s" % day)
+	
+	# 1. Determine which menu to use
+	# If we are on Day 8 but only have 7 days defined, this logic loops back to Day 1
+	# Or strictly uses the day number if available.
+	var menu_key = day
+	
+	if not MENU_SCHEDULE.has(menu_key):
+		print("Warning: No menu defined for Day %d. Defaulting to Day 1." % day)
+		menu_key = 1
+		
+	var daily_menu = MENU_SCHEDULE[menu_key]
 	var order_data = {}
 	
-	if day == 1:
-		order_data = {
-			"Go": "RICE",
-			"Grow": "CHICKEN_LEG",
-			"GlowVeg": "MIXED_VEGGIES",
-			"GlowFru": "WATERMELON",
-			"Beverage": "ALMOND_MILK"
-		}
+	# 2. Construct the order from the Schedule
+	# We copy the keys exactly as defined in MENU_SCHEDULE
+	order_data["Go"] = daily_menu["Go"]
+	order_data["Grow"] = daily_menu["Grow"]
+	order_data["GlowVeg"] = daily_menu["GlowVeg"]
+	order_data["GlowFru"] = daily_menu["GlowFru"]
 	
-	# Parse into internal format
+	# --- FIX: Handle Beverage Logic ---
+	# If the menu specifies explicit "Beverage", use it.
+	# If it has "Beverage1/2", pick one randomly for the customer to request.
+	if daily_menu.has("Beverage"):
+		order_data["Beverage"] = daily_menu["Beverage"]
+	elif daily_menu.has("Beverage1") and daily_menu.has("Beverage2"):
+		# Randomly pick one for this specific customer
+		var options = [daily_menu["Beverage1"], daily_menu["Beverage2"]]
+		order_data["Beverage"] = options.pick_random()
+	else:
+		order_data["Beverage"] = "WATER" # Fallback
+	
+	# 3. Parse into validation format (Internal Game Logic)
 	current_customer_order.required_plate.clear()
 	var bev = order_data.get("Beverage", "")
 	current_customer_order.required_beverage = [] if bev == "" else [bev]
