@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://cjilf40vbxmxa"
-path="res://.godot/imported/ArchivoBlack-Regular.ttf-220b75e6da128b6e79c033cd3ea0b89d.fontdata"
+path="res://.godot/imported/ArchivoBlack-Regular.ttf-a3db6f4959b75e91f82c51ca970c256e.fontdata"
 
 [deps]
 
-source_file="res://Fonts/Archivo_Black,Rowdies/Archivo_Black/ArchivoBlack-Regular.ttf"
-dest_files=["res://.godot/imported/ArchivoBlack-Regular.ttf-220b75e6da128b6e79c033cd3ea0b89d.fontdata"]
+source_file="res://fonts/Archivo_Black,Rowdies/Archivo_Black/ArchivoBlack-Regular.ttf"
+dest_files=["res://.godot/imported/ArchivoBlack-Regular.ttf-a3db6f4959b75e91f82c51ca970c256e.fontdata"]
 
 [params]
 
