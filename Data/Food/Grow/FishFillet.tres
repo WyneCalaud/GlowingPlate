@@ -1,9 +1,13 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=2 format=3 uid="uid://d2mntq5kbevox"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=4 format=3 uid="uid://d2mntq5kbevox"]
 
+[ext_resource type="Texture2D" uid="uid://b1b74g4ux5tok" path="res://Assets/Foods/Fish.png" id="1_pgbmo"]
+[ext_resource type="Texture2D" uid="uid://dnyy68yh350ii" path="res://Assets/GrowSection/FishFillet720.png" id="2_scjta"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_qaar2"]
 
 [resource]
 script = ExtResource("3_qaar2")
 item_name = "Fish Fillet"
 internal_key = "FISH_FILLET"
+base_texture = ExtResource("1_pgbmo")
+default_plated_texture = ExtResource("2_scjta")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

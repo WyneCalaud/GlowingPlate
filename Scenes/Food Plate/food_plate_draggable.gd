@@ -57,39 +57,35 @@ func _on_area_2d_area_exited(area: Area2D):
 func _input(event):
 	var mouse_pos = get_global_mouse_position()
 	
-	# Handle press events
 	var is_press = (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed()) or (event is InputEventScreenTouch and event.is_pressed())
-	# Handle release events
-	var is_release = (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_released()) or \
-					 (event is InputEventScreenTouch and event.is_released())
+	var is_release = (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_released()) or (event is InputEventScreenTouch and event.is_released())
 
 	if is_press:
 		if is_returning: is_returning = false
 			
 		if is_mouse_over_plate_slot():
-			return # Slot handles placement click
+			# If clicking a slot, we still want to block the camera
+			get_viewport().set_input_as_handled()
+			return 
 			
 		var contents_size = get_plate_contents().size()
 		if is_point_inside_area(mouse_pos) and contents_size > 0:
 			self.is_dragging = true
 			self.z_index = DRAG_Z_INDEX
 			drag_offset = mouse_pos - global_position
+			# BLOCK CAMERA HERE
 			get_viewport().set_input_as_handled()
 			print("DEBUG [Drag Start]: Plate has %d items. Starting drag." % contents_size)
 		elif is_point_inside_area(mouse_pos):
+			# Even if drag fails (empty plate), block camera because we touched an item
+			get_viewport().set_input_as_handled()
 			print("RESTRICTION: Cannot drag an empty plate.")
-			print("DEBUG [Drag Fail]: Plate has %d items. Drag prevented." % contents_size)
-
 
 	elif is_release:
 		if is_dragging:
 			self.is_dragging = false
-			
-			# FIX: Mark input as handled BEFORE calling _on_drop(), 
-			# which might trigger a scene change and invalidate the Viewport.
 			if get_viewport():
 				get_viewport().set_input_as_handled()
-				
 			_on_drop()
 
 
@@ -130,6 +126,7 @@ func _on_drop():
 				# (like prepared_plate_contents) because they were moved to OrderSystem.
 				# store_plate_contents handles the transfer safely.
 				GameData.store_plate_contents(plate_contents)
+				
 
 			else:
 				print("FATAL ERROR: GameData Autoload not found. Cannot proceed with serving.")

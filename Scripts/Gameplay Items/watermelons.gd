@@ -5,7 +5,7 @@ const FoodDispenserGlobals = preload("res://Scripts/Global/FoodDispenserGlobal.g
 
 # --- CONFIGURATION ---
 @export var selected_texture: Texture2D 
-@export var selected_scale_factor: float = 0.67
+@export var selected_scale_factor: float = 0.225
 
 # --- STATE ---
 var is_selected: bool = false

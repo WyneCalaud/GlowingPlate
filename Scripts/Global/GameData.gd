@@ -48,12 +48,6 @@ func store_plate_contents(contents: Array, go_to_beverage: bool = true) -> void:
 	OrderSystem.prepared_plate_contents = contents
 	print("GAME_DATA: Delegating plate storage to OrderSystem.")
 
-	if go_to_beverage:
-		transition_to_beverage_prep()
-	else:
-		returning_from_beverage = true 
-		transition_to_canteen_serve()
-
 func store_beverage_data(data: Dictionary):
 	# Forward to OrderSystem
 	OrderSystem.prepared_beverage_data = data

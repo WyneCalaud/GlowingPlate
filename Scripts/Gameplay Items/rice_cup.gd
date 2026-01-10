@@ -34,7 +34,7 @@ func _ready():
 	# 1. Set initial state (Empty)
 	texture = empty_cup_texture 
 	# Apply the EMPTY scale factor
-	scale = Vector2(empty_cup_texture_factor, empty_cup_texture_factor)
+	scale = Vector2(0.5, 0.5)
 	is_empty = true 
 	current_rice_amount = "Empty"
 	
@@ -42,6 +42,9 @@ func _ready():
 	
 	if is_instance_valid(rice_cup_area):
 		rice_cup_area.input_pickable = true
+		# FIX: Scale up the Area2D so it's larger than the visual sprite (easier to grab)
+		# At 0.4 parent scale, 2.5x makes the hitbox ~1.0x (original texture size)
+		rice_cup_area.scale = Vector2(1.0, 1.0)
 
 
 # --- OVERRIDE: CORE DROP LOGIC ---
@@ -89,6 +92,10 @@ func on_plate_placement_success():
 	texture = empty_cup_texture
 	# 2. SCALE: Reset to EMPTY scale factor
 	scale = Vector2(empty_cup_texture_factor, empty_cup_texture_factor) 
+	
+	# FIX: Reset Area2D scale for empty state
+	if is_instance_valid(rice_cup_area):
+		rice_cup_area.scale = Vector2(2.5, 2.5)
 	
 	is_empty = true
 	current_rice_amount = "Empty"
@@ -146,12 +153,21 @@ func _on_mechanic_scoop_finished(amount: String):
 	# 3. FIX: Apply the correct SCALE based on success
 	if is_scoop_successful:
 		is_empty = false
-		# Change scale to the "Full" size (0.3)
+		# Change scale to the "Full" size (0.25)
 		scale = Vector2(full_cup_scale_factor, full_cup_scale_factor)
+		
+		# FIX: When the cup shrinks to 0.25, we make the Area2D HUGE (4.0x) 
+		# so the clickable area stays roughly the same size (0.25 * 4.0 = 1.0)
+		if is_instance_valid(rice_cup_area):
+			rice_cup_area.scale = Vector2(4.0, 4.0)
 	else:
 		is_empty = true
 		# Revert scale to the "Empty" size (0.4)
 		scale = Vector2(empty_cup_texture_factor, empty_cup_texture_factor)
+		
+		# FIX: Revert Area2D scale (0.4 * 2.5 = 1.0)
+		if is_instance_valid(rice_cup_area):
+			rice_cup_area.scale = Vector2(2.5, 2.5)
 
 	# All results return to the start position immediately
 	return_to_start()

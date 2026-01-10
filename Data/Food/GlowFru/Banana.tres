@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=3 format=3 uid="uid://7wd86iqmmc06"]
+
+[ext_resource type="Texture2D" uid="uid://dci3jfrravicy" path="res://Assets/Foods/Bananas.png" id="1_rbggl"]
+[ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="2_pmuc2"]
+
+[resource]
+script = ExtResource("2_pmuc2")
+item_name = "Banana"
+internal_key = "BANANA"
+food_category = "GlowFru"
+base_texture = ExtResource("1_rbggl")
+metadata/_custom_type_script = "uid://jdcig8g3adhl"

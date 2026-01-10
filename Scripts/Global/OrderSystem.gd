@@ -30,24 +30,25 @@ const FOOD_DB: Dictionary = {
 const MENU_SCHEDULE: Dictionary = {
 	# DAY 1: Chicken / Mixed Veg / Watermelon
 	1: {
-		"Go": "RICE",
-		"Grow": "CHICKEN_LEG",
-		"GlowVeg": "MIXED_VEGGIES",
-		"GlowFru": "WATERMELON",
-		"Beverage1": "ALMOND_MILK",
-		"Beverage2": "REGULAR_MILK"
+		"Go": "PANDESAL",
+		"Grow": "EGG",
+		"GlowVeg": "CABBAGE",
+		"GlowFru": "BANANA",
+		"Beverage": "REGULAR_MILK"
 	},
 	
 	# DAY 2: Fish / Sitaw / Mango (NEW MENU - ADDED)
 	2: {
-		"Go": "RICE",
-		"Grow": "FISH_FILLET",
-		"GlowVeg": "SITAW",
-		"GlowFru": "MANGO",
-		"Beverage": "REGULAR_MILK"
-	}
+		
+	},
 	
-	# You can add Day 3, 4, 5 here...
+	3: {
+		
+	},
+	
+	4: {
+		
+	}
 }
 
 # --- STATE VARIABLES ---
