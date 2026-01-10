@@ -1,12 +1,26 @@
 extends Node2D
 
-# --- REFERENCES TO YOUR FOOD DISPENSERS ---
-# CRITICAL: You must ensure these paths match your Scene Tree!
-# If your nodes are named "ChickenContainer", please rename them to these generic names
-# or update the paths below.
-@onready var grow_dispenser = $FoodStations/Grow_Station/DraggableItem
-@onready var veg_dispenser = $FoodStations/Veg_Station/DraggableItem
-@onready var fru_dispenser = $FoodStations/Fruit_Station/DraggableItem
+# --- REFERENCES TO YOUR FOOD DISPENSER ARRAYS ---
+# Instead of one variable per category, we use Arrays of nodes.
+# Make sure you create these slots in your Scene and name them accordingly!
+
+@onready var grow_stations = [
+	$Row1/Slot1/DraggableItem,
+	$Row1/Slot2/DraggableItem, # Make sure this node exists in scene!
+	$Row1/Slot3/DraggableItem  # Make sure this node exists in scene!
+]
+
+@onready var veg_stations = [
+	$Row2/Slot1/DraggableItem,
+	$Row2/Slot2/DraggableItem,
+	$Row2/Slot3/DraggableItem
+]
+
+@onready var fru_stations = [
+	$Row3/Slot1/DraggableItem,
+	$Row3/Slot2/DraggableItem,
+	$Row3/Slot3/DraggableItem
+]
 
 # --- Node References for Drag Logic ---
 @onready var drop_zones_parent: Node2D = $ServeOrTrash
@@ -22,8 +36,8 @@ func _on_exit_pressed() -> void:
 
 # --- INITIALIZATION ---
 func _ready():
-	# 1. Setup the Menu for the Day (Load Fish, Sitaw, etc. if Day 2)
-	setup_kitchen_for_today()
+	# 1. Setup the Menu for the Day
+	#setup_kitchen_for_today()
 
 	# 2. Ensure the drop zones are hidden initially
 	if is_instance_valid(drop_zones_parent):
@@ -50,70 +64,105 @@ func _ready():
 	else:
 		print("FATAL ERROR [GamePlayFull]: FoodPlate node not found at path '$Plate/FoodPlate'. Check node path.")
 
-# --- DYNAMIC MENU LOGIC ---
-func setup_kitchen_for_today():
-	var day = GameData.current_day
-	print("Kitchen: Setting up menu for Day %d" % day)
+# --- DYNAMIC MENU LOGIC (The Stage Manager) ---
+#func setup_kitchen_for_today():
+	#var day = GameData.current_day
+	#print("Kitchen: Setting up menu for Day %d" % day)
+	#
+	#var menu_key = day
+	## Safety Fallback: If day 8 comes but we only have 7 days, loop back or use Day 1
+	#if not OrderSystem.MENU_SCHEDULE.has(menu_key):
+		#print("Warning: No menu defined for Day %d. Defaulting to Day 1." % day)
+		#menu_key = 1 
+	#
+	#var menu = OrderSystem.MENU_SCHEDULE[menu_key]
 	
-	# 1. Get the Menu Schedule
-	var menu_key = day
-	if not OrderSystem.MENU_SCHEDULE.has(menu_key):
-		menu_key = 1 # Default back to Day 1
-	
-	var menu = OrderSystem.MENU_SCHEDULE[menu_key]
-	
-	# 2. Update GROW Station (e.g., Chicken vs Fish)
-	# This station uses 'chickens.gd' logic (Spawns items)
-	if grow_dispenser:
-		var grow_key = menu["Grow"]
-		var grow_res = OrderSystem.FOOD_DB[grow_key]
-		update_dispenser(grow_dispenser, grow_res)
-	
-	# 3. Update VEG Station
-	# This station uses 'mixed_veggies.gd' logic (Toggle Selection)
-	if veg_dispenser:
-		var veg_key = menu["GlowVeg"]
-		var veg_res = OrderSystem.FOOD_DB[veg_key]
-		update_dispenser(veg_dispenser, veg_res)
-	
-	# 4. Update FRUIT Station
-	# This station uses 'watermelons.gd' logic (Toggle Selection)
-	if fru_dispenser:
-		var fru_key = menu["GlowFru"]
-		var fru_res = OrderSystem.FOOD_DB[fru_key]
-		update_dispenser(fru_dispenser, fru_res)
+	# 2. Update Stations using the List Helper
+	#update_station_list(grow_stations, menu, "Grow")
+	#update_station_list(veg_stations, menu, "GlowVeg")
+	#update_station_list(fru_stations, menu, "GlowFru")
 
-# Helper to swap the data and texture dynamically based on script type
-func update_dispenser(dispenser_node, food_res: Resource):
-	if not is_instance_valid(dispenser_node):
-		return
+# --- HELPER: Handles Lists of Stations ---
+#func update_station_list(station_nodes: Array, menu_data: Dictionary, category_key: String):
+	## 1. Get the list of foods for today (e.g. ["Chicken", "Fish"])
+	#var food_keys = []
+	#if menu_data.has(category_key):
+		#var data = menu_data[category_key]
+		#if data is Array:
+			#food_keys = data
+		#else:
+			#food_keys = [data]
+			#
+	## 2. Loop through every physical slot in the scene
+	#for i in range(station_nodes.size()):
+		#var dispenser = station_nodes[i]
+		#
+		## Do we have a food item for this slot index?
+		#if i < food_keys.size():
+			## YES: Show it and set it up
+			#var parent = dispenser.get_parent() # The Slot Node
+			#if parent: parent.show()
+			#
+			#var item_key = food_keys[i]
+			#
+			## SAFETY CHECK: Does this item key exist in the database?
+			#if not OrderSystem.FOOD_DB.has(item_key):
+				#printerr("CRITICAL ERROR: Item '%s' is in the Menu Schedule but NOT in FOOD_DB!" % item_key)
+				#continue 
+				#
+			#var food_res = OrderSystem.FOOD_DB[item_key]
+			#update_dispenser_visuals(dispenser, food_res)
+		#else:
+			## NO: Hide the empty slot
+			#var parent = dispenser.get_parent()
+			#if parent: parent.hide()
 
-	# 1. Update the Data (Critical for logic)
-	# Your scripts (chickens.gd, mixed_veggies.gd) inherit 'food_item_base.gd', 
-	# so they likely share the 'food_data' variable.
-	if "food_data" in dispenser_node:
-		dispenser_node.food_data = food_res
-	elif "item_resource" in dispenser_node:
-		dispenser_node.item_resource = food_res
-	
-	# 2. Update the Visuals
-	# Handle "Toggle Selection" scripts (mixed_veggies.gd)
-	if "default_texture" in dispenser_node:
-		dispenser_node.default_texture = food_res.icon_texture
-		# Apply immediate visual update
-		if "texture" in dispenser_node:
-			dispenser_node.texture = food_res.icon_texture
-			
-	# Handle "Spawn" scripts or generic sprites (chickens.gd)
-	elif "texture" in dispenser_node:
-		# Directly update the main texture
-		dispenser_node.texture = food_res.icon_texture
-		
-	# Fallback for nodes using a child Sprite
-	elif dispenser_node.has_node("Sprite"):
-		var sprite = dispenser_node.get_node("Sprite")
-		if sprite is Sprite2D:
-			sprite.texture = food_res.icon_texture
+# --- HELPER: Swaps Data and Textures ---
+#func update_dispenser_visuals(dispenser_node, food_res: Resource):
+	#if not is_instance_valid(dispenser_node):
+		#return
+#
+	## 1. Update the Data (Critical for logic)
+	#if "food_data" in dispenser_node:
+		#dispenser_node.food_data = food_res
+	#elif "item_resource" in dispenser_node:
+		#dispenser_node.item_resource = food_res
+	#
+	## 2. Determine which texture to use
+	#var new_texture = null
+	#
+	#if "base_texture" in food_res:
+		#new_texture = food_res.base_texture
+	#elif "default_plated_texture" in food_res:
+		#new_texture = food_res.default_plated_texture
+	#elif "texture" in food_res:
+		#new_texture = food_res.texture
+	#elif "icon_texture" in food_res:
+		#new_texture = food_res.icon_texture
+		#
+	#if new_texture == null:
+		#print("ERROR: Could not find a valid texture ('base_texture', 'icon_texture', etc.) in resource: ", food_res)
+		#return
+#
+	## 3. Apply the Visuals
+	#
+	## Handle "Toggle Selection" scripts (mixed_veggies.gd / watermelons.gd)
+	#if "default_texture" in dispenser_node:
+		#dispenser_node.default_texture = new_texture
+		## Apply immediate visual update if current texture is default
+		#if "texture" in dispenser_node:
+			#dispenser_node.texture = new_texture
+			#
+	## Handle "Spawn" scripts or generic sprites (chickens.gd)
+	#elif "texture" in dispenser_node:
+		## Directly update the main texture
+		#dispenser_node.texture = new_texture
+		#
+	## Fallback for nodes using a child Sprite
+	#elif dispenser_node.has_node("Sprite"):
+		#var sprite = dispenser_node.get_node("Sprite")
+		#if sprite is Sprite2D:
+			#sprite.texture = new_texture
 
 # --- HANDLER: Toggles visibility of Serve/Trash Zones based on drag state ---
 func _on_plate_drag_state_changed(is_dragging_now: bool):

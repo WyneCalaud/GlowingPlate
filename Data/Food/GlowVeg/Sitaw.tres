@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=2 format=3 uid="uid://b620n7sw6261m"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=3 format=3 uid="uid://b620n7sw6261m"]
 
+[ext_resource type="Texture2D" uid="uid://comko1qjr5kgl" path="res://Assets/Foods/Sitaw.png" id="1_nr06r"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_gmk55"]
 
 [resource]
@@ -7,4 +8,5 @@ script = ExtResource("3_gmk55")
 item_name = "Sitaw"
 internal_key = "SITAW"
 food_category = "GlowVeg"
+base_texture = ExtResource("1_nr06r")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"
