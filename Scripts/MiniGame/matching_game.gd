@@ -3,6 +3,11 @@ extends Control
 @export var card_back: Texture2D
 @export var card_faces: Array[Texture2D]  # add images in Inspector
 
+@export var exercise_info := {
+	# card face texture : description text
+}
+
+
 const GRID_SIZE := 4
 const TOTAL_CARDS := GRID_SIZE * GRID_SIZE
 
@@ -16,10 +21,16 @@ var lock_input := false
 @onready var score_label := $CanvasLayer/ScoreLabel
 @onready var turns_label := $CanvasLayer/TurnsLabel
 
+@onready var popup := $CanvasLayer/InfoPopup
+@onready var popup_image := $CanvasLayer/InfoPopup/VBoxContainer/ExerciseImage
+@onready var popup_text := $CanvasLayer/InfoPopup/VBoxContainer/ExerciseText
+@onready var popup_close := $CanvasLayer/InfoPopup/VBoxContainer/CloseButton
+
 
 func _ready():
 	setup_board()
 	update_ui()
+	popup_close.pressed.connect(_close_popup)
 
 
 func setup_board():
@@ -74,6 +85,8 @@ func check_match():
 		score += 1
 		a.disabled = true
 		b.disabled = true
+		
+		show_exercise_popup(card_values[a])
 	else:
 		a.texture_normal = card_back
 		b.texture_normal = card_back
@@ -81,6 +94,21 @@ func check_match():
 	revealed_cards.clear()
 	lock_input = false
 	update_ui()
+
+func show_exercise_popup(face_texture: Texture2D):
+	lock_input = true
+
+	popup_image.texture = face_texture
+	popup_text.text = exercise_info.get(
+		face_texture,
+		"Exercise information not available."
+	)
+
+	popup.visible = true
+
+func _close_popup():
+	popup.visible = false
+	lock_input = false
 
 
 func update_ui():
