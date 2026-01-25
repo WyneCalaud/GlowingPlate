@@ -1,17 +1,38 @@
-extends Control # Use Control for UI scenes
+extends Control
 
 # --- CONFIGURATION & EXTERNAL DATA ---
 @export var quiz_data_resource: QuizDataResource
+
+# --- AUDIO REFERENCES ---
+@onready var sfx_correct: AudioStreamPlayer2D = $SfxCorrect
+@onready var sfx_incorrect: AudioStreamPlayer2D = $SfxIncorrect
 
 # --- GAME DATA REFERENCE ---
 @onready var game_data = $"/root/GameData"
 
 # --- UI NODE REFERENCES ---
-@onready var quiz_background: TextureRect = $QuizBackground/BGImage
-@onready var quiz_panel: TextureRect = $QuizPanel/BackgroundPanel
-@onready var question_label: Label = $QuizPanel/BackgroundPanel/QuestionPanel/QuestionLabel
-@onready var image_display: TextureRect = $QuizPanel/BackgroundPanel/QuestionPanel/ImageDisplay
-@onready var answer_buttons_container: GridContainer = $AnswerPanel
+@onready var quiz_panel: Control = $QuizPanel
+@onready var question_label: Label = $QuizPanel/Questionaire/QuestionText
+@onready var image_display: TextureRect = $QuizPanel/Questionaire/QuestionImage
+
+@onready var answer_nodes = [
+	{
+		"button": $QuizPanel/AnswersContainer/A,
+		"text": $QuizPanel/AnswersContainer/A/AText,
+		"image": $QuizPanel/AnswersContainer/A/AImage
+	},
+	{
+		"button": $QuizPanel/AnswersContainer/B,
+		"text": $QuizPanel/AnswersContainer/B/BText,
+		"image": $QuizPanel/AnswersContainer/B/BImage
+	},
+	{
+		"button": $QuizPanel/AnswersContainer/C,
+		"text": $QuizPanel/AnswersContainer/C/CText,
+		"image": $QuizPanel/AnswersContainer/C/CImage
+	}
+]
+
 @onready var result_label: Label = $Result/ResultLabel
 
 # --- QUIZ STATE ---
@@ -21,57 +42,44 @@ var total_correct_answers: int = 0
 var MAX_QUESTIONS: int = 3
 var is_mechanic_active: bool = true
 var current_day: int = 1
+var original_panel_pos: Vector2 # Added to track correct layout position
 
 # ====================================================================
 # --- INITIALIZATION ---
 # ====================================================================
 
 func _ready():
-	# Access current day from GameData
 	current_day = game_data.current_day
+	original_panel_pos = quiz_panel.position # Capture the layout position
 	
 	if not is_instance_valid(quiz_data_resource) or quiz_data_resource.questions.size() == 0:
-		printerr("FATAL: Quiz resource missing/empty. Skipping.")
-		# Use the new QuizSystem to handle the early exit flow
-		QuizSystem.apply_quiz_results({"correct_count": 0, "bonus_money": 0, "bonus_reputation": 0.0})
+		printerr("FATAL: Quiz resource missing/empty.")
+		QuizSystem.apply_quiz_results({"correct_count": 0, "bonus_money": 0})
 		queue_free()
 		return
 
-	# 1. Initialize tracking in the QuizSystem Autoload
 	_initialize_srs_progress()
-	
-	# 2. Filter questions based on SRS due dates
 	_get_review_questions()
 	
 	if current_quiz_set.size() > 0:
-		# Limit the session to 3 questions or the total due count
 		MAX_QUESTIONS = min(current_quiz_set.size(), 3)
 		start_quiz()
 	else:
 		question_label.text = "No questions due for review today!"
-		QuizSystem.apply_quiz_results({"correct_count": 0, "bonus_money": 0, "bonus_reputation": 0.0})
+		QuizSystem.apply_quiz_results({"correct_count": 0, "bonus_money": 0})
 		queue_free()
 		return
 		
 	result_label.visible = false
+	result_label.pivot_offset = result_label.size / 2
 	
-	# Connect buttons dynamically
-	for i in range(answer_buttons_container.get_child_count()):
-		var child = answer_buttons_container.get_child(i)
-		var button = _find_button_in_node(child)
-		if button:
-			button.connect("pressed", Callable(self, "_on_answer_button_pressed").bind(i))
-
-# Helper to find a button even if it's inside a MarginContainer/VBox
-func _find_button_in_node(node: Node) -> BaseButton:
-	if node is BaseButton: return node
-	for child in node.get_children():
-		var found = _find_button_in_node(child)
-		if found: return found
-	return null
+	for i in range(answer_nodes.size()):
+		var btn = answer_nodes[i].button
+		if btn:
+			btn.pressed.connect(_on_answer_button_pressed.bind(i))
+			btn.pivot_offset = btn.size / 2
 
 func _initialize_srs_progress():
-	# Ensure every question in the resource has an entry in the QuizSystem progress
 	for q in quiz_data_resource.questions:
 		if not QuizSystem.quiz_progress.has(q.question_id):
 			QuizSystem.quiz_progress[q.question_id] = {
@@ -81,13 +89,10 @@ func _initialize_srs_progress():
 			
 func _get_review_questions():
 	current_quiz_set.clear()
-	
 	for q in quiz_data_resource.questions:
-		# Access progress from the new QuizSystem Autoload
 		var progress = QuizSystem.quiz_progress.get(q.question_id, null)
 		if progress and progress.next_review_day <= current_day:
 			current_quiz_set.append(q)
-			
 	current_quiz_set.shuffle()
 
 func start_quiz():
@@ -100,58 +105,39 @@ func load_question():
 		finish_quiz()
 		return
 		
+	quiz_panel.position = original_panel_pos # Reset to correct layout position
+	
 	var q_data: QuizQuestionResource = current_quiz_set[current_question_index]
-	print("\n--- LOADING QUESTION ID: ", q_data.question_id, " ---")
+	question_label.text = q_data.question_text
 	
-	# 1. Update Question Text
-	question_label.text = "Question %d of %d: %s" % [current_question_index + 1, MAX_QUESTIONS, q_data.question_text]
-	
-	# 2. Update Visual Prompt Image
-	image_display.modulate = Color.WHITE 
 	image_display.texture = null
-	
 	var q_img_path = q_data.image_path.strip_edges()
 	if not q_img_path.is_empty() and FileAccess.file_exists(q_img_path):
 		image_display.texture = load(q_img_path)
 	
-	# 3. Update Answer Buttons
-	for i in range(answer_buttons_container.get_child_count()):
-		var container_child = answer_buttons_container.get_child(i)
-		var button = _find_button_in_node(container_child)
-		
-		if not button:
-			continue
-		
+	for i in range(answer_nodes.size()):
+		var nodes = answer_nodes[i]
 		if i >= q_data.answers.size():
-			container_child.visible = false
+			nodes.button.visible = false
 			continue
 			
 		var answer: QuizAnswerResource = q_data.answers[i]
-		container_child.visible = true
-		button.disabled = false
-		button.modulate = Color.WHITE 
+		nodes.button.visible = true
+		nodes.button.disabled = false
+		nodes.button.modulate = Color.WHITE 
+		nodes.button.scale = Vector2.ONE
 		
-		# --- SMART NODE DISCOVERY ---
-		var icon_node = button.find_child("AnswerIcon", true, false)
-		var label_node = button.find_child("AnswerLabel", true, false)
-		
-		# Handle Image Icon
-		if icon_node and icon_node is TextureRect:
+		if nodes.text:
+			nodes.text.text = answer.text_label
+			nodes.text.visible = !answer.text_label.is_empty()
+				
+		if nodes.image:
 			var ans_img_path = answer.texture_path.strip_edges()
 			if not ans_img_path.is_empty() and FileAccess.file_exists(ans_img_path):
-				icon_node.texture = load(ans_img_path)
-				icon_node.visible = true
+				nodes.image.texture = load(ans_img_path)
+				nodes.image.visible = true
 			else:
-				icon_node.visible = false
-				
-		# Handle Text Label
-		if label_node and label_node is Label:
-			if not answer.text_label.is_empty():
-				label_node.text = answer.text_label
-				label_node.visible = true
-			else:
-				label_node.visible = false
-
+				nodes.image.visible = false
 
 # ====================================================================
 # --- INPUT AND SCORING ---
@@ -159,59 +145,80 @@ func load_question():
 
 func _on_answer_button_pressed(button_index: int):
 	if not is_mechanic_active: return
-	is_mechanic_active = false # Lock input
+	is_mechanic_active = false 
 	
 	var q_data: QuizQuestionResource = current_quiz_set[current_question_index]
-	if button_index >= q_data.answers.size():
-		is_mechanic_active = true
-		return
-
 	var selected_key = q_data.answers[button_index].answer_key
 	var correct_key = q_data.correct_answer_key
 	var is_correct = (selected_key == correct_key)
 	
-	# CRITICAL: Call the SRS update logic in the QuizSystem Autoload
-	var next_day = QuizSystem.update_question_progress(q_data.question_id, is_correct, current_day)
+	QuizSystem.update_question_progress(q_data.question_id, is_correct, current_day)
 	
-	# Show result feedback
+	result_label.visible = true
+	result_label.scale = Vector2.ZERO
+	var feedback_tween = create_tween().set_parallel(true)
+	
 	if is_correct:
 		total_correct_answers += 1
-		result_label.text = "CORRECT! Review in %d days." % (next_day - current_day)
+		result_label.text = "CORRECT!"
+		result_label.modulate = Color.GREEN
+		if sfx_correct: sfx_correct.play()
+		_animate_correct_feedback(button_index, feedback_tween)
 	else:
-		result_label.text = "INCORRECT. The right answer was %s." % correct_key
+		result_label.text = "INCORRECT."
+		result_label.modulate = Color.RED
+		if sfx_incorrect: sfx_incorrect.play()
+		_animate_incorrect_feedback(button_index, feedback_tween)
 
-	result_label.visible = true
-	
-	# Highlight buttons
-	for i in range(answer_buttons_container.get_child_count()):
-		var container_child = answer_buttons_container.get_child(i)
-		var button = _find_button_in_node(container_child)
-		if not button: continue
-		
-		button.disabled = true
+	for i in range(answer_nodes.size()):
+		var btn = answer_nodes[i].button
+		btn.disabled = true
 		if i < q_data.answers.size():
 			if q_data.answers[i].answer_key == correct_key:
-				button.modulate = Color.GREEN
+				btn.modulate = Color.GREEN
 			elif i == button_index and not is_correct:
-				button.modulate = Color.RED
+				btn.modulate = Color.RED
 	
-	# Advance to next question
-	await get_tree().create_timer(2.0).timeout
-	is_mechanic_active = true
+	await get_tree().create_timer(1.8).timeout
+	
+	var fade = create_tween()
+	fade.tween_property(result_label, "modulate:a", 0.0, 0.2)
+	await fade.finished
+	
 	result_label.visible = false
+	result_label.modulate.a = 1.0
+	is_mechanic_active = true
 	current_question_index += 1
 	load_question()
 
+# --- IMPACT ANIMATIONS ---
+
+func _animate_correct_feedback(idx: int, tween: Tween):
+	var btn = answer_nodes[idx].button
+	tween.tween_property(result_label, "scale", Vector2.ONE * 1.2, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(btn, "position:y", btn.position.y - 20, 0.1).set_trans(Tween.TRANS_SINE)
+	tween.chain().tween_property(btn, "position:y", btn.position.y, 0.1).set_trans(Tween.TRANS_SINE)
+
+func _animate_incorrect_feedback(idx: int, tween: Tween):
+	tween.tween_property(result_label, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	var shake_tween = create_tween()
+	for i in range(6):
+		var offset = original_panel_pos + Vector2(randf_range(-10, 10), randf_range(-5, 5))
+		shake_tween.tween_property(quiz_panel, "position", offset, 0.05)
+	shake_tween.tween_property(quiz_panel, "position", original_panel_pos, 0.05)
+	
+	var btn = answer_nodes[idx].button
+	var vib_tween = create_tween()
+	for i in range(4):
+		vib_tween.tween_property(btn, "rotation_degrees", 2.0, 0.05)
+		vib_tween.tween_property(btn, "rotation_degrees", -2.0, 0.05)
+	vib_tween.tween_property(btn, "rotation_degrees", 0.0, 0.05)
+
 func finish_quiz():
-	# Calculate results based on performance
+	var reward_money = total_correct_answers * 50
 	var quiz_results = {
 		"correct_count": total_correct_answers,
-		"bonus_money": total_correct_answers * 20,
-		"bonus_reputation": float(total_correct_answers) * 0.1
+		"bonus_money": reward_money
 	}
-	
-	# CRITICAL: Finalize rewards and scene transition via QuizSystem
 	QuizSystem.apply_quiz_results(quiz_results)
-	
-	# Cleanup this scene
 	queue_free()

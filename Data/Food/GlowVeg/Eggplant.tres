@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=4 format=3 uid="uid://omstc0n2h6vh"]
+
+[ext_resource type="Texture2D" uid="uid://cbkoagx0jde1o" path="res://Assets/Foods/Eggplant.png" id="1_asc4f"]
+[ext_resource type="Texture2D" uid="uid://c70w5cntep42x" path="res://Assets/IndividualFoods/Talong382.png" id="2_pemtp"]
+[ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_tp5th"]
+
+[resource]
+script = ExtResource("3_tp5th")
+item_name = "Eggplant"
+internal_key = "EGGPLANT"
+food_category = "GlowVeg"
+base_texture = ExtResource("1_asc4f")
+default_plated_texture = ExtResource("2_pemtp")
+metadata/_custom_type_script = "uid://jdcig8g3adhl"

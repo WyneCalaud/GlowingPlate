@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=7 format=3 uid="uid://bvv4bih206vxi"]
+
+[ext_resource type="Texture2D" uid="uid://1ecw6i3ykpw6" path="res://Assets/Foods/Corns.png" id="1_u72oa"]
+[ext_resource type="Texture2D" uid="uid://c5qfmiyif6i15" path="res://Assets/IndividualFoods/Corns199.png" id="2_hnsr7"]
+[ext_resource type="Texture2D" uid="uid://58c3ov3a6qju" path="res://Assets/GoSection/medrice512.png" id="3_skris"]
+[ext_resource type="Texture2D" uid="uid://oj0oes3vf6cp" path="res://Assets/GoSection/lowrice512.png" id="4_nfcvw"]
+[ext_resource type="Texture2D" uid="uid://vg6jplsit2nt" path="res://Assets/GoSection/toohighrice 512.png" id="5_pfapb"]
+[ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="6_8k7qh"]
+
+[resource]
+script = ExtResource("6_8k7qh")
+item_name = "Corn"
+internal_key = "CORN"
+food_category = "Go"
+base_texture = ExtResource("1_u72oa")
+default_plated_texture = ExtResource("2_hnsr7")
+plated_texture_small = ExtResource("4_nfcvw")
+plated_texture_medium = ExtResource("3_skris")
+plated_texture_too_high = ExtResource("5_pfapb")
+metadata/_custom_type_script = "uid://jdcig8g3adhl"

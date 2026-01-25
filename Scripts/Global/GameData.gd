@@ -1,30 +1,33 @@
 extends Node
 
 # --- Core Progression Variables ---
-var current_day: int = 1         
-const TOTAL_DAYS: int = 7        
-var money: int = 0               
-var reputation_score: float = 0.0 
+var current_day: int = 1          
+const TOTAL_DAYS: int = 7         
+var money: int = 0                
+var keys: int = 0  
+
+# --- GLOW BOARD PROGRESSION ---
+var character_progress: Dictionary = {
+	"Leo": 0.0,
+	"Maya": 0.0,
+	"Arman": 0.0
+}
+
+# --- UPGRADABLE / EXTENSION STATS ---
+var max_customers_today: int = 4  
+var customer_patience_multiplier: float = 1.0 
 
 # --- DAILY TRACKING ---
 var daily_money_earned: int = 0
-var daily_reputation_gained: float = 0.0
-
-# --- Tracking Data ---
+var daily_keys_earned: int = 0
+var total_customers_served_today: int = 0
 var customer_history: Array = [] 
 
 # --- SERVICE STATE MANAGEMENT ---
-# NOTE: Food arrays removed. They are now in OrderSystem.
 var returning_from_beverage: bool = false
 var force_hide_accept_buttons: bool = false
 
-enum ServiceState {
-	IDLE,
-	CUSTOMER_PRESENT,
-	IN_KITCHEN,
-	SERVED
-}
-
+enum ServiceState { IDLE, CUSTOMER_PRESENT, IN_KITCHEN, SERVED }
 var service_state: ServiceState = ServiceState.IDLE
 var remaining_customers: Array = []
 var day_started: bool = false
@@ -36,118 +39,103 @@ const LOBBY_CANTEEN_PATH = "res://Scenes/Lobby Canteen/lobbycanteen.tscn"
 const END_DAY_SCENE_PATH = "res://Scenes/Results/EndDayResults.tscn" 
 const QUIZ_SCENE_PATH = "res://Scenes/Quiz/QuizScene.tscn"
 
-# ====================================================================
-# --- DATA TRANSFER WRAPPERS (Compatibility Layer) ---
-# ====================================================================
+# --- NEW: HAPPINESS & TIP LOGIC ---
+func calculate_tip(happiness_percent: float) -> int:
+	if happiness_percent >= 90.0:
+		return 25 # Max tip
+	elif happiness_percent >= 70.0:
+		return 15
+	elif happiness_percent >= 40.0:
+		return 8
+	elif happiness_percent >= 20.0:
+		return 4
+	else:
+		return 1 # Minimal tip
 
-# These functions exist so your Drag & Drop scripts don't break.
-# They simply forward the data to the new OrderSystem.
+# --- TIME & VISUAL LOGIC ---
+func get_current_time_string() -> String:
+	var progress = float(total_customers_served_today) / float(max_customers_today)
+	var hour = 12 + int(progress * 4) 
+	if hour > 12: hour -= 12
+	return str(hour) + ":00 PM"
 
-func store_plate_contents(contents: Array, go_to_beverage: bool = true) -> void:
-	# Forward to OrderSystem
-	OrderSystem.prepared_plate_contents = contents
-	print("GAME_DATA: Delegating plate storage to OrderSystem.")
+func get_sun_stage_index() -> int:
+	var progress = float(total_customers_served_today) / float(max_customers_today)
+	return clampi(int(progress * 4), 0, 3)
 
-func store_beverage_data(data: Dictionary):
-	# Forward to OrderSystem
-	OrderSystem.prepared_beverage_data = data
-	print("GAME_DATA: Delegating beverage storage to OrderSystem.")
-	
-	returning_from_beverage = true
-	transition_to_canteen_serve() 
-
-func add_prepared_beverage(beverage_res: Resource) -> void:
-	OrderSystem.add_prepared_beverage(beverage_res)
-
-func add_beverage_to_plate(beverage_resource: Resource):
-	OrderSystem.add_prepared_beverage(beverage_resource)
-
-# Wrapper for Order Generation
-func generate_order_for_day(day: int) -> Dictionary:
-	return OrderSystem.generate_order_for_day(day)
-
-# ====================================================================
-# --- SCENE TRANSITIONS ---
-# ====================================================================
-
-func transition_to_plate_prep():
-	get_tree().change_scene_to_file(KITCHEN_SCENE_PATH)
-
-func transition_to_beverage_prep():
-	OrderSystem.prepared_beverage_data.clear()
-	get_tree().change_scene_to_file("res://Scenes/Gameplay/BeverageStation.tscn")
-
-func transition_to_canteen_serve():
-	get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
-	
-func transition_to_end_day():
-	get_tree().change_scene_to_file(END_DAY_SCENE_PATH)
-
-func transition_to_quiz():
-	get_tree().change_scene_to_file(QUIZ_SCENE_PATH)
-
-# ====================================================================
 # --- CORE METHODS ---
-# ====================================================================
-
 func start_new_day():
 	daily_money_earned = 0
-	daily_reputation_gained = 0.0
-	
+	daily_keys_earned = 0
+	total_customers_served_today = 0
+	max_customers_today = clampi(4 + (current_day - 1), 4, 10) 
 	if current_day <= TOTAL_DAYS:
-		print("Starting Day %s" % current_day)
 		get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
 	else:
-		print("Game finished! Showing results.")
+		print("Game finished!")
 
 func start_day_with_orders(orders: Array):
 	remaining_customers = orders.duplicate()
+	max_customers_today = remaining_customers.size() 
 	service_state = ServiceState.IDLE
 	day_started = true
 
 func finalize_service(day_result: Dictionary):
+	total_customers_served_today += 1
 	customer_history.append(day_result)
-	money += day_result.get("earned_money", 0)
-	reputation_score += day_result.get("reputation_change", 0.0)
 	
-	# Update Daily Stats
-	daily_money_earned += day_result.get("earned_money", 0)
-	daily_reputation_gained += day_result.get("reputation_change", 0.0)
+	# Extract happiness and calculate payout
+	var base_earned = day_result.get("earned_money", 0)
+	var happiness = day_result.get("happiness", 100.0)
+	var tip = calculate_tip(happiness)
+	var total_earned = base_earned + tip
 	
-	# Clear data in OrderSystem
+	money += total_earned
+	daily_money_earned += total_earned
+	
+	# Handle Keys
+	var keys_won = day_result.get("earned_keys", 0)
+	keys += keys_won
+	daily_keys_earned += keys_won
+	
+	# Handle Glow Board
+	var char_id = day_result.get("character_id", "")
+	if character_progress.has(char_id):
+		var gain = day_result.get("prog_gain", 0.0)
+		character_progress[char_id] = clamp(character_progress[char_id] + gain, 0.0, 100.0)
+	
 	OrderSystem.clear_prepared_data()
-	
-	var day_end_message = "Service finalized. New Money: %s" % money
-	print(day_end_message)
+	get_tree().call_group("HUD", "update_all_labels")
 
 	if remaining_customers.is_empty():
-		print("Day complete! Transitioning to End Day Results.")
 		current_day += 1
 		transition_to_end_day()
-	else:
-		# Wait for lobby to spawn next customer
-		pass
 
-func end_day(day_result: Dictionary):
-	finalize_service(day_result)
+# --- WRAPPERS & TRANSITIONS ---
+func store_plate_contents(contents: Array): OrderSystem.prepared_plate_contents = contents
+
+# FIX: Added function requested by the error
+func add_prepared_beverage(beverage_res: Resource):
+	OrderSystem.add_prepared_beverage(beverage_res)
+
+func store_beverage_data(data: Dictionary):
+	OrderSystem.prepared_beverage_data = data
+	returning_from_beverage = true
+	transition_to_canteen_serve() 
+
+func transition_to_plate_prep(): get_tree().change_scene_to_file(KITCHEN_SCENE_PATH)
+func transition_to_beverage_prep(): get_tree().change_scene_to_file(BEVERAGE_SCENE_PATH)
+func transition_to_canteen_serve(): get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
+func transition_to_end_day(): get_tree().change_scene_to_file(END_DAY_SCENE_PATH)
 
 var saved_customer_order: Resource = null
 var saved_customer_texture: Texture2D = null
-
 func save_customer(order: Resource, tex: Texture2D):
 	saved_customer_order = order
 	saved_customer_texture = tex
-
 func clear_customer():
 	saved_customer_order = null
 	saved_customer_texture = null
-
-# Logic wrappers for validation (in case UI calls GD directly)
-func is_plate_correct() -> bool:
-	return OrderSystem.is_plate_correct()
-
-func is_beverage_correct() -> bool:
-	return OrderSystem.is_beverage_correct()
 
 func _ready():
 	add_to_group("GameData")

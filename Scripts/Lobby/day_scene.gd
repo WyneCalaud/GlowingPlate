@@ -101,7 +101,7 @@ func _on_btn_accept_pressed() -> void:
 	$BtnAccept.hide()
 	$BtnContinue.hide()
 
-	get_tree().change_scene_to_file("res://Scenes/Gameplay/fullgameplay.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Gameplay/KitchenArea.tscn")
 
 
 func _on_btn_continue_pressed() -> void:

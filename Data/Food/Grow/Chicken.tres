@@ -2,12 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://bod6x1pdec17a" path="res://Assets/Foods/Chickens.png" id="1_gn3ue"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="1_jjco8"]
-[ext_resource type="Texture2D" uid="uid://bio3skt86wft6" path="res://Assets/Resized/chickenleg1500.png" id="2_phlly"]
+[ext_resource type="Texture2D" uid="uid://b1x8f430d0fvx" path="res://Assets/IndividualFoods/Chicken.png" id="2_gn3ue"]
 
 [resource]
 script = ExtResource("1_jjco8")
 item_name = "Chicken"
 internal_key = "CHICKEN_LEG"
 base_texture = ExtResource("1_gn3ue")
-default_plated_texture = ExtResource("2_phlly")
+default_plated_texture = ExtResource("2_gn3ue")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"
