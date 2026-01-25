@@ -33,10 +33,17 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/SignalVisualizer/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://Assets/UI/SoundSettingsUI/": "purple"
+}
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
+textures/lossless_compression/force_png=true
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true

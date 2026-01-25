@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=4 format=3 uid="uid://buald3s68wkbi"]
+
+[ext_resource type="Texture2D" uid="uid://cojks02o5t8n6" path="res://Assets/Foods/Papaya.png" id="1_u16w7"]
+[ext_resource type="Texture2D" uid="uid://fvc8vkatial0" path="res://Assets/IndividualFoods/Papaya404.png" id="2_8flky"]
+[ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="2_u16w7"]
+
+[resource]
+script = ExtResource("2_u16w7")
+item_name = "Papaya"
+internal_key = "PAPAYA"
+food_category = "GlowFru"
+base_texture = ExtResource("1_u16w7")
+default_plated_texture = ExtResource("2_8flky")
+metadata/_custom_type_script = "uid://jdcig8g3adhl"

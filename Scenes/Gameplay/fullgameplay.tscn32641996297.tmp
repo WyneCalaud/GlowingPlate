@@ -1,0 +1,373 @@
+[gd_scene load_steps=55 format=3 uid="uid://dspwcgo3enhkn"]
+
+[ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/fullgameplay.gd" id="1_2rsrt"]
+[ext_resource type="PackedScene" uid="uid://chaqv2o4rajlv" path="res://Scenes/Gameplay/BeverageStation.tscn" id="2_yb5e7"]
+[ext_resource type="Texture2D" uid="uid://d4bv2haw4iv1n" path="res://Assets/background/Kitchen Countertop.PNG" id="3_2rc42"]
+[ext_resource type="PackedScene" uid="uid://cumqgtoajakm4" path="res://Scenes/Food Plate/food_plate.tscn" id="3_mi1wp"]
+[ext_resource type="Texture2D" uid="uid://cjob6rgsmt6fj" path="res://Assets/Pinggan/Pinggang Border.png" id="4_brkib"]
+[ext_resource type="Script" uid="uid://d3gd8n1g16fj3" path="res://Scenes/Food Plate/food_plate_draggable.gd" id="5_hhl0g"]
+[ext_resource type="Texture2D" uid="uid://cegi0241vcsfs" path="res://Assets/Resized/ricecup.png" id="5_oq5xs"]
+[ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="6_m6ato"]
+[ext_resource type="Texture2D" uid="uid://cbp2ncq0mib8b" path="res://Assets/RiceCup/RiceCupTray.png" id="7_00qd4"]
+[ext_resource type="Texture2D" uid="uid://ccw7mnwk4jr0w" path="res://Assets/RiceCooker/RiceCookerClosed.png" id="8_wqubv"]
+[ext_resource type="Script" uid="uid://dieojik7tyah5" path="res://Scenes/Gameplay/RiceCooker.gd" id="9_6n3s0"]
+[ext_resource type="Texture2D" uid="uid://4vkr1fviitnc" path="res://Assets/RiceCooker/RiceCookerOpen.png" id="10_kmtth"]
+[ext_resource type="Resource" uid="uid://0swaooqdh4n5" path="res://Data/Food/Go/Rice.tres" id="10_x6gy3"]
+[ext_resource type="Texture2D" uid="uid://ciovm45kr75ix" path="res://Assets/RiceCup/LowAmountRiceCup.png" id="11_1qwq2"]
+[ext_resource type="Texture2D" uid="uid://b7xxaf5ncnmy" path="res://Assets/RiceCup/MediumAmountRiceCup.png" id="12_6n3s0"]
+[ext_resource type="PackedScene" uid="uid://ctdosdqx3kc1c" path="res://Scenes/Transition/circle_transition.tscn" id="12_xg3i5"]
+[ext_resource type="Texture2D" uid="uid://dqn00t6j06d58" path="res://Assets/RiceCup/RiceCup.png" id="13_4pr18"]
+[ext_resource type="Texture2D" uid="uid://dswlp0o3yd0xb" path="res://Assets/RiceCup/TooHighAmountRiceCup.png" id="14_kmtth"]
+[ext_resource type="Resource" uid="uid://b2oeopgun652k" path="res://Data/Food/Grow/Chicken.tres" id="15_dliw2"]
+[ext_resource type="Texture2D" uid="uid://ct2bd3kh0fuyd" path="res://Icons/IconButton_Large_Background_Circle.png" id="16_7p7c3"]
+[ext_resource type="Texture2D" uid="uid://bod6x1pdec17a" path="res://Assets/Foods/Chickens.png" id="16_brkib"]
+[ext_resource type="Texture2D" uid="uid://7ryngig7rcom" path="res://Icons/Exit.png" id="17_6d1sq"]
+[ext_resource type="Texture2D" uid="uid://1ecw6i3ykpw6" path="res://Assets/Foods/Corns.png" id="21_1qwq2"]
+[ext_resource type="Texture2D" uid="uid://b1b74g4ux5tok" path="res://Assets/Foods/Fish.png" id="21_75838"]
+[ext_resource type="Resource" uid="uid://bvv4bih206vxi" path="res://Data/Food/Go/Corn.tres" id="22_6n3s0"]
+[ext_resource type="Resource" uid="uid://d2mntq5kbevox" path="res://Data/Food/Grow/FishFillet.tres" id="23_a6vsa"]
+[ext_resource type="Texture2D" uid="uid://cbkoagx0jde1o" path="res://Assets/Foods/Eggplant.png" id="23_kmtth"]
+[ext_resource type="Resource" uid="uid://omstc0n2h6vh" path="res://Data/Food/GlowVeg/Eggplant.tres" id="24_1y83b"]
+[ext_resource type="Texture2D" uid="uid://buv78pvmno0i" path="res://Assets/Foods/Tofu.png" id="25_ir0db"]
+[ext_resource type="Resource" uid="uid://biwqdd17xlrmg" path="res://Data/Food/Grow/Tofu.tres" id="26_g4nxg"]
+[ext_resource type="Texture2D" uid="uid://bhh7nh2jclxoe" path="res://Assets/Foods/Eggs.png" id="27_i84oe"]
+[ext_resource type="Texture2D" uid="uid://mp7t74bnefg6" path="res://Assets/ServeOrTrash/Serve.png" id="28_da56h"]
+[ext_resource type="Resource" uid="uid://5e2miiomgtir" path="res://Data/Food/Go/Eggs.tres" id="28_pfk8s"]
+[ext_resource type="Texture2D" uid="uid://comko1qjr5kgl" path="res://Assets/Foods/Sitaw.png" id="29_kg6r5"]
+[ext_resource type="Texture2D" uid="uid://rqmcamclgsht" path="res://Assets/ServeOrTrash/trash.png" id="29_yb5e7"]
+[ext_resource type="Resource" uid="uid://b620n7sw6261m" path="res://Data/Food/GlowVeg/Sitaw.tres" id="30_j1qys"]
+[ext_resource type="Texture2D" uid="uid://cbwbsxmrxvjft" path="res://Assets/Foods/Pumpkins.png" id="31_bwss1"]
+[ext_resource type="PackedScene" uid="uid://b3eqyuw2etp2" path="res://Scenes/FoodDispenser/FoodDispenser.tscn" id="32_1qwq2"]
+[ext_resource type="Resource" uid="uid://rucd5es10dwy" path="res://Data/Food/GlowVeg/Pumpkin.tres" id="32_dv72k"]
+[ext_resource type="Texture2D" uid="uid://d0ve4dwh1ogbf" path="res://Assets/Foods/Carrots.png" id="33_s33om"]
+[ext_resource type="Script" uid="uid://bb4a6m5q1e2lt" path="res://Scenes/Gameplay/CameraScroller.gd" id="34_2rc42"]
+[ext_resource type="Resource" uid="uid://h68n0p1prwgj" path="res://Data/Food/GlowVeg/Carrots.tres" id="34_x6p1o"]
+[ext_resource type="Texture2D" uid="uid://cojks02o5t8n6" path="res://Assets/Foods/Papaya.png" id="35_t35j4"]
+[ext_resource type="Resource" uid="uid://buald3s68wkbi" path="res://Data/Food/GlowFru/Papaya.tres" id="36_t78y7"]
+[ext_resource type="Texture2D" uid="uid://dci3jfrravicy" path="res://Assets/Foods/Bananas.png" id="37_a5m5w"]
+[ext_resource type="Resource" uid="uid://7wd86iqmmc06" path="res://Data/Food/GlowFru/Banana.tres" id="38_0dbfa"]
+[ext_resource type="Texture2D" uid="uid://djkqp3ncps3t8" path="res://Assets/Foods/Pandesal.png" id="39_k37ic"]
+[ext_resource type="Resource" uid="uid://cy0uw31wdvh0e" path="res://Data/Food/Go/Pandesal.tres" id="40_cuxcp"]
+[ext_resource type="Texture2D" uid="uid://bry84prv55v1e" path="res://Assets/Foods/Mangoes.png" id="41_egjfc"]
+[ext_resource type="Resource" uid="uid://iwjtv5icvmxp" path="res://Data/Food/GlowFru/Mango.tres" id="42_e674j"]
+[ext_resource type="Texture2D" uid="uid://deq768bcdta8y" path="res://Assets/Foods/Melon.png" id="43_gc6ym"]
+[ext_resource type="Resource" uid="uid://dw3v4m5y7nbwm" path="res://Data/Food/GlowFru/Watermelon.tres" id="44_vw8w7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hhl0g"]
+radius = 151.08276
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rg35f"]
+radius = 102.0
+
+[node name="GamePlayFull" type="Node2D"]
+script = ExtResource("1_2rsrt")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="ColorRect" type="TextureRect" parent="Background"]
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("3_2rc42")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect2" type="TextureRect" parent="Background"]
+offset_left = 1279.0
+offset_right = 2559.0
+offset_bottom = 720.0
+texture = ExtResource("3_2rc42")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BeveragesStation" parent="." instance=ExtResource("2_yb5e7")]
+position = Vector2(1279, 1)
+
+[node name="Mat" type="Node2D" parent="."]
+position = Vector2(16, 0)
+
+[node name="PlateBorder" type="Sprite2D" parent="Mat"]
+position = Vector2(502.00003, 523.00006)
+scale = Vector2(0.51, 0.51)
+texture = ExtResource("4_brkib")
+
+[node name="Plate" type="Node2D" parent="."]
+position = Vector2(16, 0)
+
+[node name="FoodPlate" parent="Plate" instance=ExtResource("3_mi1wp")]
+z_index = 1
+position = Vector2(502, 511)
+scale = Vector2(0.517, 0.517)
+script = ExtResource("5_hhl0g")
+
+[node name="Area2D" type="Area2D" parent="Plate/FoodPlate"]
+position = Vector2(0, 1.9342651)
+scale = Vector2(1.9342359, 1.9342359)
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plate/FoodPlate/Area2D"]
+position = Vector2(0, 10)
+shape = SubResource("CircleShape2D_hhl0g")
+
+[node name="Go Section" type="Node2D" parent="."]
+
+[node name="RiceCupMat" type="Sprite2D" parent="Go Section"]
+position = Vector2(176, 552)
+scale = Vector2(0.21, 0.21)
+texture = ExtResource("7_00qd4")
+
+[node name="RiceCooker" type="Sprite2D" parent="Go Section"]
+position = Vector2(164, 270)
+scale = Vector2(0.234, 0.218)
+texture = ExtResource("8_wqubv")
+script = ExtResource("9_6n3s0")
+closed_texture = ExtResource("8_wqubv")
+open_texture = ExtResource("10_kmtth")
+
+[node name="Area2D" type="Area2D" parent="Go Section/RiceCooker"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Go Section/RiceCooker/Area2D"]
+polygon = PackedVector2Array(-465.81195, 550.45874, -534.188, 403.66968, -568.37604, 36.697266, -568.37604, -220.1836, -555.55554, -353.21106, -525.641, -463.3028, -491.45294, -545.87164, -448.71793, -619.2661, -376.06836, -669.72485, -290.59827, -701.83496, -123.93158, -733.94507, 149.5727, -733.94507, 260.68378, -711.0093, 341.88037, -688.0735, 397.4359, -660.55054, 452.99146, -614.67896, 517.094, -504.58722, 559.8291, -357.79822, 576.9231, -201.83496, 568.3761, 146.78894, 564.10254, 252.29358, 551.2821, 339.4496, 504.27356, 477.0642, 435.89746, 600.9175, 384.61536, 646.78906, 286.32483, 697.2477, 81.196594, 733.94495, -59.82904, 733.94495, -260.68372, 697.2477, -367.52133, 655.9634)
+
+[node name="RiceCup" type="Sprite2D" parent="Go Section"]
+position = Vector2(176, 544)
+scale = Vector2(0.5, 0.446)
+texture = ExtResource("5_oq5xs")
+script = ExtResource("6_m6ato")
+empty_cup_texture = ExtResource("5_oq5xs")
+small_scoop_texture = ExtResource("11_1qwq2")
+medium_scoop_texture = ExtResource("12_6n3s0")
+full_cup_texture = ExtResource("13_4pr18")
+too_high_texture = ExtResource("14_kmtth")
+food_data = ExtResource("10_x6gy3")
+
+[node name="Area2D" type="Area2D" parent="Go Section/RiceCup"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Go Section/RiceCup/Area2D"]
+shape = SubResource("CircleShape2D_rg35f")
+one_way_collision_margin = 0.0
+
+[node name="Row1" type="Control" parent="."]
+custom_minimum_size = Vector2(1205, 266)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 320.0
+offset_top = 92.0
+offset_right = 1525.0
+offset_bottom = 358.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainter" type="HBoxContainer" parent="Row1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = 7.0
+offset_right = 19.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -30
+
+[node name="Slot1" parent="Row1/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("16_brkib")
+food_data = ExtResource("15_dliw2")
+
+[node name="Slot2" parent="Row1/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("21_75838")
+food_data = ExtResource("23_a6vsa")
+
+[node name="Slot3" parent="Row1/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("21_1qwq2")
+food_data = ExtResource("22_6n3s0")
+
+[node name="Slot4" parent="Row1/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("23_kmtth")
+food_data = ExtResource("24_1y83b")
+
+[node name="Slot5" parent="Row1/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("25_ir0db")
+food_data = ExtResource("26_g4nxg")
+
+[node name="Slot6" parent="Row1/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("27_i84oe")
+food_data = ExtResource("28_pfk8s")
+
+[node name="Row2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 724.0
+offset_top = 294.0
+offset_right = 1535.0
+offset_bottom = 537.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainter" type="HBoxContainer" parent="Row2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -30
+
+[node name="Slot1" parent="Row2/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("29_kg6r5")
+food_data = ExtResource("30_j1qys")
+
+[node name="Slot2" parent="Row2/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("31_bwss1")
+food_data = ExtResource("32_dv72k")
+
+[node name="Slot3" parent="Row2/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("33_s33om")
+food_data = ExtResource("34_x6p1o")
+
+[node name="Slot4" parent="Row2/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("35_t35j4")
+food_data = ExtResource("36_t78y7")
+
+[node name="Row3" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 724.0
+offset_top = 494.0
+offset_right = 1535.0
+offset_bottom = 737.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainter" type="HBoxContainer" parent="Row3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -30
+
+[node name="Slot1" parent="Row3/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("37_a5m5w")
+food_data = ExtResource("38_0dbfa")
+
+[node name="Slot2" parent="Row3/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("39_k37ic")
+food_data = ExtResource("40_cuxcp")
+
+[node name="Slot3" parent="Row3/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("41_egjfc")
+food_data = ExtResource("42_e674j")
+
+[node name="Slot4" parent="Row3/HBoxContainter" instance=ExtResource("32_1qwq2")]
+custom_minimum_size = Vector2(230, 200)
+layout_mode = 2
+texture = ExtResource("43_gc6ym")
+food_data = ExtResource("44_vw8w7")
+
+[node name="ServeOrTrash" type="Node2D" parent="."]
+visible = false
+
+[node name="Serve" type="Sprite2D" parent="ServeOrTrash"]
+position = Vector2(672, 28)
+scale = Vector2(0.271, 0.252)
+texture = ExtResource("28_da56h")
+
+[node name="Area2D" type="Area2D" parent="ServeOrTrash/Serve"]
+collision_layer = 2
+monitoring = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Serve/Area2D"]
+polygon = PackedVector2Array(-579.3358, -111.11111, -575.64575, 0, -564.5757, 31.746025, -546.1255, 63.492058, -505.53503, 91.269844, -468.63464, 103.1746, 487.08496, 103.1746, 531.3655, 87.30158, 560.88574, 59.52381, 579.33594, 31.746025, 590.406, 0, 590.406, -115.07936)
+
+[node name="Trash" type="Sprite2D" parent="ServeOrTrash"]
+position = Vector2(688.00006, 688)
+scale = Vector2(0.27148435, 0.31492725)
+texture = ExtResource("29_yb5e7")
+
+[node name="Area2D" type="Area2D" parent="ServeOrTrash/Trash"]
+collision_layer = 2
+monitoring = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Trash/Area2D"]
+polygon = PackedVector2Array(-464.11548, -85.73413, -493.58313, -76.20801, -512.00037, -63.506836, -530.4177, -47.630127, -545.1515, -22.227295, -552.51843, 0, -556.2019, 107.961426, 574.6184, 107.961426, 574.6184, 0, 563.5681, -34.92871, 537.78394, -63.506836, 515.6831, -76.20801, 486.21558, -85.73413)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+visible = false
+
+[node name="CircleIntroTransition" parent="CanvasLayer" instance=ExtResource("12_xg3i5")]
+
+[node name="Main Menu" type="HBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 2.0
+offset_right = 76.0
+offset_bottom = 60.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Exit" type="TextureButton" parent="Main Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("16_7p7c3")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Exit" type="TextureRect" parent="Main Menu/Exit"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -16.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.96875, 2.0625)
+texture = ExtResource("17_6d1sq")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("34_2rc42")
+
+[connection signal="area_entered" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_exited"]
+[connection signal="area_entered" from="Go Section/RiceCup/Area2D" to="Go Section/RiceCup" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Go Section/RiceCup/Area2D" to="Go Section/RiceCup" method="_on_area_2d_area_exited"]
+[connection signal="pressed" from="Main Menu/Exit" to="." method="_on_exit_pressed"]

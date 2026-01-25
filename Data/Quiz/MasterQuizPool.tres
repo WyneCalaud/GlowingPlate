@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuizDataResource" load_steps=17 format=3 uid="uid://dwv5ldrcctc1x"]
+[gd_resource type="Resource" script_class="QuizDataResource" load_steps=16 format=3 uid="uid://dwv5ldrcctc1x"]
 
 [ext_resource type="Script" uid="uid://v742h0ht2cul" path="res://Scripts/Quiz/QuizQuestionResource.gd" id="1_gp4oc"]
 [ext_resource type="Script" uid="uid://bvcdcfa3fv760" path="res://Scripts/Quiz/QuizAnswerResource.gd" id="2_p0igg"]
@@ -77,13 +77,6 @@ metadata/_custom_type_script = "uid://cuksga1b1gcyo"
 
 [sub_resource type="Resource" id="Resource_pqn14"]
 script = ExtResource("2_p0igg")
-text_label = "Mixed Veggies"
-answer_key = "Mixed Veggies"
-texture_path = "\"\""
-metadata/_custom_type_script = "uid://cuksga1b1gcyo"
-
-[sub_resource type="Resource" id="Resource_ieojw"]
-script = ExtResource("2_p0igg")
 text_label = "Watermelon"
 answer_key = "Watermelon"
 texture_path = "\"\""
@@ -95,7 +88,7 @@ question_id = "Q003"
 question_text = "What Fruit is in the Glow Foods?"
 image_path = "\"\""
 correct_answer_key = "Watermelon"
-answers = Array[ExtResource("2_p0igg")]([SubResource("Resource_6chss"), SubResource("Resource_fpaye"), SubResource("Resource_pqn14"), SubResource("Resource_ieojw")])
+answers = Array[ExtResource("2_p0igg")]([SubResource("Resource_6chss"), SubResource("Resource_fpaye"), SubResource("Resource_pqn14")])
 metadata/_custom_type_script = "uid://v742h0ht2cul"
 
 [resource]

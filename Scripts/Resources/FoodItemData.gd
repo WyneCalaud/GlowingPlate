@@ -3,18 +3,48 @@ extends Resource
 class_name CustomItemData
 
 # --- Core Identity ---
-@export var item_name: String = "New Food Item" # Display name (e.g., "Chicken Leg")
-@export var internal_key: String = "ITEM_KEY" # Unique ID for orders/database lookup (e.g., CHICKEN_LEG)
-@export var food_category: String = "Grow" # Matches the plate slot type (Go, Grow, GlowVeg, GlowFru)
+@export var item_name: String = "New Food Item"
+@export var internal_key: String = "ITEM_KEY"
+@export var food_category: String = "Grow"
 
 # --- Visuals ---
-@export var base_texture: Texture2D # Inventory/Uncooked state texture
-@export var default_plated_texture: Texture2D # Default texture for when the item is successfully plated ("RightAmount" rice)
+@export var base_texture: Texture2D
+@export var default_plated_texture: Texture2D
 
-# --- Rice Mechanic Specific Plated Textures (New additions for RICE item) ---
-@export var plated_texture_small: Texture2D # Texture for a "Small" scoop of rice
-@export var plated_texture_medium: Texture2D # Texture for a "Medium" scoop of rice
-@export var plated_texture_too_high: Texture2D # Texture for a "TooHigh" scoop of rice
+# --- Quantity-Based Textures ---
+@export_group("Quantity Textures")
+@export var texture_count_1: Texture2D
+@export var texture_count_2: Texture2D
+@export var texture_count_3: Texture2D
+@export var texture_count_4: Texture2D
+@export var texture_count_5: Texture2D
+
+# --- Rice Mechanic Specific Plated Textures ---
+@export_group("Rice Mechanic Textures")
+@export var plated_texture_small: Texture2D
+@export var plated_texture_medium: Texture2D
+@export var plated_texture_too_high: Texture2D
+
+# --- Nutritional Stats (New) ---
+# Values represent percentage or mg/mcg per serving
+@export_group("Nutrients")
+@export_range(0, 100) var vitamin_a: float = 0.0
+@export_range(0, 100) var vitamin_b: float = 0.0
+@export_range(0, 100) var vitamin_c: float = 0.0
+@export_range(0, 100) var vitamin_d: float = 0.0
+@export_range(0, 100) var zinc: float = 0.0
+@export_range(0, 100) var iron: float = 0.0
 
 # --- Gameplay Stats ---
 @export var base_value: int = 100
+
+## Returns a dictionary of all nutrients for easy calculation
+func get_nutritional_profile() -> Dictionary:
+	return {
+		"vit_a": vitamin_a,
+		"vit_b": vitamin_b,
+		"vit_c": vitamin_c,
+		"vit_d": vitamin_d,
+		"zinc": zinc,
+		"iron": iron
+	}

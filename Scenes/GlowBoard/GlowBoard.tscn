@@ -1,0 +1,155 @@
+[gd_scene load_steps=12 format=3 uid="uid://bs42us5samyyd"]
+
+[ext_resource type="Script" uid="uid://ejkgyhmbfm6x" path="res://Scripts/Lobby/GlowBoard.gd" id="1_1v4b8"]
+[ext_resource type="Texture2D" uid="uid://btc5qgsjdwv2v" path="res://Assets/UI/GlowBoard/GlowBoardBackground.png" id="2_x2fdi"]
+[ext_resource type="Texture2D" uid="uid://dwx8nslak6ukk" path="res://Assets/UI/GlowBoard/BackButton.png" id="3_0er7u"]
+[ext_resource type="Texture2D" uid="uid://ddg80chhavokp" path="res://Assets/UI/GlowBoard/GlowBoardSign.png" id="4_hetde"]
+[ext_resource type="Texture2D" uid="uid://de6tyysekcw3h" path="res://Assets/UI/GlowBoard/KeysUI.png" id="5_lh86r"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="6_k3bx0"]
+[ext_resource type="Texture2D" uid="uid://ryu6th5fud2h" path="res://Assets/UI/GlowBoard/LeoCard.png" id="7_bwta1"]
+[ext_resource type="Texture2D" uid="uid://5w5goee02mmo" path="res://Assets/UI/GlowBoard/InProgressButton.png" id="8_8ph0k"]
+[ext_resource type="Texture2D" uid="uid://d1eebnqnpg85m" path="res://Assets/UI/GlowBoard/MayaCard.png" id="9_q5kgl"]
+[ext_resource type="Texture2D" uid="uid://5tveh22b30fa" path="res://Assets/UI/GlowBoard/AvailableButton.png" id="10_g0w47"]
+[ext_resource type="Texture2D" uid="uid://vurakskff3n2" path="res://Assets/UI/GlowBoard/NormaCard.png" id="11_m030s"]
+
+[node name="GlowBoard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1v4b8")
+
+[node name="GlowBoardBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_x2fdi")
+expand_mode = 1
+
+[node name="BackButton" type="MarginContainer" parent="."]
+layout_mode = 1
+offset_right = 106.0
+offset_bottom = 117.0
+
+[node name="TopLeftButton" type="HBoxContainer" parent="BackButton"]
+layout_mode = 2
+
+[node name="BackButton" type="TextureButton" parent="BackButton/TopLeftButton"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("3_0er7u")
+stretch_mode = 0
+
+[node name="SignImage" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -254.5
+offset_right = 254.5
+offset_bottom = 92.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 20
+
+[node name="TopMiddleSign" type="HBoxContainer" parent="SignImage"]
+layout_mode = 2
+
+[node name="GlowBoardSign" type="TextureRect" parent="SignImage/TopMiddleSign"]
+layout_mode = 2
+texture = ExtResource("4_hetde")
+
+[node name="KeysUI" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -219.0
+offset_bottom = 94.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+
+[node name="TopRightKeys" type="HBoxContainer" parent="KeysUI"]
+layout_mode = 2
+alignment = 2
+
+[node name="KeyImage" type="TextureRect" parent="KeysUI/TopRightKeys"]
+layout_mode = 2
+texture = ExtResource("5_lh86r")
+expand_mode = 3
+
+[node name="KeyAmount" type="Label" parent="KeysUI/TopRightKeys/KeyImage"]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 18.0
+offset_right = 129.0
+offset_bottom = 48.0
+theme_override_fonts/font = ExtResource("6_k3bx0")
+theme_override_font_sizes/font_size = 25
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CharacterCards" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -493.0
+offset_top = -217.5
+offset_right = 493.0
+offset_bottom = 297.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LeoCard" type="VBoxContainer" parent="CharacterCards"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LeoPicture" type="TextureButton" parent="CharacterCards/LeoCard"]
+layout_mode = 2
+texture_normal = ExtResource("7_bwta1")
+
+[node name="ProgressButton" type="TextureRect" parent="CharacterCards/LeoCard"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("8_8ph0k")
+
+[node name="MayaCard" type="VBoxContainer" parent="CharacterCards"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="MayaPicture" type="TextureButton" parent="CharacterCards/MayaCard"]
+layout_mode = 2
+texture_normal = ExtResource("9_q5kgl")
+
+[node name="ProgressButton" type="TextureRect" parent="CharacterCards/MayaCard"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("10_g0w47")
+
+[node name="NormaCard" type="VBoxContainer" parent="CharacterCards"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="NormaPicture" type="TextureButton" parent="CharacterCards/NormaCard"]
+layout_mode = 2
+texture_normal = ExtResource("11_m030s")
+
+[node name="ProgressButton" type="TextureRect" parent="CharacterCards/NormaCard"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("10_g0w47")
+
+[connection signal="pressed" from="BackButton/TopLeftButton/BackButton" to="." method="_on_back_button_pressed"]

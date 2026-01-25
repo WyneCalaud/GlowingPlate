@@ -1,9 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://chaqv2o4rajlv"]
+[gd_scene load_steps=17 format=3 uid="uid://chaqv2o4rajlv"]
 
 [ext_resource type="Script" uid="uid://bteybm5j11cxh" path="res://Scripts/Gameplay/beverage_station.gd" id="1_xqbgv"]
 [ext_resource type="Texture2D" uid="uid://d4bv2haw4iv1n" path="res://Assets/background/Kitchen Countertop.PNG" id="2_xqbgv"]
 [ext_resource type="Texture2D" uid="uid://bskxkak4gn6ug" path="res://Assets/Beverages/WaterStation/Water Pitcher (Cold).PNG" id="3_5tifh"]
 [ext_resource type="Script" uid="uid://drf28y3466o7l" path="res://Scenes/Gameplay/LiquidDispenser.gd" id="3_vjurt"]
+[ext_resource type="Texture2D" uid="uid://ldahrl6rkxw3" path="res://Assets/UI/KitchenUI/LongMat.png" id="3_xhudw"]
 [ext_resource type="Texture2D" uid="uid://ba826ogp85jji" path="res://Assets/Beverages/Mat/lines-square.png" id="6_3v2pv"]
 [ext_resource type="Texture2D" uid="uid://ry0sij3lf8qo" path="res://Assets/Beverages/WaterStation/Water Pitcher (Hot).PNG" id="7_0fyd5"]
 [ext_resource type="Texture2D" uid="uid://b3hlqvfmhgp8v" path="res://Assets/Beverages/Glasses/stackglass720.png" id="7_rft6r"]
@@ -12,8 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://cdsee1ndcwmht" path="res://Assets/Beverages/MilkStation/RegularMilk/MilkSelected512.png" id="10_5tifh"]
 [ext_resource type="Texture2D" uid="uid://ctiu7io6mov7l" path="res://Assets/Beverages/MilkStation/AlmondMilk/AlmondMilk512.png" id="11_xqbgv"]
 [ext_resource type="Texture2D" uid="uid://btmgv2fmqcuh0" path="res://Assets/Beverages/MilkStation/AlmondMilk/AlmondMilkSelected512.png" id="12_0fyd5"]
-[ext_resource type="Texture2D" uid="uid://mp7t74bnefg6" path="res://Assets/ServeOrTrash/Serve.png" id="13_tdqx7"]
-[ext_resource type="Texture2D" uid="uid://rqmcamclgsht" path="res://Assets/ServeOrTrash/trash.png" id="14_4sdqy"]
 [ext_resource type="Texture2D" uid="uid://blobu2nbtq44c" path="res://Assets/Buttons/Finish (1).png" id="18_0fyd5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xsyws"]
@@ -23,12 +22,6 @@ height = 799.1057
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3v2pv"]
 radius = 58.434814
 height = 230.76276
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xhudw"]
-size = Vector2(1160.9492, 226.62889)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5tifh"]
-size = Vector2(1161.2372, 208.96828)
 
 [node name="BeveragesStation" type="Node2D"]
 script = ExtResource("1_xqbgv")
@@ -44,6 +37,24 @@ size_flags_vertical = 3
 texture = ExtResource("2_xqbgv")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="Mat" type="Node2D" parent="."]
+position = Vector2(408, 480)
+
+[node name="LongMat" type="Sprite2D" parent="Mat"]
+position = Vector2(360.99997, -206.5)
+scale = Vector2(0.78955686, 0.78571415)
+texture = ExtResource("3_xhudw")
+
+[node name="Mat1" type="Sprite2D" parent="Mat"]
+position = Vector2(95.99999, 95.99997)
+scale = Vector2(0.25830182, 0.29435477)
+texture = ExtResource("6_3v2pv")
+
+[node name="Mat2" type="Sprite2D" parent="Mat"]
+position = Vector2(335, 96)
+scale = Vector2(0.25830182, 0.29435477)
+texture = ExtResource("6_3v2pv")
 
 [node name="WaterStation" type="Node2D" parent="."]
 position = Vector2(540, 80)
@@ -119,19 +130,6 @@ selected_texture = ExtResource("12_0fyd5")
 position = Vector2(-1.8550725, -5.8600006)
 shape = SubResource("CapsuleShape2D_3v2pv")
 
-[node name="Mat" type="Node2D" parent="."]
-position = Vector2(408, 480)
-
-[node name="Mat1" type="Sprite2D" parent="Mat"]
-position = Vector2(95.99999, 95.99997)
-scale = Vector2(0.25830182, 0.29435477)
-texture = ExtResource("6_3v2pv")
-
-[node name="Mat2" type="Sprite2D" parent="Mat"]
-position = Vector2(335, 96)
-scale = Vector2(0.25830182, 0.29435477)
-texture = ExtResource("6_3v2pv")
-
 [node name="Glasses" type="Node2D" parent="."]
 position = Vector2(247, 205)
 
@@ -142,36 +140,6 @@ position = Vector2(153, 19)
 scale = Vector2(0.448, 0.435)
 texture = ExtResource("7_rft6r")
 script = ExtResource("8_mcnup")
-
-[node name="ServeOrTrash" type="Node2D" parent="."]
-visible = false
-
-[node name="Serve" type="Sprite2D" parent="ServeOrTrash"]
-position = Vector2(672, 40)
-scale = Vector2(0.379, 0.353)
-texture = ExtResource("13_tdqx7")
-
-[node name="Area2D" type="Area2D" parent="ServeOrTrash/Serve"]
-collision_layer = 2
-monitoring = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ServeOrTrash/Serve/Area2D"]
-position = Vector2(10.554077, 1.5258789e-05)
-scale = Vector2(1.0000008, 1)
-shape = SubResource("RectangleShape2D_xhudw")
-
-[node name="Trash" type="Sprite2D" parent="ServeOrTrash"]
-position = Vector2(672.00006, 680.00006)
-scale = Vector2(0.37890625, 0.42111644)
-texture = ExtResource("14_4sdqy")
-
-[node name="Area2D" type="Area2D" parent="ServeOrTrash/Trash"]
-collision_layer = 2
-monitoring = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ServeOrTrash/Trash/Area2D"]
-position = Vector2(10.556519, 9.498413)
-shape = SubResource("RectangleShape2D_5tifh")
 
 [node name="BtnFinish" type="Button" parent="."]
 offset_left = 997.0

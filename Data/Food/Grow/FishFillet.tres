@@ -10,4 +10,5 @@ item_name = "Fish Fillet"
 internal_key = "FISH_FILLET"
 base_texture = ExtResource("1_pgbmo")
 default_plated_texture = ExtResource("2_scjta")
+texture_count_1 = ExtResource("2_scjta")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"
