@@ -4,7 +4,7 @@ extends Node
 var current_day: int = 1          
 const TOTAL_DAYS: int = 7         
 var money: int = 0                
-var keys: int = 0  
+var keys: int = 60  
 
 # --- GLOW BOARD PROGRESSION ---
 var character_progress: Dictionary = {

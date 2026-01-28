@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dl6vkdqxfye3a"]
+[gd_scene load_steps=7 format=3 uid="uid://dl6vkdqxfye3a"]
 
 [ext_resource type="Script" uid="uid://db22l0kqy82ml" path="res://Scenes/Gameplay/hold_button.gd" id="1_tyl08"]
 [ext_resource type="FontFile" uid="uid://btg6v4f2xjtf8" path="res://monogram.ttf" id="2_5kias"]
+[ext_resource type="Texture2D" uid="uid://xu1kc7w48m8a" path="res://Assets/UI/KitchenUI/ZoomRiceCooker.png" id="2_fvw70"]
 [ext_resource type="Texture2D" uid="uid://b0aqgr7efq1rm" path="res://Items/fantasy_pixelart_ui (1)/sliders/silver_slider_filled.png" id="2_s5r3p"]
 [ext_resource type="Texture2D" uid="uid://cbsoxhejqmkba" path="res://Items/fantasy_pixelart_ui (1)/sliders/gold_slider_pressed.png" id="3_fvw70"]
 [ext_resource type="Texture2D" uid="uid://bg7aoecx6ytqc" path="res://Assets/UI/KitchenUI/Hold Button.png" id="5_s5r3p"]
@@ -17,12 +18,21 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tyl08")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 8.0
+offset_right = 228.0
+offset_bottom = 96.0
+texture = ExtResource("2_fvw70")
+expand_mode = 1
+
 [node name="ProgressBar" type="TextureProgressBar" parent="."]
 layout_mode = 0
-offset_left = 72.0
-offset_top = 40.0
-offset_right = 131.0
-offset_bottom = 49.0
+offset_left = 248.00002
+offset_top = 48.0
+offset_right = 307.0
+offset_bottom = 57.0
 scale = Vector2(2.840711, 3.0778975)
 max_value = 4.5
 texture_under = ExtResource("2_s5r3p")
@@ -35,6 +45,7 @@ offset_bottom = 377.0
 scale = Vector2(0.6, 0.6)
 theme_override_constants/separation = -70
 alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 visible = false
