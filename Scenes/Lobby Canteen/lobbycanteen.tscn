@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=31 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://dvyeuoa5kfo3o" path="res://Assets/UI/ShopBackground.png" id="2_wdy5h"]
@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bsf2omkf5nl3c" path="res://Assets/UI/LobbyUI/Bulletin Board Module.png" id="4_606uc"]
 [ext_resource type="Texture2D" uid="uid://cpgyhoxioemwn" path="res://Assets/UI/LobbyUI/NutriShop Module.png" id="5_4edj8"]
 [ext_resource type="Texture2D" uid="uid://0mf0efgwobgl" path="res://Assets/UI/LobbyUI/NutriDesk Module.png" id="6_myl55"]
-[ext_resource type="Texture2D" uid="uid://c1fcn6wdlxryg" path="res://Assets/UI/LobbyUI/DayButton.png" id="7_cmvyw"]
+[ext_resource type="Texture2D" uid="uid://me72u4mdvqya" path="res://Assets/UI/LobbyUI/BlackStartButton.png" id="7_606uc"]
 [ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="8_606uc"]
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="12_k43ou"]
 [ext_resource type="Texture2D" uid="uid://iepyf6j8aa05" path="res://Assets/UI/LobbyUI/CallCustomer.png" id="13_wdy5h"]
@@ -24,6 +24,11 @@
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="27_cmvyw"]
 [ext_resource type="Texture2D" uid="uid://daqtdvdiuidiq" path="res://Assets/Serving Tray/Serving Tray.png" id="27_hcpvu"]
 [ext_resource type="Texture2D" uid="uid://caogeod1xs5e6" path="res://Assets/Buttons/serve (1).png" id="28_gadot"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_606uc"]
+font = ExtResource("15_wdy5h")
+font_size = 30
+font_color = Color(0.9137255, 0.8352941, 0.6862745, 1)
 
 [sub_resource type="Theme" id="Theme_myl55"]
 
@@ -112,24 +117,25 @@ stretch_mode = 0
 
 [node name="StartDayButton" type="TextureButton" parent="BottomButtons"]
 layout_mode = 0
-offset_left = 1072.0
-offset_top = 520.0
-offset_right = 1304.0
-offset_bottom = 712.0
+offset_left = 1048.0
+offset_top = 528.0
+offset_right = 1272.0
+offset_bottom = 680.0
 size_flags_horizontal = 3
-texture_normal = ExtResource("7_cmvyw")
+texture_normal = ExtResource("7_606uc")
 ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="BottomButtons/StartDayButton"]
 layout_mode = 0
-offset_left = 124.0
-offset_top = 97.0
-offset_right = 164.0
-offset_bottom = 143.0
+offset_left = 112.0
+offset_top = 32.0
+offset_right = 152.0
+offset_bottom = 78.0
 theme_override_fonts/font = ExtResource("8_606uc")
 theme_override_font_sizes/font_size = 30
 text = "1"
+label_settings = SubResource("LabelSettings_606uc")
 horizontal_alignment = 1
 vertical_alignment = 1
 

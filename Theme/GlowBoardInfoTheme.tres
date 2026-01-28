@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cq6b2ske61ggc"]
+
+[ext_resource type="FontFile" uid="uid://b443ju2lx1p21" path="res://Fonts/Comic_Neue/ComicNeue-BoldItalic.ttf" id="1_ukgoe"]
+
+[resource]
+line_spacing = 5.0
+font = ExtResource("1_ukgoe")
+font_size = 25
