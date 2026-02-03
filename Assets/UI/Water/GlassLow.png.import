@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6chsjsgrtvve"
-path="res://.godot/imported/Milk1260.png-884ee042aa916792ca0c5359d3b1446e.ctex"
+uid="uid://dlnwdvjq1id4r"
+path="res://.godot/imported/GlassLow.png-be3f3c91590b71927cc054174b1816e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Beverages/MilkStation/RegularMilk/Milk1260.png"
-dest_files=["res://.godot/imported/Milk1260.png-884ee042aa916792ca0c5359d3b1446e.ctex"]
+source_file="res://Assets/UI/Water/GlassLow.png"
+dest_files=["res://.godot/imported/GlassLow.png-be3f3c91590b71927cc054174b1816e5.ctex"]
 
 [params]
 

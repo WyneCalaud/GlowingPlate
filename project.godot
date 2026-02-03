@@ -36,12 +36,20 @@ enabled=PackedStringArray("res://addons/SignalVisualizer/plugin.cfg")
 [file_customization]
 
 folder_colors={
-"res://Assets/UI/SoundSettingsUI/": "purple"
+"res://Assets/UI/AlmanacUI/": "orange",
+"res://Assets/UI/GlowBoard/": "orange",
+"res://Assets/UI/Interface/": "orange",
+"res://Assets/UI/KitchenUI/": "orange",
+"res://Assets/UI/LobbyUI/": "orange",
+"res://Assets/UI/Milk/": "blue",
+"res://Assets/UI/NutriShop/": "orange",
+"res://Assets/UI/QuizUI/": "orange",
+"res://Assets/UI/SoundSettingsUI/": "pink",
+"res://Assets/UI/Water/": "blue"
 }
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
 textures/lossless_compression/force_png=true

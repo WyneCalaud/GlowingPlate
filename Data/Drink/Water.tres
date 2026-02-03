@@ -1,18 +1,18 @@
 [gd_resource type="Resource" script_class="CustomItemData" load_steps=6 format=3 uid="uid://cn7vgm67y2tvp"]
 
-[ext_resource type="Texture2D" uid="uid://befwmm8wymelb" path="res://Assets/Beverages/Glasses/RightWater.png" id="1_8c6o8"]
+[ext_resource type="Texture2D" uid="uid://cnmcpi1o2ssp5" path="res://Assets/UI/Water/GlassHigh.png" id="1_7y6yq"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="1_uewri"]
-[ext_resource type="Texture2D" uid="uid://bq0sw78wboej" path="res://Assets/Beverages/Glasses/MedWater.png" id="2_qfn0x"]
-[ext_resource type="Texture2D" uid="uid://cxsbycafdpxa5" path="res://Assets/Beverages/Glasses/LowWater.png" id="3_bnpoq"]
-[ext_resource type="Texture2D" uid="uid://v4swc7cvihn7" path="res://Assets/Beverages/Glasses/TooHighWater.png" id="4_83rb5"]
+[ext_resource type="Texture2D" uid="uid://cbrbjoqt3q6up" path="res://Assets/UI/Water/GlassMed.png" id="2_qfn0x"]
+[ext_resource type="Texture2D" uid="uid://dlnwdvjq1id4r" path="res://Assets/UI/Water/GlassLow.png" id="3_bnpoq"]
+[ext_resource type="Texture2D" uid="uid://b0qvst0os066f" path="res://Assets/UI/Water/GlassFull.png" id="4_qfn0x"]
 
 [resource]
 script = ExtResource("1_uewri")
 item_name = "Water"
 internal_key = "WATER"
 food_category = "Water"
-base_texture = ExtResource("1_8c6o8")
-default_plated_texture = ExtResource("1_8c6o8")
+base_texture = ExtResource("1_7y6yq")
+default_plated_texture = ExtResource("1_7y6yq")
 plated_texture_small = ExtResource("3_bnpoq")
 plated_texture_medium = ExtResource("2_qfn0x")
-plated_texture_too_high = ExtResource("4_83rb5")
+plated_texture_too_high = ExtResource("4_qfn0x")

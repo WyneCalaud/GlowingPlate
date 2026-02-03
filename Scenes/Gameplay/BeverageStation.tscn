@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://chaqv2o4rajlv"]
+[gd_scene load_steps=14 format=3 uid="uid://chaqv2o4rajlv"]
 
 [ext_resource type="Script" uid="uid://bteybm5j11cxh" path="res://Scripts/Gameplay/beverage_station.gd" id="1_xqbgv"]
 [ext_resource type="Texture2D" uid="uid://d4bv2haw4iv1n" path="res://Assets/background/Kitchen Countertop.PNG" id="2_xqbgv"]
@@ -7,21 +7,17 @@
 [ext_resource type="Texture2D" uid="uid://ldahrl6rkxw3" path="res://Assets/UI/KitchenUI/LongMat.png" id="3_xhudw"]
 [ext_resource type="Texture2D" uid="uid://ba826ogp85jji" path="res://Assets/Beverages/Mat/lines-square.png" id="6_3v2pv"]
 [ext_resource type="Texture2D" uid="uid://ry0sij3lf8qo" path="res://Assets/Beverages/WaterStation/Water Pitcher (Hot).PNG" id="7_0fyd5"]
-[ext_resource type="Texture2D" uid="uid://b3hlqvfmhgp8v" path="res://Assets/Beverages/Glasses/stackglass720.png" id="7_rft6r"]
 [ext_resource type="Script" uid="uid://dl5b6gat7441v" path="res://Scenes/Gameplay/stack_glass_spawner.gd" id="8_mcnup"]
-[ext_resource type="Texture2D" uid="uid://bwf1i4irynbwg" path="res://Assets/Beverages/MilkStation/RegularMilk/Milk512.png" id="9_0fyd5"]
-[ext_resource type="Texture2D" uid="uid://cdsee1ndcwmht" path="res://Assets/Beverages/MilkStation/RegularMilk/MilkSelected512.png" id="10_5tifh"]
-[ext_resource type="Texture2D" uid="uid://ctiu7io6mov7l" path="res://Assets/Beverages/MilkStation/AlmondMilk/AlmondMilk512.png" id="11_xqbgv"]
-[ext_resource type="Texture2D" uid="uid://btmgv2fmqcuh0" path="res://Assets/Beverages/MilkStation/AlmondMilk/AlmondMilkSelected512.png" id="12_0fyd5"]
+[ext_resource type="Texture2D" uid="uid://cacj1j2algte7" path="res://Assets/UI/Milk/MilkCartons.png" id="8_rft6r"]
+[ext_resource type="Texture2D" uid="uid://b4t6anq2kh5dv" path="res://Assets/UI/Water/StackGlass.png" id="12_tdqx7"]
 [ext_resource type="Texture2D" uid="uid://blobu2nbtq44c" path="res://Assets/Buttons/Finish (1).png" id="18_0fyd5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xsyws"]
 radius = 195.01257
 height = 799.1057
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3v2pv"]
-radius = 58.434814
-height = 230.76276
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tdqx7"]
+size = Vector2(249.50726, 172.97104)
 
 [node name="BeveragesStation" type="Node2D"]
 script = ExtResource("1_xqbgv")
@@ -42,8 +38,8 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(408, 480)
 
 [node name="LongMat" type="Sprite2D" parent="Mat"]
-position = Vector2(360.99997, -206.5)
-scale = Vector2(0.78955686, 0.78571415)
+position = Vector2(365.00003, -250)
+scale = Vector2(0.7705696, 1)
 texture = ExtResource("3_xhudw")
 
 [node name="Mat1" type="Sprite2D" parent="Mat"]
@@ -73,6 +69,7 @@ unselected_texture = ExtResource("3_5tifh")
 selected_texture = ExtResource("3_5tifh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterStation/ColdWater/Area2D"]
+visible = false
 position = Vector2(-41.809296, 8.78042)
 shape = SubResource("CapsuleShape2D_xsyws")
 
@@ -90,6 +87,7 @@ unselected_texture = ExtResource("7_0fyd5")
 selected_texture = ExtResource("7_0fyd5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterStation/HotWater/Area2D"]
+visible = false
 position = Vector2(-41.809296, 8.78042)
 shape = SubResource("CapsuleShape2D_xsyws")
 
@@ -97,38 +95,23 @@ shape = SubResource("CapsuleShape2D_xsyws")
 position = Vector2(951, 61)
 
 [node name="MilkCarton" type="Sprite2D" parent="MilkStation"]
-position = Vector2(52, 109.24999)
-scale = Vector2(1.078125, 1.2372013)
-texture = ExtResource("9_0fyd5")
+position = Vector2(122.999985, 144)
+scale = Vector2(1.0267775, 1.1204706)
+texture = ExtResource("8_rft6r")
 
 [node name="Area2D" type="Area2D" parent="MilkStation/MilkCarton"]
 collision_mask = 2
 monitorable = false
 script = ExtResource("3_vjurt")
 liquid_type = "RegularMilk"
-unselected_texture = ExtResource("9_0fyd5")
-selected_texture = ExtResource("10_5tifh")
+unselected_texture = ExtResource("8_rft6r")
+selected_texture = ExtResource("8_rft6r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MilkStation/MilkCarton/Area2D"]
-position = Vector2(-1.8550725, -5.8600006)
-shape = SubResource("CapsuleShape2D_3v2pv")
-
-[node name="AlmondCarton" type="Sprite2D" parent="MilkStation"]
-position = Vector2(204, 109.24999)
-scale = Vector2(1.078125, 1.2372013)
-texture = ExtResource("11_xqbgv")
-
-[node name="Area2D" type="Area2D" parent="MilkStation/AlmondCarton"]
-collision_mask = 2
-monitorable = false
-script = ExtResource("3_vjurt")
-liquid_type = "AlmondMilk"
-unselected_texture = ExtResource("11_xqbgv")
-selected_texture = ExtResource("12_0fyd5")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MilkStation/AlmondCarton/Area2D"]
-position = Vector2(-1.8550725, -5.8600006)
-shape = SubResource("CapsuleShape2D_3v2pv")
+visible = false
+position = Vector2(0.46374512, -4.849655)
+scale = Vector2(1, 1.0000001)
+shape = SubResource("RectangleShape2D_tdqx7")
 
 [node name="Glasses" type="Node2D" parent="."]
 position = Vector2(247, 205)
@@ -136,9 +119,9 @@ position = Vector2(247, 205)
 [node name="StackGlass" type="Sprite2D" parent="Glasses" groups=["global_controller"]]
 light_mask = 3
 visibility_layer = 9
-position = Vector2(153, 19)
-scale = Vector2(0.448, 0.435)
-texture = ExtResource("7_rft6r")
+position = Vector2(161, 2)
+scale = Vector2(0.54658383, 0.5566502)
+texture = ExtResource("12_tdqx7")
 script = ExtResource("8_mcnup")
 
 [node name="BtnFinish" type="Button" parent="."]

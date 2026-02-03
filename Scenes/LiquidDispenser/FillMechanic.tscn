@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3tgk7yhcgvkp"]
+
+[ext_resource type="Script" uid="uid://bvwnv0rofkvtw" path="res://Scenes/LiquidDispenser/GlassFill.gd" id="1_68hj7"]
+[ext_resource type="Texture2D" uid="uid://bowln0jvkiuku" path="res://Assets/UI/KitchenUI/BlackHoldButton.png" id="2_68hj7"]
+[ext_resource type="Texture2D" uid="uid://b0aqgr7efq1rm" path="res://Items/fantasy_pixelart_ui (1)/sliders/silver_slider_filled.png" id="3_jhy8e"]
+
+[node name="FillMechanic" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_68hj7")
+
+[node name="FillingIndicator" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 83.0
+offset_right = 474.71402
+offset_bottom = 126.93155
+rotation = -1.5707964
+max_value = 4.0
+step = 0.1
+value = 1.0
+rounded = true
+nine_patch_stretch = true
+texture_under = ExtResource("3_jhy8e")
+texture_progress = ExtResource("3_jhy8e")
+tint_under = Color(1.4164544, 1.4164544, 1.4164544, 1)
+tint_progress = Color(0, 1, 1, 1)
+
+[node name="OutlineFrame" type="ReferenceRect" parent="FillingIndicator"]
+layout_mode = 0
+offset_right = 239.63547
+offset_bottom = 45.22177
+
+[node name="HoldButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 68.0
+offset_right = 250.0
+offset_bottom = 181.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("2_68hj7")

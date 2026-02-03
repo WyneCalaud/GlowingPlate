@@ -1,4 +1,3 @@
-# GameHUD.gd
 extends CanvasLayer
 
 # --- UI REFERENCES ---
@@ -32,17 +31,13 @@ var menu_tween: Tween
 const SLIDE_DISTANCE: float = 60.0
 const ANIM_DURATION: float = 0.3
 
-# --- STATE ---
-var plate_served: bool = false
-var beverage_served: bool = false
-
 # --- SCENE PATHS ---
 const MAIN_MENU_PATH = "res://Scenes/Main Menu/Main_menu.tscn"
 
 # --- INITIALIZATION ---
 func _ready():
 	add_to_group("HUD")
-	# IMPORTANT: The root HUD control must ignore mouse so objects behind it can be clicked
+	self.layer = 1
 	hud_control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	_setup_initial_visibility()
@@ -68,7 +63,6 @@ func _setup_initial_visibility():
 	show_finish_button(false)
 
 func _connect_signals():
-	# Helper to avoid double-connecting signals if they are already set in Editor
 	var safe_connect = func(node, signal_name, callable):
 		if node and not node.is_connected(signal_name, callable):
 			node.connect(signal_name, callable)
@@ -77,21 +71,15 @@ func _connect_signals():
 	safe_connect.call(settings_button, "pressed", _on_settings_pressed)
 	safe_connect.call(home_button, "pressed", _on_home_pressed)
 	
-	if sound_panel_close_button:
-		safe_connect.call(sound_panel_close_button, "pressed", _on_close_button_pressed)
-	
+	if sound_panel_close_button: safe_connect.call(sound_panel_close_button, "pressed", _on_close_button_pressed)
 	if music_mute_button:
 		music_mute_button.toggle_mode = true
 		safe_connect.call(music_mute_button, "toggled", _on_music_mute_toggled)
-		
 	if sfx_mute_button:
 		sfx_mute_button.toggle_mode = true
 		safe_connect.call(sfx_mute_button, "toggled", _on_sfx_mute_toggled)
-	
-	if music_slider:
-		safe_connect.call(music_slider, "value_changed", _on_music_volume_changed)
-	if sfx_slider:
-		safe_connect.call(sfx_slider, "value_changed", _on_sfx_volume_changed)
+	if music_slider: safe_connect.call(music_slider, "value_changed", _on_music_volume_changed)
+	if sfx_slider: safe_connect.call(sfx_slider, "value_changed", _on_sfx_volume_changed)
 
 # --- REFRESH LOGIC ---
 func update_all_labels():
@@ -105,8 +93,7 @@ func update_all_labels():
 func refresh_time_display():
 	if has_node("/root/GameData"):
 		var GD = get_node("/root/GameData")
-		if time_label:
-			time_label.text = GD.get_current_time_string()
+		if time_label: time_label.text = GD.get_current_time_string()
 
 # --- MENU & SOUND LOGIC ---
 func _on_menu_button_pressed():
@@ -140,76 +127,42 @@ func _on_menu_button_pressed():
 
 func _on_settings_pressed():
 	sound_control.visible = true
-	# Block mouse while panel is open
 	sound_control.mouse_filter = Control.MOUSE_FILTER_STOP
-	_on_menu_button_pressed() 
+	_on_menu_button_pressed()
 
 func _on_close_button_pressed() -> void:
 	sound_control.visible = false
-	# Crucial: stop blocking mouse when closed
 	sound_control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _on_music_mute_toggled(is_muted: bool):
 	var bus_idx = AudioServer.get_bus_index("Music")
-	if bus_idx != -1:
-		AudioServer.set_bus_mute(bus_idx, is_muted)
+	if bus_idx != -1: AudioServer.set_bus_mute(bus_idx, is_muted)
 
 func _on_sfx_mute_toggled(is_muted: bool):
 	var bus_idx = AudioServer.get_bus_index("SFX")
-	if bus_idx != -1:
-		AudioServer.set_bus_mute(bus_idx, is_muted)
+	if bus_idx != -1: AudioServer.set_bus_mute(bus_idx, is_muted)
 
 func _on_music_volume_changed(value: float):
 	var bus_idx = AudioServer.get_bus_index("Music")
-	if bus_idx != -1:
-		AudioServer.set_bus_volume_db(bus_idx, linear_to_db(value))
+	if bus_idx != -1: AudioServer.set_bus_volume_db(bus_idx, linear_to_db(value))
 
 func _on_sfx_volume_changed(value: float):
 	var bus_idx = AudioServer.get_bus_index("SFX")
-	if bus_idx != -1:
-		AudioServer.set_bus_volume_db(bus_idx, linear_to_db(value))
+	if bus_idx != -1: AudioServer.set_bus_volume_db(bus_idx, linear_to_db(value))
 
 func _on_home_pressed():
 	get_tree().paused = false 
 	get_tree().change_scene_to_file(MAIN_MENU_PATH)
 
-# --- SERVING & HUD LOGIC ---
-func mark_plate_served():
-	plate_served = true
-	_check_requirements()
-
-func mark_beverage_served():
-	beverage_served = true
-	_check_requirements()
-
-func _check_requirements():
-	if plate_served and beverage_served:
-		show_finish_button(true)
-
-func reset_serving_status():
-	plate_served = false
-	beverage_served = false
-	show_finish_button(false)
-
-func update_cash(amount: int):
-	if cash_label: cash_label.text = str(amount)
-
-func update_day(day: int):
-	if day_label: day_label.text = "Day: " + str(day)
-
-func update_keys(amount: int):
-	if keys_label: keys_label.text = str(amount)
-
-func update_progress_display(value: float):
-	if progress_label: progress_label.text = str(int(value)) + "%"
+# --- HUD UPDATES ---
+func update_cash(amount: int): if cash_label: cash_label.text = str(amount)
+func update_day(day: int): if day_label: day_label.text = "Day: " + str(day)
+func update_keys(amount: int): if keys_label: keys_label.text = str(amount)
+func update_progress_display(value: float): if progress_label: progress_label.text = str(int(value)) + "%"
 
 func show_finish_button(show: bool):
 	if finish_button:
 		finish_button.visible = show
-		if show:
-			finish_button.mouse_filter = Control.MOUSE_FILTER_STOP
-			bottom_right_container.mouse_filter = Control.MOUSE_FILTER_STOP
-		else:
-			# Crucial: ignore mouse if the button is hidden
-			finish_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			bottom_right_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var filter = Control.MOUSE_FILTER_STOP if show else Control.MOUSE_FILTER_IGNORE
+		finish_button.mouse_filter = filter
+		bottom_right_container.mouse_filter = filter

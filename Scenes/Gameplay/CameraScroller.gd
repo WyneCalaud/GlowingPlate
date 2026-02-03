@@ -16,15 +16,20 @@ var is_input_blocked: bool = false:
 		if is_input_blocked:
 			is_dragging = false
 		else:
-			# CRITICAL: Reset tracking when unlocked to prevent the "jerk"
+			# Reset tracking when unlocked to prevent the "jerk"
 			last_mouse_pos = get_viewport().get_mouse_position()
+
+# Helper function so call_group works easily
+func set_is_input_blocked(value: bool):
+	is_input_blocked = value
 
 func _ready():
 	target_x = min_x
 	position.x = min_x
 	add_to_group("MainCamera")
 
-func _unhandled_input(event):
+# Changed to _input to capture events even if UI is clicked (like dispensers)
+func _input(event):
 	if is_input_blocked:
 		return
 

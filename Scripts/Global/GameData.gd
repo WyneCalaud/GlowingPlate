@@ -1,3 +1,4 @@
+# GameData.gd
 extends Node
 
 # --- Core Progression Variables ---
