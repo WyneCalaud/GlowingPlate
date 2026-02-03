@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://bw3ny473420jt"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_wqqiq"]
+
+[resource]
+script = ExtResource("1_wqqiq")
+customer_name = "Nina"
+order_text = "One healthy lunch for a girl like me please."
+expanded_text = "idk"
+needs = {
+"GlowFru": "",
+"GlowVeg": "MIXED_VEGGIES",
+"Go": "RICE",
+"Grow": "CHICKEN_LEG"
+}
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"
