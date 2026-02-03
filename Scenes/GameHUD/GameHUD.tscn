@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dy6gawubssej3"]
+[gd_scene load_steps=32 format=3 uid="uid://dy6gawubssej3"]
 
 [ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="1_8k2rj"]
 [ext_resource type="Texture2D" uid="uid://3drenhckqamg" path="res://Assets/StatsBar/DayMeter.png" id="1_1044j"]
@@ -27,8 +27,6 @@
 [ext_resource type="Texture2D" uid="uid://ccxmd4kg5r5t" path="res://Assets/UI/SoundSettingsUI/MuteSoundButton.png" id="22_g7tnq"]
 [ext_resource type="Texture2D" uid="uid://dq3wcwpyf0fu0" path="res://Assets/UI/SoundSettingsUI/LanguageButton.png" id="25_w5x8q"]
 [ext_resource type="Texture2D" uid="uid://dpmjnvmhk8b78" path="res://Assets/UI/SoundSettingsUI/LanguageOptions.png" id="26_jrhbn"]
-[ext_resource type="Texture2D" uid="uid://bb0gtoq1vuvy5" path="res://Assets/UI/KitchenUI/Serve Section.png" id="28_38rtn"]
-[ext_resource type="Texture2D" uid="uid://dj4wff5kf1w0r" path="res://Assets/UI/KitchenUI/Trash Section.png" id="29_2q6du"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w5x8q"]
 
@@ -395,34 +393,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("26_jrhbn")
 region_rect = Rect2(4, 0, 302, 43)
-
-[node name="ServeOrTrash" type="Node2D" parent="HUDControl"]
-visible = false
-
-[node name="Serve" type="Sprite2D" parent="HUDControl/ServeOrTrash"]
-position = Vector2(664, 51)
-scale = Vector2(0.527, 0.49)
-texture = ExtResource("28_38rtn")
-
-[node name="GlobalServeZone" type="Area2D" parent="HUDControl/ServeOrTrash/Serve"]
-collision_layer = 2
-monitoring = false
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HUDControl/ServeOrTrash/Serve/GlobalServeZone"]
-position = Vector2(125.23718, -2.0408134)
-polygon = PackedVector2Array(-423.1499, -102.04082, -426.94495, -53.061226, -421.25238, -22.448982, -409.8672, 10.204079, -377.60913, 55.102036, -354.83875, 75.51021, -324.47815, 91.83673, -284.63, 104.081635, -239.08923, 106.12245, -204.9336, 97.95918, -176.47058, 87.7551, -155.59778, 81.632645, -132.82727, 79.59183, -92.979126, 83.67346, -47.438354, 100, -9.487671, 104.081635, 24.667969, 102.04082, 64.51611, 89.79591, 94.87671, 75.51021, 115.74951, 57.142853, 138.5199, 34.69388, 155.59778, 6.122444, 168.8805, -26.530617, 174.573, -53.061226, 172.67554, -102.04082)
-
-[node name="Trash" type="Sprite2D" parent="HUDControl/ServeOrTrash"]
-position = Vector2(654, 689.275)
-scale = Vector2(0.56081086, 0.4667913)
-texture = ExtResource("29_2q6du")
-
-[node name="GlobalTrashZone" type="Area2D" parent="HUDControl/ServeOrTrash/Trash"]
-collision_layer = 2
-monitoring = false
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HUDControl/ServeOrTrash/Trash/GlobalTrashZone"]
-position = Vector2(-7.589736, -38.700317)
-polygon = PackedVector2Array(13.2821045, -1.6125488, -11.384644, -4.8375244, -36.05127, -9.675049, -62.615356, -19.35022, -108.15381, -27.41272, -142.30774, -24.187744, -165.0769, -19.35022, -195.43591, -6.4500732, -216.30774, 8.062622, -242.87177, 30.637695, -263.7436, 59.662964, -282.71796, 104.813354, 299.7948, 104.813354, 286.51282, 62.88806, 258.05127, 24.187744, 237.17944, 4.8375244, 203.02563, -14.512573, 166.97437, -25.80017, 127.128174, -29.025269, 92.974365, -22.575195, 66.41028, -12.9001465, 39.84619, -4.8375244)
 
 [connection signal="pressed" from="HUDControl/SoundControl/CloseButton" to="." method="_on_close_button_pressed"]

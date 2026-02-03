@@ -7,8 +7,8 @@ const FoodDispenserGlobals = preload("res://Scripts/Global/FoodDispenserGlobal.g
 signal trashed
 signal drag_state_changed(is_dragging_now: bool)
 
-# --- Z-INDEX CONSTANTS ---
-const DRAG_Z_INDEX: int = 10
+# --- Z-INDEX & LAYER CONSTANTS ---
+const DRAG_Z_INDEX: int = 4096 # Maximum possible Z-Index
 const DEFAULT_Z_INDEX: int = 10
 const RETURN_SPEED: float = 8.0
 const PLATE_SLOT_SCRIPT_PATH_SUFFIX = "plate_slot.gd"
@@ -23,35 +23,36 @@ var is_dragging: bool = false:
 		if is_dragging != value:
 			is_dragging = value
 			emit_signal("drag_state_changed", is_dragging)
-			# If we started dragging the plate, deselect all food dispensers
+			
 			if is_dragging:
 				get_tree().call_group("food_dispenser", "deselect")
+				# To appear over CanvasLayers, the object needs a very high Z
+				# AND the HUD needs to allow it (handled in HUD script)
+				self.z_index = DRAG_Z_INDEX
+				self.z_as_relative = false # Force absolute Z-index
 
 var drag_offset: Vector2 = Vector2.ZERO
-var original_position: Vector2
+var original_local_pos: Vector2 # Store local to avoid the offset bug
 var is_returning: bool = false
 
 # --- DROP ZONE STATE ---
-# These now track global HUD zones
 var is_over_serve_zone: bool = false
 var is_over_trash_zone: bool = false
 
 # --- INITIALIZATION ---
 func _ready():
-	original_position = global_position
+	# Store the position relative to the parent at start
+	original_local_pos = position 
 	self.z_index = DEFAULT_Z_INDEX
 	if plate_area:
 		plate_area.input_pickable = true
 		
-# --- DROP ZONE DETECTION (Updated for GameHUD) ---
+# --- DROP ZONE DETECTION ---
 func _on_area_2d_area_entered(area: Area2D):
-	# We check names or groups of the HUD zones
 	if area.name == "GlobalServeZone" or area.is_in_group("serve_zone"):
 		is_over_serve_zone = true
-		print("DEBUG: Over Serve Zone")
 	elif area.name == "GlobalTrashZone" or area.is_in_group("trash_zone"):
 		is_over_trash_zone = true
-		print("DEBUG: Over Trash Zone")
 
 func _on_area_2d_area_exited(area: Area2D):
 	if area.name == "GlobalServeZone" or area.is_in_group("serve_zone"):
@@ -75,61 +76,48 @@ func _input(event):
 		if is_mouse_over_plate_slot():
 			return 
 			
-		var contents_size = get_plate_contents().size()
 		if is_point_inside_area(mouse_pos):
-			if contents_size > 0:
-				self.is_dragging = true
-				self.z_index = DRAG_Z_INDEX
+			if get_plate_contents().size() > 0:
 				drag_offset = mouse_pos - global_position
-				get_viewport().set_input_as_handled()
-			else:
+				self.is_dragging = true
 				get_viewport().set_input_as_handled()
 
 	elif is_release:
 		if is_dragging:
 			self.is_dragging = false
-			if get_viewport():
-				get_viewport().set_input_as_handled()
 			_on_drop()
 
 func _process(delta):
 	if is_dragging:
 		global_position = get_global_mouse_position() - drag_offset
 	elif is_returning:
-		global_position = global_position.lerp(original_position, delta * RETURN_SPEED)
+		# Lerp back to local position to fix the "shifting right" bug
+		position = position.lerp(original_local_pos, delta * RETURN_SPEED)
 		
-		if global_position.distance_to(original_position) < 1.0:
-			global_position = original_position
+		if position.distance_to(original_local_pos) < 0.5:
+			position = original_local_pos
 			is_returning = false
 			self.z_index = DEFAULT_Z_INDEX
+			self.z_as_relative = true
 
 func _on_drop():
-	self.z_index = DEFAULT_Z_INDEX
 	var plate_contents = get_plate_contents()
 	var is_plate_truly_empty = plate_contents.size() == 0
 	
 	var handled = false
 	if is_over_serve_zone:
 		handled = true
-		if is_plate_truly_empty:
-			is_returning = true
-		else:
-			if is_instance_valid(GameData):
-				# Send to GameData for score/order validation
-				GameData.store_plate_contents(plate_contents)
-				reset_plate_visuals() # Clear the plate after serving
-				is_returning = true 
-			else:
-				is_returning = true
+		if not is_plate_truly_empty and is_instance_valid(GameData):
+			GameData.store_plate_contents(plate_contents)
+			reset_plate_visuals()
+		is_returning = true
 			
 	elif is_over_trash_zone:
 		handled = true
-		if is_plate_truly_empty:
-			is_returning = true
-		else:
+		if not is_plate_truly_empty:
 			reset_plate_visuals()
 			emit_signal("trashed")
-			is_returning = true
+		is_returning = true
 
 	if not handled:
 		is_returning = true
@@ -141,24 +129,20 @@ func get_plate_contents() -> Array:
 			var script = child.get_script()
 			if not (script is GDScript and script.resource_path.ends_with(PLATE_SLOT_SCRIPT_PATH_SUFFIX)):
 				continue
-			var is_filled_ref = child.get("is_filled")
-			var item_resource_ref = child.get("item_resource")
-			if is_filled_ref and item_resource_ref != null and item_resource_ref is Resource:
+			if child.get("is_filled") and child.get("item_resource") != null:
 				var accepted_type = "UNKNOWN"
 				if child.name.contains("Go"): accepted_type = "Go"
 				elif child.name.contains("Grow"): accepted_type = "Grow"
 				elif child.name.contains("GlowVeg"): accepted_type = "GlowVeg"
 				elif child.name.contains("GlowFru"): accepted_type = "GlowFru"
-				contents.append({"item": item_resource_ref, "accepted_type": accepted_type})
+				contents.append({"item": child.item_resource, "accepted_type": accepted_type})
 	return contents
 
 func reset_plate_visuals():
 	for child in get_children():
 		if child is Area2D and child.name.contains("Slot"):
-			if child.has_method("clear_slot"):
-				child.clear_slot()
-			elif child.has_method("clear_food"):
-				child.clear_food()
+			if child.has_method("clear_slot"): child.clear_slot()
+			elif child.has_method("clear_food"): child.clear_food()
 
 func is_mouse_over_plate_slot() -> bool:
 	var mouse_pos = get_global_mouse_position()
@@ -166,23 +150,18 @@ func is_mouse_over_plate_slot() -> bool:
 	var query = PhysicsPointQueryParameters2D.new()
 	query.position = mouse_pos
 	query.collide_with_areas = true
-	query.collide_with_bodies = false
-	
 	var results = space.intersect_point(query)
 	for result in results:
-		if result.collider.is_in_group("plate_slot"):
-			return true
+		if result.collider.is_in_group("plate_slot"): return true
 	return false
 
 func is_point_inside_area(point: Vector2) -> bool:
-	if plate_area and plate_area.input_pickable:
+	if plate_area:
 		var space = get_world_2d().direct_space_state
 		var query = PhysicsPointQueryParameters2D.new()
 		query.position = point
 		query.collide_with_areas = true
-		query.collide_with_bodies = false
 		var result = space.intersect_point(query)
 		for hit in result:
-			if hit.collider == plate_area:
-				return true
+			if hit.collider == plate_area: return true
 	return false

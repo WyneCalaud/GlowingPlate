@@ -1,5 +1,9 @@
 extends Node2D
 
+# --- STATE ---
+var plate_served: bool = false
+var beverage_served: bool = false
+
 # --- REFERENCES TO FOOD DISPENSER ARRAYS ---
 @onready var go_stations = []
 
@@ -27,34 +31,75 @@ extends Node2D
 ]
 
 # --- Node References ---
-# UPDATED: Pointing to the HUD path you provided
 @onready var food_plate: Node2D = $Plate/FoodPlate 
 @onready var camera: Camera2D = get_viewport().get_camera_2d()
 
 # --- UI & HUD ---
 @onready var game_hud = $OverlayCanvas/GameHUD
-# This is the container that holds both Serve and Trash
-@onready var drop_zones_parent: Node2D = $OverlayCanvas/GameHUD/HUDControl/ServeOrTrash
+
+# --- SERVE & TRASH ZONES (FIXED PATHS) ---
+# These are now in the KitchenArea root, NOT inside GameHUD
+@onready var drop_zones_parent: Node2D = $ServeOrTrash
+@onready var serve_zone: Area2D = $ServeOrTrash/Serve/GlobalServeZone
+@onready var trash_zone: Area2D = $ServeOrTrash/Trash/GlobalTrashZone
 
 func _ready():
-	# 1. Setup Initial State
+	# 1. Setup Service Group for Plate Interaction
+	add_to_group("service_manager")
+
+	# 2. Setup Initial State
 	if is_instance_valid(drop_zones_parent):
 		drop_zones_parent.visible = false
+	else:
+		print("Error: ServeOrTrash node not found at $ServeOrTrash")
 	
-	# 2. Setup the Menu for the Day
+	# 3. Setup the Menu for the Day
 	setup_kitchen_for_today()
 		
-	# 3. Connect Plate Signals
+	# 4. Connect Plate Signals
 	await get_tree().process_frame
 	if is_instance_valid(food_plate):
 		if not food_plate.is_connected("drag_state_changed", _on_plate_drag_state_changed):
 			food_plate.connect("drag_state_changed", _on_plate_drag_state_changed)
 	
-	# 4. Initialize HUD
+	# 5. Initialize HUD
 	if is_instance_valid(game_hud):
 		game_hud.update_all_labels()
 		if game_hud.has_method("show_finish_button"):
 			game_hud.show_finish_button(false)
+
+# --- SERVICE MECHANICS (Called by Plate/Glass) ---
+
+func serve_plate(contents: Array):
+	var GD = get_node("/root/GameData")
+	if GD:
+		GD.store_plate_contents(contents)
+	
+	plate_served = true
+	_check_requirements()
+	print("KitchenArea: Plate Served")
+
+func serve_beverage():
+	beverage_served = true
+	_check_requirements()
+	print("KitchenArea: Beverage Served")
+
+func trash_item():
+	print("KitchenArea: Item Trashed")
+	# Add trash sound effect here if desired
+
+func _check_requirements():
+	if plate_served and beverage_served:
+		if game_hud:
+			game_hud.show_finish_button(true)
+
+func reset_service():
+	plate_served = false
+	beverage_served = false
+	if game_hud:
+		game_hud.show_finish_button(false)
+
+# --- KITCHEN SETUP LOGIC ---
 
 func setup_kitchen_for_today():
 	var GD = get_node_or_null("/root/GameData")

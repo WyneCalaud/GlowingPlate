@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=54 format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/KitchenArea.gd" id="1_k5enx"]
 [ext_resource type="Texture2D" uid="uid://d4bv2haw4iv1n" path="res://Assets/background/Kitchen Countertop.PNG" id="2_slnmu"]
@@ -7,9 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://cumqgtoajakm4" path="res://Scenes/Food Plate/food_plate.tscn" id="5_nflrw"]
 [ext_resource type="Script" uid="uid://d3gd8n1g16fj3" path="res://Scenes/Food Plate/food_plate_draggable.gd" id="6_hkpja"]
 [ext_resource type="Texture2D" uid="uid://cbp2ncq0mib8b" path="res://Assets/RiceCup/RiceCupTray.png" id="7_kcelb"]
-[ext_resource type="Texture2D" uid="uid://ccw7mnwk4jr0w" path="res://Assets/RiceCooker/RiceCookerClosed.png" id="8_32cy7"]
+[ext_resource type="Texture2D" uid="uid://nuow13yns5q4" path="res://Assets/UI/KitchenUI/ClosedRiceCooker.png" id="8_gdykn"]
 [ext_resource type="Script" uid="uid://dieojik7tyah5" path="res://Scenes/Gameplay/RiceCooker.gd" id="9_t48f3"]
-[ext_resource type="Texture2D" uid="uid://4vkr1fviitnc" path="res://Assets/RiceCooker/RiceCookerOpen.png" id="10_m2bwa"]
+[ext_resource type="Texture2D" uid="uid://dffr7v3tak7yw" path="res://Assets/UI/KitchenUI/OpenedRiceCooker.png" id="10_jgwiw"]
 [ext_resource type="Texture2D" uid="uid://cegi0241vcsfs" path="res://Assets/Resized/ricecup.png" id="11_n7sx4"]
 [ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="12_vfpnn"]
 [ext_resource type="Texture2D" uid="uid://ciovm45kr75ix" path="res://Assets/RiceCup/LowAmountRiceCup.png" id="13_pmqpb"]
@@ -47,7 +47,9 @@
 [ext_resource type="Texture2D" uid="uid://deq768bcdta8y" path="res://Assets/Foods/Melon.png" id="45_bxfjx"]
 [ext_resource type="Resource" uid="uid://dw3v4m5y7nbwm" path="res://Data/Food/GlowFru/Watermelon.tres" id="46_w1lya"]
 [ext_resource type="PackedScene" uid="uid://ctdosdqx3kc1c" path="res://Scenes/Transition/circle_transition.tscn" id="49_1mo6l"]
+[ext_resource type="Texture2D" uid="uid://bb0gtoq1vuvy5" path="res://Assets/UI/KitchenUI/Serve Section.png" id="50_k5enx"]
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="50_nf282"]
+[ext_resource type="Texture2D" uid="uid://dj4wff5kf1w0r" path="res://Assets/UI/KitchenUI/Trash Section.png" id="51_slnmu"]
 [ext_resource type="Script" uid="uid://bb4a6m5q1e2lt" path="res://Scenes/Gameplay/CameraScroller.gd" id="52_aa5gg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhl0g"]
@@ -114,12 +116,12 @@ scale = Vector2(0.21, 0.21)
 texture = ExtResource("7_kcelb")
 
 [node name="RiceCooker" type="Sprite2D" parent="Go Section"]
-position = Vector2(164, 270)
-scale = Vector2(0.234, 0.218)
-texture = ExtResource("8_32cy7")
+position = Vector2(167, 278)
+scale = Vector2(0.17482795, 0.16726397)
+texture = ExtResource("8_gdykn")
 script = ExtResource("9_t48f3")
-closed_texture = ExtResource("8_32cy7")
-open_texture = ExtResource("10_m2bwa")
+closed_texture = ExtResource("8_gdykn")
+open_texture = ExtResource("10_jgwiw")
 
 [node name="Area2D" type="Area2D" parent="Go Section/RiceCooker"]
 
@@ -150,10 +152,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 320.0
-offset_top = 92.0
-offset_right = 1525.0
-offset_bottom = 358.0
+offset_left = 292.0
+offset_top = 77.0
+offset_right = 1497.0
+offset_bottom = 343.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -162,46 +164,47 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -6.0
+offset_left = 54.0
 offset_top = 7.0
 offset_right = 19.0
-offset_bottom = -19.0
+offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = -30
+theme_override_constants/separation = -15
 
 [node name="Slot1" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+clip_contents = true
+custom_minimum_size = Vector2(220, 100)
 layout_mode = 2
 texture = ExtResource("19_ntgi7")
 food_data = ExtResource("20_ekhcp")
 
 [node name="Slot2" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("21_7cwab")
 food_data = ExtResource("22_ghcuk")
 
 [node name="Slot3" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("23_aa47t")
 food_data = ExtResource("24_dchi6")
 
 [node name="Slot4" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("25_6runi")
 food_data = ExtResource("26_nrje0")
 
 [node name="Slot5" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("27_mk63l")
 food_data = ExtResource("28_klji4")
 
 [node name="Slot6" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("29_to81c")
 food_data = ExtResource("30_ibg84")
@@ -211,10 +214,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 724.0
-offset_top = 294.0
-offset_right = 1535.0
-offset_bottom = 537.0
+offset_left = 733.0
+offset_top = 288.0
+offset_right = 1544.0
+offset_bottom = 531.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -225,28 +228,28 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = -30
+theme_override_constants/separation = -15
 
 [node name="Slot1" parent="Row2/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("31_sno60")
 food_data = ExtResource("32_wkrru")
 
 [node name="Slot2" parent="Row2/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("33_618ji")
 food_data = ExtResource("34_htbuh")
 
 [node name="Slot3" parent="Row2/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("35_n8rcw")
 food_data = ExtResource("36_qmj44")
 
 [node name="Slot4" parent="Row2/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("37_my4v2")
 food_data = ExtResource("38_fn7s7")
@@ -256,10 +259,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 724.0
+offset_left = 726.0
 offset_top = 494.0
 offset_right = 1535.0
-offset_bottom = 737.0
+offset_bottom = 711.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -268,30 +271,32 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = -30
+theme_override_constants/separation = -15
 
 [node name="Slot1" parent="Row3/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("39_1vr5x")
 food_data = ExtResource("40_ja4r2")
 
 [node name="Slot2" parent="Row3/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("41_8ieon")
 food_data = ExtResource("42_qgykl")
 
 [node name="Slot3" parent="Row3/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("43_cxrjh")
 food_data = ExtResource("44_p52ks")
 
 [node name="Slot4" parent="Row3/HBoxContainter" instance=ExtResource("18_orncx")]
-custom_minimum_size = Vector2(230, 200)
+custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("45_bxfjx")
 food_data = ExtResource("46_w1lya")
@@ -301,12 +306,40 @@ position = Vector2(640, 360)
 script = ExtResource("52_aa5gg")
 
 [node name="OverlayCanvas" type="CanvasLayer" parent="."]
-layer = 100
 
 [node name="GameHUD" parent="OverlayCanvas" instance=ExtResource("50_nf282")]
 
 [node name="CircleIntroTransition" parent="OverlayCanvas" instance=ExtResource("49_1mo6l")]
 visible = false
+
+[node name="ServeOrTrash" type="Node2D" parent="."]
+visible = false
+
+[node name="Serve" type="Sprite2D" parent="ServeOrTrash"]
+position = Vector2(664, 51)
+scale = Vector2(0.527, 0.49)
+texture = ExtResource("50_k5enx")
+
+[node name="GlobalServeZone" type="Area2D" parent="ServeOrTrash/Serve"]
+collision_layer = 2
+monitoring = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Serve/GlobalServeZone"]
+position = Vector2(125.23718, -2.0408134)
+polygon = PackedVector2Array(-423.1499, -102.04082, -426.94495, -53.061226, -421.25238, -22.448982, -409.8672, 10.204079, -377.60913, 55.102036, -354.83875, 75.51021, -324.47815, 91.83673, -284.63, 104.081635, -239.08923, 106.12245, -204.9336, 97.95918, -176.47058, 87.7551, -155.59778, 81.632645, -132.82727, 79.59183, -92.979126, 83.67346, -47.438354, 100, -9.487671, 104.081635, 24.667969, 102.04082, 64.51611, 89.79591, 94.87671, 75.51021, 115.74951, 57.142853, 138.5199, 34.69388, 155.59778, 6.122444, 168.8805, -26.530617, 174.573, -53.061226, 172.67554, -102.04082)
+
+[node name="Trash" type="Sprite2D" parent="ServeOrTrash"]
+position = Vector2(654, 689.275)
+scale = Vector2(0.56081086, 0.4667913)
+texture = ExtResource("51_slnmu")
+
+[node name="GlobalTrashZone" type="Area2D" parent="ServeOrTrash/Trash"]
+collision_layer = 2
+monitoring = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Trash/GlobalTrashZone"]
+position = Vector2(-7.589736, -38.700317)
+polygon = PackedVector2Array(13.2821045, -1.6125488, -11.384644, -4.8375244, -36.05127, -9.675049, -62.615356, -19.35022, -108.15381, -27.41272, -142.30774, -24.187744, -165.0769, -19.35022, -195.43591, -6.4500732, -216.30774, 8.062622, -242.87177, 30.637695, -263.7436, 59.662964, -282.71796, 104.813354, 299.7948, 104.813354, 286.51282, 62.88806, 258.05127, 24.187744, 237.17944, 4.8375244, 203.02563, -14.512573, 166.97437, -25.80017, 127.128174, -29.025269, 92.974365, -22.575195, 66.41028, -12.9001465, 39.84619, -4.8375244)
 
 [connection signal="area_entered" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_exited"]

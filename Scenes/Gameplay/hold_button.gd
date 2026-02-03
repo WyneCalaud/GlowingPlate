@@ -1,3 +1,4 @@
+# hold_button.gd
 extends Control
 
 # --- SIGNALS ---
@@ -10,13 +11,21 @@ const TIME_MEDIUM: float = 3.0
 const TIME_PERFECT: float = 4.0
 # > 4.0 is Too High
 
+# --- TEXTURES ---
+@export var tex_empty: Texture2D
+@export var tex_low: Texture2D
+@export var tex_med: Texture2D
+@export var tex_right: Texture2D
+@export var tex_too_high: Texture2D
+
 var hold_duration: float = 0.0
 var is_holding: bool = false
 
 # --- NODES ---
-@onready var button: BaseButton = $VBoxContainer/TextureButton
+# Ensure these paths match your scene tree exactly
+@onready var button: BaseButton = $VBoxContainer/HoldButton
 @onready var time_label: Label = $VBoxContainer/Label
-@onready var progress_bar: Range = $ProgressBar 
+@onready var cup_display: TextureRect = $CupProgress 
 
 func _ready():
 	if button:
@@ -26,21 +35,9 @@ func _ready():
 	if time_label:
 		time_label.text = "HOLD ME"
 		
-	if progress_bar:
-		progress_bar.max_value = TIME_PERFECT + 0.5 
-		progress_bar.value = 0.0
-		
-		# Smooth animation
-		if progress_bar.has_method("set_step"):
-			progress_bar.step = 0.01 
-		elif "step" in progress_bar:
-			progress_bar.step = 0.01
-			
-		# FIX: Ensure the main node is WHITE (so borders don't get tinted)
-		progress_bar.modulate = Color.WHITE
-		
-		# FIX: Initialize only the FILL color
-		_apply_fill_color(Color.GRAY)
+	# Initialize visual state
+	if cup_display:
+		cup_display.texture = tex_empty
 
 func _process(delta):
 	if is_holding:
@@ -49,57 +46,36 @@ func _process(delta):
 		if time_label:
 			time_label.text = "%.1f s" % hold_duration
 			
-		if progress_bar:
-			progress_bar.value = hold_duration
-			_update_bar_color()
+		_update_cup_texture()
 
-func _update_bar_color():
-	if not progress_bar: return
+func _update_cup_texture():
+	if not cup_display: return
 	
-	var target_color = Color.GRAY
+	var next_tex = tex_empty
 	
 	if hold_duration < TIME_TOO_FAST:
-		target_color = Color.GRAY
+		next_tex = tex_empty
 	elif hold_duration < TIME_SMALL:
-		target_color = Color.YELLOW
+		next_tex = tex_low
 	elif hold_duration < TIME_MEDIUM:
-		target_color = Color.ORANGE
+		next_tex = tex_med
 	elif hold_duration <= TIME_PERFECT:
-		target_color = Color.GREEN
+		next_tex = tex_right
 	else:
-		target_color = Color.RED
+		next_tex = tex_too_high
 		
-	# Apply the color to just the fill
-	_apply_fill_color(target_color)
-
-# --- NEW HELPER: Handles Color Application ---
-func _apply_fill_color(color: Color):
-	# Case 1: TextureProgressBar (Best for custom art)
-	if progress_bar is TextureProgressBar:
-		progress_bar.tint_progress = color
-		
-	# Case 2: Standard ProgressBar (Uses StyleBox)
-	else:
-		# Try to get the existing "fill" style
-		var sb = progress_bar.get_theme_stylebox("fill")
-		
-		# If it's a flat style (editable color), change it
-		if sb is StyleBoxFlat:
-			sb.bg_color = color
-		else:
-			# If no custom style exists yet, create a new one
-			var new_sb = StyleBoxFlat.new()
-			new_sb.bg_color = color
-			progress_bar.add_theme_stylebox_override("fill", new_sb)
+	# Only update if changed to save performance
+	if cup_display.texture != next_tex:
+		cup_display.texture = next_tex
 
 func _on_button_down():
 	is_holding = true
 	hold_duration = 0.0
 	if time_label: time_label.text = "0.0 s"
 	
-	if progress_bar: 
-		progress_bar.value = 0.0
-		_apply_fill_color(Color.GRAY)
+	# Reset visual
+	if cup_display:
+		cup_display.texture = tex_empty
 
 func _on_button_up():
 	if not is_holding: return
@@ -108,24 +84,26 @@ func _on_button_up():
 
 func calculate_result():
 	var amount_int = 0
-	var amount_str = "Fail"
+	var amount_str = "TooFast"
 	
+	# Logic MUST match rice_cup.gd expectations
 	if hold_duration < TIME_TOO_FAST: 
 		amount_int = 0 
 		amount_str = "TooFast"
 	elif hold_duration < TIME_SMALL: 
 		amount_int = 1 
-		amount_str = "Low"
+		amount_str = "Small"
 	elif hold_duration < TIME_MEDIUM: 
 		amount_int = 2 
 		amount_str = "Medium"
 	elif hold_duration <= TIME_PERFECT: 
 		amount_int = 3 
-		amount_str = "Right"
+		amount_str = "RightAmount" 
 	else: 
 		amount_int = 4 
 		amount_str = "TooHigh"
 	
 	print("UI FINISHED: Held for %.2fs -> Result: %s" % [hold_duration, amount_str])
 	emit_signal("fill_finished", amount_str, amount_int)
-	queue_free()
+	
+	# IMPORTANT: Do NOT queue_free() here. The parent mechanic script handles it.

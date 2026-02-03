@@ -15,10 +15,14 @@ const FoodDispenserGlobals = preload("res://Scripts/Global/FoodDispenserGlobal.g
 var is_selected: bool = false
 var original_scale: Vector2
 
+# Tap detection variables
+var drag_threshold: float = 10.0
+var press_pos: Vector2
+var is_pressing: bool = false
+
 func _ready():
-	# Keep as STOP so we can select the dispenser, 
-	# but we must ensure it doesn't physically cover the plate.
-	mouse_filter = Control.MOUSE_FILTER_STOP
+	# Use PASS so the CameraScroller can still see the input for dragging
+	mouse_filter = Control.MOUSE_FILTER_PASS
 	z_as_relative = false 
 	pivot_offset = size / 2
 	original_scale = scale
@@ -29,10 +33,29 @@ func _ready():
 	add_to_group("food_dispenser")
 
 func _gui_input(event):
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		toggle_selection()
-		# Mark as handled so the plate doesn't try to place food at the same moment you select the dispenser
-		get_viewport().set_input_as_handled()
+	# Only process if we are visible
+	if not is_visible_in_tree():
+		return
+
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			is_pressing = true
+			press_pos = event.position
+		else:
+			if is_pressing:
+				# Check if the mouse moved significantly (it was a scroll, not a tap)
+				var dist = press_pos.distance_to(event.position)
+				if dist < drag_threshold:
+					toggle_selection()
+					# Optional: Consume event only on a successful tap
+					get_viewport().set_input_as_handled()
+				is_pressing = false
+
+	if event is InputEventMouseMotion and is_pressing:
+		var dist = press_pos.distance_to(event.position)
+		if dist >= drag_threshold:
+			# It's a drag, don't trigger selection on release
+			is_pressing = false
 
 func toggle_selection():
 	if is_selected:
@@ -45,7 +68,6 @@ func select():
 	is_selected = true
 	FoodDispenserGlobals.CURRENTLY_SELECTED_DISPENSER = self
 	
-	# Visual lift
 	z_index = 10 
 	
 	var tween = create_tween().set_parallel(true)

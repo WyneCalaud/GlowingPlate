@@ -22,7 +22,6 @@ const FOOD_DB: Dictionary = {
 	"BANANA": preload("res://Data/Food/GlowFru/Banana.tres"),
 	
 	"REGULAR_MILK": preload("res://Data/Drink/RegularMilk.tres"),
-	"ALMOND_MILK": preload("res://Data/Drink/AlmondMilk.tres"),
 	"WATER": preload("res://Data/Drink/Water.tres")
 }
 

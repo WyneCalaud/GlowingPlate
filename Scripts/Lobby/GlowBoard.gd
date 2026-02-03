@@ -43,7 +43,7 @@ var current_character_name = ""
 
 # Audio Nodes
 @onready var success_sfx = $SuccessSFX
-@onready var fail_sfx = $FailSFX
+@onready var fail_sfx = $FailedSFX
 
 # Layout 1
 @onready var leo_pic = $Layout1/CharacterCards/LeoCard/LeoPicture

@@ -1,34 +1,23 @@
+# stack_glass_spawner.gd
 extends Sprite2D
 
 # --- CONFIGURATION ---
 const TRAVEL_TIME = 0.5 
 const GLASS_SIZE_MULTIPLIER = 2.5
-const FILLED_GLASS_SCALE = Vector2(2.5, 2.0)
+const FILLED_GLASS_SCALE = Vector2(2.8, 2.3)
 const EMPTY_GLASS_SCALE = Vector2(2.5, 2.5)
 const RETURN_SPEED = 0.3 # Time for the glass to return from trash
 
 # --- RESOURCES & PATHS ---
 const EMPTY_GLASS_SCENE = preload("res://Assets/Beverages/EmptyGlass.tscn")
-const HOLD_BUTTON_SCENE = preload("res://Scenes/Gameplay/RiceScoopUI.tscn")
+const HOLD_BUTTON_SCENE = preload("res://Scenes/LiquidDispenser/FillMechanic.tscn")
 const FILLED_GLASS_GENERIC_SCENE = preload("res://Assets/Beverages/FilledWaterGlass.tscn")
 
 # --- WATER TEXTURES ---
-const WATER_TEXTURE_LOW = preload("res://Assets/Beverages/Glasses/LowWater.png")
-const WATER_TEXTURE_MED = preload("res://Assets/Beverages/Glasses/MedWater.png")
-const WATER_TEXTURE_RIGHT = preload("res://Assets/Beverages/Glasses/RightWater.png")
-const WATER_TEXTURE_HIGH = preload("res://Assets/Beverages/Glasses/TooHighWater.png")
-
-# --- MILK TEXTURES ---
-const MILK_TEXTURE_LOW = preload("res://Assets/Beverages/MilkStation/RegularMilk/LowMilk.png")
-const MILK_TEXTURE_MED = preload("res://Assets/Beverages/MilkStation/RegularMilk/MedMilk.png")
-const MILK_TEXTURE_RIGHT = preload("res://Assets/Beverages/MilkStation/RegularMilk/RightMilk.png")
-const MILK_TEXTURE_HIGH = preload("res://Assets/Beverages/MilkStation/RegularMilk/TooHighMilk.png")
-
-# --- ALMOND MILK TEXTURES ---
-const ALMOND_MILK_TEXTURE_LOW = preload("res://Assets/Beverages/MilkStation/AlmondMilk/LowAlmondMilk.png")
-const ALMOND_MILK_TEXTURE_MED = preload("res://Assets/Beverages/MilkStation/AlmondMilk/MedAlmondMilk.png")
-const ALMOND_MILK_TEXTURE_RIGHT = preload("res://Assets/Beverages/MilkStation/AlmondMilk/RightAlmondMilk.png")
-const ALMOND_MILK_TEXTURE_HIGH = preload("res://Assets/Beverages/MilkStation/AlmondMilk/TooHighAlmondMilk.png")
+const WATER_TEXTURE_LOW = preload("res://Assets/UI/Water/GlassLow.png")
+const WATER_TEXTURE_MED = preload("res://Assets/UI/Water/GlassMed.png")
+const WATER_TEXTURE_RIGHT = preload("res://Assets/UI/Water/GlassHigh.png")
+const WATER_TEXTURE_HIGH = preload("res://Assets/UI/Water/GlassFull.png")
 
 # --- CACHE NODE REFERENCES ---
 @onready var mat1: Node2D = $"../../Mat/Mat1"
@@ -56,10 +45,18 @@ func set_liquid_selection(dispenser_node: Node, liquid_name: String):
 	print("STATE: Selected liquid is now: ", selected_liquid)
 
 func reset_liquid_selection_visuals():
-	if is_instance_valid(current_dispenser_node) and current_dispenser_node.has_method("set_visual_state"):
-		current_dispenser_node.set_visual_state(false)
+	# CRITICAL FIX: Capture the node locally first
+	var dispenser_to_reset = current_dispenser_node
+	
+	# Clear the state variables BEFORE calling the dispenser.
+	# This prevents the dispenser's deselect() function from calling THIS function back,
+	# breaking the infinite recursion loop that freezes the computer.
 	current_dispenser_node = null
 	selected_liquid = ""
+	
+	if is_instance_valid(dispenser_to_reset) and dispenser_to_reset.has_method("set_visual_state"):
+		dispenser_to_reset.set_visual_state(false)
+		
 	print("STATE: Liquid selection reset.")
 
 # --- SWAP FILLED GLASS FOR EMPTY GLASS (TRASHING) ---
@@ -108,7 +105,7 @@ func replace_filled_with_empty(filled_glass: Node2D):
 	
 	print("ACTION: Filled glass trashed and replaced with new empty glass on Mat. Initiating return animation.")
 
-# --- INTERACTION LOGIC (Fixed to handle Regular Milk) ---
+# --- INTERACTION LOGIC ---
 func replace_glass_with_filled(empty_glass: Node2D, fill_level: int, liquid_type_override: String = ""):
 	
 	print("DEBUG: replace_glass called. Level: %d, Override: %s" % [fill_level, liquid_type_override])
@@ -123,10 +120,7 @@ func replace_glass_with_filled(empty_glass: Node2D, fill_level: int, liquid_type
 			is_water = true
 			break
 	
-	# CRITICAL FIX APPLIED HERE: Remove spaces from string literals for matching "regularmilk" / "almondmilk"
-	var is_milk = liquid_lower.begins_with("regularmilk") || liquid_lower.begins_with("almondmilk")
-			
-	if is_water or is_milk:
+	if is_water:
 		# 1. Handle "TooFast" (Level 0) immediately
 		if fill_level == 0:
 			print("ACTION: Held too short (TooFast). Glass remains empty.")
@@ -138,23 +132,12 @@ func replace_glass_with_filled(empty_glass: Node2D, fill_level: int, liquid_type
 		var target_texture: Texture2D = null
 		var amount_string: String = "Right"
 		
+		# Default to Water textures
 		var low_texture = WATER_TEXTURE_LOW
 		var med_texture = WATER_TEXTURE_MED
 		var right_texture = WATER_TEXTURE_RIGHT
 		var high_texture = WATER_TEXTURE_HIGH
 		
-		# --- LIQUID TEXTURE SELECTION ---
-		if liquid_lower.begins_with("almondmilk"): # FIX: Removed space
-			low_texture = ALMOND_MILK_TEXTURE_LOW
-			med_texture = ALMOND_MILK_TEXTURE_MED
-			right_texture = ALMOND_MILK_TEXTURE_RIGHT
-			high_texture = ALMOND_MILK_TEXTURE_HIGH
-		elif liquid_lower.begins_with("regularmilk"): # FIX: Removed space
-			low_texture = MILK_TEXTURE_LOW
-			med_texture = MILK_TEXTURE_MED
-			right_texture = MILK_TEXTURE_RIGHT
-			high_texture = MILK_TEXTURE_HIGH
-
 		match fill_level:
 			1: 
 				target_texture = low_texture
@@ -219,7 +202,6 @@ func replace_glass_with_filled(empty_glass: Node2D, fill_level: int, liquid_type
 		print("ACTION: Glass filled with %s. Amount: %s" % [check_liquid, amount_string])
 		return true
 	
-	# The execution path that caused the error is HERE:
 	print("ACTION: Wrong liquid context for replacement.")
 	return false
 
