@@ -2,7 +2,6 @@ extends Node2D
 
 var active_order: CustomerOrder = null
 
-@export var orders: Array[CustomerOrder]  # assign your .tres order files in Inspector
 var order_index := 0
 
 

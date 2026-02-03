@@ -4,10 +4,9 @@ signal customer_arrived(order: CustomerOrder)
 signal customer_left
 
 @export var customer_scene: PackedScene
-@export var orders: Array[CustomerOrder]  # 👈 your actual orders array lives here
 @export var spawn_y: float = 15
 @export var offscreen_x: float = 0
-@export var onscreen_x: float = 350
+@export var onscreen_x: float = 500
 @export var move_duration: float = 0.5
 
 var current_customer: Node2D = null
@@ -30,9 +29,11 @@ func spawn_customer(order: CustomerOrder, texture: Texture2D):
 	current_customer.position = Vector2(offscreen_x, spawn_y)
 
 	# Assign customer sprite texture
-	var sprite = current_customer.get_node_or_null("CustomerSprite")
+	var sprite := current_customer.get_node_or_null("CustomerSprite") as Sprite2D
 	if sprite:
 		sprite.texture = texture
+		scale_customer_sprite(sprite, 470)
+
 
 	# Slide in animation
 	var tween = create_tween()
@@ -55,3 +56,14 @@ func next_customer():
 		current_customer.queue_free()
 		current_customer = null
 	)
+	
+func scale_customer_sprite(sprite: Sprite2D, max_height: float = 300.0) -> void:
+	if sprite.texture == null:
+		return
+
+	var tex_size = sprite.texture.get_size()
+	if tex_size.y == 0:
+		return
+
+	var scale_factor = max_height / tex_size.y
+	sprite.scale = Vector2.ONE * scale_factor
