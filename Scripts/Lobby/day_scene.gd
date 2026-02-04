@@ -2,7 +2,6 @@ extends Node2D
 
 var active_order: CustomerOrder = null
 
-@export var orders: Array[CustomerOrder]  # assign your .tres order files in Inspector
 var order_index := 0
 
 
@@ -26,10 +25,26 @@ func _on_next_customer_pressed():
 
 	var tex: Texture2D
 	match order.customer_name:
-		"Niko":
-			tex = preload("res://Assets/Customers/boy final.png")
-		"Vien":
-			tex = preload("res://Assets/Customers/girl final.png")
+		"Cedric":
+			tex = preload("res://Assets/Customers/Cedric.png")
+		"Guli":
+			tex = preload("res://Assets/Customers/Guli.png")
+		"Milan":
+			tex = preload("res://Assets/Customers/Milan.png")
+		"Nina":
+			tex = preload("res://Assets/Customers/Nina.png")
+		"Norma":
+			tex = preload("res://Assets/Customers/Norma.png")
+		"Pedro":
+			tex = preload("res://Assets/Customers/Pedro.png")
+		"Rimo":
+			tex = preload("res://Assets/Customers/Rimo.png")
+		"Tina":
+			tex = preload("res://Assets/Customers/Tina.png")
+		"Troy":
+			tex = preload("res://Assets/Customers/Troy.png")
+		"Yeeha":
+			tex = preload("res://Assets/Customers/Yeeha.png")
 
 	GameData.save_customer(order, tex)
 	GameData.service_state = GameData.ServiceState.CUSTOMER_PRESENT

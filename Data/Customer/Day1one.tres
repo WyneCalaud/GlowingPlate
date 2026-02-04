@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://daprx88h4max6"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_kt5s1"]
+
+[resource]
+script = ExtResource("1_kt5s1")
+customer_name = "Pedro"
+order_text = "I’d like to try the rice, chicken, sitaw and mango combo, please!"
+expanded_text = "like I said I want rice, chicken, sitaw, and mango"
+needs = {
+"GlowFru": "",
+"GlowVeg": "MIXED_VEGGIES",
+"Go": "RICE",
+"Grow": "CHICKEN_LEG"
+}
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

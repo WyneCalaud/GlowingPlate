@@ -1,17 +1,16 @@
 [gd_scene load_steps=12 format=3 uid="uid://ctl6sxeshrxbu"]
 
 [ext_resource type="Script" uid="uid://u3qhy5pns8k0" path="res://Scripts/MiniGame/matching_game.gd" id="1_pssnd"]
-[ext_resource type="Texture2D" uid="uid://dxjtphrgr0fu5" path="res://Assets/MiniGame/backcard.png" id="2_y140r"]
-[ext_resource type="Texture2D" uid="uid://bc6k3wyv0l51h" path="res://Assets/MiniGame/bikecard.png" id="3_3jjgu"]
-[ext_resource type="Texture2D" uid="uid://8weigjff0r56" path="res://Assets/MiniGame/jumpingjackcard.png" id="4_8mtou"]
-[ext_resource type="Texture2D" uid="uid://clddw14175kuu" path="res://Assets/MiniGame/lungescard.png" id="5_o1035"]
+[ext_resource type="Texture2D" uid="uid://bmngok4y3s6j8" path="res://Assets/MiniGame/Exercises/Small/Question.png" id="2_8mtou"]
+[ext_resource type="Texture2D" uid="uid://bxwsrhb8vbfsm" path="res://Assets/MiniGame/Exercises/Small/Cycling.png" id="3_o1035"]
+[ext_resource type="Texture2D" uid="uid://cklwj0c2dqxhw" path="res://Assets/MiniGame/Exercises/Big/Cycling.png" id="3_y140r"]
+[ext_resource type="Texture2D" uid="uid://ic0skrv5y3cg" path="res://Assets/MiniGame/Exercises/Small/Jumping Jacks.png" id="4_rh4ka"]
+[ext_resource type="Texture2D" uid="uid://u8yenqdt2qj1" path="res://Assets/MiniGame/Exercises/Small/Lunges.png" id="5_ud7q6"]
 [ext_resource type="Texture2D" uid="uid://r3jit84wb6or" path="res://Assets/MiniGame/plankcard.png" id="6_rh4ka"]
-[ext_resource type="Texture2D" uid="uid://d24kfq00pukw7" path="res://Assets/MiniGame/ropecard.png" id="7_ud7q6"]
-[ext_resource type="Texture2D" uid="uid://di8crby7ruynh" path="res://Assets/MiniGame/situpscard.png" id="8_bmcsj"]
-[ext_resource type="Texture2D" uid="uid://dogs5my7qd76n" path="res://Assets/MiniGame/squatscard.png" id="9_s8q65"]
-[ext_resource type="Texture2D" uid="uid://b61y51be4tdj" path="res://Assets/MiniGame/walkingcard.png" id="10_84hdg"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y140r"]
+[ext_resource type="Texture2D" uid="uid://d13341hk15b5o" path="res://Assets/MiniGame/Exercises/Small/Jumping Rope.png" id="7_bmcsj"]
+[ext_resource type="Texture2D" uid="uid://cw67l5lxshmsr" path="res://Assets/MiniGame/Exercises/Small/Sit Ups.png" id="8_s8q65"]
+[ext_resource type="Texture2D" uid="uid://cfcasgt8cvwfi" path="res://Assets/MiniGame/Exercises/Small/Squats.png" id="9_84hdg"]
+[ext_resource type="Texture2D" uid="uid://ds8xsirbc4xtc" path="res://Assets/MiniGame/Exercises/Small/Running.png" id="10_xdroa"]
 
 [node name="MatchingGame" type="Control"]
 layout_mode = 3
@@ -23,12 +22,17 @@ offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pssnd")
-card_back = ExtResource("2_y140r")
-card_faces = Array[Texture2D]([ExtResource("3_3jjgu"), ExtResource("4_8mtou"), ExtResource("5_o1035"), ExtResource("6_rh4ka"), ExtResource("7_ud7q6"), ExtResource("8_bmcsj"), ExtResource("9_s8q65"), ExtResource("10_84hdg")])
+card_back = ExtResource("2_8mtou")
+card_faces = Array[Texture2D]([ExtResource("3_y140r"), ExtResource("4_rh4ka"), ExtResource("5_ud7q6"), ExtResource("6_rh4ka"), ExtResource("7_bmcsj"), ExtResource("8_s8q65"), ExtResource("9_84hdg"), ExtResource("10_xdroa")])
 exercise_info = {
-ExtResource("3_3jjgu"): "Cycling helps with blahblahblah",
-SubResource("CompressedTexture2D_y140r"): "",
-ExtResource("4_8mtou"): "Jumping Jacks is blahblahblah"
+ExtResource("3_o1035"): "Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for ",
+ExtResource("4_rh4ka"): "Jumping Jacks is goodJumping Jacks is good for Jumping Jacks is good for Jumping Jacks is good for Jumping Jacks is good for  for ",
+ExtResource("7_bmcsj"): "Jump rope isJump rope isJump rope isJump rope is",
+ExtResource("5_ud7q6"): "LungeLungeLungeLungeLungeLunge",
+ExtResource("10_xdroa"): "Running is good for blahblahblah and for aaawawa plus wawawawa",
+ExtResource("8_s8q65"): "Sit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit ups",
+ExtResource("9_84hdg"): "SquatsSquatsSquatsSquatsSquatsSquatsSquatsSquatsSquatsSquats",
+ExtResource("3_y140r"): "weeeewewewewe"
 }
 
 [node name="CenterContainer" type="Container" parent="."]
@@ -55,13 +59,14 @@ offset_right = 1150.0
 offset_bottom = 340.0
 
 [node name="InfoPopup" type="Panel" parent="CanvasLayer"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 151.0
-offset_top = 17.0
-offset_right = -815.0
-offset_bottom = -191.0
+offset_left = 463.0
+offset_top = 57.0
+offset_right = -503.0
+offset_bottom = -151.0
 grow_horizontal = 2
 grow_vertical = 2
 

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://duahdg4khtoow"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_af8kf"]
+
+[resource]
+script = ExtResource("1_af8kf")
+customer_name = "Troy"
+order_text = " I’ll eat whatever you have today on the menu. Thanks."
+expanded_text = "any food will do as long as it completes the pinggang pinoy"
+needs = {
+"GlowFru": "",
+"GlowVeg": "MIXED_VEGGIES",
+"Go": "RICE",
+"Grow": "CHICKEN_LEG"
+}
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"
