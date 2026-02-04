@@ -13,13 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/Transition/fade_transition.tscn" id="14_hcpvu"]
 [ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="15_sgopm"]
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
 [ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/Fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
 [ext_resource type="Texture2D" uid="uid://nnrumvef44xt" path="res://Assets/UI/LobbyUI/GotItButton.png" id="16_k43ou"]
-=======
-[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
-[ext_resource type="Texture2D" uid="uid://da1juwk10cg45" path="res://Assets/UI/LobbyUI/Order Dialogue.png" id="16_606uc"]
->>>>>>> Stashed changes
 =======
 [ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
 [ext_resource type="Texture2D" uid="uid://da1juwk10cg45" path="res://Assets/UI/LobbyUI/Order Dialogue.png" id="16_606uc"]
@@ -89,9 +84,6 @@ layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("2_k43ou")
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
 expand_mode = 2
 metadata/_edit_use_anchors_ = true
