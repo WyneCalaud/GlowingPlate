@@ -1,14 +1,25 @@
-[gd_scene load_steps=31 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=38 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
-[ext_resource type="Texture2D" uid="uid://dvyeuoa5kfo3o" path="res://Assets/UI/ShopBackground.png" id="2_wdy5h"]
+[ext_resource type="Texture2D" uid="uid://dt5he77x83jrn" path="res://Assets/UI/LobbyUI/LobbyBackground/OutsideBackground.png" id="2_502pm"]
 [ext_resource type="Texture2D" uid="uid://l4hs7ltis6vt" path="res://Assets/UI/LobbyUI/Almanac Module.png" id="3_k43ou"]
+[ext_resource type="Texture2D" uid="uid://b42vdgmuiggtf" path="res://Assets/UI/LobbyUI/LobbyBackground/Floor.png" id="3_q6g5s"]
+[ext_resource type="Texture2D" uid="uid://cinteuxw081s6" path="res://Assets/UI/LobbyUI/LobbyBackground/WallFrame.png" id="4_7yiff"]
 [ext_resource type="Texture2D" uid="uid://bsf2omkf5nl3c" path="res://Assets/UI/LobbyUI/Bulletin Board Module.png" id="4_606uc"]
 [ext_resource type="Texture2D" uid="uid://cpgyhoxioemwn" path="res://Assets/UI/LobbyUI/NutriShop Module.png" id="5_4edj8"]
+[ext_resource type="Texture2D" uid="uid://bpgpttpqx4wk8" path="res://Assets/UI/LobbyUI/LobbyBackground/Plant.png" id="5_fw8iq"]
+[ext_resource type="Texture2D" uid="uid://bmxnbss56pehx" path="res://Assets/UI/LobbyUI/LobbyBackground/WallTabl.png" id="6_krqk6"]
 [ext_resource type="Texture2D" uid="uid://0mf0efgwobgl" path="res://Assets/UI/LobbyUI/NutriDesk Module.png" id="6_myl55"]
 [ext_resource type="Texture2D" uid="uid://me72u4mdvqya" path="res://Assets/UI/LobbyUI/BlackStartButton.png" id="7_606uc"]
+[ext_resource type="Texture2D" uid="uid://diuyi48p0f6il" path="res://Assets/UI/LobbyUI/LobbyBackground/Chairs.png" id="7_uu58y"]
 [ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="8_606uc"]
+[ext_resource type="Texture2D" uid="uid://c5rbf0dq0amus" path="res://Assets/UI/LobbyUI/LobbyBackground/Tables.png" id="8_nk7xc"]
+[ext_resource type="Texture2D" uid="uid://dxk4knvyq8lb5" path="res://Assets/UI/LobbyUI/LobbyBackground/Counter.png" id="9_vtn67"]
+[ext_resource type="Texture2D" uid="uid://tmae170qxmrb" path="res://Assets/UI/LobbyUI/LobbyBackground/Lights.png" id="10_8rcq3"]
+[ext_resource type="Texture2D" uid="uid://djleog35ekq2h" path="res://Assets/UI/LobbyUI/LobbyBackground/CashRegister.png" id="11_o8hjd"]
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="12_k43ou"]
+[ext_resource type="Texture2D" uid="uid://pa3xby32qsk6" path="res://Assets/UI/LobbyUI/LobbyBackground/Tray.png" id="12_rxbhd"]
+[ext_resource type="Texture2D" uid="uid://cua7565y16m42" path="res://Assets/UI/LobbyUI/LobbyBackground/TissueBox.png" id="13_t3xjw"]
 [ext_resource type="Texture2D" uid="uid://iepyf6j8aa05" path="res://Assets/UI/LobbyUI/CallCustomer.png" id="13_wdy5h"]
 [ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/Transition/fade_transition.tscn" id="14_hcpvu"]
 [ext_resource type="Texture2D" uid="uid://tiwu34pf2i5p" path="res://Assets/UI/LobbyUI/DialogueBox.png" id="15_k43ou"]
@@ -24,6 +35,10 @@
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="27_cmvyw"]
 [ext_resource type="Texture2D" uid="uid://daqtdvdiuidiq" path="res://Assets/Serving Tray/Serving Tray.png" id="27_hcpvu"]
 [ext_resource type="Texture2D" uid="uid://caogeod1xs5e6" path="res://Assets/Buttons/serve (1).png" id="28_gadot"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rlbi3"]
+atlas = ExtResource("9_vtn67")
+region = Rect2(0, 3, 1272, 134)
 
 [sub_resource type="LabelSettings" id="LabelSettings_606uc"]
 font = ExtResource("15_wdy5h")
@@ -58,20 +73,185 @@ grow_vertical = 2
 script = ExtResource("1_8p2f5")
 
 [node name="Background" type="Control" parent="."]
-anchors_preset = 0
-
-[node name="ColorRect" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_wdy5h")
-expand_mode = 2
+
+[node name="OutsideBackground" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.51111114
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_502pm")
+expand_mode = 1
+stretch_mode = 4
 metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Floor" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.35972223
+anchor_right = 1.0
+anchor_bottom = 0.8666667
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_q6g5s")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="WallFrame" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_7yiff")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Plants" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.63125
+anchor_top = 0.16666667
+anchor_right = 0.6875
+anchor_bottom = 0.41111112
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_fw8iq")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="WallTable" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.25555557
+anchor_right = 0.5375
+anchor_bottom = 0.73333335
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_krqk6")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Chairs" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.2888889
+anchor_right = 0.50625
+anchor_bottom = 0.64444447
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_uu58y")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="ChairsTables" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.19375
+anchor_top = 0.3
+anchor_right = 1.0
+anchor_bottom = 0.73333323
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_nk7xc")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Counter" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.8138889
+anchor_right = 1.0
+anchor_bottom = 1.0138891
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_rlbi3")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Lights" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15625
+anchor_right = 1.0
+anchor_bottom = 0.1
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_8rcq3")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="CashRegister" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.7111111
+anchor_right = 0.20625
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_o8hjd")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Tray" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.7888889
+anchor_right = 0.85625
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_rxbhd")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="TissueBox" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.84375
+anchor_top = 0.7222222
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_t3xjw")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
 
 [node name="BottomButtons" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 
 [node name="AlmanacButton" type="TextureButton" parent="BottomButtons"]
@@ -152,6 +332,7 @@ offset_bottom = 720.0
 
 [node name="OverlayCanvas" type="CanvasLayer" parent="."]
 layer = 100
+visible = false
 
 [node name="DarkenOverlay" type="ColorRect" parent="OverlayCanvas"]
 visible = false
@@ -170,8 +351,10 @@ visible = false
 visible = false
 
 [node name="GameHUD" parent="OverlayCanvas" instance=ExtResource("12_k43ou")]
+visible = false
 
 [node name="DayScene" type="Node2D" parent="."]
+visible = false
 script = ExtResource("17_wdy5h")
 
 [node name="NextCustomer" type="Button" parent="DayScene"]
