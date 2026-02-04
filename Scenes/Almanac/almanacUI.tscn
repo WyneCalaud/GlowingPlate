@@ -1,8 +1,48 @@
-[gd_scene load_steps=4 format=3 uid="uid://clbki6vphqy7t"]
+[gd_scene load_steps=34 format=3 uid="uid://clbki6vphqy7t"]
 
 [ext_resource type="Script" uid="uid://buuoq4bsevlop" path="res://Scripts/Lobby/almanac_ui.gd" id="1_8l0e0"]
-[ext_resource type="Texture2D" uid="uid://cjbq4jmganvi6" path="res://Assets/UI/AlmanacUI/AlmanacGoFood.png" id="2_unaxf"]
+[ext_resource type="Texture2D" uid="uid://c364h4j3e0aq2" path="res://Assets/UI/DarkenLayer.png" id="2_jpf65"]
 [ext_resource type="Texture2D" uid="uid://d3vxoqpokf5xg" path="res://Assets/UI/SoundSettingsUI/CloseButton1.png" id="3_3xfrq"]
+[ext_resource type="Texture2D" uid="uid://ct6gh5224de1n" path="res://Assets/UI/AlmanacUI/BookBase2.png" id="3_lg1bt"]
+[ext_resource type="Texture2D" uid="uid://rnxewdbhpn6v" path="res://Assets/UI/AlmanacUI/GoTab.png" id="3_mmgp3"]
+[ext_resource type="Texture2D" uid="uid://bxttwq2l0s36m" path="res://Assets/UI/AlmanacUI/GrowFoods/GrowFoodSign.png" id="3_ubeeb"]
+[ext_resource type="Texture2D" uid="uid://c6gpn1j73ck3k" path="res://Assets/UI/AlmanacUI/GrowTab.png" id="4_aghlv"]
+[ext_resource type="Texture2D" uid="uid://drk6m7uukm8ry" path="res://Assets/UI/AlmanacUI/GlowFoods/GlowFoodSign.png" id="4_i56je"]
+[ext_resource type="Texture2D" uid="uid://cqhv4wkfjlnjw" path="res://Assets/UI/AlmanacUI/GlowTab.png" id="5_8eymg"]
+[ext_resource type="Texture2D" uid="uid://2fddj7usspxk" path="res://Assets/UI/AlmanacUI/GoFoods/GoFoodsSign.png" id="8_b6es5"]
+[ext_resource type="Texture2D" uid="uid://b6pkpsolnhgyk" path="res://Assets/UI/AlmanacUI/GoFoods/WhiteRiceIcon.png" id="9_ubeeb"]
+[ext_resource type="Texture2D" uid="uid://dn1a4fs8rhspj" path="res://Assets/UI/AlmanacUI/GrowFoods/GrowFoodInfo.png" id="10_g02hj"]
+[ext_resource type="Texture2D" uid="uid://dhj0xilnxn1r5" path="res://Assets/UI/AlmanacUI/GoFoods/BrownRiceIcon.png" id="10_i56je"]
+[ext_resource type="Texture2D" uid="uid://voa7ottw0aia" path="res://Assets/UI/AlmanacUI/GrowFoods/ChickenIcon.png" id="11_4ko4i"]
+[ext_resource type="Texture2D" uid="uid://dn3juv2e6ma7a" path="res://Assets/UI/AlmanacUI/GoFoods/PandesalIcon.png" id="11_6fjyo"]
+[ext_resource type="Texture2D" uid="uid://coagatwiunxtd" path="res://Assets/UI/AlmanacUI/GoFoods/GoFoodsInfo.png" id="11_46u4c"]
+[ext_resource type="Texture2D" uid="uid://c0xi2l6oixx5a" path="res://Assets/UI/AlmanacUI/GrowFoods/FishIcon.png" id="12_8elnb"]
+[ext_resource type="Texture2D" uid="uid://bln1y8urjft45" path="res://Assets/UI/AlmanacUI/GoFoods/CornIcon.png" id="12_i0gx2"]
+[ext_resource type="Texture2D" uid="uid://b52etsid7fycm" path="res://Assets/UI/AlmanacUI/GrowFoods/EggIcon.png" id="13_y5vdk"]
+[ext_resource type="Texture2D" uid="uid://wml2c6u1ohj5" path="res://Assets/UI/AlmanacUI/GrowFoods/TofuIcon.png" id="14_0r2jp"]
+[ext_resource type="Texture2D" uid="uid://brtcnk2hs04cx" path="res://Assets/UI/AlmanacUI/GlowFoods/GlowFoodInfo.png" id="15_4ko4i"]
+[ext_resource type="Texture2D" uid="uid://bkomc30dm8oe8" path="res://Assets/UI/AlmanacUI/GlowFoods/SitawIcon.png" id="15_byxuj"]
+[ext_resource type="Texture2D" uid="uid://y1lqs5yn7fpa" path="res://Assets/UI/AlmanacUI/GlowFoods/EggplantIcon.png" id="16_v5ayx"]
+[ext_resource type="Texture2D" uid="uid://br2fcqbh4376q" path="res://Assets/UI/AlmanacUI/GlowFoods/CarrotIcon.png" id="17_fp46j"]
+[ext_resource type="Texture2D" uid="uid://uerbfyllaf1s" path="res://Assets/UI/AlmanacUI/GlowFoods/KalabasaIcon.png" id="18_nr56u"]
+[ext_resource type="Texture2D" uid="uid://dgaaglt1lv1bn" path="res://Assets/UI/AlmanacUI/GlowFoods/WatermelonIcon.png" id="19_lf1pw"]
+[ext_resource type="Texture2D" uid="uid://q74v45odehl" path="res://Assets/UI/AlmanacUI/GlowFoods/PapayaIcon.png" id="20_n54g7"]
+[ext_resource type="Texture2D" uid="uid://dqvut775aadqj" path="res://Assets/UI/AlmanacUI/GlowFoods/BananaIcon.png" id="21_bt3gs"]
+[ext_resource type="Texture2D" uid="uid://ciksm4ky2qtqn" path="res://Assets/UI/AlmanacUI/GlowFoods/MangoIcon.png" id="22_8vcey"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fjyo"]
+atlas = ExtResource("3_ubeeb")
+region = Rect2(2, 0, 525, 119)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0gx2"]
+atlas = ExtResource("4_i56je")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77g2a"]
+atlas = ExtResource("8_b6es5")
+region = Rect2(3, 3, 523, 118)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lg1bt"]
+atlas = ExtResource("9_ubeeb")
 
 [node name="AlmanacUI" type="Control"]
 layout_mode = 3
@@ -11,7 +51,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_8l0e0")
+sign_go_texture = ExtResource("8_b6es5")
+sign_grow_texture = SubResource("AtlasTexture_6fjyo")
+sign_glow_texture = SubResource("AtlasTexture_i0gx2")
+go_default_info = ExtResource("11_46u4c")
+go_btn_icons = Array[Texture2D]([ExtResource("9_ubeeb"), ExtResource("10_i56je"), ExtResource("11_6fjyo"), ExtResource("12_i0gx2")])
+grow_default_info = ExtResource("10_g02hj")
+grow_btn_icons = Array[Texture2D]([ExtResource("11_4ko4i"), ExtResource("12_8elnb"), ExtResource("13_y5vdk"), ExtResource("14_0r2jp")])
+grow_info_pages = Array[Texture2D]([null, null, null, null])
+glow_default_info = ExtResource("15_4ko4i")
+glow_btn_icons = Array[Texture2D]([ExtResource("15_byxuj"), ExtResource("16_v5ayx"), ExtResource("17_fp46j"), ExtResource("18_nr56u"), ExtResource("19_lf1pw"), ExtResource("20_n54g7"), ExtResource("21_bt3gs"), ExtResource("22_8vcey")])
+
+[node name="DarkenBackground" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("2_jpf65")
 
 [node name="Almanac" type="TextureRect" parent="."]
 layout_mode = 1
@@ -20,20 +77,245 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -640.0
-offset_top = -288.0
-offset_right = 640.0
-offset_bottom = 288.0
+offset_left = -436.0
+offset_top = -299.0
+offset_right = 460.0
+offset_bottom = 293.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_unaxf")
+texture = ExtResource("3_lg1bt")
+expand_mode = 1
 
-[node name="Exitbutton" type="TextureButton" parent="."]
+[node name="Exitbutton" type="TextureButton" parent="Almanac"]
 layout_mode = 0
-offset_left = 920.0
-offset_top = -16.0
-offset_right = 1094.0
-offset_bottom = 93.0
+offset_left = 709.0
+offset_top = -80.0
+offset_right = 883.0
+offset_bottom = 29.0
 texture_normal = ExtResource("3_3xfrq")
 
-[connection signal="pressed" from="Exitbutton" to="." method="_on_texture_button_pressed"]
+[node name="GoTab" type="TextureButton" parent="Almanac"]
+layout_mode = 0
+offset_left = 840.0
+offset_top = 309.0
+offset_right = 953.0
+offset_bottom = 380.0
+texture_normal = ExtResource("3_mmgp3")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="GrowTab" type="TextureButton" parent="Almanac"]
+layout_mode = 0
+offset_left = 840.0
+offset_top = 391.0
+offset_right = 953.0
+offset_bottom = 462.0
+texture_normal = ExtResource("4_aghlv")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="GlowTab" type="TextureButton" parent="Almanac"]
+layout_mode = 0
+offset_left = 840.0
+offset_top = 468.0
+offset_right = 953.0
+offset_bottom = 539.0
+texture_normal = ExtResource("5_8eymg")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="LeftPage" type="Control" parent="Almanac"]
+anchors_preset = 0
+offset_left = 67.0
+offset_top = 24.0
+offset_right = 426.68
+offset_bottom = 522.744
+
+[node name="CategorySign" type="TextureRect" parent="Almanac/LeftPage"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -158.1
+offset_right = 158.1
+offset_bottom = 75.0
+grow_horizontal = 2
+texture = SubResource("AtlasTexture_77g2a")
+expand_mode = 3
+
+[node name="2x2" type="GridContainer" parent="Almanac/LeftPage"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.089
+anchor_top = 0.178
+anchor_right = 0.934
+anchor_bottom = 0.90800005
+offset_left = -0.011520386
+offset_top = 0.22356415
+offset_right = 0.05886841
+offset_bottom = 0.14041138
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="One" type="TextureButton" parent="Almanac/LeftPage/2x2"]
+custom_minimum_size = Vector2(150, 180)
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("9_ubeeb")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Two" type="TextureButton" parent="Almanac/LeftPage/2x2"]
+custom_minimum_size = Vector2(150, 180)
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("10_i56je")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Three" type="TextureButton" parent="Almanac/LeftPage/2x2"]
+custom_minimum_size = Vector2(150, 180)
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("11_6fjyo")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Four" type="TextureButton" parent="Almanac/LeftPage/2x2"]
+custom_minimum_size = Vector2(150, 180)
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("12_i0gx2")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="3x3" type="GridContainer" parent="Almanac/LeftPage"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.028
+anchor_top = 0.162
+anchor_right = 0.96800005
+anchor_bottom = 0.984
+offset_left = 14.92896
+offset_top = 10.203468
+offset_right = -15.170258
+offset_bottom = -9.76413
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/v_separation = -20
+columns = 3
+
+[node name="One" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+custom_minimum_size = Vector2(110, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_lg1bt")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Two" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+custom_minimum_size = Vector2(110, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_lg1bt")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Three" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+custom_minimum_size = Vector2(110, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_lg1bt")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Four" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+custom_minimum_size = Vector2(110, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_lg1bt")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Five" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+custom_minimum_size = Vector2(110, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_lg1bt")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Six" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+custom_minimum_size = Vector2(110, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_lg1bt")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Seven" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+custom_minimum_size = Vector2(110, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_lg1bt")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Eight" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+custom_minimum_size = Vector2(110, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_lg1bt")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Nine" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+custom_minimum_size = Vector2(110, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_lg1bt")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RightPage" type="Control" parent="Almanac"]
+layout_mode = 1
+anchor_left = 0.52900004
+anchor_top = 0.041
+anchor_right = 0.93000007
+anchor_bottom = 0.883
+offset_left = 0.015960693
+offset_top = -0.27200127
+offset_right = 0.39996338
+offset_bottom = 0.0079956055
+
+[node name="RighSideInfo" type="TextureRect" parent="Almanac/RightPage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_46u4c")
+expand_mode = 4
+
+[connection signal="pressed" from="Almanac/Exitbutton" to="." method="_on_texture_button_pressed"]
