@@ -1,5 +1,3 @@
-# KitchenArea.gd
-
 extends Node2D
 
 # --- STATE ---
