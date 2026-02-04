@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://du6kd2g4u6epa"]
 
 [ext_resource type="Script" uid="uid://dlnjg76pcymn" path="res://Scripts/Main_menu.gd" id="1_b8yyp"]
-[ext_resource type="Texture2D" uid="uid://dnacquwotmcdq" path="res://Assets/UI/ShopBackgroundAI.png" id="2_b8yyp"]
+[ext_resource type="Texture2D" uid="uid://jrcka5sbfhqa" path="res://Background/Main Menu.png" id="2_l5jq2"]
 [ext_resource type="Texture2D" uid="uid://cyd5sucvpckhf" path="res://Buttons/Start button.png" id="3_0lb75"]
 [ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/Transition/fade_transition.tscn" id="4_l1v0r"]
 
@@ -16,8 +16,8 @@ anchors_preset = 0
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
-texture = ExtResource("2_b8yyp")
-expand_mode = 1
+texture = ExtResource("2_l5jq2")
+expand_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="UI" type="Node2D" parent="."]
