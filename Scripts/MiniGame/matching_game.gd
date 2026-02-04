@@ -6,7 +6,6 @@ extends Control
 @export var exercise_info := {
 	# card face texture : description text
 }
-@export var preview_time := 2.0 # seconds cards stay revealed at start
 
 
 const GRID_SIZE := 4
@@ -17,8 +16,6 @@ var card_values := {}
 var score := 0
 var turns_taken := 0
 var lock_input := false
-var all_cards: Array[TextureButton] = []
-
 
 @onready var grid := $CenterContainer/Grid
 @onready var score_label := $CanvasLayer/ScoreLabel
@@ -34,9 +31,6 @@ func _ready():
 	setup_board()
 	update_ui()
 	popup_close.pressed.connect(_close_popup)
-
-	await get_tree().process_frame
-	preview_all_cards()
 
 
 func setup_board():
@@ -58,28 +52,12 @@ func setup_board():
 		card.ignore_texture_size = true
 
 		grid.add_child(card)
-		all_cards.append(card)
 		card_values[card] = faces[i]
 
 		card.pressed.connect(func():
 			on_card_pressed(card)
 		)
 
-func preview_all_cards():
-	lock_input = true
-
-	# show all faces
-	for card in all_cards:
-		card.texture_normal = card_values[card]
-
-	await get_tree().create_timer(preview_time).timeout
-
-	# flip all back
-	for card in all_cards:
-		if not card.disabled:
-			card.texture_normal = card_back
-
-	lock_input = false
 
 
 func on_card_pressed(card: TextureButton):

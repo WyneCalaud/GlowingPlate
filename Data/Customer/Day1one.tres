@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_kt5s1")
-customer_name = "Pedro"
+customer_name = "Cedric"
 order_text = "I’d like to try the rice, chicken, sitaw and mango combo, please!"
 expanded_text = "like I said I want rice, chicken, sitaw, and mango"
 needs = {
