@@ -22,9 +22,9 @@ extends Control
 @onready var final_beverage_display = $FinalBeverageDisplay
 
 # --- State Variables ---
-var current_open_popup: Control = null 
-var current_popup_tween: Tween 
-var button_type = null 
+var current_open_popup: Control = null
+var current_popup_tween: Tween
+var button_type = null
 
 var current_happiness: float = 100.0
 var happiness_decay_rate: float = 2.0
@@ -68,7 +68,6 @@ func _restore_day_ui_state() -> void:
 		next_customer_btn.visible = is_idle
 		is_waiting_for_serve = !is_idle
 		
-		# Hide all lobby buttons during work
 		almanac_btn.hide()
 		bulletin_btn.hide()
 		start_day_btn.hide()
@@ -78,7 +77,6 @@ func _restore_day_ui_state() -> void:
 		is_waiting_for_serve = false
 		next_customer_btn.hide()
 		
-		# Show lobby buttons
 		almanac_btn.show()
 		bulletin_btn.show()
 		start_day_btn.show()
@@ -96,6 +94,45 @@ func _check_for_returned_items() -> void:
 	else:
 		final_beverage_display.hide()
 
+# --- DEBUG HELPERS ---
+
+func _debug_plate_slots() -> void:
+	print("==== 🧪 PLATE DEBUG ====")
+
+	# Explicitly typed dictionaries
+	var expected: Dictionary = OrderSystem.current_customer_order.required_plate
+	var plated: Dictionary = {}
+
+	# Build what the player plated
+	for entry: Dictionary in OrderSystem.prepared_plate_contents:
+		var slot: String = entry.get("accepted_type", "") as String
+		if slot != "":
+			var item = entry.get("item")
+			if item and item.has_method("get"):
+				plated[slot] = item.internal_key
+
+	# Explicitly typed slot list
+	var slots: Array[String] = ["Go", "Grow", "GlowVeg", "GlowFru"]
+
+	for slot: String in slots:
+		var exp: String = expected.get(slot, "") as String
+		var act: String = plated.get(slot, "") as String
+
+		var status: String = "✅ OK"
+		if act == "":
+			status = "❌ MISSING"
+		elif act != exp:
+			status = "❌ WRONG"
+
+		print(
+			slot.lpad(8),
+			"| Expected:", exp.lpad(14),
+			"| Actual:", act.lpad(14),
+			"|", status
+		)
+
+	print("========================")
+
 # --- Display Helpers ---
 
 func _get_item_texture(res: Resource) -> Texture2D:
@@ -106,13 +143,12 @@ func _get_item_texture(res: Resource) -> Texture2D:
 		match res.get_meta("RiceAmount"):
 			"Small": tex = res.get("plated_texture_small")
 			"TooHigh": tex = res.get("plated_texture_too_high")
-	
 	elif res.has_meta("DrinkAmount"):
 		match res.get_meta("DrinkAmount"):
 			"Low": tex = res.get("plated_texture_small")
 			"Medium": tex = res.get("plated_texture_medium")
 			"TooHigh": tex = res.get("plated_texture_too_high")
-			
+
 	return tex
 
 func show_final_plate(contents: Array) -> void:
@@ -159,7 +195,13 @@ func _on_btn_final_serve_pressed() -> void:
 	var GD = get_node("/root/GameData")
 	is_waiting_for_serve = false
 
-	var correct : bool = GD.is_plate_correct() and GD.is_beverage_correct()
+	_debug_plate_slots() # 👈 DEBUG CALL
+
+	var correct := (
+		OrderSystem.is_plate_correct()
+		and OrderSystem.is_beverage_correct()
+	)
+
 	if not correct:
 		current_happiness = clamp(current_happiness - 30.0, 0.0, 100.0)
 
@@ -180,10 +222,14 @@ func _on_btn_final_serve_pressed() -> void:
 	$DayScene/BtnAccept.hide()
 	$DayScene/BtnContinue.hide()
 	$DayScene/DialogueBox/OrderText.text = "😊" if correct else "😢"
-	
+
 	customer_manager.next_customer()
+
 	if not GD.remaining_customers.is_empty():
 		next_customer_btn.show()
+
+# --- Remaining code unchanged ---
+
 
 func _on_day_button_pressed() -> void:
 	var GD := get_node("/root/GameData")

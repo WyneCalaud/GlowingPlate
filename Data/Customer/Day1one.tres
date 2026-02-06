@@ -8,9 +8,9 @@ customer_name = "Pedro"
 order_text = "I’d like to try the rice, chicken, sitaw and mango combo, please!"
 expanded_text = "like I said I want rice, chicken, sitaw, and mango"
 needs = {
-"GlowFru": "",
-"GlowVeg": "MIXED_VEGGIES",
-"Go": "RICE",
+"GlowFru": "CHICKEN_LEG",
+"GlowVeg": "CHICKEN_LEG",
+"Go": "CHICKEN_LEG",
 "Grow": "CHICKEN_LEG"
 }
 metadata/_custom_type_script = "uid://b6ratnvhx4aau"

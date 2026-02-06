@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://0mf0efgwobgl" path="res://Assets/UI/LobbyUI/NutriDesk Module.png" id="6_myl55"]
 [ext_resource type="Texture2D" uid="uid://me72u4mdvqya" path="res://Assets/UI/LobbyUI/BlackStartButton.png" id="7_606uc"]
 [ext_resource type="Texture2D" uid="uid://diuyi48p0f6il" path="res://Assets/UI/LobbyUI/LobbyBackground/Chairs.png" id="7_uu58y"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="8_606uc"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="8_606uc"]
 [ext_resource type="Texture2D" uid="uid://c5rbf0dq0amus" path="res://Assets/UI/LobbyUI/LobbyBackground/Tables.png" id="8_nk7xc"]
 [ext_resource type="Texture2D" uid="uid://dxk4knvyq8lb5" path="res://Assets/UI/LobbyUI/LobbyBackground/Counter.png" id="9_vtn67"]
 [ext_resource type="Texture2D" uid="uid://tmae170qxmrb" path="res://Assets/UI/LobbyUI/LobbyBackground/Lights.png" id="10_8rcq3"]
@@ -25,18 +25,19 @@
 [ext_resource type="Texture2D" uid="uid://brjo8ncdnys4h" path="res://Assets/UI/LobbyUI/LobbyBackground/Noise.png" id="14_q6g5s"]
 [ext_resource type="Texture2D" uid="uid://tiwu34pf2i5p" path="res://Assets/UI/LobbyUI/DialogueBox.png" id="15_k43ou"]
 [ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="15_sgopm"]
-[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/Fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
-[ext_resource type="Texture2D" uid="uid://nnrumvef44xt" path="res://Assets/UI/LobbyUI/GotItButton.png" id="16_k43ou"]
+[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/GlowBoard/GlowBoard.tscn" id="16_vrvqj"]
-[ext_resource type="Texture2D" uid="uid://cb2th1oxm4cyo" path="res://Assets/UI/LobbyUI/WhatButton.png" id="17_606uc"]
 [ext_resource type="Script" uid="uid://bhyi7niihpfqg" path="res://Scripts/Lobby/day_scene.gd" id="17_wdy5h"]
 [ext_resource type="PackedScene" uid="uid://cjn07fdlbx2nm" path="res://Scenes/Customer/Customer.tscn" id="20_5fhlb"]
 [ext_resource type="Script" uid="uid://fti83bbe01wh" path="res://Scripts/Customer/customer_manager.gd" id="20_k43ou"]
 [ext_resource type="PackedScene" uid="uid://chcm4mgm880ef" path="res://Scenes/NutriShop/NutriShop.tscn" id="25_7yiff"]
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="21_606uc"]
+[ext_resource type="Texture2D" uid="uid://da1juwk10cg45" path="res://Assets/UI/LobbyUI/Order Dialogue.png" id="27_502pm"]
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="27_cmvyw"]
 [ext_resource type="Texture2D" uid="uid://daqtdvdiuidiq" path="res://Assets/Serving Tray/Serving Tray.png" id="27_hcpvu"]
 [ext_resource type="Texture2D" uid="uid://caogeod1xs5e6" path="res://Assets/Buttons/serve (1).png" id="28_gadot"]
+[ext_resource type="Texture2D" uid="uid://4ssy3iheafjj" path="res://Assets/UI/LobbyUI/Okay Button.png" id="28_q6g5s"]
+[ext_resource type="Texture2D" uid="uid://1ttof10olivl" path="res://Assets/UI/LobbyUI/Hint Button.png" id="29_7yiff"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rlbi3"]
 atlas = ExtResource("9_vtn67")
@@ -48,22 +49,6 @@ font_size = 30
 font_color = Color(0.9137255, 0.8352941, 0.6862745, 1)
 
 [sub_resource type="Theme" id="Theme_myl55"]
-
-[sub_resource type="Resource" id="Resource_4edj8"]
-script = ExtResource("21_606uc")
-metadata/_custom_type_script = "uid://b6ratnvhx4aau"
-
-[sub_resource type="Resource" id="Resource_myl55"]
-script = ExtResource("21_606uc")
-metadata/_custom_type_script = "uid://b6ratnvhx4aau"
-
-[sub_resource type="Resource" id="Resource_cmvyw"]
-script = ExtResource("21_606uc")
-metadata/_custom_type_script = "uid://b6ratnvhx4aau"
-
-[sub_resource type="Resource" id="Resource_gadot"]
-script = ExtResource("21_606uc")
-metadata/_custom_type_script = "uid://b6ratnvhx4aau"
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -380,13 +365,12 @@ icon = ExtResource("13_wdy5h")
 flat = true
 
 [node name="DialogueBox" type="TextureRect" parent="DayScene"]
-offset_left = 432.0
+offset_left = 264.0
 offset_top = 24.0
-offset_right = 1056.0
+offset_right = 888.0
 offset_bottom = 328.0
-texture = ExtResource("15_k43ou")
+texture = ExtResource("27_502pm")
 expand_mode = 1
-flip_h = true
 
 [node name="CustomerName" type="Label" parent="DayScene/DialogueBox"]
 layout_mode = 0
@@ -395,36 +379,35 @@ offset_bottom = 23.0
 
 [node name="OrderText" type="RichTextLabel" parent="DayScene/DialogueBox"]
 layout_mode = 0
-offset_left = 104.0
+offset_left = 88.0
 offset_top = 88.0
-offset_right = 529.0
+offset_right = 513.0
 offset_bottom = 203.0
 theme_override_fonts/normal_font = ExtResource("15_wdy5h")
 theme_override_font_sizes/normal_font_size = 25
 
 [node name="BtnAccept" type="Button" parent="DayScene"]
-offset_left = 624.0
-offset_top = 288.0
-offset_right = 796.0
-offset_bottom = 362.0
-icon = ExtResource("16_k43ou")
+offset_left = 418.0
+offset_top = 275.0
+offset_right = 590.0
+offset_bottom = 349.0
+icon = ExtResource("28_q6g5s")
 flat = true
 expand_icon = true
 
 [node name="BtnContinue" type="Button" parent="DayScene"]
-offset_left = 784.0
-offset_top = 288.0
-offset_right = 956.0
-offset_bottom = 362.0
+offset_left = 590.0
+offset_top = 274.0
+offset_right = 762.0
+offset_bottom = 348.0
 theme = SubResource("Theme_myl55")
-icon = ExtResource("17_606uc")
+icon = ExtResource("29_7yiff")
 flat = true
 expand_icon = true
 
 [node name="CustomerManager" type="Node" parent="DayScene"]
 script = ExtResource("20_k43ou")
 customer_scene = ExtResource("20_5fhlb")
-orders = Array[ExtResource("21_606uc")]([SubResource("Resource_4edj8"), SubResource("Resource_myl55"), SubResource("Resource_cmvyw"), SubResource("Resource_gadot")])
 
 [node name="FinalPlateDisplay" type="Control" parent="."]
 visible = false
