@@ -1,0 +1,161 @@
+[gd_scene load_steps=20 format=3 uid="uid://chcm4mgm880ef"]
+
+[ext_resource type="Texture2D" uid="uid://d3vxoqpokf5xg" path="res://Assets/UI/SoundSettingsUI/CloseButton1.png" id="1_00mgd"]
+[ext_resource type="Script" uid="uid://gb0mckln7o1m" path="res://Scenes/NutriShop/NutriShop.gd" id="1_ludv1"]
+[ext_resource type="Texture2D" uid="uid://c364h4j3e0aq2" path="res://Assets/UI/DarkenLayer.png" id="2_1iu8b"]
+[ext_resource type="Texture2D" uid="uid://dty8hbqkhhbrc" path="res://Assets/UI/NutriShop/NutriShopDesign.png" id="2_400bb"]
+[ext_resource type="Texture2D" uid="uid://cllpw4pndbrix" path="res://Assets/UI/NutriShop/ShopUpgradesButton.png" id="3_apdn2"]
+[ext_resource type="Texture2D" uid="uid://dx01fq2vw0y0m" path="res://Assets/UI/NutriShop/CanteenDecorButton.png" id="4_3j2v6"]
+[ext_resource type="Texture2D" uid="uid://dqj6snf5yqdj3" path="res://Assets/UI/NutriShop/KitchenDecorButton.png" id="5_1m3nj"]
+[ext_resource type="Texture2D" uid="uid://dkjsqda8ddhau" path="res://Assets/UI/NutriShop/PatientCustomerUpgrade.png" id="6_txg5u"]
+[ext_resource type="Texture2D" uid="uid://umed4ubj2e13" path="res://Assets/UI/NutriShop/MealBonusUpgrade.png" id="7_40hjl"]
+[ext_resource type="Texture2D" uid="uid://bsrg151jdvcq7" path="res://Assets/UI/NutriShop/WindowButton.png" id="7_ludv1"]
+[ext_resource type="Texture2D" uid="uid://da4d8y466jarn" path="res://Assets/UI/NutriShop/FloorButton.png" id="8_1iu8b"]
+[ext_resource type="Texture2D" uid="uid://f6yg1bqm2lc" path="res://Assets/UI/NutriShop/ReturnFoodUpgrade.png" id="8_ludv1"]
+[ext_resource type="Texture2D" uid="uid://b03x8qmjg1dqu" path="res://Assets/UI/NutriShop/HighTableButton.png" id="9_mv4k2"]
+[ext_resource type="Texture2D" uid="uid://ej44qpy4klys" path="res://Assets/UI/NutriShop/HighChairsButton.png" id="10_slfqj"]
+[ext_resource type="Texture2D" uid="uid://x8q3gtmsabal" path="res://Assets/UI/NutriShop/MainTableButton.png" id="11_nlf0i"]
+[ext_resource type="Texture2D" uid="uid://ckurcvdexd41o" path="res://Assets/UI/NutriShop/CountertopButton.png" id="12_32vtc"]
+[ext_resource type="Texture2D" uid="uid://r3s6vu8hibwa" path="res://Assets/UI/NutriShop/CountertopDecorationButton.png" id="13_11nqn"]
+[ext_resource type="Texture2D" uid="uid://cyx4ps55iburx" path="res://Assets/UI/NutriShop/EntranceDecorationButton.png" id="14_bb53y"]
+[ext_resource type="PackedScene" uid="uid://c2xinfnuh4tjw" path="res://Scenes/NutriShop/ShopItemCard.tscn" id="16_1iu8b"]
+
+[node name="NutriShop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_ludv1")
+shop_card_scene = ExtResource("16_1iu8b")
+upgrades_icons = Array[Texture2D]([ExtResource("6_txg5u"), ExtResource("7_40hjl"), ExtResource("8_ludv1")])
+upgrades_prices = Array[int]([50, 100, 200])
+upgrades_names = Array[String](["Patient Customer", "Meal Bonus", "ReturnFood"])
+
+[node name="DarkenBackground" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("2_1iu8b")
+
+[node name="CloseTextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1085.0
+offset_top = 35.0
+offset_right = 1259.0
+offset_bottom = 144.0
+texture_normal = ExtResource("1_00mgd")
+
+[node name="NutriShopBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.5
+offset_top = 50.5
+offset_right = -0.5
+offset_bottom = -50.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_400bb")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="LeftTabs" type="VBoxContainer" parent="NutriShopBackground"]
+layout_mode = 0
+offset_top = 184.0
+offset_right = 272.0
+offset_bottom = 533.0
+
+[node name="BtnUpgrades" type="TextureButton" parent="NutriShopBackground/LeftTabs"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("3_apdn2")
+
+[node name="BtnCanteen" type="TextureButton" parent="NutriShopBackground/LeftTabs"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("4_3j2v6")
+
+[node name="CanteenSubMenuScroll" type="ScrollContainer" parent="NutriShopBackground/LeftTabs"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+horizontal_scroll_mode = 0
+
+[node name="ButtonList" type="VBoxContainer" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BtnWindows" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = ExtResource("7_ludv1")
+
+[node name="BtnFloors" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("8_1iu8b")
+
+[node name="BtnHighTable" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("9_mv4k2")
+
+[node name="BtnHighChairs" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("10_slfqj")
+
+[node name="BtnMainTable" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("11_nlf0i")
+
+[node name="BtnCounterTop" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("12_32vtc")
+
+[node name="BtnCounterTopDec" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("13_11nqn")
+
+[node name="BtnEntranceDec" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("14_bb53y")
+
+[node name="BtnKitchen" type="TextureButton" parent="NutriShopBackground/LeftTabs"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("5_1m3nj")
+
+[node name="ItemDisplayScroll" type="ScrollContainer" parent="NutriShopBackground"]
+layout_mode = 0
+offset_left = 265.5
+offset_top = 154.5
+offset_right = 1280.5
+offset_bottom = 603.5
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="ItemContainer" type="HBoxContainer" parent="NutriShopBackground/ItemDisplayScroll"]
+layout_mode = 2
+
+[node name="Card" parent="NutriShopBackground/ItemDisplayScroll/ItemContainer" instance=ExtResource("16_1iu8b")]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="NutriShopBackground"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="pressed" from="CloseTextureButton" to="." method="_on_close_texture_button_pressed"]
