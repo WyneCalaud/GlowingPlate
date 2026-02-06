@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=40 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://dt5he77x83jrn" path="res://Assets/UI/LobbyUI/LobbyBackground/OutsideBackground.png" id="2_502pm"]
@@ -22,12 +22,16 @@
 [ext_resource type="Texture2D" uid="uid://cua7565y16m42" path="res://Assets/UI/LobbyUI/LobbyBackground/TissueBox.png" id="13_t3xjw"]
 [ext_resource type="Texture2D" uid="uid://iepyf6j8aa05" path="res://Assets/UI/LobbyUI/CallCustomer.png" id="13_wdy5h"]
 [ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/Transition/fade_transition.tscn" id="14_hcpvu"]
+[ext_resource type="Texture2D" uid="uid://brjo8ncdnys4h" path="res://Assets/UI/LobbyUI/LobbyBackground/Noise.png" id="14_q6g5s"]
+[ext_resource type="Texture2D" uid="uid://tiwu34pf2i5p" path="res://Assets/UI/LobbyUI/DialogueBox.png" id="15_k43ou"]
 [ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="15_sgopm"]
 [ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/GlowBoard/GlowBoard.tscn" id="16_vrvqj"]
 [ext_resource type="Script" uid="uid://bhyi7niihpfqg" path="res://Scripts/Lobby/day_scene.gd" id="17_wdy5h"]
 [ext_resource type="PackedScene" uid="uid://cjn07fdlbx2nm" path="res://Scenes/Customer/Customer.tscn" id="20_5fhlb"]
 [ext_resource type="Script" uid="uid://fti83bbe01wh" path="res://Scripts/Customer/customer_manager.gd" id="20_k43ou"]
+[ext_resource type="PackedScene" uid="uid://chcm4mgm880ef" path="res://Scenes/NutriShop/NutriShop.tscn" id="25_7yiff"]
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="21_606uc"]
 [ext_resource type="Texture2D" uid="uid://da1juwk10cg45" path="res://Assets/UI/LobbyUI/Order Dialogue.png" id="27_502pm"]
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="27_cmvyw"]
 [ext_resource type="Texture2D" uid="uid://daqtdvdiuidiq" path="res://Assets/Serving Tray/Serving Tray.png" id="27_hcpvu"]
@@ -206,7 +210,7 @@ metadata/_edit_lock_ = true
 [node name="Tray" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
+anchor_left = 0.5125
 anchor_top = 0.7888889
 anchor_right = 0.85625
 anchor_bottom = 1.0
@@ -228,6 +232,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("13_t3xjw")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Noise" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("14_q6g5s")
 expand_mode = 1
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
@@ -314,7 +331,6 @@ offset_bottom = 720.0
 
 [node name="OverlayCanvas" type="CanvasLayer" parent="."]
 layer = 100
-visible = false
 
 [node name="DarkenOverlay" type="ColorRect" parent="OverlayCanvas"]
 visible = false
@@ -332,8 +348,10 @@ visible = false
 [node name="BulletinBoardUI" parent="OverlayCanvas" instance=ExtResource("16_vrvqj")]
 visible = false
 
-[node name="GameHUD" parent="OverlayCanvas" instance=ExtResource("12_k43ou")]
+[node name="NutriShop" parent="OverlayCanvas" instance=ExtResource("25_7yiff")]
 visible = false
+
+[node name="GameHUD" parent="OverlayCanvas" instance=ExtResource("12_k43ou")]
 
 [node name="DayScene" type="Node2D" parent="."]
 script = ExtResource("17_wdy5h")
@@ -446,10 +464,12 @@ position = Vector2(78, 71)
 
 [connection signal="pressed" from="BottomButtons/AlmanacButton" to="." method="_on_almanac_pressed"]
 [connection signal="pressed" from="BottomButtons/BulletinBoardButton" to="." method="_on_bulletin_board_pressed"]
+[connection signal="pressed" from="BottomButtons/NutriShopButton" to="." method="_on_nutri_shop_button_pressed"]
 [connection signal="pressed" from="BottomButtons/StartDayButton" to="." method="_on_day_button_pressed"]
 [connection signal="timeout" from="Fade_transition/Fade_timer" to="." method="_on_fade_timer_timeout"]
 [connection signal="closed" from="OverlayCanvas/AlmanacUI" to="." method="_on_almanac_ui_closed"]
 [connection signal="closed" from="OverlayCanvas/BulletinBoardUI" to="." method="_on_bulletin_board_ui_closed"]
+[connection signal="closed" from="OverlayCanvas/NutriShop" to="." method="_on_nutri_shop_closed"]
 [connection signal="pressed" from="DayScene/NextCustomer" to="DayScene" method="_on_next_customer_pressed"]
 [connection signal="pressed" from="DayScene/BtnAccept" to="DayScene" method="_on_btn_accept_pressed"]
 [connection signal="pressed" from="DayScene/BtnContinue" to="DayScene" method="_on_btn_continue_pressed"]

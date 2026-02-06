@@ -4,6 +4,7 @@ extends Control
 @onready var darken_overlay = $OverlayCanvas/DarkenOverlay
 @onready var almanac_ui = $OverlayCanvas/AlmanacUI
 @onready var bulletin_board_ui = $OverlayCanvas/BulletinBoardUI
+@onready var nutrishop_ui = $OverlayCanvas/NutriShop
 
 @onready var day_scene = $DayScene
 @onready var dialogue_box = $DayScene/DialogueBox
@@ -35,6 +36,20 @@ func _ready() -> void:
 	dialogue_box.hide()
 	$DayScene/BtnAccept.hide()
 	$DayScene/BtnContinue.hide()
+
+	# Connect Popup Close Signals (With Safety Checks)
+	if almanac_ui.has_signal("closed"):
+		if not almanac_ui.closed.is_connected(_on_almanac_ui_closed):
+			almanac_ui.closed.connect(_on_almanac_ui_closed)
+			
+	if bulletin_board_ui.has_signal("closed"):
+		if not bulletin_board_ui.closed.is_connected(_on_bulletin_board_ui_closed):
+			bulletin_board_ui.closed.connect(_on_bulletin_board_ui_closed)
+			
+	# Connect the Nutrishop signal
+	if nutrishop_ui.has_signal("closed"):
+		if not nutrishop_ui.closed.is_connected(_on_nutri_shop_closed):
+			nutrishop_ui.closed.connect(_on_nutri_shop_closed)
 
 	_check_for_returned_items()
 	_restore_day_ui_state()
@@ -291,3 +306,8 @@ func close_popup() -> void:
 
 func _on_almanac_ui_closed() -> void: close_popup()
 func _on_bulletin_board_ui_closed() -> void: close_popup()
+func _on_nutri_shop_closed() -> void: close_popup()
+
+func _on_nutri_shop_button_pressed() -> void:
+	if current_open_popup == nutrishop_ui: close_popup()
+	elif current_open_popup == null: open_popup(nutrishop_ui)
