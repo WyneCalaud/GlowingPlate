@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://cjn07fdlbx2nm" path="res://Scenes/Customer/Customer.tscn" id="20_5fhlb"]
 [ext_resource type="Script" uid="uid://fti83bbe01wh" path="res://Scripts/Customer/customer_manager.gd" id="20_k43ou"]
 [ext_resource type="PackedScene" uid="uid://chcm4mgm880ef" path="res://Scenes/NutriShop/NutriShop.tscn" id="25_7yiff"]
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="21_606uc"]
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="27_cmvyw"]
 [ext_resource type="Texture2D" uid="uid://daqtdvdiuidiq" path="res://Assets/Serving Tray/Serving Tray.png" id="27_hcpvu"]
 [ext_resource type="Texture2D" uid="uid://caogeod1xs5e6" path="res://Assets/Buttons/serve (1).png" id="28_gadot"]
@@ -47,6 +48,22 @@ font_size = 30
 font_color = Color(0.9137255, 0.8352941, 0.6862745, 1)
 
 [sub_resource type="Theme" id="Theme_myl55"]
+
+[sub_resource type="Resource" id="Resource_4edj8"]
+script = ExtResource("21_606uc")
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"
+
+[sub_resource type="Resource" id="Resource_myl55"]
+script = ExtResource("21_606uc")
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"
+
+[sub_resource type="Resource" id="Resource_cmvyw"]
+script = ExtResource("21_606uc")
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"
+
+[sub_resource type="Resource" id="Resource_gadot"]
+script = ExtResource("21_606uc")
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -407,6 +424,7 @@ expand_icon = true
 [node name="CustomerManager" type="Node" parent="DayScene"]
 script = ExtResource("20_k43ou")
 customer_scene = ExtResource("20_5fhlb")
+orders = Array[ExtResource("21_606uc")]([SubResource("Resource_4edj8"), SubResource("Resource_myl55"), SubResource("Resource_cmvyw"), SubResource("Resource_gadot")])
 
 [node name="FinalPlateDisplay" type="Control" parent="."]
 visible = false
