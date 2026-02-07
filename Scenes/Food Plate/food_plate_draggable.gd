@@ -11,7 +11,6 @@ signal drag_state_changed(is_dragging_now: bool)
 const DRAG_Z_INDEX: int = 4096 # Maximum possible Z-Index
 const DEFAULT_Z_INDEX: int = 10
 const RETURN_SPEED: float = 8.0
-const PLATE_SLOT_SCRIPT_PATH_SUFFIX = "plate_slot.gd"
 
 # --- CACHE NODE REFERENCES ---
 @onready var plate_area: Area2D = $Area2D
@@ -26,13 +25,11 @@ var is_dragging: bool = false:
 			
 			if is_dragging:
 				get_tree().call_group("food_dispenser", "deselect")
-				# To appear over CanvasLayers, the object needs a very high Z
-				# AND the HUD needs to allow it (handled in HUD script)
 				self.z_index = DRAG_Z_INDEX
-				self.z_as_relative = false # Force absolute Z-index
+				self.z_as_relative = false 
 
 var drag_offset: Vector2 = Vector2.ZERO
-var original_local_pos: Vector2 # Store local to avoid the offset bug
+var original_local_pos: Vector2 
 var is_returning: bool = false
 
 # --- DROP ZONE STATE ---
@@ -41,7 +38,6 @@ var is_over_trash_zone: bool = false
 
 # --- INITIALIZATION ---
 func _ready():
-	# Store the position relative to the parent at start
 	original_local_pos = position 
 	self.z_index = DEFAULT_Z_INDEX
 	if plate_area:
@@ -91,7 +87,6 @@ func _process(delta):
 	if is_dragging:
 		global_position = get_global_mouse_position() - drag_offset
 	elif is_returning:
-		# Lerp back to local position to fix the "shifting right" bug
 		position = position.lerp(original_local_pos, delta * RETURN_SPEED)
 		
 		if position.distance_to(original_local_pos) < 0.5:
@@ -105,42 +100,70 @@ func _on_drop():
 	var is_plate_truly_empty = plate_contents.size() == 0
 	
 	var handled = false
+	
+	# CASE 1: SERVE ZONE
 	if is_over_serve_zone:
 		handled = true
 		if not is_plate_truly_empty and is_instance_valid(GameData):
 			GameData.store_plate_contents(plate_contents)
-			reset_plate_visuals()
-		is_returning = true
+			_animate_new_plate_arrival()
+		else:
+			is_returning = true
 			
+	# CASE 2: TRASH ZONE
 	elif is_over_trash_zone:
 		handled = true
 		if not is_plate_truly_empty:
-			reset_plate_visuals()
+			if is_instance_valid(GameData):
+				if GameData.has_method("add_money"):
+					GameData.add_money(-5)
+				elif GameData.has_method("adjust_money"):
+					GameData.adjust_money(-5)
+				
 			emit_signal("trashed")
-		is_returning = true
+			_animate_new_plate_arrival()
+		else:
+			is_returning = true
 
 	if not handled:
 		is_returning = true
 
+# --- NEW PLATE ANIMATION ---
+func _animate_new_plate_arrival():
+	is_returning = false
+	self.z_index = DEFAULT_Z_INDEX
+	self.z_as_relative = true
+	
+	reset_plate_visuals()
+	
+	var spawn_offset = Vector2(0, 600) 
+	position = original_local_pos + spawn_offset
+	
+	var tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "position", original_local_pos, 0.6)
+
+# --- FIXED LOGIC HERE ---
 func get_plate_contents() -> Array:
 	var contents = []
 	for child in get_children():
-		if child is Area2D and child.name.contains("Slot"):
-			var script = child.get_script()
-			if not (script is GDScript and script.resource_path.ends_with(PLATE_SLOT_SCRIPT_PATH_SUFFIX)):
-				continue
+		# Check if it's a plate slot using the Group or Script property
+		if child.is_in_group("plate_slot"):
 			if child.get("is_filled") and child.get("item_resource") != null:
-				var accepted_type = "UNKNOWN"
-				if child.name.contains("Go"): accepted_type = "Go"
-				elif child.name.contains("Grow"): accepted_type = "Grow"
-				elif child.name.contains("GlowVeg"): accepted_type = "GlowVeg"
-				elif child.name.contains("GlowFru"): accepted_type = "GlowFru"
-				contents.append({"item": child.item_resource, "accepted_type": accepted_type})
+				# DIRECTLY get the type from the slot's exported variable
+				var type = child.get("slot_type")
+				
+				# Fallback just in case
+				if type == null or type == "": 
+					print("WARNING: Slot ", child.name, " has no slot_type set!")
+					type = "UNKNOWN"
+					
+				contents.append({"item": child.item_resource, "accepted_type": type})
 	return contents
 
 func reset_plate_visuals():
 	for child in get_children():
-		if child is Area2D and child.name.contains("Slot"):
+		# Use group check here too for consistency
+		if child.is_in_group("plate_slot"):
 			if child.has_method("clear_slot"): child.clear_slot()
 			elif child.has_method("clear_food"): child.clear_food()
 

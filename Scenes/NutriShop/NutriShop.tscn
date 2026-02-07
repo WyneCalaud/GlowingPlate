@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://chcm4mgm880ef"]
+[gd_scene load_steps=17 format=3 uid="uid://chcm4mgm880ef"]
 
 [ext_resource type="Texture2D" uid="uid://d3vxoqpokf5xg" path="res://Assets/UI/SoundSettingsUI/CloseButton1.png" id="1_00mgd"]
 [ext_resource type="Script" uid="uid://gb0mckln7o1m" path="res://Scenes/NutriShop/NutriShop.gd" id="1_ludv1"]
@@ -7,11 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cllpw4pndbrix" path="res://Assets/UI/NutriShop/ShopUpgradesButton.png" id="3_apdn2"]
 [ext_resource type="Texture2D" uid="uid://dx01fq2vw0y0m" path="res://Assets/UI/NutriShop/CanteenDecorButton.png" id="4_3j2v6"]
 [ext_resource type="Texture2D" uid="uid://dqj6snf5yqdj3" path="res://Assets/UI/NutriShop/KitchenDecorButton.png" id="5_1m3nj"]
-[ext_resource type="Texture2D" uid="uid://dkjsqda8ddhau" path="res://Assets/UI/NutriShop/PatientCustomerUpgrade.png" id="6_txg5u"]
-[ext_resource type="Texture2D" uid="uid://umed4ubj2e13" path="res://Assets/UI/NutriShop/MealBonusUpgrade.png" id="7_40hjl"]
 [ext_resource type="Texture2D" uid="uid://bsrg151jdvcq7" path="res://Assets/UI/NutriShop/WindowButton.png" id="7_ludv1"]
 [ext_resource type="Texture2D" uid="uid://da4d8y466jarn" path="res://Assets/UI/NutriShop/FloorButton.png" id="8_1iu8b"]
-[ext_resource type="Texture2D" uid="uid://f6yg1bqm2lc" path="res://Assets/UI/NutriShop/ReturnFoodUpgrade.png" id="8_ludv1"]
 [ext_resource type="Texture2D" uid="uid://b03x8qmjg1dqu" path="res://Assets/UI/NutriShop/HighTableButton.png" id="9_mv4k2"]
 [ext_resource type="Texture2D" uid="uid://ej44qpy4klys" path="res://Assets/UI/NutriShop/HighChairsButton.png" id="10_slfqj"]
 [ext_resource type="Texture2D" uid="uid://x8q3gtmsabal" path="res://Assets/UI/NutriShop/MainTableButton.png" id="11_nlf0i"]
@@ -29,10 +26,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_ludv1")
-shop_card_scene = ExtResource("16_1iu8b")
-upgrades_icons = Array[Texture2D]([ExtResource("6_txg5u"), ExtResource("7_40hjl"), ExtResource("8_ludv1")])
-upgrades_prices = Array[int]([50, 100, 200])
-upgrades_names = Array[String](["Patient Customer", "Meal Bonus", "ReturnFood"])
 
 [node name="DarkenBackground" type="TextureRect" parent="."]
 layout_mode = 0

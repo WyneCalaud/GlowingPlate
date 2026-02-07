@@ -73,13 +73,6 @@ func _ready():
 		if game_hud.has_method("show_finish_button"):
 			game_hud.show_finish_button(false)
 
-# --- NEW: FOLLOW CAMERA LOGIC ---
-func _process(_delta):
-	# This makes the Serve/Trash nodes stick to the center of the screen
-	# effectively acting like a UI element while remaining in the World (Physics) layer.
-	if is_instance_valid(drop_zones_parent) and drop_zones_parent.visible and is_instance_valid(camera):
-		drop_zones_parent.global_position = camera.get_screen_center_position()
-
 # --- SERVICE MECHANICS (Called by Plate/Glass) ---
 
 func serve_plate(contents: Array):
@@ -167,9 +160,6 @@ func _on_plate_drag_state_changed(is_dragging_now: bool):
 		var contents = food_plate.get_plate_contents()
 		if contents.size() > 0:
 			drop_zones_parent.visible = true
-			# Force position update immediately so it doesn't "pop"
-			if is_instance_valid(camera):
-				drop_zones_parent.global_position = camera.get_screen_center_position()
 		
 		var cam = get_tree().get_first_node_in_group("MainCamera")
 		if cam: cam.is_input_blocked = true

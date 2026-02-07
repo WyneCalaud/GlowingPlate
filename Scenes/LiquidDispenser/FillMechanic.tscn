@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3tgk7yhcgvkp"]
+[gd_scene load_steps=6 format=3 uid="uid://d3tgk7yhcgvkp"]
 
 [ext_resource type="Script" uid="uid://bvwnv0rofkvtw" path="res://Scenes/LiquidDispenser/GlassFill.gd" id="1_68hj7"]
 [ext_resource type="Texture2D" uid="uid://bowln0jvkiuku" path="res://Assets/UI/KitchenUI/BlackHoldButton.png" id="2_68hj7"]
-[ext_resource type="Texture2D" uid="uid://b0aqgr7efq1rm" path="res://Items/fantasy_pixelart_ui (1)/sliders/silver_slider_filled.png" id="3_jhy8e"]
+[ext_resource type="Texture2D" uid="uid://b011hpk3t2sgv" path="res://Assets/UI/Water/WaterFill.png" id="2_jhy8e"]
+[ext_resource type="Texture2D" uid="uid://b1tfntukjeovs" path="res://Assets/UI/Water/WaterFilled.png" id="3_5ukk3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ukk3"]
+atlas = ExtResource("2_jhy8e")
 
 [node name="FillMechanic" type="Control"]
 layout_mode = 3
@@ -15,25 +19,20 @@ script = ExtResource("1_68hj7")
 
 [node name="FillingIndicator" type="TextureProgressBar" parent="."]
 layout_mode = 0
-offset_left = 236.0
-offset_top = 83.0
-offset_right = 474.71402
-offset_bottom = 126.93155
-rotation = -1.5707964
+offset_left = 262.0
+offset_top = -157.0
+offset_right = 316.0
+offset_bottom = 72.496826
 max_value = 4.0
 step = 0.1
 value = 1.0
 rounded = true
+fill_mode = 3
 nine_patch_stretch = true
-texture_under = ExtResource("3_jhy8e")
-texture_progress = ExtResource("3_jhy8e")
+texture_under = SubResource("AtlasTexture_5ukk3")
+texture_progress = ExtResource("3_5ukk3")
 tint_under = Color(1.4164544, 1.4164544, 1.4164544, 1)
 tint_progress = Color(0, 1, 1, 1)
-
-[node name="OutlineFrame" type="ReferenceRect" parent="FillingIndicator"]
-layout_mode = 0
-offset_right = 239.63547
-offset_bottom = 45.22177
 
 [node name="HoldButton" type="TextureButton" parent="."]
 layout_mode = 0

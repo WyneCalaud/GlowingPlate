@@ -314,6 +314,7 @@ visible = false
 
 [node name="ServeOrTrash" type="Node2D" parent="."]
 visible = false
+position = Vector2(8, 0)
 
 [node name="Serve" type="Sprite2D" parent="ServeOrTrash"]
 position = Vector2(664, 51)
