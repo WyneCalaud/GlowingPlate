@@ -12,7 +12,6 @@ func _ready():
 	
 	# 2. Show Stats (with a simple animation effect)
 	animate_number(money_label, GameData.daily_money_earned, "$")
-	animate_float(rep_label, GameData.daily_reputation_gained, "+")
 	
 	next_button.pressed.connect(_on_next_day_pressed)
 

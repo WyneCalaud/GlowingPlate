@@ -36,7 +36,9 @@ class_name CustomItemData
 @export_range(0, 100) var iron: float = 0.0
 
 # --- Gameplay Stats ---
-@export var base_value: int = 100
+@export_group("Economics")
+@export var base_value: int = 100 # INCOME: How much you earn when serving this correctly
+@export var cost: int = 5        # EXPENSE: How much deducted per scoop/use
 
 ## Returns a dictionary of all nutrients for easy calculation
 func get_nutritional_profile() -> Dictionary:

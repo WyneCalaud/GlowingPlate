@@ -1,3 +1,5 @@
+# filled_glass.gd
+
 extends "res://Scripts/Food Data/food_item_base.gd"
 
 # --- CONFIGURATION ---
@@ -41,14 +43,32 @@ func _ready():
 func start_dragging():
 	super.start_dragging() 
 	
-	# Show the drop zones
+	# 1. Elevate Z-Index to appear above Serve/Trash zones (which are at Z=50)
+	z_index = 100
+	
+	# 2. Block Camera Movement
+	var cam = get_tree().get_first_node_in_group("MainCamera")
+	if cam and "is_input_blocked" in cam:
+		cam.is_input_blocked = true
+	
+	# 3. Show the drop zones
 	if serve_trash_zone:
 		serve_trash_zone.visible = true
-		print("ACTION: Serve/Trash zones visible.")
+		# Move to specific X position (1240.0) for the cup
+		serve_trash_zone.global_position.x = 1240.0
+		print("ACTION: Serve/Trash zones visible at x=1240.0.")
 
 # --- OVERRIDE: Drop Ends (Hide Zones) ---
 func handle_drop():
-	# Hide the drop zones before processing the drop outcome
+	# 1. Reset Z-Index
+	z_index = 0
+	
+	# 2. Unblock Camera Movement
+	var cam = get_tree().get_first_node_in_group("MainCamera")
+	if cam and "is_input_blocked" in cam:
+		cam.is_input_blocked = false
+
+	# 3. Hide the drop zones before processing the drop outcome
 	if serve_trash_zone:
 		serve_trash_zone.visible = false
 		
