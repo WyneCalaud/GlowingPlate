@@ -4,7 +4,7 @@ extends Node
 # --- Core Progression Variables ---
 var current_day: int = 1          
 const TOTAL_DAYS: int = 7         
-var money: int = 0                
+var money: int = 900                
 var keys: int = 60  
 
 # --- GLOW BOARD PROGRESSION ---
@@ -39,6 +39,16 @@ const BEVERAGE_SCENE_PATH = "res://Scenes/Gameplay/BeveragesStation.tscn"
 const LOBBY_CANTEEN_PATH = "res://Scenes/Lobby Canteen/lobbycanteen.tscn"
 const END_DAY_SCENE_PATH = "res://Scenes/Results/EndDayResults.tscn" 
 const QUIZ_SCENE_PATH = "res://Scenes/Quiz/QuizScene.tscn"
+
+func _ready():
+	add_to_group("GameData")
+
+# --- ECONOMY HELPER (FIX FOR CRASH) ---
+func add_money(amount: int) -> void:
+	money += amount
+	# Update any UI listening for changes
+	get_tree().call_group("HUD", "update_all_labels")
+	print("Money updated: ", money)
 
 # --- NEW: HAPPINESS & TIP LOGIC ---
 func calculate_tip(happiness_percent: float) -> int:
@@ -115,7 +125,6 @@ func finalize_service(day_result: Dictionary):
 # --- WRAPPERS & TRANSITIONS ---
 func store_plate_contents(contents: Array): OrderSystem.prepared_plate_contents = contents
 
-# FIX: Added function requested by the error
 func add_prepared_beverage(beverage_res: Resource):
 	OrderSystem.add_prepared_beverage(beverage_res)
 
@@ -137,6 +146,3 @@ func save_customer(order: Resource, tex: Texture2D):
 func clear_customer():
 	saved_customer_order = null
 	saved_customer_texture = null
-
-func _ready():
-	add_to_group("GameData")
