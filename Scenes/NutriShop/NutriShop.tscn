@@ -1,21 +1,120 @@
-[gd_scene load_steps=17 format=3 uid="uid://chcm4mgm880ef"]
+[gd_scene load_steps=116 format=3 uid="uid://chcm4mgm880ef"]
 
 [ext_resource type="Texture2D" uid="uid://d3vxoqpokf5xg" path="res://Assets/UI/SoundSettingsUI/CloseButton1.png" id="1_00mgd"]
 [ext_resource type="Script" uid="uid://gb0mckln7o1m" path="res://Scenes/NutriShop/NutriShop.gd" id="1_ludv1"]
 [ext_resource type="Texture2D" uid="uid://c364h4j3e0aq2" path="res://Assets/UI/DarkenLayer.png" id="2_1iu8b"]
 [ext_resource type="Texture2D" uid="uid://dty8hbqkhhbrc" path="res://Assets/UI/NutriShop/NutriShopDesign.png" id="2_400bb"]
 [ext_resource type="Texture2D" uid="uid://cllpw4pndbrix" path="res://Assets/UI/NutriShop/ShopUpgradesButton.png" id="3_apdn2"]
+[ext_resource type="Texture2D" uid="uid://dkjsqda8ddhau" path="res://Assets/UI/NutriShop/PatientCustomerUpgrade.png" id="3_nlf0i"]
 [ext_resource type="Texture2D" uid="uid://dx01fq2vw0y0m" path="res://Assets/UI/NutriShop/CanteenDecorButton.png" id="4_3j2v6"]
+[ext_resource type="Texture2D" uid="uid://umed4ubj2e13" path="res://Assets/UI/NutriShop/MealBonusUpgrade.png" id="4_32vtc"]
 [ext_resource type="Texture2D" uid="uid://dqj6snf5yqdj3" path="res://Assets/UI/NutriShop/KitchenDecorButton.png" id="5_1m3nj"]
+[ext_resource type="Texture2D" uid="uid://f6yg1bqm2lc" path="res://Assets/UI/NutriShop/ReturnFoodUpgrade.png" id="5_11nqn"]
+[ext_resource type="Texture2D" uid="uid://bqfxh07y6vm5t" path="res://Assets/UI/NutriShop/WallFrameCards/MintyGreenWallFrame.png" id="6_ig48w"]
+[ext_resource type="Texture2D" uid="uid://bo4xna56jpf5r" path="res://Assets/UI/NutriShop/FloorsCards/BlueCheckersFloor.png" id="6_oejyr"]
+[ext_resource type="Texture2D" uid="uid://dq4c70qvsq1n2" path="res://Assets/UI/NutriShop/WallFrameCards/CloudyWhiteWallFrame.png" id="7_2dnf8"]
+[ext_resource type="Texture2D" uid="uid://cqjd3rtw47rar" path="res://Assets/UI/NutriShop/FloorsCards/GreenCheckersFloor.png" id="7_gnjbe"]
 [ext_resource type="Texture2D" uid="uid://bsrg151jdvcq7" path="res://Assets/UI/NutriShop/WindowButton.png" id="7_ludv1"]
 [ext_resource type="Texture2D" uid="uid://da4d8y466jarn" path="res://Assets/UI/NutriShop/FloorButton.png" id="8_1iu8b"]
+[ext_resource type="Texture2D" uid="uid://dlnm4mi6ghqxc" path="res://Assets/UI/NutriShop/WallFrameCards/SweetPinkWallFrame.png" id="8_3nyog"]
+[ext_resource type="Texture2D" uid="uid://bew8uinpmodpo" path="res://Assets/UI/NutriShop/FloorsCards/PurpleCheckersFloor.png" id="8_ths8p"]
 [ext_resource type="Texture2D" uid="uid://b03x8qmjg1dqu" path="res://Assets/UI/NutriShop/HighTableButton.png" id="9_mv4k2"]
+[ext_resource type="Texture2D" uid="uid://op7doyu8ixt0" path="res://Assets/UI/NutriShop/FloorsCards/AngledWalnutFloor.png" id="9_ohsvx"]
+[ext_resource type="Texture2D" uid="uid://cl50qe3ybl8hx" path="res://Assets/UI/NutriShop/WallFrameCards/VintageGreenWallFrame.png" id="9_uhjro"]
+[ext_resource type="Texture2D" uid="uid://b2ioxc4o7d88i" path="res://Assets/UI/NutriShop/WallFrameCards/DarkBeigeWallFrame.png" id="10_2ilx8"]
+[ext_resource type="Texture2D" uid="uid://cqtgtntlffqs4" path="res://Assets/UI/NutriShop/FloorsCards/MapleWoodFloor.png" id="10_rcwvd"]
 [ext_resource type="Texture2D" uid="uid://ej44qpy4klys" path="res://Assets/UI/NutriShop/HighChairsButton.png" id="10_slfqj"]
+[ext_resource type="Texture2D" uid="uid://byg7e1y5un7mq" path="res://Assets/UI/NutriShop/FloorsCards/StoneBrickFloor.png" id="11_c52yn"]
+[ext_resource type="Texture2D" uid="uid://dwekh7ogu13f6" path="res://Assets/UI/NutriShop/WallFrameCards/CoffeeBrownWallFrame.png" id="11_dscfn"]
 [ext_resource type="Texture2D" uid="uid://x8q3gtmsabal" path="res://Assets/UI/NutriShop/MainTableButton.png" id="11_nlf0i"]
+[ext_resource type="Texture2D" uid="uid://jwses1mg6lhu" path="res://Assets/UI/NutriShop/WallFrameVariants/MintyGreenWallFrame.png" id="12_2fv3y"]
 [ext_resource type="Texture2D" uid="uid://ckurcvdexd41o" path="res://Assets/UI/NutriShop/CountertopButton.png" id="12_32vtc"]
+[ext_resource type="Texture2D" uid="uid://bm6qyetn03lol" path="res://Assets/UI/NutriShop/HighTableCards/CozyYellowHighTable.png" id="12_ig48w"]
+[ext_resource type="Texture2D" uid="uid://cahay5pvpex7x" path="res://Assets/UI/NutriShop/HighTableCards/CloudWhiteHighTable.png" id="13_2dnf8"]
 [ext_resource type="Texture2D" uid="uid://r3s6vu8hibwa" path="res://Assets/UI/NutriShop/CountertopDecorationButton.png" id="13_11nqn"]
+[ext_resource type="Texture2D" uid="uid://0j6lvoprdvca" path="res://Assets/UI/NutriShop/WallFrameVariants/CloudyWhiteWallFrame.png" id="13_i2cis"]
+[ext_resource type="Texture2D" uid="uid://bkueyw7n1a4ki" path="res://Assets/UI/NutriShop/HighTableCards/VintageGreenHighTable.png" id="14_3nyog"]
+[ext_resource type="Texture2D" uid="uid://c8g7ooebggc7l" path="res://Assets/UI/NutriShop/WallFrameVariants/SweetPinkWallFrame.png" id="14_8fvl8"]
 [ext_resource type="Texture2D" uid="uid://cyx4ps55iburx" path="res://Assets/UI/NutriShop/EntranceDecorationButton.png" id="14_bb53y"]
+[ext_resource type="Texture2D" uid="uid://punn00ipmqje" path="res://Assets/UI/NutriShop/WallFrameVariants/VintageGreenWallFrame.png" id="15_isllb"]
+[ext_resource type="Texture2D" uid="uid://cmmeo1kwa5udw" path="res://Assets/UI/NutriShop/HighTableCards/CherryWoodHighTable.png" id="15_uhjro"]
 [ext_resource type="PackedScene" uid="uid://c2xinfnuh4tjw" path="res://Scenes/NutriShop/ShopItemCard.tscn" id="16_1iu8b"]
+[ext_resource type="Texture2D" uid="uid://bc5o3a4yk3ccy" path="res://Assets/UI/NutriShop/HighTableCards/StripedGreenHighTable.png" id="16_2ilx8"]
+[ext_resource type="Texture2D" uid="uid://c3mmxydyr5mkx" path="res://Assets/UI/NutriShop/WallFrameVariants/DarkBeigeWallFrame.png" id="16_a148s"]
+[ext_resource type="Texture2D" uid="uid://cqgeapw0dycx6" path="res://Assets/UI/NutriShop/HighTableCards/BeechWoodHighTable.png" id="17_dscfn"]
+[ext_resource type="Texture2D" uid="uid://boroebb6618rg" path="res://Assets/UI/NutriShop/WallFrameVariants/CoffeeBrownWallFrame.png" id="17_iqes7"]
+[ext_resource type="Texture2D" uid="uid://b877jw4p7aonf" path="res://Assets/UI/NutriShop/HighChairsCards/CozyOrangeHighChairs.png" id="18_hjp6b"]
+[ext_resource type="Texture2D" uid="uid://bxe77vah4llrs" path="res://Assets/UI/NutriShop/HighChairsCards/CozyYellowHighChairs.png" id="19_5pni5"]
+[ext_resource type="Texture2D" uid="uid://co1n35mij26by" path="res://Assets/UI/NutriShop/HighChairsCards/CloudWhiteHighChairs.png" id="20_arnlt"]
+[ext_resource type="Texture2D" uid="uid://l7qd3k7giiw0" path="res://Assets/UI/NutriShop/HighChairsCards/StripedGreenHighChairs.png" id="21_2vu5c"]
+[ext_resource type="Texture2D" uid="uid://nv8skmfcfqm0" path="res://Assets/UI/NutriShop/HighChairsCards/VintageGreenHighChairs.png" id="22_ereyj"]
+[ext_resource type="Texture2D" uid="uid://1ax54hqfsbui" path="res://Assets/UI/NutriShop/HighChairsCards/BeechWoodHighChairs.png" id="23_njwso"]
+[ext_resource type="Texture2D" uid="uid://c8x43vctc3cdl" path="res://Assets/UI/NutriShop/FloorVariants/MapleWoodFloor.png" id="24_a148s"]
+[ext_resource type="Texture2D" uid="uid://b3advowilpu6w" path="res://Assets/UI/NutriShop/MainTableCards/CozyOrangeMainTable.png" id="24_yh83u"]
+[ext_resource type="Texture2D" uid="uid://i5s4iwjmogdt" path="res://Assets/UI/NutriShop/MainTableCards/CozyGreenMainTable.png" id="25_hpjnm"]
+[ext_resource type="Texture2D" uid="uid://bunq1livksjsm" path="res://Assets/UI/NutriShop/FloorVariants/BlueCheckersFloor.png" id="25_iqes7"]
+[ext_resource type="Texture2D" uid="uid://co0rggvahkcwf" path="res://Assets/UI/NutriShop/MainTableCards/OakWoodMainTable.png" id="26_2fv3y"]
+[ext_resource type="Texture2D" uid="uid://diswqr7in50rc" path="res://Assets/UI/NutriShop/FloorVariants/PurpleCheckersFloor.png" id="26_teo5t"]
+[ext_resource type="Texture2D" uid="uid://cwt47o1g52tud" path="res://Assets/UI/NutriShop/MainTableCards/CloudWhiteMainTable.png" id="27_i2cis"]
+[ext_resource type="Texture2D" uid="uid://b3uityhpqaef5" path="res://Assets/UI/NutriShop/FloorVariants/AngledWalnutFloor.png" id="27_ou7el"]
+[ext_resource type="Texture2D" uid="uid://cvhb4og112aul" path="res://Assets/UI/NutriShop/MainTableCards/CherryRedMainTable.png" id="28_8fvl8"]
+[ext_resource type="Texture2D" uid="uid://brickgjujcrsq" path="res://Assets/UI/NutriShop/CountertopCards/CozyWhiteCountertop.png" id="29_isllb"]
+[ext_resource type="Texture2D" uid="uid://cu80nocotjue8" path="res://Assets/UI/NutriShop/CountertopCards/CherryWoodCountertop.png" id="30_a148s"]
+[ext_resource type="Texture2D" uid="uid://df2hkwje6e2q4" path="res://Assets/UI/NutriShop/CountertopCards/CandyBrickCountertop.png" id="31_iqes7"]
+[ext_resource type="Texture2D" uid="uid://baphxlp7sma1p" path="res://Assets/UI/NutriShop/CountertopCards/VintageTileCountertop.png" id="32_teo5t"]
+[ext_resource type="Texture2D" uid="uid://cc7eqf4kcnxdd" path="res://Assets/UI/NutriShop/CountertopCards/BlackAndRedCountertop.png" id="33_ou7el"]
+[ext_resource type="Texture2D" uid="uid://budmt4g8csg0i" path="res://Assets/UI/NutriShop/CountertopCards/BeechWoodCountertop.png" id="34_5ijsi"]
+[ext_resource type="Texture2D" uid="uid://txxp2gpu2d4b" path="res://Assets/UI/NutriShop/HighTableVariants/CozyYellowHighTable.png" id="34_tp8e0"]
+[ext_resource type="Texture2D" uid="uid://cv0p2m3sb7ydp" path="res://Assets/UI/NutriShop/CountertopDecCards/TissueBoxCountertopDec.png" id="35_apr3b"]
+[ext_resource type="Texture2D" uid="uid://d31jk6w76ure3" path="res://Assets/UI/NutriShop/HighTableVariants/CloudyWhiteHighTable.png" id="35_o4em8"]
+[ext_resource type="Texture2D" uid="uid://ry1xwoa7k88p" path="res://Assets/UI/NutriShop/HighTableVariants/VintageGreenHighTable.png" id="36_nntqd"]
+[ext_resource type="Texture2D" uid="uid://uvqom3eldwb2" path="res://Assets/UI/NutriShop/CountertopDecCards/FlowerVaseCountertopDec.png" id="36_yir2f"]
+[ext_resource type="Texture2D" uid="uid://dlq3ow72yfovt" path="res://Assets/UI/NutriShop/CountertopDecCards/LuckyCatCountertopDec.png" id="37_gt5hr"]
+[ext_resource type="Texture2D" uid="uid://dl5mlqhntra1e" path="res://Assets/UI/NutriShop/HighTableVariants/CherryWoodHighTable.png" id="37_t0hmg"]
+[ext_resource type="Texture2D" uid="uid://cnsebypj8ms61" path="res://Assets/UI/NutriShop/HighTableVariants/StripedGreenHighTable.png" id="38_bmmd1"]
+[ext_resource type="Texture2D" uid="uid://cq4mej3uexxob" path="res://Assets/UI/NutriShop/WallDecCards/BasicPlantWallDec.png" id="38_inv4e"]
+[ext_resource type="Texture2D" uid="uid://cxmvsbdm2cscf" path="res://Assets/UI/NutriShop/WallDecCards/MoneyTreeWallDec.png" id="39_6e0in"]
+[ext_resource type="Texture2D" uid="uid://ccehp2dqb028o" path="res://Assets/UI/NutriShop/HighTableVariants/BeechWoodHighTable.png" id="39_mnfii"]
+[ext_resource type="Texture2D" uid="uid://5mmlehht8t7v" path="res://Assets/UI/NutriShop/HighChairVariants/CozyOrangeHighChair.png" id="40_6hkx3"]
+[ext_resource type="Texture2D" uid="uid://dlcgx1oxttw8g" path="res://Assets/UI/NutriShop/WallDecCards/RefrigeratorWallDec.png" id="40_66t1j"]
+[ext_resource type="Texture2D" uid="uid://bacjo60ku2wy2" path="res://Assets/UI/NutriShop/WallDecCards/BookshelfWallDec.png" id="41_4eq8w"]
+[ext_resource type="Texture2D" uid="uid://ba15utftn8xd3" path="res://Assets/UI/NutriShop/HighChairVariants/CozyYellowHighChair.png" id="41_tp8e0"]
+[ext_resource type="Texture2D" uid="uid://gb1vki4cud3e" path="res://Assets/UI/NutriShop/HighChairVariants/CloudyWhiteHighChair.png" id="42_vrnpl"]
+[ext_resource type="Texture2D" uid="uid://e3qoc4vo3tht" path="res://Assets/UI/NutriShop/HighChairVariants/StripedGreenHighChair.png" id="43_0htoh"]
+[ext_resource type="Texture2D" uid="uid://c8l3cp836wogj" path="res://Assets/UI/NutriShop/HighChairVariants/VintageGreenHighChair.png" id="44_ny2ii"]
+[ext_resource type="Texture2D" uid="uid://dd3wig72x4k7t" path="res://Assets/UI/NutriShop/HighChairVariants/BeechWoodHighChair.png" id="45_cqqa2"]
+[ext_resource type="Texture2D" uid="uid://s1ye0b3388ab" path="res://Assets/UI/NutriShop/LightsCards/ConeLights.png" id="48_hjp6b"]
+[ext_resource type="Texture2D" uid="uid://cgb0g564pofeh" path="res://Assets/UI/NutriShop/LightsCards/FlowerLights.png" id="49_5pni5"]
+[ext_resource type="Texture2D" uid="uid://desjnxppw0bpr" path="res://Assets/UI/NutriShop/LightsCards/DumbbellLights.png" id="50_arnlt"]
+[ext_resource type="Texture2D" uid="uid://bsil2xuvxj7dt" path="res://Assets/UI/NutriShop/LightsCards/RattanLights.png" id="51_2vu5c"]
+[ext_resource type="Texture2D" uid="uid://qtqct4m2oy3w" path="res://Assets/UI/NutriShop/CountertopVariants/CherryWoodCountertop.png" id="51_apr3b"]
+[ext_resource type="Texture2D" uid="uid://dxk4knvyq8lb5" path="res://Assets/UI/LobbyUI/LobbyBackground/Counter.png" id="51_yir2f"]
+[ext_resource type="Texture2D" uid="uid://c25p2sopcjeo0" path="res://Assets/UI/NutriShop/CashRegisterCards/SummerCashier.png" id="52_arnlt"]
+[ext_resource type="Texture2D" uid="uid://bk0lva7t0fjro" path="res://Assets/UI/NutriShop/CountertopVariants/CandyBrickCountertop.png" id="52_yir2f"]
+[ext_resource type="Texture2D" uid="uid://chlav2bswxtd" path="res://Assets/UI/NutriShop/CashRegisterCards/OrangeCashier.png" id="53_2vu5c"]
+[ext_resource type="Texture2D" uid="uid://dulao3m3vby3" path="res://Assets/UI/NutriShop/CountertopVariants/VintageGreenCountertop.png" id="53_gt5hr"]
+[ext_resource type="Texture2D" uid="uid://b0slk1vqkjjm5" path="res://Assets/UI/NutriShop/CountertopVariants/BlackRedCountertop.png" id="54_inv4e"]
+[ext_resource type="Texture2D" uid="uid://bg54u3nfb4l3u" path="res://Assets/UI/NutriShop/LightsButton.png" id="55_3nyog"]
+[ext_resource type="Texture2D" uid="uid://la8rmb5wo2hy" path="res://Assets/UI/NutriShop/CountertopVariants/BeechWoodCountertop.png" id="55_6e0in"]
+[ext_resource type="Texture2D" uid="uid://tkftd55r2v6d" path="res://Assets/UI/NutriShop/MainTableVariants/CozyOrangeMainTable.png" id="57_uq223"]
+[ext_resource type="Texture2D" uid="uid://24s2a4iyvjjd" path="res://Assets/UI/NutriShop/MainTableVariants/CozyGreenMainTable.png" id="58_juuhw"]
+[ext_resource type="Texture2D" uid="uid://baukw5e2aptcf" path="res://Assets/UI/NutriShop/MainTableVariants/OakWoodMainTable.png" id="59_mqhjl"]
+[ext_resource type="Texture2D" uid="uid://ddwohuk1s3d5d" path="res://Assets/UI/NutriShop/MainTableVariants/CloudWhiteMainTable.png" id="60_e0k6h"]
+[ext_resource type="Texture2D" uid="uid://deo026dlea3in" path="res://Assets/UI/NutriShop/CashRegisterButton.png" id="60_uhjro"]
+[ext_resource type="Texture2D" uid="uid://dvmuk60a2exas" path="res://Assets/UI/NutriShop/MainTableVariants/CherryRedMainTable.png" id="61_jbujv"]
+[ext_resource type="Texture2D" uid="uid://62vbxhisxq18" path="res://Assets/UI/NutriShop/CountertopDecVariants/TissueBoxCounterDec.png" id="77_e0k6h"]
+[ext_resource type="Texture2D" uid="uid://wvwage0vc0l2" path="res://Assets/UI/NutriShop/CountertopDecVariants/PlantVaseCounterDec.png" id="78_jbujv"]
+[ext_resource type="Texture2D" uid="uid://dxjhnxmh42u8v" path="res://Assets/UI/NutriShop/CountertopDecVariants/LuckyCatCounterDec.png" id="79_s7yjw"]
+[ext_resource type="Texture2D" uid="uid://dnwqtxeef5vht" path="res://Assets/UI/NutriShop/WallDecVariants/BasicPlantEntranceDecor.png" id="84_byggp"]
+[ext_resource type="Texture2D" uid="uid://1i3tqwrsxp6g" path="res://Assets/UI/NutriShop/WallDecVariants/MoneyTreeEntranceDecor.png" id="85_g8hii"]
+[ext_resource type="Texture2D" uid="uid://dd24b4lq1kvrq" path="res://Assets/UI/NutriShop/WallDecVariants/RefrigeratorEntranceDecor.png" id="86_fhbi2"]
+[ext_resource type="Texture2D" uid="uid://dw7qg3egnrmm8" path="res://Assets/UI/NutriShop/WallDecVariants/BookshelfEntranceDecor.png" id="87_3fxbb"]
+[ext_resource type="Texture2D" uid="uid://51eb7tx1t2kv" path="res://Assets/UI/NutriShop/LightsVariants/ConeLightsLight.png" id="92_r6waw"]
+[ext_resource type="Texture2D" uid="uid://gvc3sql3bqp3" path="res://Assets/UI/NutriShop/LightsVariants/FlowerLightsLight.png" id="93_2jcmr"]
+[ext_resource type="Texture2D" uid="uid://bo2sp6av468qk" path="res://Assets/UI/NutriShop/LightsVariants/DumbBellLightsLight.png" id="94_3urf0"]
+[ext_resource type="Texture2D" uid="uid://b2fmujlxh5p7p" path="res://Assets/UI/NutriShop/LightsVariants/RattanLightsLight.png" id="95_h012q"]
+[ext_resource type="Texture2D" uid="uid://djleog35ekq2h" path="res://Assets/UI/LobbyUI/LobbyBackground/CashRegister.png" id="98_3urf0"]
+[ext_resource type="Texture2D" uid="uid://srkvofcci0d3" path="res://Assets/UI/NutriShop/CashRegisterVariants/OrangeRegister.png" id="99_h012q"]
 
 [node name="NutriShop" type="Control"]
 layout_mode = 3
@@ -26,6 +125,53 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_ludv1")
+shop_card_scene = ExtResource("16_1iu8b")
+upgrades_icons = Array[Texture2D]([ExtResource("3_nlf0i"), ExtResource("4_32vtc"), ExtResource("5_11nqn")])
+upgrades_prices = Array[int]([20, 30, 50])
+upgrades_names = Array[String](["PatientCustomers", "MealBonus", "ReturnFood"])
+kitchen_icons = Array[Texture2D]([ExtResource("5_11nqn")])
+kitchen_prices = Array[int]([50])
+kitchen_names = Array[String](["Re"])
+wallframe_names = Array[String](["MintyGreenWF", "CloudyWhiteWF", "SweetPinkFW", "VintageGreenFW", "DarkBeigeFW", "CoffeeBrownFW"])
+wallframe_prices = Array[int]([0, 50, 100, 70, 80, 90])
+wallframe_icons = Array[Texture2D]([ExtResource("6_ig48w"), ExtResource("7_2dnf8"), ExtResource("8_3nyog"), ExtResource("9_uhjro"), ExtResource("10_2ilx8"), ExtResource("11_dscfn")])
+wallframe_skins = Array[Texture2D]([ExtResource("12_2fv3y"), ExtResource("13_i2cis"), ExtResource("14_8fvl8"), ExtResource("15_isllb"), ExtResource("16_a148s"), ExtResource("17_iqes7")])
+floor_names = Array[String](["MapleWoodF", "BlueCheckersF", "GreenCheckersF", "PurpleCheckersF", "AngledWalnutF", "StoneBrickF"])
+floor_prices = Array[int]([0, 30, 30, 30, 30, 30])
+floor_icons = Array[Texture2D]([ExtResource("10_rcwvd"), ExtResource("6_oejyr"), ExtResource("7_gnjbe"), ExtResource("8_ths8p"), ExtResource("9_ohsvx"), ExtResource("11_c52yn")])
+floor_skins = Array[Texture2D]([ExtResource("24_a148s"), ExtResource("25_iqes7"), null, ExtResource("26_teo5t"), ExtResource("27_ou7el"), ExtResource("27_ou7el")])
+hightable_names = Array[String](["CozyYellowHT", "CloudyWhiteHT", "VintageGreenHT", "CherryWoodHT", "StripedGreenHT", "BeechWoodHT"])
+hightable_prices = Array[int]([0, 20, 30, 40, 50, 60])
+hightable_icons = Array[Texture2D]([ExtResource("12_ig48w"), ExtResource("13_2dnf8"), ExtResource("14_3nyog"), ExtResource("15_uhjro"), ExtResource("16_2ilx8"), ExtResource("17_dscfn")])
+hightable_skins = Array[Texture2D]([ExtResource("34_tp8e0"), ExtResource("35_o4em8"), ExtResource("36_nntqd"), ExtResource("37_t0hmg"), ExtResource("38_bmmd1"), ExtResource("39_mnfii")])
+highchair_names = Array[String](["CozyOrangeHC", "CozyYellowHC", "CloudyWhiteHC", "StripedGreenHC", "VintageGreenHC", "BeechWoodHC"])
+highchair_prices = Array[int]([0, 20, 30, 40, 50, 60])
+highchair_icons = Array[Texture2D]([ExtResource("18_hjp6b"), ExtResource("19_5pni5"), ExtResource("20_arnlt"), ExtResource("21_2vu5c"), ExtResource("22_ereyj"), ExtResource("23_njwso")])
+highchair_skins = Array[Texture2D]([ExtResource("40_6hkx3"), ExtResource("41_tp8e0"), ExtResource("42_vrnpl"), ExtResource("43_0htoh"), ExtResource("44_ny2ii"), ExtResource("45_cqqa2")])
+maintable_names = Array[String](["CozyYellowMT", "CozyGreenMT", "OakWoodMT", "CloudWhiteMT", "CherryRedMT"])
+maintable_prices = Array[int]([0, 30, 40, 50, 60])
+maintable_icons = Array[Texture2D]([ExtResource("24_yh83u"), ExtResource("25_hpjnm"), ExtResource("26_2fv3y"), ExtResource("27_i2cis"), ExtResource("28_8fvl8")])
+maintable_skins = Array[Texture2D]([ExtResource("57_uq223"), ExtResource("58_juuhw"), ExtResource("59_mqhjl"), ExtResource("60_e0k6h"), ExtResource("61_jbujv")])
+countertop_names = Array[String](["CozyWhiteCT", "CherryWoodCT", "CandyBrickCT", "VintageTileCT", "BlackRedCT", "BeechWoodCT"])
+countertop_prices = Array[int]([0, 40, 50, 60, 30, 20])
+countertop_icons = Array[Texture2D]([ExtResource("29_isllb"), ExtResource("30_a148s"), ExtResource("31_iqes7"), ExtResource("32_teo5t"), ExtResource("33_ou7el"), ExtResource("34_5ijsi")])
+countertop_skins = Array[Texture2D]([ExtResource("51_yir2f"), ExtResource("51_apr3b"), ExtResource("52_yir2f"), ExtResource("53_gt5hr"), ExtResource("54_inv4e"), ExtResource("55_6e0in")])
+counterdecor_names = Array[String](["TissueBoxCD", "PlantVaseCD", "LuckyCatCD"])
+counterdecor_prices = Array[int]([0, 50, 80])
+counterdecor_icons = Array[Texture2D]([ExtResource("35_apr3b"), ExtResource("36_yir2f"), ExtResource("37_gt5hr")])
+counterdecor_skins = Array[Texture2D]([ExtResource("77_e0k6h"), ExtResource("78_jbujv"), ExtResource("79_s7yjw")])
+entrancedecor_names = Array[String](["BasicPlantED", "MoneyTreeED", "RefrigeratorED", "BookshelfED"])
+entrancedecor_prices = Array[int]([0, 40, 70, 100])
+entrancedecor_icons = Array[Texture2D]([ExtResource("38_inv4e"), ExtResource("39_6e0in"), ExtResource("40_66t1j"), ExtResource("41_4eq8w")])
+entrancedecor_skins = Array[Texture2D]([ExtResource("84_byggp"), ExtResource("85_g8hii"), ExtResource("86_fhbi2"), ExtResource("87_3fxbb")])
+lights_names = Array[String](["ConeLightsL", "FlowerLightsL", "DumbbellLightsL", "RattanLightsL"])
+lights_prices = Array[int]([0, 20, 30, 40])
+lights_icons = Array[Texture2D]([ExtResource("48_hjp6b"), ExtResource("49_5pni5"), ExtResource("50_arnlt"), ExtResource("51_2vu5c")])
+lights_skins = Array[Texture2D]([ExtResource("92_r6waw"), ExtResource("93_2jcmr"), ExtResource("94_3urf0"), ExtResource("95_h012q")])
+cashregister_names = Array[String](["SummerCashierCR", "OrangeCashierCR"])
+cashregister_prices = Array[int]([0, 50])
+cashregister_icons = Array[Texture2D]([ExtResource("52_arnlt"), ExtResource("53_2vu5c")])
+cashregister_skins = Array[Texture2D]([ExtResource("98_3urf0"), ExtResource("99_h012q")])
 
 [node name="DarkenBackground" type="TextureRect" parent="."]
 layout_mode = 0
@@ -59,9 +205,9 @@ stretch_mode = 4
 
 [node name="LeftTabs" type="VBoxContainer" parent="NutriShopBackground"]
 layout_mode = 0
-offset_top = 184.0
+offset_top = 141.5
 offset_right = 272.0
-offset_bottom = 533.0
+offset_bottom = 593.5
 
 [node name="BtnUpgrades" type="TextureButton" parent="NutriShopBackground/LeftTabs"]
 layout_mode = 2
@@ -75,16 +221,16 @@ texture_normal = ExtResource("4_3j2v6")
 
 [node name="CanteenSubMenuScroll" type="ScrollContainer" parent="NutriShopBackground/LeftTabs"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
 size_flags_vertical = 4
 horizontal_scroll_mode = 0
 
 [node name="ButtonList" type="VBoxContainer" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
 size_flags_vertical = 4
 
-[node name="BtnWindows" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
+[node name="BtnWallFrame" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -95,6 +241,11 @@ texture_normal = ExtResource("7_ludv1")
 layout_mode = 2
 toggle_mode = true
 texture_normal = ExtResource("8_1iu8b")
+
+[node name="BtnLights" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("55_3nyog")
 
 [node name="BtnHighTable" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
 layout_mode = 2
@@ -115,6 +266,11 @@ texture_normal = ExtResource("11_nlf0i")
 layout_mode = 2
 toggle_mode = true
 texture_normal = ExtResource("12_32vtc")
+
+[node name="BtnCashRegister" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("60_uhjro")
 
 [node name="BtnCounterTopDec" type="TextureButton" parent="NutriShopBackground/LeftTabs/CanteenSubMenuScroll/ButtonList"]
 layout_mode = 2
@@ -145,10 +301,5 @@ layout_mode = 2
 
 [node name="Card" parent="NutriShopBackground/ItemDisplayScroll/ItemContainer" instance=ExtResource("16_1iu8b")]
 layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="NutriShopBackground"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [connection signal="pressed" from="CloseTextureButton" to="." method="_on_close_texture_button_pressed"]

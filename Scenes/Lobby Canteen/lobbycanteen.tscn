@@ -7,31 +7,29 @@
 [ext_resource type="Texture2D" uid="uid://cinteuxw081s6" path="res://Assets/UI/LobbyUI/LobbyBackground/WallFrame.png" id="4_7yiff"]
 [ext_resource type="Texture2D" uid="uid://bsf2omkf5nl3c" path="res://Assets/UI/LobbyUI/Bulletin Board Module.png" id="4_606uc"]
 [ext_resource type="Texture2D" uid="uid://cpgyhoxioemwn" path="res://Assets/UI/LobbyUI/NutriShop Module.png" id="5_4edj8"]
-[ext_resource type="Texture2D" uid="uid://bpgpttpqx4wk8" path="res://Assets/UI/LobbyUI/LobbyBackground/Plant.png" id="5_fw8iq"]
-[ext_resource type="Texture2D" uid="uid://bmxnbss56pehx" path="res://Assets/UI/LobbyUI/LobbyBackground/WallTabl.png" id="6_krqk6"]
+[ext_resource type="Texture2D" uid="uid://dnwqtxeef5vht" path="res://Assets/UI/NutriShop/WallDecVariants/BasicPlantEntranceDecor.png" id="5_7yiff"]
+[ext_resource type="Texture2D" uid="uid://txxp2gpu2d4b" path="res://Assets/UI/NutriShop/HighTableVariants/CozyYellowHighTable.png" id="6_7yiff"]
 [ext_resource type="Texture2D" uid="uid://0mf0efgwobgl" path="res://Assets/UI/LobbyUI/NutriDesk Module.png" id="6_myl55"]
+[ext_resource type="Texture2D" uid="uid://5mmlehht8t7v" path="res://Assets/UI/NutriShop/HighChairVariants/CozyOrangeHighChair.png" id="7_7yiff"]
 [ext_resource type="Texture2D" uid="uid://me72u4mdvqya" path="res://Assets/UI/LobbyUI/BlackStartButton.png" id="7_606uc"]
-[ext_resource type="Texture2D" uid="uid://diuyi48p0f6il" path="res://Assets/UI/LobbyUI/LobbyBackground/Chairs.png" id="7_uu58y"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="8_606uc"]
-[ext_resource type="Texture2D" uid="uid://c5rbf0dq0amus" path="res://Assets/UI/LobbyUI/LobbyBackground/Tables.png" id="8_nk7xc"]
+[ext_resource type="Texture2D" uid="uid://tkftd55r2v6d" path="res://Assets/UI/NutriShop/MainTableVariants/CozyOrangeMainTable.png" id="8_7yiff"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="8_606uc"]
 [ext_resource type="Texture2D" uid="uid://dxk4knvyq8lb5" path="res://Assets/UI/LobbyUI/LobbyBackground/Counter.png" id="9_vtn67"]
-[ext_resource type="Texture2D" uid="uid://tmae170qxmrb" path="res://Assets/UI/LobbyUI/LobbyBackground/Lights.png" id="10_8rcq3"]
+[ext_resource type="Texture2D" uid="uid://51eb7tx1t2kv" path="res://Assets/UI/NutriShop/LightsVariants/ConeLightsLight.png" id="10_7yiff"]
 [ext_resource type="Texture2D" uid="uid://djleog35ekq2h" path="res://Assets/UI/LobbyUI/LobbyBackground/CashRegister.png" id="11_o8hjd"]
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="12_k43ou"]
 [ext_resource type="Texture2D" uid="uid://pa3xby32qsk6" path="res://Assets/UI/LobbyUI/LobbyBackground/Tray.png" id="12_rxbhd"]
-[ext_resource type="Texture2D" uid="uid://cua7565y16m42" path="res://Assets/UI/LobbyUI/LobbyBackground/TissueBox.png" id="13_t3xjw"]
+[ext_resource type="Texture2D" uid="uid://62vbxhisxq18" path="res://Assets/UI/NutriShop/CountertopDecVariants/TissueBoxCounterDec.png" id="13_7yiff"]
 [ext_resource type="Texture2D" uid="uid://iepyf6j8aa05" path="res://Assets/UI/LobbyUI/CallCustomer.png" id="13_wdy5h"]
 [ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/Transition/fade_transition.tscn" id="14_hcpvu"]
 [ext_resource type="Texture2D" uid="uid://brjo8ncdnys4h" path="res://Assets/UI/LobbyUI/LobbyBackground/Noise.png" id="14_q6g5s"]
-[ext_resource type="Texture2D" uid="uid://tiwu34pf2i5p" path="res://Assets/UI/LobbyUI/DialogueBox.png" id="15_k43ou"]
 [ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="15_sgopm"]
-[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
+[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/Fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/GlowBoard/GlowBoard.tscn" id="16_vrvqj"]
 [ext_resource type="Script" uid="uid://bhyi7niihpfqg" path="res://Scripts/Lobby/day_scene.gd" id="17_wdy5h"]
 [ext_resource type="PackedScene" uid="uid://cjn07fdlbx2nm" path="res://Scenes/Customer/Customer.tscn" id="20_5fhlb"]
 [ext_resource type="Script" uid="uid://fti83bbe01wh" path="res://Scripts/Customer/customer_manager.gd" id="20_k43ou"]
 [ext_resource type="PackedScene" uid="uid://chcm4mgm880ef" path="res://Scenes/NutriShop/NutriShop.tscn" id="25_7yiff"]
-[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="21_606uc"]
 [ext_resource type="Texture2D" uid="uid://da1juwk10cg45" path="res://Assets/UI/LobbyUI/Order Dialogue.png" id="27_502pm"]
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="27_cmvyw"]
 [ext_resource type="Texture2D" uid="uid://daqtdvdiuidiq" path="res://Assets/Serving Tray/Serving Tray.png" id="27_hcpvu"]
@@ -83,9 +81,9 @@ metadata/_edit_lock_ = true
 [node name="Floor" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.35972223
+anchor_top = 0.3638889
 anchor_right = 1.0
-anchor_bottom = 0.8666667
+anchor_bottom = 0.87083334
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_q6g5s")
@@ -107,7 +105,7 @@ stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="Plants" type="TextureRect" parent="Background"]
+[node name="WallDec" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.63125
@@ -116,61 +114,62 @@ anchor_right = 0.6875
 anchor_bottom = 0.41111112
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_fw8iq")
+texture = ExtResource("5_7yiff")
 expand_mode = 1
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="WallTable" type="TextureRect" parent="Background"]
+[node name="HighTable" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.25555557
+anchor_top = 0.2472222
 anchor_right = 0.5375
-anchor_bottom = 0.73333335
+anchor_bottom = 0.725
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("6_krqk6")
+texture = ExtResource("6_7yiff")
 expand_mode = 1
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="Chairs" type="TextureRect" parent="Background"]
+[node name="HighChairs" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.2888889
-anchor_right = 0.50625
-anchor_bottom = 0.64444447
+anchor_left = 0.0671875
+anchor_top = 0.28611106
+anchor_right = 0.48203126
+anchor_bottom = 0.64166665
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("7_uu58y")
+texture = ExtResource("7_7yiff")
 expand_mode = 1
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="ChairsTables" type="TextureRect" parent="Background"]
+[node name="MainTables" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.19375
-anchor_top = 0.3
+anchor_top = 0.30833334
 anchor_right = 1.0
-anchor_bottom = 0.73333323
+anchor_bottom = 0.74166656
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("8_nk7xc")
+texture = ExtResource("8_7yiff")
 expand_mode = 1
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="Counter" type="TextureRect" parent="Background"]
+[node name="Countertop" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.8138889
-anchor_right = 1.0
-anchor_bottom = 1.0138891
+anchor_top = 0.8041667
+anchor_right = 1.0671875
+anchor_bottom = 1.0041667
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_rlbi3")
@@ -187,7 +186,7 @@ anchor_right = 1.0
 anchor_bottom = 0.1
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("10_8rcq3")
+texture = ExtResource("10_7yiff")
 expand_mode = 1
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
@@ -222,16 +221,16 @@ stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="TissueBox" type="TextureRect" parent="Background"]
+[node name="CountertopDec" type="TextureRect" parent="Background"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.84375
-anchor_top = 0.7222222
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.85859376
+anchor_top = 0.76805556
+anchor_right = 1.0007813
+anchor_bottom = 0.96944445
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("13_t3xjw")
+texture = ExtResource("13_7yiff")
 expand_mode = 1
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
@@ -354,6 +353,7 @@ visible = false
 [node name="GameHUD" parent="OverlayCanvas" instance=ExtResource("12_k43ou")]
 
 [node name="DayScene" type="Node2D" parent="."]
+visible = false
 script = ExtResource("17_wdy5h")
 
 [node name="NextCustomer" type="Button" parent="DayScene"]

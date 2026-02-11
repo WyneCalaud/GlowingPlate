@@ -1,13 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2xinfnuh4tjw"]
+[gd_scene load_steps=7 format=3 uid="uid://c2xinfnuh4tjw"]
 
 [ext_resource type="Texture2D" uid="uid://dkjsqda8ddhau" path="res://Assets/UI/NutriShop/PatientCustomerUpgrade.png" id="1_uw726"]
 [ext_resource type="Texture2D" uid="uid://cp4f10ukdstt6" path="res://Assets/UI/NutriShop/ButtonPrice.png" id="2_cckas"]
+[ext_resource type="Script" uid="uid://brwhyu75mfo6b" path="res://Scenes/NutriShop/ShopItemCard.gd" id="2_lbdv8"]
 [ext_resource type="LabelSettings" uid="uid://c7ptqt68bqpsk" path="res://Theme/QuizText.tres" id="3_lbdv8"]
+[ext_resource type="Texture2D" uid="uid://do1w3lwpbnsnl" path="res://Assets/UI/NutriShop/EquipButton.png" id="4_dbaqm"]
+[ext_resource type="Texture2D" uid="uid://d0b1no0r6jhhq" path="res://Assets/UI/NutriShop/EquippedButton.png" id="5_1eft2"]
 
 [node name="Card" type="TextureRect"]
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("1_uw726")
+script = ExtResource("2_lbdv8")
+tex_buy = ExtResource("2_cckas")
+tex_equip = ExtResource("4_dbaqm")
+tex_equipped = ExtResource("5_1eft2")
 
 [node name="BtnPrice" type="TextureButton" parent="."]
 layout_mode = 0
