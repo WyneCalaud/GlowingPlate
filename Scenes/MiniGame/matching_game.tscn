@@ -1,16 +1,38 @@
-[gd_scene load_steps=12 format=3 uid="uid://ctl6sxeshrxbu"]
+[gd_scene load_steps=34 format=3 uid="uid://ctl6sxeshrxbu"]
 
 [ext_resource type="Script" uid="uid://u3qhy5pns8k0" path="res://Scripts/MiniGame/matching_game.gd" id="1_pssnd"]
-[ext_resource type="Texture2D" uid="uid://bmngok4y3s6j8" path="res://Assets/MiniGame/Exercises/Small/Question.png" id="2_8mtou"]
-[ext_resource type="Texture2D" uid="uid://bxwsrhb8vbfsm" path="res://Assets/MiniGame/Exercises/Small/Cycling.png" id="3_o1035"]
-[ext_resource type="Texture2D" uid="uid://cklwj0c2dqxhw" path="res://Assets/MiniGame/Exercises/Big/Cycling.png" id="3_y140r"]
-[ext_resource type="Texture2D" uid="uid://ic0skrv5y3cg" path="res://Assets/MiniGame/Exercises/Small/Jumping Jacks.png" id="4_rh4ka"]
-[ext_resource type="Texture2D" uid="uid://u8yenqdt2qj1" path="res://Assets/MiniGame/Exercises/Small/Lunges.png" id="5_ud7q6"]
-[ext_resource type="Texture2D" uid="uid://r3jit84wb6or" path="res://Assets/MiniGame/plankcard.png" id="6_rh4ka"]
-[ext_resource type="Texture2D" uid="uid://d13341hk15b5o" path="res://Assets/MiniGame/Exercises/Small/Jumping Rope.png" id="7_bmcsj"]
-[ext_resource type="Texture2D" uid="uid://cw67l5lxshmsr" path="res://Assets/MiniGame/Exercises/Small/Sit Ups.png" id="8_s8q65"]
-[ext_resource type="Texture2D" uid="uid://cfcasgt8cvwfi" path="res://Assets/MiniGame/Exercises/Small/Squats.png" id="9_84hdg"]
-[ext_resource type="Texture2D" uid="uid://ds8xsirbc4xtc" path="res://Assets/MiniGame/Exercises/Small/Running.png" id="10_xdroa"]
+[ext_resource type="Texture2D" uid="uid://cfvugwijhyu8x" path="res://Assets/MiniGame/Exercises/Refined/Exercise Card Back.png" id="2_xdroa"]
+[ext_resource type="Texture2D" uid="uid://dav5ywlogm7fc" path="res://Assets/MiniGame/Exercises/Refined/Cycling.png" id="3_xdroa"]
+[ext_resource type="Texture2D" uid="uid://dpg4mmf714c8i" path="res://Assets/MiniGame/Exercises/Refined/Jumping Jacks.png" id="4_kqnsh"]
+[ext_resource type="Texture2D" uid="uid://bltsnqcbyopet" path="res://Assets/MiniGame/Exercises/Refined/Lunge.png" id="5_x1b3m"]
+[ext_resource type="Texture2D" uid="uid://00mmb580pkmc" path="res://Assets/MiniGame/Exercises/Refined/Planking.png" id="6_m345l"]
+[ext_resource type="Texture2D" uid="uid://cc557cnas122s" path="res://Assets/MiniGame/Exercises/Refined/Jump Rope.png" id="7_bt5ei"]
+[ext_resource type="Texture2D" uid="uid://ckxg24pwbwuao" path="res://Assets/MiniGame/Exercises/Refined/Sit Ups.png" id="8_xtgos"]
+[ext_resource type="Texture2D" uid="uid://cdjsc17b0o87n" path="res://Assets/MiniGame/Exercises/Refined/Squats.png" id="9_b4at2"]
+[ext_resource type="Texture2D" uid="uid://d2eo67u6vp2pc" path="res://Assets/MiniGame/Exercises/Refined/Running.png" id="10_pum5n"]
+[ext_resource type="Texture2D" uid="uid://8sgk6pnxlqrb" path="res://Assets/MiniGame/UI/Mini Game Background.png" id="11_3jjgu"]
+[ext_resource type="Texture2D" uid="uid://ip4ht58xwr3k" path="res://Assets/MiniGame/Exercises/Pups/CyclingPup.png" id="11_gjhrx"]
+[ext_resource type="Texture2D" uid="uid://c3ylumcyk4ged" path="res://Assets/MiniGame/Exercises/Pups/JumpingJackPup.png" id="12_8jjub"]
+[ext_resource type="Texture2D" uid="uid://nl3pl5h8tkdt" path="res://Assets/MiniGame/Exercises/Pups/JumpRopePup.png" id="13_e4oyj"]
+[ext_resource type="Texture2D" uid="uid://bu2x84cq6rwqn" path="res://Assets/MiniGame/Exercises/Pups/LungePup.png" id="14_i53an"]
+[ext_resource type="Texture2D" uid="uid://c8mhc6n7lun51" path="res://Assets/MiniGame/Exercises/Pups/PlankPup.png" id="15_gir37"]
+[ext_resource type="Texture2D" uid="uid://dy4el8gq3wdd7" path="res://Assets/MiniGame/Exercises/Pups/RunningPup.png" id="16_u7wj2"]
+[ext_resource type="Texture2D" uid="uid://bh3676iudpsr7" path="res://Assets/MiniGame/Exercises/Pups/SitPups.png" id="17_6wdvu"]
+[ext_resource type="Texture2D" uid="uid://d2xn0cbku1sbl" path="res://Assets/MiniGame/Exercises/Pups/SquatPup.png" id="18_eatd0"]
+[ext_resource type="Texture2D" uid="uid://bb5p40xaifn3j" path="res://Assets/MiniGame/UI/stas.png" id="20_kqnsh"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="21_x1b3m"]
+[ext_resource type="Texture2D" uid="uid://bflbyf0gc5tqr" path="res://Assets/MiniGame/UI/rectangle.png" id="21_xtgos"]
+[ext_resource type="Texture2D" uid="uid://c3ky53w3wknny" path="res://Assets/MiniGame/UI/Heart Container.png" id="22_bt5ei"]
+[ext_resource type="Texture2D" uid="uid://5cn0rgiic4rd" path="res://Assets/MiniGame/UI/Heart Icon.png" id="22_m345l"]
+[ext_resource type="Texture2D" uid="uid://bxkwyajrnvkti" path="res://Assets/MiniGame/UI/Not Passed Screen.png" id="25_b4at2"]
+[ext_resource type="Texture2D" uid="uid://b8tsvp4ifauyb" path="res://Assets/MiniGame/UI/Try Again Button.png" id="26_54qja"]
+[ext_resource type="Texture2D" uid="uid://boql3fcpe0atu" path="res://Assets/MiniGame/UI/Main Menu Button.png" id="27_lpk1w"]
+[ext_resource type="Texture2D" uid="uid://dhgcs8p1fajkx" path="res://Assets/MiniGame/UI/Skip Button.png" id="28_7mefl"]
+[ext_resource type="Texture2D" uid="uid://dysgmjelqna6x" path="res://Assets/MiniGame/UI/Passed Screen.png" id="29_lpk1w"]
+[ext_resource type="Texture2D" uid="uid://culffwpkefk1a" path="res://Assets/MiniGame/UI/brownbg.png" id="30_7mefl"]
+[ext_resource type="Texture2D" uid="uid://dqr54b88e4gfc" path="res://Assets/MiniGame/UI/Progress Selection Screen.png" id="31_hu6c8"]
+[ext_resource type="Texture2D" uid="uid://dvigiggxesi1m" path="res://Assets/MiniGame/UI/Continue Button.png" id="32_5f0w2"]
+[ext_resource type="Texture2D" uid="uid://cjoo4tkb73fji" path="res://Assets/MiniGame/UI/ExerciseBoxName.png" id="32_gjhrx"]
 
 [node name="MatchingGame" type="Control"]
 layout_mode = 3
@@ -22,41 +44,88 @@ offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pssnd")
-card_back = ExtResource("2_8mtou")
-card_faces = Array[Texture2D]([ExtResource("3_y140r"), ExtResource("4_rh4ka"), ExtResource("5_ud7q6"), ExtResource("6_rh4ka"), ExtResource("7_bmcsj"), ExtResource("8_s8q65"), ExtResource("9_84hdg"), ExtResource("10_xdroa")])
+card_back = ExtResource("2_xdroa")
+card_faces = Array[Texture2D]([ExtResource("3_xdroa"), ExtResource("4_kqnsh"), ExtResource("5_x1b3m"), ExtResource("6_m345l"), ExtResource("7_bt5ei"), ExtResource("8_xtgos"), ExtResource("9_b4at2"), ExtResource("10_pum5n")])
 exercise_info = {
-ExtResource("3_o1035"): "Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for Cycling is good for ",
-ExtResource("4_rh4ka"): "Jumping Jacks is goodJumping Jacks is good for Jumping Jacks is good for Jumping Jacks is good for Jumping Jacks is good for  for ",
-ExtResource("7_bmcsj"): "Jump rope isJump rope isJump rope isJump rope is",
-ExtResource("5_ud7q6"): "LungeLungeLungeLungeLungeLunge",
-ExtResource("10_xdroa"): "Running is good for blahblahblah and for aaawawa plus wawawawa",
-ExtResource("8_s8q65"): "Sit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit upsSit ups",
-ExtResource("9_84hdg"): "SquatsSquatsSquatsSquatsSquatsSquatsSquatsSquatsSquatsSquats",
-ExtResource("3_y140r"): "weeeewewewewe"
+ExtResource("3_xdroa"): "Cycling",
+ExtResource("7_bt5ei"): "Jump Rope",
+ExtResource("4_kqnsh"): "Jumping Jacks",
+ExtResource("5_x1b3m"): "Lunges",
+ExtResource("6_m345l"): "Planking",
+ExtResource("10_pum5n"): "Running",
+ExtResource("8_xtgos"): "Situps",
+ExtResource("9_b4at2"): "Squats"
+}
+exercise_description = {
+ExtResource("3_xdroa"): "Cycling is good for something",
+ExtResource("7_bt5ei"): "Jump rope is something something",
+ExtResource("4_kqnsh"): "Jumping Jacks is ass",
+ExtResource("5_x1b3m"): "Lunge do be lunging",
+ExtResource("6_m345l"): "Yepp that is Planking",
+ExtResource("10_pum5n"): "Running is very beneficial because idk",
+ExtResource("8_xtgos"): "Situps is good very good",
+ExtResource("9_b4at2"): "omaygah squatsss blahblahblah"
+}
+match_popup_images = {
+ExtResource("3_xdroa"): ExtResource("11_gjhrx"),
+ExtResource("4_kqnsh"): ExtResource("12_8jjub"),
+ExtResource("7_bt5ei"): ExtResource("13_e4oyj"),
+ExtResource("5_x1b3m"): ExtResource("14_i53an"),
+ExtResource("6_m345l"): ExtResource("15_gir37"),
+ExtResource("10_pum5n"): ExtResource("16_u7wj2"),
+ExtResource("8_xtgos"): ExtResource("17_6wdvu"),
+ExtResource("9_b4at2"): ExtResource("18_eatd0")
 }
 
-[node name="CenterContainer" type="Container" parent="."]
-layout_mode = 1
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("11_3jjgu")
 
-[node name="Grid" type="GridContainer" parent="CenterContainer"]
-layout_mode = 2
+[node name="Grid" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 29.0
+offset_right = 26.0
+offset_bottom = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 4
 
+[node name="Stats" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 773.0
+offset_top = 6.0
+offset_right = 1246.0
+offset_bottom = 693.0
+texture = ExtResource("20_kqnsh")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_left = 954.0
+offset_top = 342.0
+offset_right = 1078.0
+offset_bottom = 466.0
+texture = ExtResource("21_xtgos")
+
 [node name="ScoreLabel" type="Label" parent="CanvasLayer"]
-offset_left = 1004.0
-offset_top = 249.0
-offset_right = 1151.0
-offset_bottom = 301.0
+offset_left = 943.0
+offset_top = 365.0
+offset_right = 1090.0
+offset_bottom = 446.0
+theme_override_fonts/font = ExtResource("21_x1b3m")
+theme_override_font_sizes/font_size = 70
+horizontal_alignment = 1
 
 [node name="TurnsLabel" type="Label" parent="CanvasLayer"]
-offset_left = 1007.0
-offset_top = 297.0
-offset_right = 1150.0
-offset_bottom = 340.0
+visible = false
+offset_left = 954.0
+offset_top = 410.0
+offset_right = 1097.0
+offset_bottom = 453.0
+theme_override_fonts/font = ExtResource("21_x1b3m")
 
 [node name="InfoPopup" type="Panel" parent="CanvasLayer"]
 visible = false
@@ -94,3 +163,264 @@ autowrap_mode = 2
 
 [node name="CloseButton" type="Button" parent="CanvasLayer/InfoPopup/VBoxContainer"]
 layout_mode = 2
+
+[node name="Turns Left" type="Label" parent="CanvasLayer"]
+offset_left = 826.0
+offset_top = 123.0
+offset_right = 1073.0
+offset_bottom = 151.0
+theme_override_fonts/font = ExtResource("21_x1b3m")
+theme_override_font_sizes/font_size = 20
+text = "Turns Left"
+
+[node name="Score" type="Label" parent="CanvasLayer"]
+offset_left = 892.0
+offset_top = 302.0
+offset_right = 1139.0
+offset_bottom = 338.0
+theme_override_fonts/font = ExtResource("21_x1b3m")
+theme_override_font_sizes/font_size = 31
+text = "Score"
+horizontal_alignment = 1
+
+[node name="Heartbg" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 820.0
+offset_top = 150.0
+offset_right = 1206.0
+offset_bottom = 231.0
+theme_override_constants/separation = -3
+alignment = 1
+
+[node name="Heart1" type="TextureRect" parent="Heartbg"]
+layout_mode = 2
+texture = ExtResource("22_bt5ei")
+
+[node name="Heart2" type="TextureRect" parent="Heartbg"]
+layout_mode = 2
+texture = ExtResource("22_bt5ei")
+
+[node name="Heart3" type="TextureRect" parent="Heartbg"]
+layout_mode = 2
+texture = ExtResource("22_bt5ei")
+
+[node name="Heart4" type="TextureRect" parent="Heartbg"]
+layout_mode = 2
+texture = ExtResource("22_bt5ei")
+
+[node name="Heart5" type="TextureRect" parent="Heartbg"]
+layout_mode = 2
+texture = ExtResource("22_bt5ei")
+
+[node name="HeartsContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 836.0
+offset_top = 158.0
+offset_right = 1192.0
+offset_bottom = 209.0
+theme_override_constants/separation = 28
+
+[node name="Heart0" type="TextureRect" parent="HeartsContainer"]
+layout_mode = 2
+texture = ExtResource("22_m345l")
+
+[node name="Heart1" type="TextureRect" parent="HeartsContainer"]
+layout_mode = 2
+texture = ExtResource("22_m345l")
+
+[node name="Heart2" type="TextureRect" parent="HeartsContainer"]
+layout_mode = 2
+texture = ExtResource("22_m345l")
+
+[node name="Heart3" type="TextureRect" parent="HeartsContainer"]
+layout_mode = 2
+texture = ExtResource("22_m345l")
+
+[node name="Heart4" type="TextureRect" parent="HeartsContainer"]
+layout_mode = 2
+texture = ExtResource("22_m345l")
+
+[node name="GameOverOverlay" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="GameOverOverlay"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("25_b4at2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverOverlay"]
+layout_mode = 0
+offset_left = 831.0
+offset_top = 205.0
+offset_right = 1128.0
+offset_bottom = 469.0
+theme_override_constants/separation = 12
+
+[node name="TryAgainButton" type="Button" parent="GameOverOverlay/VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("26_54qja")
+flat = true
+
+[node name="MainMenuButton" type="Button" parent="GameOverOverlay/VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("27_lpk1w")
+flat = true
+
+[node name="SkipButton" type="Button" parent="GameOverOverlay/VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("28_7mefl")
+flat = true
+
+[node name="WinOverlay" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="WinOverlay"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("29_lpk1w")
+
+[node name="ShuffleOverlay" type="Control" parent="."]
+anchors_preset = 0
+
+[node name="TextureRect" type="TextureRect" parent="ShuffleOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -3.0
+offset_right = 1283.0
+offset_bottom = 727.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("30_7mefl")
+
+[node name="CardGrid" type="GridContainer" parent="ShuffleOverlay"]
+layout_mode = 0
+offset_left = 461.0
+offset_top = 234.0
+offset_right = 1125.0
+offset_bottom = 578.0
+columns = 4
+
+[node name="TextureRect" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+layout_mode = 2
+texture = ExtResource("2_xdroa")
+
+[node name="TextureRect2" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+layout_mode = 2
+texture = ExtResource("2_xdroa")
+
+[node name="TextureRect3" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+layout_mode = 2
+texture = ExtResource("2_xdroa")
+
+[node name="TextureRect4" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+layout_mode = 2
+texture = ExtResource("2_xdroa")
+
+[node name="TextureRect5" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+layout_mode = 2
+texture = ExtResource("2_xdroa")
+
+[node name="TextureRect6" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+layout_mode = 2
+texture = ExtResource("2_xdroa")
+
+[node name="TextureRect7" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+layout_mode = 2
+texture = ExtResource("2_xdroa")
+
+[node name="TextureRect8" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+layout_mode = 2
+texture = ExtResource("2_xdroa")
+
+[node name="ExerciseResultOverlay" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" type="TextureRect" parent="ExerciseResultOverlay"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("31_hu6c8")
+
+[node name="PickedExercise" type="TextureRect" parent="ExerciseResultOverlay"]
+layout_mode = 0
+offset_left = 484.0
+offset_top = 219.0
+offset_right = 774.0
+offset_bottom = 446.0
+
+[node name="NameBG" type="TextureRect" parent="ExerciseResultOverlay"]
+layout_mode = 0
+offset_left = 164.0
+offset_top = 377.0
+offset_right = 457.0
+offset_bottom = 449.0
+texture = ExtResource("32_gjhrx")
+stretch_mode = 5
+
+[node name="ExerciseNameLabel" type="Label" parent="ExerciseResultOverlay"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 388.0
+offset_right = 427.0
+offset_bottom = 463.0
+theme_override_colors/font_color = Color(1, 0.7921569, 0.5529412, 1)
+theme_override_fonts/font = ExtResource("21_x1b3m")
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+
+[node name="ExerciseDescriptionLabel" type="Label" parent="ExerciseResultOverlay"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 460.0
+offset_right = 502.0
+offset_bottom = 576.0
+theme_override_fonts/font = ExtResource("21_x1b3m")
+theme_override_font_sizes/font_size = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ExerciseResultOverlay"]
+layout_mode = 0
+offset_left = 778.0
+offset_top = 157.0
+offset_right = 1073.0
+offset_bottom = 497.0
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="ContinueButton" type="Button" parent="ExerciseResultOverlay/VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("32_5f0w2")
+flat = true
+
+[node name="MainMenuButton" type="Button" parent="ExerciseResultOverlay/VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("27_lpk1w")
+flat = true
+
+[node name="MatchPopupOverlay" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 1278.0
+offset_bottom = 729.0
+
+[node name="MatchPopupImage" type="TextureRect" parent="MatchPopupOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 340.0
+offset_top = 144.0
+offset_right = -291.0
+offset_bottom = -251.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 3
