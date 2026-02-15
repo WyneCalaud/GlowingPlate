@@ -1,15 +1,15 @@
 [gd_scene load_steps=14 format=3 uid="uid://bwe76a0ehdxka"]
 
 [ext_resource type="Script" uid="uid://dcek1knwpaq1t" path="res://Scripts/Quiz/QuizManager.gd" id="1_8s52k"]
-[ext_resource type="Resource" uid="uid://dwv5ldrcctc1x" path="res://Data/Quiz/MasterQuizPool.tres" id="2_grxcj"]
 [ext_resource type="Texture2D" uid="uid://b1dvwltxkj1ft" path="res://Assets/UI/QuizUI/QuizTemplateX3.png" id="3_nc0by"]
 [ext_resource type="FontFile" uid="uid://btg6v4f2xjtf8" path="res://monogram.ttf" id="4_8s52k"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="4_cwbs8"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="4_cwbs8"]
+[ext_resource type="LabelSettings" uid="uid://dar4gad22igrx" path="res://Theme/AnswerText.tres" id="5_vc1sw"]
 [ext_resource type="Texture2D" uid="uid://c6kj011esgoxj" path="res://Assets/UI/QuizUI/AnswerBlock1.png" id="5_yo6g2"]
 [ext_resource type="Texture2D" uid="uid://b68l4oid0e8dh" path="res://Assets/UI/QuizUI/AnswerBlock2.png" id="6_h0ls5"]
 [ext_resource type="LabelSettings" uid="uid://c7ptqt68bqpsk" path="res://Theme/QuizText.tres" id="6_yo6g2"]
 [ext_resource type="Texture2D" uid="uid://cg0ww4f47e6c1" path="res://Assets/UI/QuizUI/AnswerBlock3.png" id="7_kt8ux"]
-[ext_resource type="FontFile" uid="uid://b443ju2lx1p21" path="res://fonts/Comic_Neue/ComicNeue-BoldItalic.ttf" id="10_nc0by"]
+[ext_resource type="FontFile" uid="uid://b443ju2lx1p21" path="res://Fonts/Comic_Neue/ComicNeue-BoldItalic.ttf" id="10_nc0by"]
 [ext_resource type="AudioStream" uid="uid://bcp43wsb52wne" path="res://Assets/SFX/CorrectSound.mp3" id="11_nc0by"]
 [ext_resource type="AudioStream" uid="uid://b3asxuljoftcf" path="res://Assets/SFX/WrongSound.mp3" id="12_vc1sw"]
 
@@ -28,7 +28,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_8s52k")
-quiz_data_resource = ExtResource("2_grxcj")
 
 [node name="QuizBackground" type="Control" parent="."]
 layout_mode = 1
@@ -78,16 +77,18 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_cwbs8")
 theme_override_font_sizes/font_size = 50
 text = "What Food Type is a Mango?"
+label_settings = ExtResource("5_vc1sw")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="QuestionImage" type="TextureRect" parent="QuizPanel/Questionaire"]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 3.0
-offset_right = 819.0
-offset_bottom = 215.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="AnswersContainer" type="HBoxContainer" parent="QuizPanel"]
 layout_mode = 1

@@ -1,3 +1,4 @@
+# QuizDataResource.gd
 extends Resource
 class_name QuizDataResource
 

@@ -5,6 +5,7 @@ extends Control
 @onready var almanac_ui = $OverlayCanvas/AlmanacUI
 @onready var bulletin_board_ui = $OverlayCanvas/BulletinBoardUI
 @onready var nutrishop_ui = $OverlayCanvas/NutriShop
+@onready var glow_desk_ui = $OverlayCanvas/GlowDesk # Added Reference
 
 @onready var day_scene = $DayScene
 @onready var dialogue_box = $DayScene/DialogueBox
@@ -12,11 +13,11 @@ extends Control
 @onready var customer_manager = $DayScene/CustomerManager
 
 @onready var bottom_buttons = $BottomButtons
-@onready var almanac_btn = $BottomButtons/AlmanacButton
-@onready var bulletin_btn = $BottomButtons/BulletinBoardButton
+@onready var almanac_btn = $BottomButtons/HBoxContainer/Almanac
+@onready var bulletin_btn = $BottomButtons/HBoxContainer/GlowBoard
 @onready var start_day_btn = $BottomButtons/StartDayButton
-@onready var nutridesk_btn = $BottomButtons/NutriDeskButton
-@onready var nutrishop_btn = $BottomButtons/NutriShopButton
+@onready var nutridesk_btn = $BottomButtons/HBoxContainer/GlowDesk
+@onready var nutrishop_btn = $BottomButtons/HBoxContainer/GlowShop
 
 @onready var final_plate_display = $FinalPlateDisplay
 @onready var final_beverage_display = $FinalBeverageDisplay
@@ -50,6 +51,17 @@ func _ready() -> void:
 	if nutrishop_ui.has_signal("closed"):
 		if not nutrishop_ui.closed.is_connected(_on_nutri_shop_closed):
 			nutrishop_ui.closed.connect(_on_nutri_shop_closed)
+
+	# Connect the GlowDesk signal
+	if glow_desk_ui.has_signal("closed"):
+		if not glow_desk_ui.closed.is_connected(_on_glow_desk_closed):
+			glow_desk_ui.closed.connect(_on_glow_desk_closed)
+
+	# Connect Buttons
+	if nutridesk_btn:
+		# FIX: Check connection before connecting to avoid errors
+		if not nutridesk_btn.pressed.is_connected(_on_glow_desk_pressed):
+			nutridesk_btn.pressed.connect(_on_glow_desk_pressed)
 
 	_check_for_returned_items()
 	_restore_day_ui_state()
@@ -271,6 +283,14 @@ func _on_bulletin_board_pressed() -> void:
 	if current_open_popup == bulletin_board_ui: close_popup()
 	elif current_open_popup == null: open_popup(bulletin_board_ui)
 
+func _on_nutri_shop_button_pressed() -> void:
+	if current_open_popup == nutrishop_ui: close_popup()
+	elif current_open_popup == null: open_popup(nutrishop_ui)
+
+func _on_glow_desk_pressed() -> void:
+	if current_open_popup == glow_desk_ui: close_popup()
+	elif current_open_popup == null: open_popup(glow_desk_ui)
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and current_open_popup != null:
 		close_popup()
@@ -307,7 +327,4 @@ func close_popup() -> void:
 func _on_almanac_ui_closed() -> void: close_popup()
 func _on_bulletin_board_ui_closed() -> void: close_popup()
 func _on_nutri_shop_closed() -> void: close_popup()
-
-func _on_nutri_shop_button_pressed() -> void:
-	if current_open_popup == nutrishop_ui: close_popup()
-	elif current_open_popup == null: open_popup(nutrishop_ui)
+func _on_glow_desk_closed() -> void: close_popup()

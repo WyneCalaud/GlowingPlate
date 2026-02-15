@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dj1ni41u74d4g"]
+
+[ext_resource type="FontFile" uid="uid://b443ju2lx1p21" path="res://Fonts/Comic_Neue/ComicNeue-BoldItalic.ttf" id="1_ir4n1"]
+
+[resource]
+font = ExtResource("1_ir4n1")
+font_size = 20
+font_color = Color(0.35686275, 0.23137255, 0.1882353, 1)
+outline_size = 3
+outline_color = Color(0.35686275, 0.23137255, 0.1882353, 1)

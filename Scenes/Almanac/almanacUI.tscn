@@ -106,9 +106,9 @@ stretch_mode = 0
 
 [node name="GrowTab" type="TextureButton" parent="Almanac"]
 layout_mode = 0
-offset_left = 840.0
+offset_left = 842.0
 offset_top = 391.0
-offset_right = 953.0
+offset_right = 955.0
 offset_bottom = 462.0
 texture_normal = ExtResource("4_aghlv")
 ignore_texture_size = true
@@ -116,9 +116,9 @@ stretch_mode = 0
 
 [node name="GlowTab" type="TextureButton" parent="Almanac"]
 layout_mode = 0
-offset_left = 840.0
+offset_left = 842.0
 offset_top = 468.0
-offset_right = 953.0
+offset_right = 955.0
 offset_bottom = 539.0
 texture_normal = ExtResource("5_8eymg")
 ignore_texture_size = true

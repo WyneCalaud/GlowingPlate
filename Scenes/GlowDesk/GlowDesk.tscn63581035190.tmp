@@ -1,0 +1,876 @@
+[gd_scene load_steps=41 format=3 uid="uid://c5l8auaitpptq"]
+
+[ext_resource type="Texture2D" uid="uid://brv6v260jforn" path="res://Assets/UI/GlowDesk/GlowDeskBackground.png" id="1_057f4"]
+[ext_resource type="Script" uid="uid://be185ofgy7lb5" path="res://Scripts/GlowDesk/GlowDeskGlowDesk.gd" id="1_sf6pf"]
+[ext_resource type="Texture2D" uid="uid://dsgh3f7lvrsdj" path="res://Assets/UI/GlowDesk/PracticeCard.png" id="2_6o23y"]
+[ext_resource type="Texture2D" uid="uid://dwx8nslak6ukk" path="res://Assets/UI/GlowBoard/BackButton.png" id="2_ac1q2"]
+[ext_resource type="Texture2D" uid="uid://qptyjt1hqs6u" path="res://Assets/UI/Interface/Money.png" id="3_ac1q2"]
+[ext_resource type="Texture2D" uid="uid://bes4gbhdlrf02" path="res://Assets/UI/GlowDesk/PracticeButton.png" id="3_f1vpk"]
+[ext_resource type="Texture2D" uid="uid://byydxqul1u5xp" path="res://Assets/UI/GlowDesk/EndlessSign.png" id="3_o01m3"]
+[ext_resource type="Texture2D" uid="uid://cf845g8e02e5f" path="res://Assets/UI/GlowDesk/BrowseCard.png" id="4_057f4"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="4_mb5fr"]
+[ext_resource type="Texture2D" uid="uid://dlmn7blamker5" path="res://Assets/UI/GlowDesk/GroupBSign.png" id="5_8t6cw"]
+[ext_resource type="Texture2D" uid="uid://dp8wdk2cua5ix" path="res://Assets/UI/GlowDesk/BrowseButton.png" id="5_kqkk5"]
+[ext_resource type="Texture2D" uid="uid://cbqlj0hdp0nx1" path="res://Assets/UI/GlowDesk/GroupCSign.png" id="6_60x4y"]
+[ext_resource type="Texture2D" uid="uid://d04eijlie6r3m" path="res://Assets/UI/GlowDesk/QuickCard.png" id="6_kqkk5"]
+[ext_resource type="Texture2D" uid="uid://d1qtfto4xlcmx" path="res://Assets/UI/GlowDesk/EndlessCard.png" id="7_ws786"]
+[ext_resource type="Texture2D" uid="uid://dx50qaji4hfme" path="res://Assets/UI/GlowDesk/PracticeSign.png" id="8_ac1q2"]
+[ext_resource type="Texture2D" uid="uid://770xuvom4n3x" path="res://Assets/UI/GlowDesk/QuickButton.png" id="9_6q71q"]
+[ext_resource type="Texture2D" uid="uid://pxjh5jvli38" path="res://Assets/UI/GlowDesk/EndlessButton.png" id="11_fkpc5"]
+[ext_resource type="Texture2D" uid="uid://cftagnepi5nh0" path="res://Assets/UI/GlowDesk/BrowseSign.png" id="12_1qgkl"]
+[ext_resource type="Texture2D" uid="uid://3jtofiqsjjt7" path="res://Assets/UI/GlowDesk/Starting in.png" id="12_mb5fr"]
+[ext_resource type="Texture2D" uid="uid://d4lfwu4yuaae1" path="res://Assets/UI/GlowDesk/GroupCard.png" id="13_o01m3"]
+[ext_resource type="Texture2D" uid="uid://dhdbojavbe6jt" path="res://Assets/UI/GlowDesk/ThreeIcon.png" id="13_t450l"]
+[ext_resource type="Texture2D" uid="uid://dsj0sgf1th0dg" path="res://Assets/UI/GlowDesk/GroupAButton.png" id="14_8t6cw"]
+[ext_resource type="Texture2D" uid="uid://ddcl5rvngcjhq" path="res://Assets/UI/GlowDesk/GroupASign.png" id="14_nunxq"]
+[ext_resource type="Texture2D" uid="uid://cwsu0pfwojnuw" path="res://Assets/UI/GlowDesk/GroupBButton.png" id="15_60x4y"]
+[ext_resource type="Texture2D" uid="uid://be82hf27jrm6q" path="res://Assets/UI/GlowDesk/ImageExample.png" id="16_ksixq"]
+[ext_resource type="Texture2D" uid="uid://yfnuet5lump1" path="res://Assets/UI/GlowDesk/GroupCButton.png" id="16_u0x3h"]
+[ext_resource type="Texture2D" uid="uid://fut7jd36inur" path="res://Assets/UI/GlowDesk/AButton.png" id="17_a6lix"]
+[ext_resource type="Texture2D" uid="uid://dhsgba3xox0rc" path="res://Assets/UI/GlowDesk/QuestionBox.png" id="18_bqq7l"]
+[ext_resource type="LabelSettings" uid="uid://c7ptqt68bqpsk" path="res://Theme/QuizText.tres" id="18_gaam1"]
+[ext_resource type="Texture2D" uid="uid://d04qdkpoehsk2" path="res://Assets/UI/GlowDesk/QuickSign.png" id="18_iljl6"]
+[ext_resource type="Texture2D" uid="uid://bos5vd8rdrsu2" path="res://Assets/UI/GlowDesk/BButton.png" id="19_2jg6t"]
+[ext_resource type="LabelSettings" uid="uid://dj1ni41u74d4g" path="res://Theme/ExplanationText.tres" id="19_eibyc"]
+[ext_resource type="LabelSettings" uid="uid://c2okc58miplvq" path="res://Theme/QuestionTextMode.tres" id="19_sf6pf"]
+[ext_resource type="LabelSettings" uid="uid://bnw1c7xl5etu4" path="res://Theme/QuestionText.tres" id="19_uoomi"]
+[ext_resource type="Texture2D" uid="uid://c0m4dr1454glm" path="res://Assets/UI/GlowDesk/CButton.png" id="20_m2bnn"]
+[ext_resource type="Texture2D" uid="uid://dex8lkp3t7cgl" path="res://Assets/UI/PauseLayer.png" id="21_g4848"]
+[ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="24_jwusr"]
+[ext_resource type="Texture2D" uid="uid://c7o7arewtutfj" path="res://Assets/UI/Interface/SettingsButton.png" id="25_d5moo"]
+[ext_resource type="Texture2D" uid="uid://dquyayxor6rta" path="res://Assets/UI/Interface/HomeButton.png" id="26_4nfn7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6q71q"]
+
+[node name="GlowDesk" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sf6pf")
+sign_quick = ExtResource("18_iljl6")
+sign_endless = ExtResource("3_o01m3")
+sign_group_a = ExtResource("14_nunxq")
+sign_group_b = ExtResource("5_8t6cw")
+sign_group_c = ExtResource("6_60x4y")
+
+[node name="GlowDeskBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_057f4")
+
+[node name="PracticeOrBrowse" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 218.0
+offset_top = 95.0
+offset_right = 1076.0
+offset_bottom = 586.0
+mouse_filter = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PracticeOrBrowse"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.0
+offset_top = -169.0
+offset_right = 113.0
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="PracticeCard" type="TextureRect" parent="PracticeOrBrowse/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_6o23y")
+stretch_mode = 4
+
+[node name="PracticeButton" type="TextureButton" parent="PracticeOrBrowse/HBoxContainer/PracticeCard"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -134.0
+offset_top = -82.5
+offset_right = 134.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("3_f1vpk")
+
+[node name="BrowseCard" type="TextureRect" parent="PracticeOrBrowse/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_057f4")
+stretch_mode = 4
+
+[node name="BrowseButton" type="TextureButton" parent="PracticeOrBrowse/HBoxContainer/BrowseCard"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -133.0
+offset_top = -83.5
+offset_right = 135.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("5_kqkk5")
+
+[node name="QuickOrEndlessSelection" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 218.0
+offset_top = 95.0
+offset_right = 1076.0
+offset_bottom = 586.0
+mouse_filter = 1
+
+[node name="PracticeSign" type="TextureRect" parent="QuickOrEndlessSelection"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -103.0
+offset_top = 24.0
+offset_right = 103.0
+offset_bottom = 85.0
+grow_horizontal = 2
+texture = ExtResource("8_ac1q2")
+stretch_mode = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="QuickOrEndlessSelection"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.0
+offset_top = -169.0
+offset_right = 113.0
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="QuickCard" type="TextureRect" parent="QuickOrEndlessSelection/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_kqkk5")
+stretch_mode = 4
+
+[node name="QuickButton" type="TextureButton" parent="QuickOrEndlessSelection/HBoxContainer/QuickCard"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -134.5
+offset_top = -71.5
+offset_right = 133.5
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("9_6q71q")
+
+[node name="EndlessCard" type="TextureRect" parent="QuickOrEndlessSelection/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("7_ws786")
+stretch_mode = 4
+
+[node name="EndlessButton" type="TextureButton" parent="QuickOrEndlessSelection/HBoxContainer/EndlessCard"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -133.0
+offset_top = -71.5
+offset_right = 135.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("11_fkpc5")
+
+[node name="BrowseGroup" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 218.0
+offset_top = 95.0
+offset_right = 1076.0
+offset_bottom = 586.0
+mouse_filter = 1
+
+[node name="BrowseSign" type="TextureRect" parent="BrowseGroup"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -103.0
+offset_top = 24.0
+offset_right = 103.0
+offset_bottom = 85.0
+grow_horizontal = 2
+texture = ExtResource("12_1qgkl")
+stretch_mode = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BrowseGroup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -383.0
+offset_top = -151.0
+offset_right = 383.0
+offset_bottom = 151.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="GroupACard" type="TextureRect" parent="BrowseGroup/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("13_o01m3")
+stretch_mode = 4
+
+[node name="GroupAButton" type="TextureButton" parent="BrowseGroup/HBoxContainer/GroupACard"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -99.5
+offset_top = -86.5
+offset_right = 93.5
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("14_8t6cw")
+
+[node name="GroupBCard" type="TextureRect" parent="BrowseGroup/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("13_o01m3")
+stretch_mode = 4
+
+[node name="GroupBButton" type="TextureButton" parent="BrowseGroup/HBoxContainer/GroupBCard"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -99.5
+offset_top = -86.5
+offset_right = 93.5
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("15_60x4y")
+
+[node name="GroupCCard" type="TextureRect" parent="BrowseGroup/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("13_o01m3")
+stretch_mode = 4
+
+[node name="GroupCButton" type="TextureButton" parent="BrowseGroup/HBoxContainer/GroupCCard"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -99.5
+offset_top = -86.5
+offset_right = 93.5
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("16_u0x3h")
+
+[node name="BrowseGroupSelected" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 218.0
+offset_top = 95.0
+offset_right = 1076.0
+offset_bottom = 586.0
+mouse_filter = 1
+
+[node name="GroupSign" type="TextureRect" parent="BrowseGroupSelected"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -73.0
+offset_top = 16.0
+offset_right = 73.0
+offset_bottom = 77.0
+grow_horizontal = 2
+texture = ExtResource("14_nunxq")
+stretch_mode = 4
+
+[node name="GridContainer" type="GridContainer" parent="BrowseGroupSelected"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -386.0
+offset_top = -155.5
+offset_right = 386.0
+offset_bottom = 220.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="QuestionBox" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture_normal = ExtResource("18_bqq7l")
+
+[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 13.0
+offset_right = -87.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Which food gives you energy?"
+label_settings = ExtResource("19_sf6pf")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="QuestionBox2" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture_normal = ExtResource("18_bqq7l")
+
+[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 13.0
+offset_right = -87.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Which of the following is a Grow Food?"
+label_settings = ExtResource("19_sf6pf")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="QuestionBox3" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture_normal = ExtResource("18_bqq7l")
+
+[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 13.0
+offset_right = -87.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Which food gives you energy?"
+label_settings = ExtResource("19_sf6pf")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="QuestionBox4" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture_normal = ExtResource("18_bqq7l")
+
+[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 13.0
+offset_right = -87.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Which food gives you energy?"
+label_settings = ExtResource("19_sf6pf")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="QuestionBox5" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture_normal = ExtResource("18_bqq7l")
+
+[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 13.0
+offset_right = -87.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Which food gives you energy?"
+label_settings = ExtResource("19_sf6pf")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="QuestionBox6" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture_normal = ExtResource("18_bqq7l")
+
+[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 13.0
+offset_right = -87.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Which food gives you energy?"
+label_settings = ExtResource("19_sf6pf")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BrowseQuestionBox" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 235.0
+offset_top = 112.0
+offset_right = -220.0
+offset_bottom = -148.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="GroupSign" type="TextureRect" parent="BrowseQuestionBox"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+texture = ExtResource("14_nunxq")
+
+[node name="AnswerBox" type="Control" parent="BrowseQuestionBox"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 329.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BrowseQuestionBox/AnswerBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -44.5
+offset_top = 87.0
+offset_right = 44.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="QuestionText" type="Label" parent="BrowseQuestionBox/AnswerBox/HBoxContainer"]
+custom_minimum_size = Vector2(350, 50)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_mb5fr")
+theme_override_font_sizes/font_size = 50
+text = "Which type of food gives our body lots of energy to run, jump, and play?"
+label_settings = ExtResource("19_uoomi")
+autowrap_mode = 3
+
+[node name="QuestionImage" type="TextureRect" parent="BrowseQuestionBox/AnswerBox/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("16_ksixq")
+
+[node name="AnswersContainer" type="HBoxContainer" parent="BrowseQuestionBox"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = -104.0
+offset_right = 13.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="VSeparator" type="VSeparator" parent="BrowseQuestionBox/AnswersContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+theme_override_styles/separator = SubResource("StyleBoxEmpty_6q71q")
+
+[node name="RightAnswerButton" type="TextureButton" parent="BrowseQuestionBox/AnswersContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("17_a6lix")
+
+[node name="RightAnswerText" type="Label" parent="BrowseQuestionBox/AnswersContainer/RightAnswerButton"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 79.0
+text = "GO FOOD"
+label_settings = ExtResource("18_gaam1")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="RightAnswerImage" type="TextureRect" parent="BrowseQuestionBox/AnswersContainer/RightAnswerButton"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 79.0
+
+[node name="ExplanationText" type="Label" parent="BrowseQuestionBox/AnswersContainer"]
+custom_minimum_size = Vector2(350, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_mb5fr")
+theme_override_font_sizes/font_size = 50
+text = "Here is this explanation as to why is that the case, Here is this explanation as to why is that the case"
+label_settings = ExtResource("19_eibyc")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Countdown" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 218.0
+offset_top = 95.0
+offset_right = 1076.0
+offset_bottom = 586.0
+mouse_filter = 1
+
+[node name="Starting In" type="TextureRect" parent="Countdown"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -194.5
+offset_top = 56.0
+offset_right = 194.5
+offset_bottom = 130.0
+grow_horizontal = 2
+texture = ExtResource("12_mb5fr")
+stretch_mode = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Countdown"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.0
+offset_top = -169.0
+offset_right = 113.0
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="CountIcon" type="TextureRect" parent="Countdown/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("13_t450l")
+stretch_mode = 4
+
+[node name="QuickOrEndlessMode" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 235.0
+offset_top = 112.0
+offset_right = -220.0
+offset_bottom = -148.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="QuickOrEndlessSign" type="TextureRect" parent="QuickOrEndlessMode"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -73.0
+offset_right = 73.0
+offset_bottom = 61.0
+grow_horizontal = 2
+texture = ExtResource("18_iljl6")
+
+[node name="AnswerBox" type="Control" parent="QuickOrEndlessMode"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 329.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="QuickOrEndlessMode/AnswerBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -44.5
+offset_top = 87.0
+offset_right = 44.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="QuestionText" type="Label" parent="QuickOrEndlessMode/AnswerBox/HBoxContainer"]
+custom_minimum_size = Vector2(350, 50)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_mb5fr")
+theme_override_font_sizes/font_size = 50
+text = "Which type of food gives our body lots of energy to run, jump, and play?"
+label_settings = ExtResource("19_sf6pf")
+autowrap_mode = 3
+
+[node name="QuestionImage" type="TextureRect" parent="QuickOrEndlessMode/AnswerBox/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("16_ksixq")
+
+[node name="AnswersContainer" type="HBoxContainer" parent="QuickOrEndlessMode"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = -116.0
+offset_right = 13.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="A" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("17_a6lix")
+
+[node name="AText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/A"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 79.0
+text = "GO FOOD"
+label_settings = ExtResource("18_gaam1")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/A"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 79.0
+
+[node name="B" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("19_2jg6t")
+
+[node name="BText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/B"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 79.0
+text = "Grow Food"
+label_settings = ExtResource("18_gaam1")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/B"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 79.0
+
+[node name="C" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("20_m2bnn")
+
+[node name="CText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/C"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 79.0
+text = "Glow Food"
+label_settings = ExtResource("18_gaam1")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="CImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/C"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 79.0
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PauseLayer" type="TextureRect" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("21_g4848")
+
+[node name="BackButtonImage" type="MarginContainer" parent="UI"]
+layout_mode = 0
+offset_right = 101.0
+offset_bottom = 92.0
+theme_override_constants/margin_top = 20
+
+[node name="TopLeftButton" type="HBoxContainer" parent="UI/BackButtonImage"]
+layout_mode = 2
+
+[node name="BackButton" type="TextureButton" parent="UI/BackButtonImage/TopLeftButton"]
+z_index = 100
+layout_mode = 2
+texture_normal = ExtResource("2_ac1q2")
+
+[node name="MoneyUI" type="MarginContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -219.0
+offset_bottom = 94.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+
+[node name="TopRightMoney" type="HBoxContainer" parent="UI/MoneyUI"]
+layout_mode = 2
+alignment = 2
+
+[node name="MoneyImage" type="TextureRect" parent="UI/MoneyUI/TopRightMoney"]
+layout_mode = 2
+texture = ExtResource("3_ac1q2")
+expand_mode = 3
+
+[node name="MoneyAmount" type="Label" parent="UI/MoneyUI/TopRightMoney/MoneyImage"]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 18.0
+offset_right = 129.0
+offset_bottom = 48.0
+theme_override_fonts/font = ExtResource("4_mb5fr")
+theme_override_font_sizes/font_size = 25
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuGroup" type="VBoxContainer" parent="UI/MoneyUI/TopRightMoney"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MenuButton" type="TextureButton" parent="UI/MoneyUI/TopRightMoney/MenuGroup"]
+layout_mode = 2
+texture_normal = ExtResource("24_jwusr")
+
+[node name="SettingsButton" type="TextureButton" parent="UI/MoneyUI/TopRightMoney/MenuGroup/MenuButton"]
+layout_mode = 0
+offset_top = 62.0
+offset_right = 62.0
+offset_bottom = 62.0
+texture_normal = ExtResource("25_d5moo")
+
+[node name="HomeButton" type="TextureButton" parent="UI/MoneyUI/TopRightMoney/MenuGroup/MenuButton"]
+layout_mode = 0
+offset_top = 128.0
+offset_right = 62.0
+offset_bottom = 186.0
+texture_normal = ExtResource("26_4nfn7")

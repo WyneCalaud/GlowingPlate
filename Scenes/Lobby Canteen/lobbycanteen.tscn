@@ -1,15 +1,11 @@
-[gd_scene load_steps=40 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=43 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://dt5he77x83jrn" path="res://Assets/UI/LobbyUI/LobbyBackground/OutsideBackground.png" id="2_502pm"]
-[ext_resource type="Texture2D" uid="uid://l4hs7ltis6vt" path="res://Assets/UI/LobbyUI/Almanac Module.png" id="3_k43ou"]
 [ext_resource type="Texture2D" uid="uid://b42vdgmuiggtf" path="res://Assets/UI/LobbyUI/LobbyBackground/Floor.png" id="3_q6g5s"]
 [ext_resource type="Texture2D" uid="uid://cinteuxw081s6" path="res://Assets/UI/LobbyUI/LobbyBackground/WallFrame.png" id="4_7yiff"]
-[ext_resource type="Texture2D" uid="uid://bsf2omkf5nl3c" path="res://Assets/UI/LobbyUI/Bulletin Board Module.png" id="4_606uc"]
-[ext_resource type="Texture2D" uid="uid://cpgyhoxioemwn" path="res://Assets/UI/LobbyUI/NutriShop Module.png" id="5_4edj8"]
 [ext_resource type="Texture2D" uid="uid://dnwqtxeef5vht" path="res://Assets/UI/NutriShop/WallDecVariants/BasicPlantEntranceDecor.png" id="5_7yiff"]
 [ext_resource type="Texture2D" uid="uid://txxp2gpu2d4b" path="res://Assets/UI/NutriShop/HighTableVariants/CozyYellowHighTable.png" id="6_7yiff"]
-[ext_resource type="Texture2D" uid="uid://0mf0efgwobgl" path="res://Assets/UI/LobbyUI/NutriDesk Module.png" id="6_myl55"]
 [ext_resource type="Texture2D" uid="uid://5mmlehht8t7v" path="res://Assets/UI/NutriShop/HighChairVariants/CozyOrangeHighChair.png" id="7_7yiff"]
 [ext_resource type="Texture2D" uid="uid://me72u4mdvqya" path="res://Assets/UI/LobbyUI/BlackStartButton.png" id="7_606uc"]
 [ext_resource type="Texture2D" uid="uid://tkftd55r2v6d" path="res://Assets/UI/NutriShop/MainTableVariants/CozyOrangeMainTable.png" id="8_7yiff"]
@@ -23,10 +19,16 @@
 [ext_resource type="Texture2D" uid="uid://iepyf6j8aa05" path="res://Assets/UI/LobbyUI/CallCustomer.png" id="13_wdy5h"]
 [ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/Transition/fade_transition.tscn" id="14_hcpvu"]
 [ext_resource type="Texture2D" uid="uid://brjo8ncdnys4h" path="res://Assets/UI/LobbyUI/LobbyBackground/Noise.png" id="14_q6g5s"]
+[ext_resource type="Texture2D" uid="uid://d0xfb0mvnrhxa" path="res://Assets/UI/LobbyUI/Almanac.png" id="15_7yiff"]
+[ext_resource type="Texture2D" uid="uid://bgei1qmoc4kpv" path="res://Assets/UI/LobbyUI/ArrowLeftToRight.png" id="15_fw8iq"]
+[ext_resource type="Script" uid="uid://i7nkla44iwvl" path="res://Scenes/Lobby Canteen/BottomButtons.gd" id="15_krqk6"]
 [ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="15_sgopm"]
-[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
+[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/Fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
+[ext_resource type="Texture2D" uid="uid://buu5n0np3bere" path="res://Assets/UI/LobbyUI/GlowBoard.png" id="16_fw8iq"]
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/GlowBoard/GlowBoard.tscn" id="16_vrvqj"]
+[ext_resource type="Texture2D" uid="uid://dxhvnf11tiqij" path="res://Assets/UI/LobbyUI/GlowShop.png" id="17_krqk6"]
 [ext_resource type="Script" uid="uid://bhyi7niihpfqg" path="res://Scripts/Lobby/day_scene.gd" id="17_wdy5h"]
+[ext_resource type="Texture2D" uid="uid://cj8itr27fqoh7" path="res://Assets/UI/LobbyUI/GlowDesk.png" id="18_uu58y"]
 [ext_resource type="PackedScene" uid="uid://cjn07fdlbx2nm" path="res://Scenes/Customer/Customer.tscn" id="20_5fhlb"]
 [ext_resource type="Script" uid="uid://fti83bbe01wh" path="res://Scripts/Customer/customer_manager.gd" id="20_k43ou"]
 [ext_resource type="PackedScene" uid="uid://chcm4mgm880ef" path="res://Scenes/NutriShop/NutriShop.tscn" id="25_7yiff"]
@@ -35,6 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://daqtdvdiuidiq" path="res://Assets/Serving Tray/Serving Tray.png" id="27_hcpvu"]
 [ext_resource type="Texture2D" uid="uid://caogeod1xs5e6" path="res://Assets/Buttons/serve (1).png" id="28_gadot"]
 [ext_resource type="Texture2D" uid="uid://4ssy3iheafjj" path="res://Assets/UI/LobbyUI/Okay Button.png" id="28_q6g5s"]
+[ext_resource type="PackedScene" uid="uid://c5l8auaitpptq" path="res://Scenes/GlowDesk/GlowDesk.tscn" id="28_uu58y"]
 [ext_resource type="Texture2D" uid="uid://1ttof10olivl" path="res://Assets/UI/LobbyUI/Hint Button.png" id="29_7yiff"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rlbi3"]
@@ -249,59 +252,70 @@ stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="BottomButtons" type="Control" parent="."]
-anchors_preset = 0
+[node name="BottomButtons" type="Control" parent="." node_paths=PackedStringArray("hide_show_btn", "buttons_to_toggle")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -224.0
+offset_right = 928.0
+grow_vertical = 0
+script = ExtResource("15_krqk6")
+hide_show_btn = NodePath("HBoxContainer/HideShowButton")
+buttons_to_toggle = [NodePath("HBoxContainer/Almanac"), NodePath("HBoxContainer/GlowBoard"), NodePath("HBoxContainer/GlowShop"), NodePath("HBoxContainer/GlowDesk")]
 
-[node name="AlmanacButton" type="TextureButton" parent="BottomButtons"]
-layout_mode = 0
-offset_left = 88.0
-offset_top = 472.0
-offset_right = 296.0
-offset_bottom = 680.0
-scale = Vector2(0.73, 0.73)
-size_flags_horizontal = 3
-texture_normal = ExtResource("3_k43ou")
-stretch_mode = 0
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomButtons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_right = -128.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
 
-[node name="BulletinBoardButton" type="TextureButton" parent="BottomButtons"]
-layout_mode = 0
-offset_left = 264.00003
-offset_top = 464.00006
-offset_right = 472.00003
-offset_bottom = 683.00006
-scale = Vector2(0.73, 0.73)
-size_flags_horizontal = 3
-texture_normal = ExtResource("4_606uc")
-stretch_mode = 0
+[node name="HideShowButton" type="TextureButton" parent="BottomButtons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = ExtResource("15_fw8iq")
 
-[node name="NutriShopButton" type="TextureButton" parent="BottomButtons"]
-layout_mode = 0
-offset_left = 440.0
-offset_top = 464.0
-offset_right = 648.0
-offset_bottom = 683.00006
-scale = Vector2(0.73, 0.73)
-size_flags_horizontal = 3
-texture_normal = ExtResource("5_4edj8")
-stretch_mode = 0
+[node name="Almanac" type="TextureButton" parent="BottomButtons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("15_7yiff")
+stretch_mode = 4
 
-[node name="NutriDeskButton" type="TextureButton" parent="BottomButtons"]
-layout_mode = 0
-offset_left = 616.0
-offset_top = 464.0
-offset_right = 824.0
-offset_bottom = 683.0
-scale = Vector2(0.73, 0.73)
-size_flags_horizontal = 3
-texture_normal = ExtResource("6_myl55")
-stretch_mode = 0
+[node name="GlowBoard" type="TextureButton" parent="BottomButtons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("16_fw8iq")
+stretch_mode = 4
+
+[node name="GlowShop" type="TextureButton" parent="BottomButtons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("17_krqk6")
+stretch_mode = 4
+
+[node name="GlowDesk" type="TextureButton" parent="BottomButtons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("18_uu58y")
+stretch_mode = 4
 
 [node name="StartDayButton" type="TextureButton" parent="BottomButtons"]
 layout_mode = 0
-offset_left = 1048.0
-offset_top = 528.0
-offset_right = 1272.0
-offset_bottom = 680.0
+offset_left = 1056.0
+offset_top = 40.0
+offset_right = 1280.0
+offset_bottom = 192.0
 size_flags_horizontal = 3
 texture_normal = ExtResource("7_606uc")
 ignore_texture_size = true
@@ -348,6 +362,9 @@ visible = false
 visible = false
 
 [node name="NutriShop" parent="OverlayCanvas" instance=ExtResource("25_7yiff")]
+visible = false
+
+[node name="GlowDesk" parent="OverlayCanvas" instance=ExtResource("28_uu58y")]
 visible = false
 
 [node name="GameHUD" parent="OverlayCanvas" instance=ExtResource("12_k43ou")]
@@ -460,14 +477,16 @@ position = Vector2(17, 71)
 [node name="BeverageSprite2" type="Sprite2D" parent="FinalBeverageDisplay"]
 position = Vector2(78, 71)
 
-[connection signal="pressed" from="BottomButtons/AlmanacButton" to="." method="_on_almanac_pressed"]
-[connection signal="pressed" from="BottomButtons/BulletinBoardButton" to="." method="_on_bulletin_board_pressed"]
-[connection signal="pressed" from="BottomButtons/NutriShopButton" to="." method="_on_nutri_shop_button_pressed"]
+[connection signal="pressed" from="BottomButtons/HBoxContainer/Almanac" to="." method="_on_almanac_pressed"]
+[connection signal="pressed" from="BottomButtons/HBoxContainer/GlowBoard" to="." method="_on_bulletin_board_pressed"]
+[connection signal="pressed" from="BottomButtons/HBoxContainer/GlowShop" to="." method="_on_nutri_shop_button_pressed"]
+[connection signal="pressed" from="BottomButtons/HBoxContainer/GlowDesk" to="." method="_on_glow_desk_pressed"]
 [connection signal="pressed" from="BottomButtons/StartDayButton" to="." method="_on_day_button_pressed"]
 [connection signal="timeout" from="Fade_transition/Fade_timer" to="." method="_on_fade_timer_timeout"]
 [connection signal="closed" from="OverlayCanvas/AlmanacUI" to="." method="_on_almanac_ui_closed"]
 [connection signal="closed" from="OverlayCanvas/BulletinBoardUI" to="." method="_on_bulletin_board_ui_closed"]
 [connection signal="closed" from="OverlayCanvas/NutriShop" to="." method="_on_nutri_shop_closed"]
+[connection signal="closed" from="OverlayCanvas/GlowDesk" to="." method="_on_glow_desk_closed"]
 [connection signal="pressed" from="DayScene/NextCustomer" to="DayScene" method="_on_next_customer_pressed"]
 [connection signal="pressed" from="DayScene/BtnAccept" to="DayScene" method="_on_btn_accept_pressed"]
 [connection signal="pressed" from="DayScene/BtnContinue" to="DayScene" method="_on_btn_continue_pressed"]
