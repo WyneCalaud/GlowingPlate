@@ -75,11 +75,18 @@ func _ready():
 func _switch_category(category: String):
 	current_category = category
 	
-	# Reset highlights
+	# Reset food button highlights
 	_deselect_all_buttons()
+	
+	# Reset Tab highlights
+	tab_go.modulate = Color.WHITE
+	tab_grow.modulate = Color.WHITE
+	tab_glow.modulate = Color.WHITE
 	
 	# --- 1. SETUP UI BASED ON CATEGORY ---
 	if category == "Go":
+		tab_go.modulate = Color(1.5, 1.5, 1.5) # Highlight selected tab
+		
 		category_sign.texture = sign_go_texture
 		right_info.texture = go_default_info
 		
@@ -90,6 +97,8 @@ func _switch_category(category: String):
 		_apply_button_textures(active_buttons, go_btn_icons)
 
 	elif category == "Grow":
+		tab_grow.modulate = Color(1.5, 1.5, 1.5) # Highlight selected tab
+		
 		category_sign.texture = sign_grow_texture
 		right_info.texture = grow_default_info
 		
@@ -100,6 +109,8 @@ func _switch_category(category: String):
 		_apply_button_textures(active_buttons, grow_btn_icons)
 
 	elif category == "Glow":
+		tab_glow.modulate = Color(1.5, 1.5, 1.5) # Highlight selected tab
+		
 		category_sign.texture = sign_glow_texture
 		right_info.texture = glow_default_info
 		

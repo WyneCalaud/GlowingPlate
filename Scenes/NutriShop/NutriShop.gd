@@ -387,7 +387,7 @@ func _update_decor_node(node_name: String, item_name: String, texture: Texture2D
 				if item_name == "MoneyTreeED":
 					if "size" in target_node: target_node.size = Vector2(143.0, 204.0)
 					if "position" in target_node: target_node.position = Vector2(795.0, 84.0)
-				elif item_name == "RefrigerationED":
+				elif item_name == "RefrigeratorED":
 					if "size" in target_node: target_node.size = Vector2(233.0, 206.0)
 					if "position" in target_node: target_node.position = Vector2(819.0, 82.0)
 				elif item_name == "BookshelfED":

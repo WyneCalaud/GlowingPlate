@@ -1,3 +1,4 @@
+# QuizSystem.gd
 extends Node
 
 # Stores the SRS progress: {"Q_ID": {"streak": 0, "next_review_day": 1}}
