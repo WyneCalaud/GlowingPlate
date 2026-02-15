@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://5mmlehht8t7v" path="res://Assets/UI/NutriShop/HighChairVariants/CozyOrangeHighChair.png" id="7_7yiff"]
 [ext_resource type="Texture2D" uid="uid://me72u4mdvqya" path="res://Assets/UI/LobbyUI/BlackStartButton.png" id="7_606uc"]
 [ext_resource type="Texture2D" uid="uid://tkftd55r2v6d" path="res://Assets/UI/NutriShop/MainTableVariants/CozyOrangeMainTable.png" id="8_7yiff"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="8_606uc"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="8_606uc"]
 [ext_resource type="Texture2D" uid="uid://dxk4knvyq8lb5" path="res://Assets/UI/LobbyUI/LobbyBackground/Counter.png" id="9_vtn67"]
 [ext_resource type="Texture2D" uid="uid://51eb7tx1t2kv" path="res://Assets/UI/NutriShop/LightsVariants/ConeLightsLight.png" id="10_7yiff"]
 [ext_resource type="Texture2D" uid="uid://djleog35ekq2h" path="res://Assets/UI/LobbyUI/LobbyBackground/CashRegister.png" id="11_o8hjd"]
@@ -370,7 +370,6 @@ visible = false
 [node name="GameHUD" parent="OverlayCanvas" instance=ExtResource("12_k43ou")]
 
 [node name="DayScene" type="Node2D" parent="."]
-visible = false
 script = ExtResource("17_wdy5h")
 
 [node name="NextCustomer" type="Button" parent="DayScene"]
@@ -427,7 +426,6 @@ script = ExtResource("20_k43ou")
 customer_scene = ExtResource("20_5fhlb")
 
 [node name="FinalPlateDisplay" type="Control" parent="."]
-visible = false
 anchors_preset = 0
 offset_left = 538.0
 offset_top = 508.0
