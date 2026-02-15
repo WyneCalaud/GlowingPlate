@@ -5,11 +5,11 @@ extends Control
 @export var exercise_info := {}
 @export var exercise_description := {}
 
-# ⭐ NEW DICTIONARY
 @export var match_popup_images := {}
 
-@export var preview_time := 5.0
+@export var preview_time := 6.0
 @export var max_hearts := 5
+@export var tutorial_preview_time := 12.0
 
 const TOTAL_CARDS := 16
 const WIN_SCORE := 8
@@ -25,6 +25,33 @@ var current_hearts := 0
 var hearts_original_pos: Vector2
 var chosen_exercise: Texture2D
 
+var is_previewing := false
+
+# =========================
+# TUTORIAL
+# =========================
+
+var is_tutorial := true
+var tutorial_state := "intro1"
+
+var tutorial_first_card : TextureButton = null
+var tutorial_seen_correct := false
+var tutorial_seen_wrong := false
+var tutorial_ready_for_final := false
+
+# ⭐ NEW FIX
+var tutorial_seen_pointer2 := false
+
+@onready var tutorial_overlay := $TutorialOverlay
+@onready var tutorial_step_image := $TutorialOverlay/TutorialStepImage
+@onready var tutorial_popup_image := $TutorialOverlay/TutorialPopupImage
+@onready var tutorial_popup_image2 := $TutorialOverlay/TutorialPopupImage2
+@onready var tutorial_bg := $TutorialOverlay/bg
+
+# =========================
+# NORMAL NODES (UNCHANGED)
+# =========================
+
 @onready var grid := $Grid
 @onready var score_label := $CanvasLayer/ScoreLabel
 @onready var turns_label := $CanvasLayer/TurnsLabel
@@ -37,12 +64,9 @@ var chosen_exercise: Texture2D
 @onready var go_skip := $GameOverOverlay/VBoxContainer/SkipButton
 
 @onready var win_overlay := $WinOverlay
-
-# SHUFFLE
 @onready var shuffle_overlay := $ShuffleOverlay
 @onready var shuffle_grid := $ShuffleOverlay/CardGrid
 
-# RESULT
 @onready var result_overlay := $ExerciseResultOverlay
 @onready var result_image := $ExerciseResultOverlay/PickedExercise
 @onready var result_bg := $ExerciseResultOverlay/Background
@@ -52,12 +76,11 @@ var chosen_exercise: Texture2D
 @onready var btn_continue := $ExerciseResultOverlay/VBoxContainer/ContinueButton
 @onready var btn_menu := $ExerciseResultOverlay/VBoxContainer/MainMenuButton
 
-# ⭐ MATCH POPUP
 @onready var match_popup := $MatchPopupOverlay
 @onready var match_popup_image := $MatchPopupOverlay/MatchPopupImage
 
-
 func _ready():
+
 	go_retry.pressed.connect(_on_go_retry)
 	go_menu.pressed.connect(_on_go_menu)
 	go_skip.pressed.connect(_on_go_skip)
@@ -72,14 +95,193 @@ func _ready():
 	result_overlay.visible = false
 	match_popup.visible = false
 
-	btn_continue.pressed.connect(func(): print("➡ CONTINUE"))
-	btn_menu.pressed.connect(func(): print("🏠 MAIN MENU"))
-
 	setup_board()
 	update_ui()
 
 	await get_tree().process_frame
 	preview_all_cards()
+
+	if is_tutorial:
+		start_tutorial()
+
+	tutorial_step_image.gui_input.connect(_on_tutorial_clicked)
+	tutorial_popup_image.gui_input.connect(_on_tutorial_popup_clicked)
+	tutorial_popup_image2.gui_input.connect(_on_tutorial_popup2_clicked)
+
+# =========================
+# TUTORIAL FLOW
+# =========================
+
+func start_tutorial():
+	lock_input = true
+	tutorial_overlay.visible = true
+	$CanvasLayer.visible = false
+	grid.visible = false
+	tutorial_bg.visible = true
+	tutorial_step_image.visible = true
+	tutorial_step_image.texture = preload("res://Assets/MiniGame/Tutorial/Cat Intro 1.png")
+	tutorial_state = "intro1"
+
+func _on_tutorial_clicked(event):
+	if not (event is InputEventMouseButton and event.pressed):
+		return
+
+	if tutorial_state == "intro1":
+		tutorial_step_image.texture = preload("res://Assets/MiniGame/Tutorial/Cat Intro 2.png")
+		tutorial_state = "intro2"
+		return
+
+	if tutorial_state == "intro2":
+		tutorial_step_image.visible = false
+		tutorial_bg.visible = false
+		$CanvasLayer.visible = true
+		grid.visible = true
+		set_background_dim(0.2)
+		tutorial_popup_image.texture = preload("res://Assets/MiniGame/Tutorial/Pointer1.png")
+		tutorial_popup_image.visible = true
+		tutorial_state = "pointer1"
+
+func _on_tutorial_popup_clicked(event):
+	if not (event is InputEventMouseButton and event.pressed):
+		return
+
+	if tutorial_state == "pointer1":
+		tutorial_popup_image.visible = false
+		set_background_dim(1.0)
+		tutorial_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		lock_input = false
+		tutorial_state = "wait_first"
+		return
+
+	if tutorial_state == "pointer2":
+		tutorial_popup_image.visible = false
+		lock_input = false
+		tutorial_state = "wait_second"
+		return
+
+	if tutorial_state == "intro9":
+		tutorial_popup_image.visible = false
+		if tutorial_seen_correct and tutorial_seen_wrong:
+			tutorial_ready_for_final = true
+		lock_input = false
+		tutorial_state = "wait_first"
+		return
+
+	if tutorial_state == "final_extra":
+		tutorial_popup_image.visible = false
+		end_tutorial()
+
+func _on_tutorial_popup2_clicked(event):
+	if not (event is InputEventMouseButton and event.pressed):
+		return
+
+	if tutorial_state == "good1":
+		tutorial_popup_image2.visible = false
+		tutorial_popup_image.texture = preload("res://Assets/MiniGame/Tutorial/Cat Intro 9.png")
+		tutorial_popup_image.visible = true
+		tutorial_state = "intro9"
+		return
+
+	if tutorial_state == "oops1":
+		tutorial_popup_image2.position = Vector2(746,232)
+		tutorial_popup_image2.texture = preload("res://Assets/MiniGame/Tutorial/Cat Intro 8.png")
+		tutorial_state = "oops2"
+		return
+
+	if tutorial_state == "oops2":
+		tutorial_popup_image2.visible = false
+		tutorial_popup_image.texture = preload("res://Assets/MiniGame/Tutorial/Cat Intro 9.png")
+		tutorial_popup_image.visible = true
+		tutorial_state = "intro9"
+
+func handle_tutorial_progress(card):
+
+	if tutorial_state == "wait_first":
+
+		tutorial_first_card = card
+		card.texture_normal = card_values[card]
+
+		revealed_cards.clear()
+		revealed_cards.append(card)
+
+		# ⭐ Pointer2 ONLY ONCE
+		if not tutorial_seen_pointer2:
+			tutorial_seen_pointer2 = true
+			lock_input = true
+			tutorial_popup_image.texture = preload("res://Assets/MiniGame/Tutorial/Pointer2.png")
+			tutorial_popup_image.visible = true
+			tutorial_state = "pointer2"
+		else:
+			lock_input = false
+			tutorial_state = "wait_second"
+
+		return
+
+
+	if tutorial_state == "wait_second":
+
+		card.texture_normal = card_values[card]
+		revealed_cards.append(card)
+
+		turns_taken += 1
+
+		if card_values[card] == card_values[tutorial_first_card]:
+
+			score += 1
+			tutorial_first_card.disabled = true
+			card.disabled = true
+			update_ui()
+
+			show_match_popup(card_values[card])
+
+			if not tutorial_seen_correct:
+				tutorial_seen_correct = true
+				tutorial_popup_image2.position = Vector2(714,460)
+				tutorial_popup_image2.texture = preload("res://Assets/MiniGame/Tutorial/Cat Intro 4.png")
+				tutorial_popup_image2.visible = true
+				tutorial_state = "good1"
+				lock_input = true
+
+			elif tutorial_ready_for_final:
+				tutorial_popup_image.texture = preload("res://Assets/MiniGame/Tutorial/Cat Intro 11.png")
+				tutorial_popup_image.visible = true
+				tutorial_state = "final_extra"
+				lock_input = true
+
+			else:
+				lock_input = false
+				tutorial_state = "wait_first"
+
+		else:
+
+			lose_heart()
+
+			await get_tree().create_timer(0.4).timeout
+			tutorial_first_card.texture_normal = card_back
+			card.texture_normal = card_back
+
+			if not tutorial_seen_wrong:
+				tutorial_seen_wrong = true
+				tutorial_popup_image2.position = Vector2(746,232)
+				tutorial_popup_image2.texture = preload("res://Assets/MiniGame/Tutorial/Cat Intro 7.png")
+				tutorial_popup_image2.visible = true
+				tutorial_state = "oops1"
+				lock_input = true
+			else:
+				# ⭐ FIX BRICKING
+				lock_input = false
+				tutorial_state = "wait_first"
+
+		revealed_cards.clear()
+
+func end_tutorial():
+
+	tutorial_overlay.visible = false
+	set_background_dim(1.0)
+
+	is_tutorial = false
+	lock_input = false
+
 
 func _on_go_retry():
 	get_tree().reload_current_scene()
@@ -122,20 +324,41 @@ func setup_board():
 
 
 func preview_all_cards():
+
 	lock_input = true
+	is_previewing = true
+
 	for card in all_cards:
 		card.texture_normal = card_values[card]
 
-	await get_tree().create_timer(preview_time).timeout
+	var time_to_wait := preview_time
+	if is_tutorial:
+		time_to_wait = tutorial_preview_time
+
+	await get_tree().create_timer(time_to_wait).timeout
 
 	for card in all_cards:
 		card.texture_normal = card_back
 
+	is_previewing = false
 	lock_input = false
 
 
+
 func on_card_pressed(card: TextureButton):
-	if lock_input or revealed_cards.has(card):
+
+	# ⭐ HARD BLOCK during preview (no exceptions)
+	if is_previewing:
+		return
+
+	if lock_input:
+		return
+
+	if is_tutorial:
+		handle_tutorial_progress(card)
+		return
+
+	if revealed_cards.has(card):
 		return
 
 	card.texture_normal = card_values[card]
@@ -144,6 +367,7 @@ func on_card_pressed(card: TextureButton):
 	if revealed_cards.size() == 2:
 		turns_taken += 1
 		check_match()
+
 
 
 func check_match():

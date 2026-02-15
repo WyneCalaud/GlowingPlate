@@ -45,31 +45,31 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pssnd")
 card_back = ExtResource("2_xdroa")
-card_faces = Array[Texture2D]([ExtResource("3_xdroa"), ExtResource("4_kqnsh"), ExtResource("5_x1b3m"), ExtResource("6_m345l"), ExtResource("7_bt5ei"), ExtResource("8_xtgos"), ExtResource("9_b4at2"), ExtResource("10_pum5n")])
+card_faces = Array[Texture2D]([ExtResource("3_xdroa"), ExtResource("7_bt5ei"), ExtResource("4_kqnsh"), ExtResource("5_x1b3m"), ExtResource("6_m345l"), ExtResource("10_pum5n"), ExtResource("8_xtgos"), ExtResource("9_b4at2")])
 exercise_info = {
 ExtResource("3_xdroa"): "Cycling",
 ExtResource("7_bt5ei"): "Jump Rope",
 ExtResource("4_kqnsh"): "Jumping Jacks",
-ExtResource("5_x1b3m"): "Lunges",
+ExtResource("5_x1b3m"): "Lunge",
 ExtResource("6_m345l"): "Planking",
 ExtResource("10_pum5n"): "Running",
 ExtResource("8_xtgos"): "Situps",
-ExtResource("9_b4at2"): "Squats"
+ExtResource("9_b4at2"): "Squatts"
 }
 exercise_description = {
-ExtResource("3_xdroa"): "Cycling is good for something",
-ExtResource("7_bt5ei"): "Jump rope is something something",
-ExtResource("4_kqnsh"): "Jumping Jacks is ass",
-ExtResource("5_x1b3m"): "Lunge do be lunging",
-ExtResource("6_m345l"): "Yepp that is Planking",
-ExtResource("10_pum5n"): "Running is very beneficial because idk",
-ExtResource("8_xtgos"): "Situps is good very good",
-ExtResource("9_b4at2"): "omaygah squatsss blahblahblah"
+ExtResource("3_xdroa"): "Cycling is wack",
+ExtResource("7_bt5ei"): "Hang yourself using a jump rope",
+ExtResource("4_kqnsh"): "jumpingjumpingjumpingjumping jumpingjumpingjumping jumpingjumping",
+ExtResource("5_x1b3m"): "Lunges is great for nothing",
+ExtResource("6_m345l"): "Planking does absolutely nothing for you",
+ExtResource("10_pum5n"): "Running sucks and you suck fuck u",
+ExtResource("8_xtgos"): "Sit ups yeah they do be upping",
+ExtResource("9_b4at2"): "Squats more like fucks gottem"
 }
 match_popup_images = {
 ExtResource("3_xdroa"): ExtResource("11_gjhrx"),
-ExtResource("4_kqnsh"): ExtResource("12_8jjub"),
 ExtResource("7_bt5ei"): ExtResource("13_e4oyj"),
+ExtResource("4_kqnsh"): ExtResource("12_8jjub"),
 ExtResource("5_x1b3m"): ExtResource("14_i53an"),
 ExtResource("6_m345l"): ExtResource("15_gir37"),
 ExtResource("10_pum5n"): ExtResource("16_u7wj2"),
@@ -105,16 +105,16 @@ texture = ExtResource("20_kqnsh")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 offset_left = 954.0
-offset_top = 342.0
+offset_top = 360.0
 offset_right = 1078.0
-offset_bottom = 466.0
+offset_bottom = 484.0
 texture = ExtResource("21_xtgos")
 
 [node name="ScoreLabel" type="Label" parent="CanvasLayer"]
 offset_left = 943.0
-offset_top = 365.0
+offset_top = 381.0
 offset_right = 1090.0
-offset_bottom = 446.0
+offset_bottom = 462.0
 theme_override_fonts/font = ExtResource("21_x1b3m")
 theme_override_font_sizes/font_size = 70
 horizontal_alignment = 1
@@ -175,9 +175,9 @@ text = "Turns Left"
 
 [node name="Score" type="Label" parent="CanvasLayer"]
 offset_left = 892.0
-offset_top = 302.0
+offset_top = 328.0
 offset_right = 1139.0
-offset_bottom = 338.0
+offset_bottom = 364.0
 theme_override_fonts/font = ExtResource("21_x1b3m")
 theme_override_font_sizes/font_size = 31
 text = "Score"
@@ -241,6 +241,7 @@ layout_mode = 2
 texture = ExtResource("22_m345l")
 
 [node name="GameOverOverlay" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -275,6 +276,7 @@ icon = ExtResource("28_7mefl")
 flat = true
 
 [node name="WinOverlay" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -286,6 +288,7 @@ offset_bottom = 40.0
 texture = ExtResource("29_lpk1w")
 
 [node name="ShuffleOverlay" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 
 [node name="TextureRect" type="TextureRect" parent="ShuffleOverlay"]
@@ -342,6 +345,7 @@ layout_mode = 2
 texture = ExtResource("2_xdroa")
 
 [node name="ExerciseResultOverlay" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -408,6 +412,7 @@ icon = ExtResource("27_lpk1w")
 flat = true
 
 [node name="MatchPopupOverlay" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_right = 1278.0
 offset_bottom = 729.0
@@ -424,3 +429,38 @@ offset_bottom = -251.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch_mode = 3
+
+[node name="TutorialOverlay" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 1276.0
+offset_bottom = 724.0
+
+[node name="bg" type="TextureRect" parent="TutorialOverlay"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("11_3jjgu")
+
+[node name="TutorialStepImage" type="TextureRect" parent="TutorialOverlay"]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 181.0
+offset_right = 858.0
+offset_bottom = 456.0
+
+[node name="TutorialPopupImage" type="TextureRect" parent="TutorialOverlay"]
+layout_mode = 0
+offset_left = 142.0
+offset_top = 286.0
+offset_right = 555.0
+offset_bottom = 358.0
+stretch_mode = 5
+
+[node name="TutorialPopupImage2" type="TextureRect" parent="TutorialOverlay"]
+layout_mode = 0
+offset_left = 714.0
+offset_top = 460.0
+offset_right = 1007.0
+offset_bottom = 562.0
+stretch_mode = 5
