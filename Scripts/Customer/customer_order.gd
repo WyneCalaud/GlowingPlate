@@ -6,11 +6,17 @@ class_name CustomerOrder
 @export var order_text: String
 @export var expanded_text: String
 
-# NEW: dictionary of required internal_keys for the plate
-# Example keys: "Go", "Grow", "GlowVeg", "GlowFru" — set these in the Inspector on each .tres
+# ⭐ NEW
+# "6-9" or "10-12"
+@export var age_group: String = "6-9"
+
+# plate requirements
 @export var needs: Dictionary = {
 	"Go": "",
 	"Grow": "",
 	"GlowVeg": "",
 	"GlowFru": ""
 }
+
+# beverage requirements
+@export var beverage_needs: Array[String] = []

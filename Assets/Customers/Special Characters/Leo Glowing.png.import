@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5oq17hvlgnhl"
-path="res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"
+uid="uid://bj1qqne5amxil"
+path="res://.godot/imported/Leo Glowing.png-e8b6bfd073b7661d361823fab8c38c3b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customers/Yeeha.png"
-dest_files=["res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"]
+source_file="res://Assets/Customers/Special Characters/Leo Glowing.png"
+dest_files=["res://.godot/imported/Leo Glowing.png-e8b6bfd073b7661d361823fab8c38c3b.ctex"]
 
 [params]
 

@@ -1,6 +1,8 @@
 # GameData.gd
 extends Node
 
+var current_customer_age_group: String = ""
+
 # --- Core Progression Variables ---
 var current_day: int = 1          
 const TOTAL_DAYS: int = 7         
@@ -13,6 +15,17 @@ var character_progress: Dictionary = {
 	"Maya": 0.0,
 	"Arman": 0.0
 }
+
+# --- CHARACTER VISUAL STAGES ---
+# 1 = Current
+# 2 = Better
+# 3 = Glowing
+var character_stage: Dictionary = {
+	"Leo": 1,
+	"Maya": 1,
+	"Norma": 1
+}
+
 
 # --- UPGRADABLE / EXTENSION STATS ---
 var max_customers_today: int = 4  
@@ -106,8 +119,17 @@ func finalize_service(day_result: Dictionary):
 	
 	# Handle Keys
 	var keys_won = day_result.get("earned_keys", 0)
+
+	var special_char: String = day_result.get("character_id", "") as String
+	var is_correct: bool = day_result.get("is_correct", false)
+
+	# ⭐ Only give special bonus if order was correct
+	if is_correct and special_char in ["Leo","Maya","Norma"]:
+		keys_won += 5
+
 	keys += keys_won
 	daily_keys_earned += keys_won
+
 	
 	# Handle Glow Board
 	var char_id = day_result.get("character_id", "")
@@ -143,6 +165,27 @@ var saved_customer_texture: Texture2D = null
 func save_customer(order: Resource, tex: Texture2D):
 	saved_customer_order = order
 	saved_customer_texture = tex
+
+	# ⭐ NEW
+	if order and order.has_method("get"):
+		current_customer_age_group = order.age_group
+
+	# Tell HUD to refresh
+	get_tree().call_group("HUD", "update_age_group_display")
+
 func clear_customer():
 	saved_customer_order = null
 	saved_customer_texture = null
+	current_customer_age_group = ""
+
+	get_tree().call_group("HUD", "update_age_group_display")
+
+
+# =========================
+# SPECIAL CHARACTER HELPERS
+# =========================
+
+func get_character_stage(char_name: String) -> int:
+	if character_stage.has(char_name):
+		return character_stage[char_name]
+	return 1

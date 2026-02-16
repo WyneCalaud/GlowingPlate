@@ -1,24 +1,25 @@
-[gd_scene load_steps=32 format=3 uid="uid://dy6gawubssej3"]
+[gd_scene load_steps=33 format=3 uid="uid://dy6gawubssej3"]
 
 [ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="1_8k2rj"]
 [ext_resource type="Texture2D" uid="uid://3drenhckqamg" path="res://Assets/StatsBar/DayMeter.png" id="1_1044j"]
 [ext_resource type="Script" uid="uid://pyv06wdu0qoo" path="res://Scenes/GameHUD/GameHUD.gd" id="1_ag13m"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="2_ko41u"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="2_ko41u"]
 [ext_resource type="Texture2D" uid="uid://dqsa3bwb8ux31" path="res://Assets/StatsBar/HappyMeter.png" id="2_pts2n"]
 [ext_resource type="Script" uid="uid://uaj3dfuenee4" path="res://Scenes/GameHUD/TimeManager.gd" id="3_lrnd8"]
 [ext_resource type="Texture2D" uid="uid://qww3uhouf8av" path="res://Assets/UI/Interface/SecondCycle.png" id="4_6k04v"]
-[ext_resource type="Texture2D" uid="uid://b3n3c8nuggw44" path="res://Assets/UI/Interface/BoyAgeGroup6-9.png" id="4_eb7cu"]
 [ext_resource type="Texture2D" uid="uid://ceeg78xwticdj" path="res://Assets/UI/Interface/ThirdCycle.png" id="5_pur5n"]
 [ext_resource type="Texture2D" uid="uid://qptyjt1hqs6u" path="res://Assets/UI/Interface/Money.png" id="5_tm5hb"]
 [ext_resource type="Texture2D" uid="uid://dpk3je1j87nfn" path="res://Assets/StatsBar/KeyMeter.png" id="6_ag13m"]
 [ext_resource type="Texture2D" uid="uid://dy0fhsrovhlgv" path="res://Assets/UI/Interface/FourthCycle.png" id="6_i6t2p"]
 [ext_resource type="Texture2D" uid="uid://cpwx2avlbi8ct" path="res://Assets/UI/Interface/Lobby Button.png" id="8_tm5hb"]
+[ext_resource type="Texture2D" uid="uid://bkg0rricjjmar" path="res://Assets/UI/Interface/6-9.png" id="9_2nljy"]
 [ext_resource type="Texture2D" uid="uid://c7o7arewtutfj" path="res://Assets/UI/Interface/SettingsButton.png" id="9_scfow"]
+[ext_resource type="Texture2D" uid="uid://r3v4o7y1w2up" path="res://Assets/UI/Interface/10-12.png" id="10_38rtn"]
 [ext_resource type="Texture2D" uid="uid://dquyayxor6rta" path="res://Assets/UI/Interface/HomeButton.png" id="10_lrnd8"]
 [ext_resource type="Texture2D" uid="uid://d3vxoqpokf5xg" path="res://Assets/UI/SoundSettingsUI/CloseButton1.png" id="16_jrhbn"]
 [ext_resource type="Texture2D" uid="uid://cbt1e8js4x6n7" path="res://Assets/UI/SoundSettingsUI/SoundSettings.png" id="16_pur5n"]
 [ext_resource type="Texture2D" uid="uid://baxfeu7t2d6xf" path="res://Assets/UI/SoundSettingsUI/MusicButton.png" id="17_i6t2p"]
-[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/Fonts/Rowdies-Regular.ttf" id="17_k6hsu"]
+[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/fonts/Rowdies-Regular.ttf" id="17_k6hsu"]
 [ext_resource type="Texture2D" uid="uid://duwqgcfwddmsr" path="res://Assets/UI/SoundSettingsUI/Bar.png" id="18_df0c7"]
 [ext_resource type="LabelSettings" uid="uid://dnbs1daf6c8v5" path="res://Theme/LabelTheme.tres" id="18_k6hsu"]
 [ext_resource type="Texture2D" uid="uid://dpmlupi1iu1fb" path="res://Assets/UI/SoundSettingsUI/MuteMusicButton.png" id="18_uq2nh"]
@@ -125,13 +126,21 @@ text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AgeGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft/HBoxContainer"]
+[node name="AgeGroup" type="Control" parent="HUDControl/TopBarLeft/HBoxContainer"]
 layout_mode = 2
 
-[node name="Face" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
-layout_mode = 2
-texture = ExtResource("4_eb7cu")
-expand_mode = 3
+[node name="6-9" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("9_2nljy")
+
+[node name="10-12" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
+layout_mode = 0
+offset_left = -6.0
+offset_right = 159.0
+offset_bottom = 71.0
+texture = ExtResource("10_38rtn")
 
 [node name="TopBarRight" type="MarginContainer" parent="HUDControl"]
 layout_mode = 1

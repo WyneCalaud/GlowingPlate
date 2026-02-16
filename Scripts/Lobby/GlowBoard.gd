@@ -120,7 +120,14 @@ func _handle_part_interaction(part_key: String, btn: TextureButton):
 func _purchase_success(part_key: String, btn: TextureButton, price: int):
 	GameData.keys -= price
 	purchased_parts[current_character_name].append(part_key)
+	_sync_character_progress()
+
+	# ⭐ Update GlowBoard display
 	update_key_display()
+
+	# ⭐ Update HUD display
+	get_tree().call_group("HUD", "update_all_labels")
+
 	
 	# Play Success Sound
 	if success_sfx: success_sfx.play()
@@ -246,3 +253,24 @@ func _fade_transition(from: Control, to: Control):
 	tween.tween_property(from, "modulate:a", 0.0, 0.3)
 	tween.tween_property(to, "modulate:a", 1.0, 0.3)
 	tween.chain().tween_callback(func(): from.visible = false)
+	
+	
+	
+func _sync_character_progress():
+
+	for char_name in purchased_parts.keys():
+
+		var parts = purchased_parts[char_name]
+		var stage := 1
+
+		if parts.has("Part3"):
+			stage = 3
+		elif parts.has("Part2"):
+			stage = 2
+		else:
+			stage = 1
+
+		# ⭐ REAL visual stage (NO VALUES)
+		GameData.character_stage[char_name] = stage
+
+	

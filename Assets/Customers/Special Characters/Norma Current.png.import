@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4fnyoit3v3w3"
-path="res://.godot/imported/Cedric.png-86c36d06ab50eb5823eb2c9389b9bac6.ctex"
+uid="uid://bp4txoirxcjle"
+path="res://.godot/imported/Norma Current.png-16663ee402be8b18852cca8a3cbd5d18.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customers/Cedric.png"
-dest_files=["res://.godot/imported/Cedric.png-86c36d06ab50eb5823eb2c9389b9bac6.ctex"]
+source_file="res://Assets/Customers/Special Characters/Norma Current.png"
+dest_files=["res://.godot/imported/Norma Current.png-16663ee402be8b18852cca8a3cbd5d18.ctex"]
 
 [params]
 

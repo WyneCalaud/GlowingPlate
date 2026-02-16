@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5oq17hvlgnhl"
-path="res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"
+uid="uid://c1ofkw40loyly"
+path="res://.godot/imported/Boba.png-4274c1ea5f7d4189077fc5a7fd087655.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customers/Yeeha.png"
-dest_files=["res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"]
+source_file="res://Assets/Customers/Boba.png"
+dest_files=["res://.godot/imported/Boba.png-4274c1ea5f7d4189077fc5a7fd087655.ctex"]
 
 [params]
 

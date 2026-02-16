@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_wqqiq")
-customer_name = "Nina"
+customer_name = "Maya"
 order_text = "One healthy lunch for a girl like me please."
 expanded_text = "idk"
 needs = {

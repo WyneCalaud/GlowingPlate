@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpeyuwfq1sf3l"
-path="res://.godot/imported/Guli.png-ce8d8a978b6e39f3dd1069e9080f5aef.ctex"
+uid="uid://r3v4o7y1w2up"
+path="res://.godot/imported/10-12.png-85ada88fe34d9cac0dd23daba5f927b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customers/Guli.png"
-dest_files=["res://.godot/imported/Guli.png-ce8d8a978b6e39f3dd1069e9080f5aef.ctex"]
+source_file="res://Assets/UI/Interface/10-12.png"
+dest_files=["res://.godot/imported/10-12.png-85ada88fe34d9cac0dd23daba5f927b0.ctex"]
 
 [params]
 
