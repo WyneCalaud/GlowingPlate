@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5oq17hvlgnhl"
-path="res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"
+uid="uid://c43gxyojps1kx"
+path="res://.godot/imported/Maya Better.png-edb48cf5637345b73d8d352abe2c1748.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customers/Yeeha.png"
-dest_files=["res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"]
+source_file="res://Assets/Customers/Special Characters/Maya Better.png"
+dest_files=["res://.godot/imported/Maya Better.png-edb48cf5637345b73d8d352abe2c1748.ctex"]
 
 [params]
 

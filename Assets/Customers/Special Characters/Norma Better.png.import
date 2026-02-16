@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5oq17hvlgnhl"
-path="res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"
+uid="uid://feyaddfb6lel"
+path="res://.godot/imported/Norma Better.png-e81dd5afe4097f5193d693b9fe3b98be.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customers/Yeeha.png"
-dest_files=["res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"]
+source_file="res://Assets/Customers/Special Characters/Norma Better.png"
+dest_files=["res://.godot/imported/Norma Better.png-e81dd5afe4097f5193d693b9fe3b98be.ctex"]
 
 [params]
 

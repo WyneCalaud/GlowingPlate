@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5oq17hvlgnhl"
-path="res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"
+uid="uid://dy8ahvpyhaabm"
+path="res://.godot/imported/Maya Current.png-ee01fded5014dfbe786b1fced075c5d1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customers/Yeeha.png"
-dest_files=["res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"]
+source_file="res://Assets/Customers/Special Characters/Maya Current.png"
+dest_files=["res://.godot/imported/Maya Current.png-ee01fded5014dfbe786b1fced075c5d1.ctex"]
 
 [params]
 

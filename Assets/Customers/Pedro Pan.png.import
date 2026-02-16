@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5oq17hvlgnhl"
-path="res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"
+uid="uid://lc44t64lmyex"
+path="res://.godot/imported/Pedro Pan.png-a07a283f579e9d6447daece1ad5458a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customers/Yeeha.png"
-dest_files=["res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"]
+source_file="res://Assets/Customers/Pedro Pan.png"
+dest_files=["res://.godot/imported/Pedro Pan.png-a07a283f579e9d6447daece1ad5458a9.ctex"]
 
 [params]
 

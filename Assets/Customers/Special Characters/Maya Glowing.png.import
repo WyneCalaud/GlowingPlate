@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lc44t64lmyex"
-path="res://.godot/imported/Pedro.png-7479b8da94edab73e527e3321d5dd874.ctex"
+uid="uid://c3y0yc86dc3cr"
+path="res://.godot/imported/Maya Glowing.png-c53891dc27ee08f99da936608a2dfb6d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customers/Pedro.png"
-dest_files=["res://.godot/imported/Pedro.png-7479b8da94edab73e527e3321d5dd874.ctex"]
+source_file="res://Assets/Customers/Special Characters/Maya Glowing.png"
+dest_files=["res://.godot/imported/Maya Glowing.png-c53891dc27ee08f99da936608a2dfb6d.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5oq17hvlgnhl"
-path="res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"
+uid="uid://c4fnyoit3v3w3"
+path="res://.godot/imported/Cyril.png-763c0becd03fb4862a59259d2793210b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Customers/Yeeha.png"
-dest_files=["res://.godot/imported/Yeeha.png-eebfe16adaaadae0984306276a1f1dbf.ctex"]
+source_file="res://Assets/Customers/Cyril.png"
+dest_files=["res://.godot/imported/Cyril.png-763c0becd03fb4862a59259d2793210b.ctex"]
 
 [params]
 
