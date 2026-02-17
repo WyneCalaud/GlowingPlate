@@ -2,6 +2,7 @@
 extends Node
 
 var current_customer_age_group: String = ""
+var player_name : String = ""
 
 # --- Core Progression Variables ---
 var current_day: int = 1          

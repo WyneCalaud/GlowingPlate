@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://bgei1qmoc4kpv" path="res://Assets/UI/LobbyUI/ArrowLeftToRight.png" id="15_fw8iq"]
 [ext_resource type="Script" uid="uid://i7nkla44iwvl" path="res://Scenes/Lobby Canteen/BottomButtons.gd" id="15_krqk6"]
 [ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="15_sgopm"]
-[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/Fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
+[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
 [ext_resource type="Texture2D" uid="uid://buu5n0np3bere" path="res://Assets/UI/LobbyUI/GlowBoard.png" id="16_fw8iq"]
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/GlowBoard/GlowBoard.tscn" id="16_vrvqj"]
 [ext_resource type="Texture2D" uid="uid://dxhvnf11tiqij" path="res://Assets/UI/LobbyUI/GlowShop.png" id="17_krqk6"]
