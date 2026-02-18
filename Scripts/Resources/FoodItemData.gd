@@ -19,6 +19,15 @@ class_name CustomItemData
 @export var texture_count_4: Texture2D
 @export var texture_count_5: Texture2D
 
+# --- Portion Mechanics (New) ---
+@export_group("Portion Mechanics")
+@export var is_portionable: bool = false
+@export var plated_texture_half: Texture2D
+@export var plated_texture_whole: Texture2D
+# New: Images specifically for the Selector UI Buttons
+@export var selector_icon_half: Texture2D
+@export var selector_icon_whole: Texture2D
+
 # --- Rice Mechanic Specific Plated Textures ---
 @export_group("Rice Mechanic Textures")
 @export var plated_texture_small: Texture2D
@@ -38,7 +47,7 @@ class_name CustomItemData
 # --- Gameplay Stats ---
 @export_group("Economics")
 @export var base_value: int = 100 # INCOME: How much you earn when serving this correctly
-@export var cost: int = 5        # EXPENSE: How much deducted per scoop/use
+@export var cost: int = 5         # EXPENSE: How much deducted per scoop/use
 
 ## Returns a dictionary of all nutrients for easy calculation
 func get_nutritional_profile() -> Dictionary:

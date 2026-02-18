@@ -20,6 +20,9 @@ var drag_threshold: float = 10.0
 var press_pos: Vector2
 var is_pressing: bool = false
 
+# New: Stores "Half", "Whole", or "" 
+var portion_type: String = ""
+
 func _ready():
 	# Use PASS so the CameraScroller can still see the input for dragging
 	mouse_filter = Control.MOUSE_FILTER_PASS
@@ -59,7 +62,12 @@ func _gui_input(event):
 
 func toggle_selection():
 	if is_selected:
-		deselect()
+		# If we are already selected and it's a portion item, clicking again 
+		# might be intended to re-open the portion menu to switch choice
+		if food_data and "is_portionable" in food_data and food_data.is_portionable:
+			_trigger_portion_selector()
+		else:
+			deselect()
 	else:
 		select()
 
@@ -73,6 +81,24 @@ func select():
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(self, "scale", original_scale * hover_scale, anim_speed)
 	tween.tween_property(self, "modulate", Color(1.3, 1.3, 1.3), anim_speed)
+
+	# Check for Portion Logic
+	if food_data and "is_portionable" in food_data and food_data.is_portionable:
+		_trigger_portion_selector()
+	else:
+		portion_type = "" # Reset for non-portion items
+
+func _trigger_portion_selector():
+	var selector = get_tree().get_first_node_in_group("portion_selector")
+	if selector:
+		selector.open(self)
+	else:
+		print("Warning: No 'PortionSelector' found in scene group 'portion_selector'")
+
+# Called by the PortionSelector UI when a button is clicked
+func set_portion(type: String):
+	portion_type = type
+	print("Dispenser ", name, " set to portion: ", portion_type)
 
 func deselect():
 	is_selected = false

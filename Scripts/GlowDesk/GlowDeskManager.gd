@@ -25,9 +25,21 @@ signal closed
 @onready var btn_group_b: BaseButton = $BrowseGroup/HBoxContainer/GroupBCard/GroupBButton
 @onready var btn_group_c: BaseButton = $BrowseGroup/HBoxContainer/GroupCCard/GroupCButton
 
-# --- UI & HUD ---
-@onready var game_hud: CanvasLayer = $GameHUD 
+# --- UI & HUD (Local) ---
+# New paths provided by user
 @onready var back_button: BaseButton = $UI/BackButtonImage/TopLeftButton/BackButton
+@onready var money_label: Label = $UI/TopBarRight/HBoxContainer/MoneyGroup/Money/Label
+
+# Menu Group
+@onready var btn_menu: BaseButton = $UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton
+@onready var btn_settings: BaseButton = $UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/SettingsButton
+@onready var btn_home: BaseButton = $UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/HomeButton
+
+# Pause Layer (New)
+@onready var pause_layer: Control = $UI/PauseLayer
+
+# Sound Control (Instantiated Scene)
+@onready var sound_control: Control = $SoundControl
 
 # --- GAMEPLAY ELEMENTS ---
 @onready var sign_gameplay: TextureRect = $QuickOrEndlessMode/QuickOrEndlessSign
@@ -80,6 +92,10 @@ var active_tween: Tween
 var is_transitioning: bool = false 
 var original_panel_pos: Vector2 
 
+# Menu Animation State
+var is_menu_open: bool = false
+var menu_tween: Tween
+
 # Gameplay State
 var current_game_mode: String = ""
 var current_score: int = 0
@@ -106,7 +122,7 @@ func _ready():
 		screen_countdown
 	]
 	
-	# Set Pivot Offset to Center for Popping Animation
+	# Set Pivot Offset
 	for screen in all_screens:
 		if screen:
 			screen.call_deferred("set_pivot_offset", screen.size / 2)
@@ -120,9 +136,9 @@ func _ready():
 	
 	_fix_mouse_filters()
 	_sync_user_progress()
-	_setup_hud() # Configure the GameHUD
+	_setup_local_ui()
 
-	# Connect Buttons
+	# Connect Main Buttons
 	if btn_practice: btn_practice.pressed.connect(_on_practice_pressed)
 	if btn_browse: btn_browse.pressed.connect(_on_browse_pressed)
 	
@@ -144,76 +160,63 @@ func _ready():
 
 func _exit_tree():
 	if active_tween: active_tween.kill()
+	if menu_tween: menu_tween.kill()
 
-func _setup_hud():
-	# Configures the GameHUD to show only Money and Menu groups
-	if not game_hud:
-		printerr("GlowDeskManager: GameHUD node not found! Make sure to instantiate it.")
-		return
-	
-	# Force visibility ON (in case hidden in editor)
-	game_hud.visible = true
-	
-	# 1. Access the main HUD Control container
-	# Note: GameHUD is a CanvasLayer, its child is 'HUDControl'
-	var hud_control = game_hud.get_node_or_null("HUDControl")
-	if not hud_control:
-		printerr("GlowDeskManager: HUDControl not found in GameHUD!")
-		return
-	
-	# Force Control visibility ON
-	hud_control.visible = true
-		
-	# 2. Hide TopBarLeft (Time/Happiness)
-	var top_left = hud_control.get_node_or_null("TopBarLeft")
-	if top_left:
-		top_left.visible = false
-	
-	# 3. Configure TopBarRight (Money/Keys/Menu)
-	var top_right = hud_control.get_node_or_null("TopBarRight")
-	if top_right:
-		top_right.visible = true
-		
-		# Hide Keys, Keep Money and Menu
-		var key_group = game_hud.find_child("KeyGroup", true, false)
-		if key_group: key_group.visible = false
-		
-		var money_group = game_hud.find_child("MoneyGroup", true, false)
-		if money_group: money_group.visible = true
-		
-		var menu_group = game_hud.find_child("MenuGroup", true, false)
-		if menu_group: menu_group.visible = true
-	
-	# 4. Hide other panels if they exist
-	var sound_control = hud_control.get_node_or_null("SoundControl")
-	if sound_control: sound_control.visible = false
-	
-	var bottom_right = hud_control.get_node_or_null("BottomRight")
-	if bottom_right: bottom_right.visible = false
+func _setup_local_ui():
+	# 1. Setup Menu Dropdown (Initially hidden)
+	if btn_settings:
+		btn_settings.visible = false
+		btn_settings.modulate.a = 0.0
+		btn_settings.position = Vector2.ZERO # Start underneath the menu button
+		if not btn_settings.pressed.is_connected(_on_settings_pressed):
+			btn_settings.pressed.connect(_on_settings_pressed)
 
-	# 5. OVERRIDE Home Button behavior
-	# GameHUD connects it to scene change. We want to disconnect that and use our signal.
-	var home_btn = game_hud.find_child("HomeButton", true, false)
-	if home_btn:
-		# Disconnect ALL existing connections (specifically GameHUD's own logic)
-		var connections = home_btn.get_signal_connection_list("pressed")
-		for conn in connections:
-			home_btn.disconnect("pressed", conn.callable)
+	if btn_home:
+		btn_home.visible = false
+		btn_home.modulate.a = 0.0
+		btn_home.position = Vector2.ZERO
+		if not btn_home.pressed.is_connected(_on_home_pressed):
+			btn_home.pressed.connect(_on_home_pressed)
 			
-		# Connect to our local handler
-		if not home_btn.pressed.is_connected(_on_home_pressed):
-			home_btn.pressed.connect(_on_home_pressed)
+	if btn_menu:
+		if not btn_menu.pressed.is_connected(_toggle_menu):
+			btn_menu.pressed.connect(_toggle_menu)
+	
+	# 2. Setup Pause Layer (Initially hidden)
+	if pause_layer:
+		pause_layer.visible = false
+
+	# 3. Setup Sound Control (Hidden by default)
+	if sound_control:
+		sound_control.visible = false
+		# Try to find a CloseButton inside SoundControl to hide it when clicked
+		var close_btn = sound_control.find_child("CloseButton", true, false)
+		if close_btn:
+			# Disconnect any existing connections that might close the whole HUD
+			var connections = close_btn.get_signal_connection_list("pressed")
+			for conn in connections:
+				close_btn.disconnect("pressed", conn.callable)
+			
+			# Add local close logic
+			if not close_btn.pressed.is_connected(func(): sound_control.visible = false):
+				close_btn.pressed.connect(func(): sound_control.visible = false)
 
 func _sync_user_progress():
-	if QuizSystem:
-		answered_questions_ref = QuizSystem.quiz_progress
+	if has_node("/root/QuizSystem"):
+		answered_questions_ref = get_node("/root/QuizSystem").quiz_progress
 	else:
-		printerr("GlowDeskManager: QuizSystem Global not found!")
+		printerr("GlowDeskManager: QuizSystem Global not found! Defaulting to empty.")
+		answered_questions_ref = {}
 
 func _process(delta: float):
-	if is_game_active and current_game_mode == "Quick":
+	# Update Money Display from GameData
+	if money_label and has_node("/root/GameData"):
+		money_label.text = str(get_node("/root/GameData").money)
+
+	# Only run timer if game is active AND menu is NOT open (Paused)
+	if is_game_active and current_game_mode == "Quick" and not is_menu_open:
 		game_time_left -= delta
-		if lbl_timer:
+		if is_instance_valid(lbl_timer):
 			var m = int(game_time_left / 60)
 			var s = int(game_time_left) % 60
 			var new_text = "%d:%02d" % [m, s]
@@ -222,7 +225,7 @@ func _process(delta: float):
 				
 		if game_time_left <= 0:
 			game_time_left = 0
-			if lbl_timer: lbl_timer.text = "0:00"
+			if is_instance_valid(lbl_timer): lbl_timer.text = "0:00"
 			_game_over()
 
 func _fix_mouse_filters():
@@ -231,10 +234,66 @@ func _fix_mouse_filters():
 		if btn and btn.get_parent() is Control:
 			btn.get_parent().mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-# --- UI LOGIC ---
+# --- UI LOGIC (MENU ANIMATION) ---
+
+func _toggle_menu():
+	is_menu_open = !is_menu_open
+	
+	# Toggle Pause Layer visibility
+	if pause_layer:
+		pause_layer.visible = is_menu_open
+	
+	if menu_tween: menu_tween.kill()
+	menu_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	
+	# Define drop distances (pixels down from parent)
+	var settings_y = 65.0 
+	var home_y = 130.0
+	
+	if is_menu_open:
+		# ANIMATE OPEN
+		btn_settings.visible = true
+		btn_home.visible = true
+		btn_settings.mouse_filter = Control.MOUSE_FILTER_STOP
+		btn_home.mouse_filter = Control.MOUSE_FILTER_STOP
+		
+		menu_tween.tween_property(btn_settings, "position:y", settings_y, 0.3)
+		menu_tween.tween_property(btn_settings, "modulate:a", 1.0, 0.3)
+		
+		menu_tween.tween_property(btn_home, "position:y", home_y, 0.3).set_delay(0.05)
+		menu_tween.tween_property(btn_home, "modulate:a", 1.0, 0.3).set_delay(0.05)
+	else:
+		# ANIMATE CLOSE
+		btn_settings.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		btn_home.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
+		menu_tween.tween_property(btn_settings, "position:y", 0.0, 0.3)
+		menu_tween.tween_property(btn_settings, "modulate:a", 0.0, 0.3)
+		
+		menu_tween.tween_property(btn_home, "position:y", 0.0, 0.3)
+		menu_tween.tween_property(btn_home, "modulate:a", 0.0, 0.3)
+		
+		menu_tween.chain().tween_callback(func():
+			if not is_menu_open:
+				btn_settings.visible = false
+				btn_home.visible = false
+		)
+
+func _on_settings_pressed():
+	_toggle_menu() # Close menu
+	if sound_control:
+		sound_control.visible = true
+		sound_control.move_to_front()
+	else:
+		printerr("GlowDeskManager: SoundControl node is missing!")
 
 func _on_home_pressed():
-	# Called when GameHUD Home Button is clicked (after override)
+	# Close the menu/pause layer if it's open
+	if is_menu_open:
+		_toggle_menu()
+
+	# Close the desk logic
+	visible = false
 	closed.emit()
 
 func _on_practice_pressed(): _change_screen(screen_practice_select)
@@ -251,7 +310,7 @@ func _change_screen(target_screen: Control):
 func _on_back_pressed():
 	if is_transitioning: return
 	if navigation_stack.is_empty():
-		closed.emit()
+		_on_home_pressed()
 	else:
 		var previous_screen = navigation_stack.pop_back()
 		_show_only(previous_screen)
@@ -272,20 +331,19 @@ func _show_only(target: Control, instant: bool = false):
 	if active_tween: active_tween.kill()
 	is_transitioning = true
 	
-	# Use TRANS_BACK for that "Pop" overshoot effect
 	active_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	
 	var current = _get_current_screen()
 	
-	# 1. Animate OUT (Current)
 	if current and current != target:
 		if is_instance_valid(current):
 			current.pivot_offset = current.size / 2
 			active_tween.tween_property(current, "scale", Vector2(0.9, 0.9), 0.2)
 			active_tween.tween_property(current, "modulate:a", 0.0, 0.15)
-			active_tween.tween_callback(func(): current.visible = false).set_delay(0.2)
+			active_tween.tween_callback(func(): 
+				if is_instance_valid(current): current.visible = false
+			).set_delay(0.2)
 
-	# 2. Animate IN (Target)
 	if target and is_instance_valid(target):
 		target.visible = true
 		target.pivot_offset = target.size / 2
@@ -443,14 +501,12 @@ func _check_answer(btn_index: int):
 func _animate_button_error(btn: BaseButton):
 	if not btn: return
 	
-	# FIX: Prevent spam clicking from locking the button in Red state
 	if btn.has_meta("is_animating_error") and btn.get_meta("is_animating_error"):
 		return
 		
 	btn.set_meta("is_animating_error", true)
 	
 	var tween = create_tween()
-	# Explicitly return to White to prevent getting stuck
 	var target_color = Color.WHITE 
 	
 	btn.pivot_offset = btn.size / 2
@@ -464,8 +520,10 @@ func _animate_button_error(btn: BaseButton):
 	tween.tween_property(btn, "rotation_degrees", 0.0, 0.05)
 	tween.tween_property(btn, "modulate", target_color, 0.2)
 	
-	# Unlock when done
-	tween.tween_callback(func(): btn.set_meta("is_animating_error", false))
+	tween.tween_callback(func(): 
+		if is_instance_valid(btn): 
+			btn.set_meta("is_animating_error", false)
+	)
 
 func _animate_correct_feedback(idx: int, tween: Tween):
 	var btn = answer_buttons_list[idx].btn

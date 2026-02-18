@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=55 format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/KitchenArea.gd" id="1_k5enx"]
 [ext_resource type="Texture2D" uid="uid://d4bv2haw4iv1n" path="res://Assets/background/Kitchen Countertop.PNG" id="2_slnmu"]
@@ -51,6 +51,7 @@
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="50_nf282"]
 [ext_resource type="Texture2D" uid="uid://dj4wff5kf1w0r" path="res://Assets/UI/KitchenUI/Trash Section.png" id="51_slnmu"]
 [ext_resource type="Script" uid="uid://bb4a6m5q1e2lt" path="res://Scenes/Gameplay/CameraScroller.gd" id="52_aa5gg"]
+[ext_resource type="PackedScene" uid="uid://pphr73e4o3ik" path="res://Scenes/PortionSelection.tscn" id="52_k5enx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhl0g"]
 radius = 151.08276
@@ -341,6 +342,11 @@ monitoring = false
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Trash/GlobalTrashZone"]
 position = Vector2(-7.589736, -38.700317)
 polygon = PackedVector2Array(13.2821045, -1.6125488, -11.384644, -4.8375244, -36.05127, -9.675049, -62.615356, -19.35022, -108.15381, -27.41272, -142.30774, -24.187744, -165.0769, -19.35022, -195.43591, -6.4500732, -216.30774, 8.062622, -242.87177, 30.637695, -263.7436, 59.662964, -282.71796, 104.813354, 299.7948, 104.813354, 286.51282, 62.88806, 258.05127, 24.187744, 237.17944, 4.8375244, 203.02563, -14.512573, 166.97437, -25.80017, 127.128174, -29.025269, 92.974365, -22.575195, 66.41028, -12.9001465, 39.84619, -4.8375244)
+
+[node name="Background2" parent="." instance=ExtResource("52_k5enx")]
+visible = false
+offset_right = 406.0
+offset_bottom = 207.0
 
 [connection signal="area_entered" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_exited"]
