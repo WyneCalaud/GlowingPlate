@@ -38,16 +38,14 @@ func _ready() -> void:
 	$DayScene/BtnAccept.hide()
 	$DayScene/BtnContinue.hide()
 
-	# Connect Popup Close Signals (With Safety Checks)
 	if almanac_ui.has_signal("closed"):
 		if not almanac_ui.closed.is_connected(_on_almanac_ui_closed):
 			almanac_ui.closed.connect(_on_almanac_ui_closed)
-			
+
 	if bulletin_board_ui.has_signal("closed"):
 		if not bulletin_board_ui.closed.is_connected(_on_bulletin_board_ui_closed):
 			bulletin_board_ui.closed.connect(_on_bulletin_board_ui_closed)
-			
-	# Connect the Nutrishop signal
+
 	if nutrishop_ui.has_signal("closed"):
 		if not nutrishop_ui.closed.is_connected(_on_nutri_shop_closed):
 			nutrishop_ui.closed.connect(_on_nutri_shop_closed)
@@ -79,7 +77,7 @@ func _restore_day_ui_state() -> void:
 		var is_idle = (gd.service_state == GameData.ServiceState.IDLE)
 		next_customer_btn.visible = is_idle
 		is_waiting_for_serve = !is_idle
-		
+
 		almanac_btn.hide()
 		bulletin_btn.hide()
 		start_day_btn.hide()
@@ -88,7 +86,7 @@ func _restore_day_ui_state() -> void:
 	else:
 		is_waiting_for_serve = false
 		next_customer_btn.hide()
-		
+
 		almanac_btn.show()
 		bulletin_btn.show()
 		start_day_btn.show()
@@ -111,11 +109,9 @@ func _check_for_returned_items() -> void:
 func _debug_plate_slots() -> void:
 	print("==== 🧪 PLATE DEBUG ====")
 
-	# Explicitly typed dictionaries
 	var expected: Dictionary = OrderSystem.current_customer_order.required_plate
 	var plated: Dictionary = {}
 
-	# Build what the player plated
 	for entry: Dictionary in OrderSystem.prepared_plate_contents:
 		var slot: String = entry.get("accepted_type", "") as String
 		if slot != "":
@@ -123,7 +119,6 @@ func _debug_plate_slots() -> void:
 			if item and item.has_method("get"):
 				plated[slot] = item.internal_key
 
-	# Explicitly typed slot list
 	var slots: Array[String] = ["Go", "Grow", "GlowVeg", "GlowFru"]
 
 	for slot: String in slots:
@@ -136,14 +131,32 @@ func _debug_plate_slots() -> void:
 		elif act != exp:
 			status = "❌ WRONG"
 
-		print(
-			slot.lpad(8),
-			"| Expected:", exp.lpad(14),
-			"| Actual:", act.lpad(14),
-			"|", status
-		)
+		print(slot.lpad(8), "| Expected:", exp.lpad(14), "| Actual:", act.lpad(14), "|", status)
 
 	print("========================")
+
+
+# ⭐ NEW BEVERAGE DEBUG
+func _debug_beverage_slots() -> void:
+	print("==== 🥤 BEVERAGE DEBUG ====")
+
+	var expected: Array = OrderSystem.current_customer_order.required_beverage
+	var served: Array[String] = []
+
+	for key in OrderSystem.prepared_beverage_data.keys():
+		served.append(key)
+
+	if expected.is_empty():
+		print("No beverage required → auto pass")
+	else:
+		for req in expected:
+			var status := "✅ OK"
+			if not served.has(req):
+				status = "❌ MISSING"
+
+			print("Expected:", req, "| Served:", served, "|", status)
+
+	print("==========================")
 
 # --- Display Helpers ---
 
@@ -207,7 +220,7 @@ func _on_btn_final_serve_pressed() -> void:
 	var GD = get_node("/root/GameData")
 	is_waiting_for_serve = false
 
-	_debug_plate_slots() # 👈 DEBUG CALL
+	_debug_plate_slots()
 
 	var correct := (
 		OrderSystem.is_plate_correct()
@@ -217,10 +230,18 @@ func _on_btn_final_serve_pressed() -> void:
 	if not correct:
 		current_happiness = clamp(current_happiness - 30.0, 0.0, 100.0)
 
+	# ⭐ GET CURRENT CUSTOMER NAME
+	var character_id := ""
+	if GD.saved_customer_order:
+		character_id = GD.saved_customer_order.customer_name
+
 	GD.finalize_service({
 		"earned_money": 10 if correct else 0,
 		"reputation_change": 1.0 if correct else -0.5,
-		"happiness": current_happiness
+		"happiness": current_happiness,
+		"character_id": character_id,   # ⭐ FIX
+		"prog_gain": 34.0 if correct else 0.0, # ⭐ progression
+		"is_correct": correct
 	})
 
 	GD.clear_customer()
@@ -240,7 +261,6 @@ func _on_btn_final_serve_pressed() -> void:
 	if not GD.remaining_customers.is_empty():
 		next_customer_btn.show()
 
-# --- Remaining code unchanged ---
 
 
 func _on_day_button_pressed() -> void:
