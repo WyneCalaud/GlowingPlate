@@ -1,5 +1,3 @@
-# almanac_ui.gd
-
 extends Control
 signal closed
 
@@ -15,6 +13,7 @@ func _on_texture_button_pressed() -> void:
 @onready var tab_go: TextureButton = $Almanac/GoTab
 @onready var tab_grow: TextureButton = $Almanac/GrowTab
 @onready var tab_glow: TextureButton = $Almanac/GlowTab
+@onready var tab_portion: BaseButton = $Almanac/PortionTab # NEW: Portion Tab
 
 # Grids
 @onready var grid_2x2: GridContainer = $"Almanac/LeftPage/2x2"
@@ -30,27 +29,36 @@ func _on_texture_button_pressed() -> void:
 @export_group("Go Data")
 @export var go_default_info: Texture2D # Shown when tab is opened
 @export var go_btn_icons: Array[Texture2D] # Textures for the 4 buttons
-@export var go_info_pages: Array[Texture2D] # Textures for the Right Page
+@export var go_info_pages: Array[Texture2D] # Textures for the Right Page (Standard)
+@export var go_portion_pages: Array[Texture2D] # NEW: Textures for Portion Info
 
 @export_group("Grow Data")
 @export var grow_default_info: Texture2D
 @export var grow_btn_icons: Array[Texture2D]
 @export var grow_info_pages: Array[Texture2D]
+@export var grow_portion_pages: Array[Texture2D] # NEW: Textures for Portion Info
 
 @export_group("Glow Data")
 @export var glow_default_info: Texture2D
 @export var glow_btn_icons: Array[Texture2D]
 @export var glow_info_pages: Array[Texture2D]
+@export var glow_portion_pages: Array[Texture2D] # NEW: Textures for Portion Info
 
 # --- STATE ---
 var current_category: String = "Go"
 var active_buttons: Array = []
+var current_food_index: int = -1 # Tracks which food is currently selected (-1 if none)
 
 func _ready():
-	# 1. Setup Tabs
+	# 1. Setup Category Tabs
 	tab_go.pressed.connect(func(): _switch_category("Go"))
 	tab_grow.pressed.connect(func(): _switch_category("Grow"))
 	tab_glow.pressed.connect(func(): _switch_category("Glow"))
+	
+	# 2. Setup Portion Tab
+	if tab_portion:
+		tab_portion.toggle_mode = true # Ensure it behaves like a toggle
+		tab_portion.toggled.connect(_on_portion_tab_toggled)
 	
 	# 3. Connect Button Signals
 	# We connect all children of both grids. 
@@ -74,6 +82,7 @@ func _ready():
 
 func _switch_category(category: String):
 	current_category = category
+	current_food_index = -1 # Reset selection
 	
 	# Reset food button highlights
 	_deselect_all_buttons()
@@ -82,6 +91,12 @@ func _switch_category(category: String):
 	tab_go.modulate = Color.WHITE
 	tab_grow.modulate = Color.WHITE
 	tab_glow.modulate = Color.WHITE
+	
+	# Reset Portion Tab
+	if tab_portion:
+		tab_portion.button_pressed = false # Reset toggle state
+		# Note: Setting button_pressed = false triggers the toggled signal with false,
+		# which handles the color reset via _on_portion_tab_toggled.
 	
 	# --- 1. SETUP UI BASED ON CATEGORY ---
 	if category == "Go":
@@ -142,18 +157,53 @@ func _on_food_button_pressed(pressed_btn: BaseButton, index: int):
 	pressed_btn.modulate = Color(1.5, 1.5, 1.5) # Glow effect
 	
 	# Update Right Info Page
-	_update_info_page(index)
+	current_food_index = index
+	_update_info_page()
 
-func _update_info_page(index: int):
-	var texture_list = []
+func _on_portion_tab_toggled(toggled_on: bool):
+	# Highlight logic for the Portion Tab
+	if toggled_on:
+		tab_portion.modulate = Color(1.5, 1.5, 1.5)
+	else:
+		tab_portion.modulate = Color.WHITE
+
+	# Refresh the info page to show either the standard info or portion info
+	_update_info_page()
+
+func _update_info_page():
+	var index = current_food_index
+	
+	# If no food is selected, ensure we stick to default category info 
+	# (or you could choose to disable the portion tab here)
+	if index == -1:
+		match current_category:
+			"Go": right_info.texture = go_default_info
+			"Grow": right_info.texture = grow_default_info
+			"Glow": right_info.texture = glow_default_info
+		return
+
+	var standard_list = []
+	var portion_list = []
 	
 	match current_category:
-		"Go": texture_list = go_info_pages
-		"Grow": texture_list = grow_info_pages
-		"Glow": texture_list = glow_info_pages
+		"Go": 
+			standard_list = go_info_pages
+			portion_list = go_portion_pages
+		"Grow": 
+			standard_list = grow_info_pages
+			portion_list = grow_portion_pages
+		"Glow": 
+			standard_list = glow_info_pages
+			portion_list = glow_portion_pages
 	
-	if index >= 0 and index < texture_list.size():
-		right_info.texture = texture_list[index]
+	# Determine which list to use based on Portion Tab state
+	var target_list = standard_list
+	if tab_portion and tab_portion.button_pressed:
+		target_list = portion_list
+	
+	# Apply texture
+	if index >= 0 and index < target_list.size():
+		right_info.texture = target_list[index]
 	else:
 		print("Warning: No info texture found for index ", index)
 

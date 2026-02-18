@@ -1,0 +1,198 @@
+[gd_scene load_steps=17 format=3 uid="uid://ccv4r1x8840d2"]
+
+[ext_resource type="Texture2D" uid="uid://d3vxoqpokf5xg" path="res://Assets/UI/SoundSettingsUI/CloseButton1.png" id="1_tbf2x"]
+[ext_resource type="Texture2D" uid="uid://cbt1e8js4x6n7" path="res://Assets/UI/SoundSettingsUI/SoundSettings.png" id="2_yy33u"]
+[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/Fonts/Rowdies-Regular.ttf" id="3_ry2qj"]
+[ext_resource type="LabelSettings" uid="uid://dnbs1daf6c8v5" path="res://Theme/LabelTheme.tres" id="4_jxku6"]
+[ext_resource type="Texture2D" uid="uid://baxfeu7t2d6xf" path="res://Assets/UI/SoundSettingsUI/MusicButton.png" id="5_pgnl1"]
+[ext_resource type="Texture2D" uid="uid://dpmlupi1iu1fb" path="res://Assets/UI/SoundSettingsUI/MuteMusicButton.png" id="6_l7g36"]
+[ext_resource type="Texture2D" uid="uid://cmue25kho05b0" path="res://Assets/UI/SoundSettingsUI/SliderButton.png" id="7_6cahj"]
+[ext_resource type="Texture2D" uid="uid://duwqgcfwddmsr" path="res://Assets/UI/SoundSettingsUI/Bar.png" id="8_eonuu"]
+[ext_resource type="Texture2D" uid="uid://bbc81nyq4qd35" path="res://Assets/UI/SoundSettingsUI/SoundButton.png" id="9_cwkrk"]
+[ext_resource type="Texture2D" uid="uid://ccxmd4kg5r5t" path="res://Assets/UI/SoundSettingsUI/MuteSoundButton.png" id="10_n11vq"]
+[ext_resource type="Texture2D" uid="uid://dq3wcwpyf0fu0" path="res://Assets/UI/SoundSettingsUI/LanguageButton.png" id="11_oe1vw"]
+[ext_resource type="Texture2D" uid="uid://dpmjnvmhk8b78" path="res://Assets/UI/SoundSettingsUI/LanguageOptions.png" id="12_2jakt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w5x8q"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7br87"]
+content_margin_top = 20.0
+texture = ExtResource("8_eonuu")
+expand_margin_bottom = 10.0
+region_rect = Rect2(4, 0, 302, 22)
+modulate_color = Color(0.87482893, 0.8940203, 0.74757767, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uq2nh"]
+texture = ExtResource("8_eonuu")
+expand_margin_bottom = 10.0
+region_rect = Rect2(4, 0, 302, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_df0c7"]
+texture = ExtResource("8_eonuu")
+expand_margin_bottom = 10.0
+region_rect = Rect2(4, 0, 302, 22)
+
+[node name="SoundControl" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CloseButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 786.0
+offset_top = 50.0
+offset_right = 960.0
+offset_bottom = 159.0
+texture_normal = ExtResource("1_tbf2x")
+
+[node name="SettingsPanel" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -333.5
+offset_top = -227.0
+offset_right = 333.5
+offset_bottom = 227.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_yy33u")
+
+[node name="Music" type="Label" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 293.5
+offset_top = 123.0
+offset_right = 372.5
+offset_bottom = 160.0
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_ry2qj")
+theme_override_font_sizes/font_size = 32
+text = "Music"
+label_settings = ExtResource("4_jxku6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sound Effects" type="Label" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 117.5
+offset_top = 211.0
+offset_right = 549.5
+offset_bottom = 248.0
+theme_override_fonts/font = ExtResource("3_ry2qj")
+theme_override_font_sizes/font_size = 32
+text = "Sound Effects"
+label_settings = ExtResource("4_jxku6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Language" type="Label" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 117.5
+offset_top = 307.0
+offset_right = 549.5
+offset_bottom = 344.0
+theme_override_fonts/font = ExtResource("3_ry2qj")
+theme_override_font_sizes/font_size = 32
+text = "Language"
+label_settings = ExtResource("4_jxku6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VolumeSettings" type="VBoxContainer" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.0
+offset_top = -104.0
+offset_right = 184.0
+offset_bottom = 213.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="HSeparator3" type="HSeparator" parent="SettingsPanel/VolumeSettings"]
+layout_mode = 2
+theme_override_constants/separation = 30
+theme_override_styles/separator = SubResource("StyleBoxEmpty_w5x8q")
+
+[node name="MusicGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings"]
+layout_mode = 2
+
+[node name="MusicMuteButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/MusicGroup"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("5_pgnl1")
+texture_pressed = ExtResource("6_l7g36")
+
+[node name="MusicSlider" type="HSlider" parent="SettingsPanel/VolumeSettings/MusicGroup"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_constants/grabber_offset = 2
+theme_override_icons/grabber = ExtResource("7_6cahj")
+theme_override_icons/grabber_highlight = ExtResource("7_6cahj")
+theme_override_styles/slider = SubResource("StyleBoxTexture_7br87")
+theme_override_styles/grabber_area = SubResource("StyleBoxTexture_uq2nh")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxTexture_df0c7")
+max_value = 1.5
+step = 0.001
+value = 0.8
+ticks_position = 2
+
+[node name="HSeparator2" type="HSeparator" parent="SettingsPanel/VolumeSettings"]
+layout_mode = 2
+theme_override_constants/separation = 30
+theme_override_styles/separator = SubResource("StyleBoxEmpty_w5x8q")
+
+[node name="SFXGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings"]
+layout_mode = 2
+
+[node name="SFXMuteButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/SFXGroup"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("9_cwkrk")
+texture_pressed = ExtResource("10_n11vq")
+
+[node name="SFXSlider" type="HSlider" parent="SettingsPanel/VolumeSettings/SFXGroup"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_constants/grabber_offset = 2
+theme_override_icons/grabber = ExtResource("7_6cahj")
+theme_override_icons/grabber_highlight = ExtResource("7_6cahj")
+theme_override_styles/slider = SubResource("StyleBoxTexture_7br87")
+theme_override_styles/grabber_area = SubResource("StyleBoxTexture_uq2nh")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxTexture_df0c7")
+max_value = 1.5
+step = 0.001
+value = 0.8
+ticks_position = 2
+
+[node name="HSeparator" type="HSeparator" parent="SettingsPanel/VolumeSettings"]
+layout_mode = 2
+theme_override_constants/separation = 60
+theme_override_styles/separator = SubResource("StyleBoxEmpty_w5x8q")
+
+[node name="LanguageGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings"]
+layout_mode = 2
+
+[node name="LanguageButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/LanguageGroup"]
+layout_mode = 2
+disabled = true
+toggle_mode = true
+texture_normal = ExtResource("11_oe1vw")
+
+[node name="LanguageOptions" type="NinePatchRect" parent="SettingsPanel/VolumeSettings/LanguageGroup"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("12_2jakt")
+region_rect = Rect2(4, 0, 302, 43)

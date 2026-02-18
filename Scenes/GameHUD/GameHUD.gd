@@ -50,7 +50,22 @@ func _ready():
 	update_age_group_display() # ⭐ NEW
 
 func _setup_initial_visibility():
-	# Menu Buttons
+	# 1. FORCE RESET DEFAULT VISIBILITY
+	# This ensures the Lobby HUD always has Keys/Time/Money visible,
+	# even if they were hidden in the editor for the GlowDesk.
+	var top_left = hud_control.get_node_or_null("TopBarLeft")
+	if top_left: top_left.visible = true
+	
+	var top_right = hud_control.get_node_or_null("TopBarRight")
+	if top_right: top_right.visible = true
+	
+	var key_group = hud_control.find_child("KeyGroup", true, false)
+	if key_group: key_group.visible = true
+
+	var money_group = hud_control.find_child("MoneyGroup", true, false)
+	if money_group: money_group.visible = true
+	
+	# 2. Setup Menu Button Animations
 	settings_button.modulate.a = 0
 	home_button.modulate.a = 0
 	settings_button.position.x += SLIDE_DISTANCE
@@ -60,11 +75,11 @@ func _setup_initial_visibility():
 	settings_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	home_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
-	# Sound Control
+	# 3. Sound Control
 	sound_control.visible = false
 	sound_control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
-	# Lobby Button
+	# 4. Lobby Button
 	show_finish_button(false)
 
 func _connect_signals():

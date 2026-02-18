@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://ccvy7eyr4ht8l"]
+[gd_scene load_steps=11 format=3 uid="uid://ccvy7eyr4ht8l"]
 
 [ext_resource type="Script" uid="uid://c05tk15qol8jt" path="res://Scripts/Results/EndDayResults.gd" id="1_rhjxp"]
 [ext_resource type="Texture2D" uid="uid://bbi8lrleu7bf6" path="res://Background/canteen lobby final.png" id="2_ep7c6"]
 [ext_resource type="Theme" uid="uid://b5mpvf81owwdn" path="res://Theme/QuizTheme.tres" id="3_464tc"]
 [ext_resource type="FontFile" uid="uid://btg6v4f2xjtf8" path="res://monogram.ttf" id="3_ej7a3"]
 [ext_resource type="Texture2D" uid="uid://crkg7i8lp1a4o" path="res://Assets/Buttons/Got it.png" id="3_l3ycq"]
+[ext_resource type="LabelSettings" uid="uid://dnbs1daf6c8v5" path="res://Theme/LabelTheme.tres" id="5_1i4kd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ej7a3"]
 bg_color = Color(1, 1, 1, 1)
@@ -103,28 +104,32 @@ size_flags_vertical = 4
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_ej7a3")
 theme_override_font_sizes/font_size = 32
-text = "Total Earned:"
+text = "Total Money Earned:"
+label_settings = ExtResource("5_1i4kd")
 
 [node name="MoneyLabel" type="Label" parent="CenterContainer/Layout/MoneyRow"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_ej7a3")
 theme_override_font_sizes/font_size = 32
+label_settings = ExtResource("5_1i4kd")
 
 [node name="ReputationRow" type="HBoxContainer" parent="CenterContainer/Layout"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
+size_flags_vertical = 4
 
 [node name="Reputation" type="Label" parent="CenterContainer/Layout/ReputationRow"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_ej7a3")
 theme_override_font_sizes/font_size = 32
-text = "Reputation Gained:"
+text = "Total Keys Earned:"
+label_settings = ExtResource("5_1i4kd")
 
 [node name="RepLabel" type="Label" parent="CenterContainer/Layout/ReputationRow"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_ej7a3")
 theme_override_font_sizes/font_size = 32
+label_settings = ExtResource("5_1i4kd")
 
 [node name="HSeparator2" type="HSeparator" parent="CenterContainer/Layout"]
 layout_mode = 2
