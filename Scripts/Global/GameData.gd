@@ -5,7 +5,7 @@ var current_customer_age_group: String = ""
 var player_name : String = ""
 
 # --- Core Progression Variables ---
-var current_day: int = 2         
+var current_day: int = 1         
 const TOTAL_DAYS: int = 7         
 var money: int = 900                
 var keys: int = 60  
