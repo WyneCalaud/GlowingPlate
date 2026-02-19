@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3 uid="uid://li2x2jgpg6rt"]
+
+[ext_resource type="Script" uid="uid://orehkdtj7p5h" path="res://Scenes/News/news_scene.gd" id="1_m8lmo"]
+[ext_resource type="Texture2D" uid="uid://dhe4dn4a6by3t" path="res://Assets/News/introbg.png" id="2_r0bxa"]
+[ext_resource type="Texture2D" uid="uid://cb6gd6jgesjjr" path="res://Assets/News/gnsplate.png" id="3_36bo3"]
+[ext_resource type="Texture2D" uid="uid://dtdx0kla25084" path="res://Assets/News/Next Button.png" id="4_nbab0"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="4_pjny0"]
+[ext_resource type="Texture2D" uid="uid://k2i8s01ngniw" path="res://Assets/News/newsblank.png" id="5_y4pkj"]
+[ext_resource type="Texture2D" uid="uid://b6mxi0dqes67u" path="res://Assets/News/Glow News Station.png" id="6_k2jpj"]
+[ext_resource type="AudioStream" uid="uid://df6weh8ca6anl" path="res://Assets/News/newsintro.mp3" id="8_foeoc"]
+
+[node name="NewsScene" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_m8lmo")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1290.0
+offset_bottom = 720.0
+texture = ExtResource("2_r0bxa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Plate" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 321.0
+offset_top = 112.0
+offset_right = 941.0
+offset_bottom = 612.0
+texture = ExtResource("3_36bo3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GlowNewsStation" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 361.0
+offset_top = 426.0
+offset_right = 924.0
+offset_bottom = 677.0
+texture = ExtResource("6_k2jpj")
+
+[node name="SlideImage" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 1284.0
+offset_bottom = 720.0
+texture = ExtResource("5_y4pkj")
+
+[node name="DialogueBox" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 547.0
+offset_right = 1285.0
+offset_bottom = 730.0
+
+[node name="DialogueText" type="Label" parent="DialogueBox"]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 52.0
+offset_right = 1038.0
+offset_bottom = 116.0
+theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
+theme_override_fonts/font = ExtResource("4_pjny0")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+
+[node name="BtnNext" type="Button" parent="DialogueBox"]
+layout_mode = 0
+offset_left = 1144.0
+offset_top = 26.0
+offset_right = 1200.0
+offset_bottom = 120.0
+icon = ExtResource("4_nbab0")
+flat = true
+
+[node name="NewsIntroSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_foeoc")
+volume_db = -14.182
+
+[connection signal="pressed" from="DialogueBox/BtnNext" to="." method="_on_btn_next_pressed"]
