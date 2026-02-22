@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://bl13xs8g1rj5i"
-path="res://.godot/imported/Rowdies-Light.ttf-5c90191f85a505a27931bbde372614f5.fontdata"
+path="res://.godot/imported/Rowdies-Light.ttf-239e765d0944355d9e06f1d081bf46b5.fontdata"
 
 [deps]
 
-source_file="res://Assets/fonts/Rowdies-Light.ttf"
-dest_files=["res://.godot/imported/Rowdies-Light.ttf-5c90191f85a505a27931bbde372614f5.fontdata"]
+source_file="res://Assets/Fonts/Rowdies-Light.ttf"
+dest_files=["res://.godot/imported/Rowdies-Light.ttf-239e765d0944355d9e06f1d081bf46b5.fontdata"]
 
 [params]
 
