@@ -434,14 +434,14 @@ func _fade_transition(from: Control, to: Control):
 	
 func _sync_character_progress():
 
-	for char_name in purchased_parts.keys():
+	for char_name in purchased_acts.keys():
 
-		var parts = purchased_parts[char_name]
+		var parts = purchased_acts[char_name]
 		var stage := 1
 
-		if parts.has("Part3"):
+		if parts.has("Act3"):
 			stage = 3
-		elif parts.has("Part2"):
+		elif parts.has("Act2"):
 			stage = 2
 		else:
 			stage = 1

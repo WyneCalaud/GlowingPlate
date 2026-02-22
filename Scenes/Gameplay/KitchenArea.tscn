@@ -48,7 +48,7 @@
 [ext_resource type="Resource" uid="uid://dw3v4m5y7nbwm" path="res://Data/Food/GlowFru/Watermelon.tres" id="46_m2bwa"]
 [ext_resource type="PackedScene" uid="uid://ctdosdqx3kc1c" path="res://Scenes/Transition/circle_transition.tscn" id="49_1mo6l"]
 [ext_resource type="Texture2D" uid="uid://bb0gtoq1vuvy5" path="res://Assets/UI/KitchenUI/Serve Section.png" id="50_k5enx"]
-[ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="50_nf282"]
+[ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="54_nf282"]
 [ext_resource type="Texture2D" uid="uid://dj4wff5kf1w0r" path="res://Assets/UI/KitchenUI/Trash Section.png" id="51_slnmu"]
 [ext_resource type="Script" uid="uid://bb4a6m5q1e2lt" path="res://Scenes/Gameplay/CameraScroller.gd" id="52_aa5gg"]
 [ext_resource type="PackedScene" uid="uid://pphr73e4o3ik" path="res://Scenes/FoodDispenser/PortionSelection.tscn" id="52_k5enx"]
@@ -309,7 +309,7 @@ script = ExtResource("52_aa5gg")
 
 [node name="OverlayCanvas" type="CanvasLayer" parent="."]
 
-[node name="GameHUD" parent="OverlayCanvas" instance=ExtResource("50_nf282")]
+[node name="GameHUD" parent="OverlayCanvas" instance=ExtResource("54_nf282")]
 
 [node name="CircleIntroTransition" parent="OverlayCanvas" instance=ExtResource("49_1mo6l")]
 visible = false
