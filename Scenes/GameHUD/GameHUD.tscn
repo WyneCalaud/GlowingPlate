@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bkg0rricjjmar" path="res://Assets/UI/Interface/6-9.png" id="11_df0c7"]
 [ext_resource type="Texture2D" uid="uid://bw5itjsktoqfc" path="res://Assets/UI/Interface/User Profile.png" id="12"]
 [ext_resource type="Texture2D" uid="uid://dv4f86gkvydlk" path="res://Assets/UI/Interface/Avatar.png" id="13"]
-[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://Fonts/Comic_Neue/ComicNeue-Bold.ttf" id="14"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="14"]
 [ext_resource type="LabelSettings" uid="uid://bxmx2yfdx0m1m" path="res://Theme/GameHUDTheme.tres" id="15"]
 [ext_resource type="PackedScene" uid="uid://ccv4r1x8840d2" path="res://Scenes/GameHUD/SoundControl.tscn" id="16"]
 [ext_resource type="Texture2D" uid="uid://cp07tbyxft2d2" path="res://Assets/UI/Interface/FinishButton.png" id="17"]
@@ -113,6 +113,11 @@ stretch_mode = 2
 [node name="10-12" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
 layout_mode = 0
 texture = ExtResource("10")
+stretch_mode = 2
+
+[node name="6-9" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
+layout_mode = 0
+texture = ExtResource("11_df0c7")
 stretch_mode = 2
 
 [node name="TopBarLeft2" type="MarginContainer" parent="HUDControl"]
