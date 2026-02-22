@@ -80,6 +80,16 @@ var current_customer_order: Dictionary = {
 	"required_beverage": []
 }
 
+func set_order_from_customer(customer_order: CustomerOrder) -> void:
+
+	# plate
+	current_customer_order.required_plate = customer_order.needs.duplicate()
+
+	# beverage
+	current_customer_order.required_beverage = customer_order.beverage_needs.duplicate()
+
+
+
 var prepared_plate_contents: Array = []
 var prepared_beverage_data: Dictionary = {}
 

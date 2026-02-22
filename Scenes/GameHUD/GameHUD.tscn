@@ -5,11 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://b1cqjv8liqajn" path="res://Assets/UI/Interface/DayCycle.png" id="2_g2pgc"]
 [ext_resource type="Script" uid="uid://uaj3dfuenee4" path="res://Scenes/GameHUD/TimeManager.gd" id="3_lrnd8"]
 [ext_resource type="Texture2D" uid="uid://qww3uhouf8av" path="res://Assets/UI/Interface/SecondCycle.png" id="4_6k04v"]
-[ext_resource type="Texture2D" uid="uid://b3n3c8nuggw44" path="res://Assets/UI/Interface/BoyAgeGroup6-9.png" id="4_eb7cu"]
 [ext_resource type="Texture2D" uid="uid://ceeg78xwticdj" path="res://Assets/UI/Interface/ThirdCycle.png" id="5_pur5n"]
 [ext_resource type="Texture2D" uid="uid://dy0fhsrovhlgv" path="res://Assets/UI/Interface/FourthCycle.png" id="6_i6t2p"]
 [ext_resource type="Texture2D" uid="uid://dlx7ijsy5vyib" path="res://Assets/UI/Interface/HappyMeter.png" id="9_df0c7"]
 [ext_resource type="Texture2D" uid="uid://c7o7arewtutfj" path="res://Assets/UI/Interface/SettingsButton.png" id="9_scfow"]
+[ext_resource type="Texture2D" uid="uid://r3v4o7y1w2up" path="res://Assets/UI/Interface/10-12.png" id="10_38rtn"]
 [ext_resource type="Texture2D" uid="uid://dquyayxor6rta" path="res://Assets/UI/Interface/HomeButton.png" id="10_lrnd8"]
 [ext_resource type="Texture2D" uid="uid://bw5itjsktoqfc" path="res://Assets/UI/Interface/User Profile.png" id="11_g2pgc"]
 [ext_resource type="Texture2D" uid="uid://dv4f86gkvydlk" path="res://Assets/UI/Interface/Avatar.png" id="12_df0c7"]
@@ -101,7 +101,7 @@ label_settings = ExtResource("15_g2pgc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AgeGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft/HBoxContainer"]
+[node name="AgeGroup" type="Control" parent="HUDControl/TopBarLeft/HBoxContainer"]
 layout_mode = 2
 
 [node name="Face" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]

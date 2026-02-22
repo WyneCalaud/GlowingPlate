@@ -44,7 +44,7 @@ func _ready() -> void:
 	if almanac_ui.has_signal("closed"):
 		if not almanac_ui.closed.is_connected(_on_almanac_ui_closed):
 			almanac_ui.closed.connect(_on_almanac_ui_closed)
-			
+
 	if bulletin_board_ui.has_signal("closed"):
 		if not bulletin_board_ui.closed.is_connected(_on_bulletin_board_ui_closed):
 			bulletin_board_ui.closed.connect(_on_bulletin_board_ui_closed)
@@ -81,7 +81,7 @@ func _restore_day_ui_state() -> void:
 		var is_idle = (gd.service_state == GameData.ServiceState.IDLE)
 		next_customer_btn.visible = is_idle
 		is_waiting_for_serve = !is_idle
-		
+
 		almanac_btn.hide()
 		bulletin_btn.hide()
 		start_day_btn.hide()
@@ -90,7 +90,7 @@ func _restore_day_ui_state() -> void:
 	else:
 		is_waiting_for_serve = false
 		next_customer_btn.hide()
-		
+
 		almanac_btn.show()
 		bulletin_btn.show()
 		start_day_btn.show()

@@ -25,6 +25,10 @@ extends CanvasLayer
 @onready var bottom_right_container: Control = $HUDControl/BottomRight
 @onready var finish_button: TextureButton = $HUDControl/BottomRight/FinishButton
 
+#AgeGroup
+@onready var sixtonine: TextureRect = $"HUDControl/TopBarLeft/HBoxContainer/AgeGroup/6-9"
+@onready var tentotwelve: TextureRect = $"HUDControl/TopBarLeft/HBoxContainer/AgeGroup/10-12"
+
 # --- ANIMATION SETTINGS ---
 var is_menu_open: bool = false
 var menu_tween: Tween
@@ -68,6 +72,7 @@ func _ready():
 	_setup_initial_visibility()
 	_connect_signals()
 	update_all_labels()
+	update_age_group_display() # ⭐ NEW
 
 func _setup_initial_visibility():
 	# 1. FORCE RESET DEFAULT VISIBILITY
@@ -203,6 +208,24 @@ func update_cash(amount: int): if cash_label: cash_label.text = str(amount)
 func update_day(day: int): if day_label: day_label.text = "Day: " + str(day)
 func update_keys(amount: int): if keys_label: keys_label.text = str(amount)
 func update_progress_display(value: float): if progress_label: progress_label.text = str(int(value)) + "%"
+
+func update_age_group_display():
+	if not has_node("/root/GameData"):
+		return
+
+	var GD = get_node("/root/GameData")
+	var age: String = GD.current_customer_age_group
+
+	# hide both first
+	sixtonine.visible = false
+	tentotwelve.visible = false
+
+	match age:
+		"6-9":
+			sixtonine.visible = true
+		"10-12":
+			tentotwelve.visible = true
+
 
 func show_finish_button(show: bool):
 	if finish_button:

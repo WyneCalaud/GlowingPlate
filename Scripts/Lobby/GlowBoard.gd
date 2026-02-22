@@ -206,6 +206,10 @@ func _purchase_success(act_key: String, btn: TextureButton, price: int):
 	GameData.keys -= price
 	purchased_acts[current_character_name].append(act_key)
 	update_key_display()
+
+	# ⭐ Update HUD display
+	get_tree().call_group("HUD", "update_all_labels")
+
 	
 	# Update the character portrait immediately based on new purchased act
 	var updated_portrait = _get_current_character_portrait()
@@ -425,3 +429,24 @@ func _fade_transition(from: Control, to: Control):
 	tween.tween_property(from, "modulate:a", 0.0, 0.3)
 	tween.tween_property(to, "modulate:a", 1.0, 0.3)
 	tween.chain().tween_callback(func(): from.visible = false)
+	
+	
+	
+func _sync_character_progress():
+
+	for char_name in purchased_parts.keys():
+
+		var parts = purchased_parts[char_name]
+		var stage := 1
+
+		if parts.has("Part3"):
+			stage = 3
+		elif parts.has("Part2"):
+			stage = 2
+		else:
+			stage = 1
+
+		# ⭐ REAL visual stage (NO VALUES)
+		GameData.character_stage[char_name] = stage
+
+	

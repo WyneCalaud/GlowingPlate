@@ -8,15 +8,11 @@ var order_index := 0
 func _on_next_customer_pressed():
 	$NextCustomer.hide()
 
-	# Use the global Autoload directly instead of get_node
 	print("Remaining customers:", GameData.remaining_customers.size()) 
 
 	if GameData.remaining_customers.is_empty():
-		# GameData handles the end-of-day transition in finalize_service.
-		# We don't need to do anything here.
 		return
 
-	# UI reset
 	$DialogueBox.hide()
 	$BtnAccept.hide()
 	$BtnContinue.hide()
@@ -24,19 +20,23 @@ func _on_next_customer_pressed():
 	var order: CustomerOrder = GameData.remaining_customers.pop_front()
 
 	var tex: Texture2D
+
+	# ⭐ SPECIAL CHARACTER STAGE HANDLING
+	var stage := GameData.get_character_stage(order.customer_name)
+
 	match order.customer_name:
-		"Cedric":
-			tex = preload("res://Assets/Customers/Cedric.png")
-		"Guli":
-			tex = preload("res://Assets/Customers/Guli.png")
+
+		# ================= NORMAL =================
+		"Cyril":
+			tex = preload("res://Assets/Customers/Cyril.png")
+		"Nestor":
+			tex = preload("res://Assets/Customers/Nestor.png")
 		"Milan":
 			tex = preload("res://Assets/Customers/Milan.png")
 		"Nina":
 			tex = preload("res://Assets/Customers/Nina.png")
-		"Norma":
-			tex = preload("res://Assets/Customers/Norma.png")
-		"Pedro":
-			tex = preload("res://Assets/Customers/Pedro.png")
+		"Pedro Pan":
+			tex = preload("res://Assets/Customers/Pedro Pan.png")
 		"Rimo":
 			tex = preload("res://Assets/Customers/Rimo.png")
 		"Tina":
@@ -45,11 +45,42 @@ func _on_next_customer_pressed():
 			tex = preload("res://Assets/Customers/Troy.png")
 		"Yeeha":
 			tex = preload("res://Assets/Customers/Yeeha.png")
+		"Boba":
+			tex = preload("res://Assets/Customers/Boba.png")
+		"Bree":
+			tex = preload("res://Assets/Customers/Bree.png")
+		"Jenna":
+			tex = preload("res://Assets/Customers/Jenna.png")
+		"Miggy":
+			tex = preload("res://Assets/Customers/Miggy.png")
+		"Principal":
+			tex = preload("res://Assets/Customers/Principal_.png")
+
+		# ================= SPECIAL STORY =================
+
+		"Leo":
+			match stage:
+				1: tex = preload("res://Assets/Customers/Special Characters/Leo Current.png")
+				2: tex = preload("res://Assets/Customers/Special Characters/Leo Better.png")
+				3: tex = preload("res://Assets/Customers/Special Characters/Leo Glowing.png")
+
+		"Maya":
+			match stage:
+				1: tex = preload("res://Assets/Customers/Special Characters/Maya Current.png")
+				2: tex = preload("res://Assets/Customers/Special Characters/Maya Better.png")
+				3: tex = preload("res://Assets/Customers/Special Characters/Maya Glowing.png")
+
+		"Norma":
+			match stage:
+				1: tex = preload("res://Assets/Customers/Special Characters/Norma Current.png")
+				2: tex = preload("res://Assets/Customers/Special Characters/Norma Better.png")
+				3: tex = preload("res://Assets/Customers/Special Characters/Norma Glowing.png")
 
 	GameData.save_customer(order, tex)
 	GameData.service_state = GameData.ServiceState.CUSTOMER_PRESENT
 
 	$CustomerManager.spawn_customer(order, tex)
+
 
 
 func _ready():
@@ -77,6 +108,7 @@ func _ready():
 
 func _on_customer_arrived(order: CustomerOrder):
 	active_order = order
+	OrderSystem.set_order_from_customer(order)
 
 	var GD := get_node("/root/GameData")
 
