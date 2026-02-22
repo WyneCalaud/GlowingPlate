@@ -1,6 +1,8 @@
 extends Control
 signal closed
 
+var is_updating: bool = false # Guard against recursive layout loops
+
 func _on_texture_button_pressed() -> void:
 	closed.emit()
 
@@ -27,27 +29,27 @@ func _on_texture_button_pressed() -> void:
 @export var sign_glow_texture: Texture2D
 
 @export_group("Go Data")
-@export var go_default_info: Texture2D # Shown when tab is opened
-@export var go_btn_icons: Array[Texture2D] # Textures for the 4 buttons
-@export var go_info_pages: Array[Texture2D] # Textures for the Right Page (Standard)
-@export var go_portion_pages: Array[Texture2D] # NEW: Textures for Portion Info
+@export var go_default_info: Texture2D 
+@export var go_btn_icons: Array[Texture2D] 
+@export var go_info_pages: Array[Texture2D] 
+@export var go_portion_pages: Array[Texture2D] 
 
 @export_group("Grow Data")
 @export var grow_default_info: Texture2D
 @export var grow_btn_icons: Array[Texture2D]
 @export var grow_info_pages: Array[Texture2D]
-@export var grow_portion_pages: Array[Texture2D] # NEW: Textures for Portion Info
+@export var grow_portion_pages: Array[Texture2D] 
 
 @export_group("Glow Data")
 @export var glow_default_info: Texture2D
 @export var glow_btn_icons: Array[Texture2D]
 @export var glow_info_pages: Array[Texture2D]
-@export var glow_portion_pages: Array[Texture2D] # NEW: Textures for Portion Info
+@export var glow_portion_pages: Array[Texture2D] 
 
 # --- STATE ---
 var current_category: String = "Go"
 var active_buttons: Array = []
-var current_food_index: int = -1 # Tracks which food is currently selected (-1 if none)
+var current_food_index: int = -1 
 
 func _ready():
 	# 1. Setup Category Tabs
@@ -57,34 +59,36 @@ func _ready():
 	
 	# 2. Setup Portion Tab
 	if tab_portion:
-		tab_portion.toggle_mode = true # Ensure it behaves like a toggle
+		tab_portion.toggle_mode = true 
 		tab_portion.toggled.connect(_on_portion_tab_toggled)
 	
-	# 3. Connect Button Signals
-	# We connect all children of both grids. 
-	# We use bind() to pass the button's index.
+	# 3. Connect Button Signals safely
 	var index = 0
-	for btn in grid_2x2.get_children():
-		if btn is BaseButton:
-			btn.toggle_mode = true
-			btn.pressed.connect(_on_food_button_pressed.bind(btn, index))
-			index += 1
+	if grid_2x2:
+		for btn in grid_2x2.get_children():
+			if btn is BaseButton:
+				btn.toggle_mode = true
+				btn.pressed.connect(_on_food_button_pressed.bind(btn, index))
+				index += 1
 			
 	index = 0
-	for btn in grid_3x3.get_children():
-		if btn is BaseButton:
-			btn.toggle_mode = true
-			btn.pressed.connect(_on_food_button_pressed.bind(btn, index))
-			index += 1
+	if grid_3x3:
+		for btn in grid_3x3.get_children():
+			if btn is BaseButton:
+				btn.toggle_mode = true
+				btn.pressed.connect(_on_food_button_pressed.bind(btn, index))
+				index += 1
 
 	# 4. Initialize
-	_switch_category("Go")
+	call_deferred("_switch_category", "Go")
 
 func _switch_category(category: String):
-	current_category = category
-	current_food_index = -1 # Reset selection
+	if is_updating: return
+	is_updating = true
 	
-	# Reset food button highlights
+	current_category = category
+	current_food_index = -1 
+	
 	_deselect_all_buttons()
 	
 	# Reset Tab highlights
@@ -92,94 +96,90 @@ func _switch_category(category: String):
 	tab_grow.modulate = Color.WHITE
 	tab_glow.modulate = Color.WHITE
 	
-	# Reset Portion Tab
+	# Reset Portion Tab without emitting a signal
 	if tab_portion:
-		tab_portion.button_pressed = false # Reset toggle state
-		# Note: Setting button_pressed = false triggers the toggled signal with false,
-		# which handles the color reset via _on_portion_tab_toggled.
+		tab_portion.set_pressed_no_signal(false) 
+		tab_portion.modulate = Color.WHITE
 	
 	# --- 1. SETUP UI BASED ON CATEGORY ---
+	# We use set_deferred for visibility to prevent UI layout loops that crash the GPU
 	if category == "Go":
-		tab_go.modulate = Color(1.5, 1.5, 1.5) # Highlight selected tab
+		tab_go.modulate = Color(1.5, 1.5, 1.5) 
+		category_sign.set_deferred("texture", sign_go_texture)
+		right_info.set_deferred("texture", go_default_info)
 		
-		category_sign.texture = sign_go_texture
-		right_info.texture = go_default_info
-		
-		grid_2x2.visible = true
-		grid_3x3.visible = false
+		grid_3x3.set_deferred("visible", false)
+		grid_2x2.set_deferred("visible", true)
 		active_buttons = grid_2x2.get_children()
-		
 		_apply_button_textures(active_buttons, go_btn_icons)
 
 	elif category == "Grow":
-		tab_grow.modulate = Color(1.5, 1.5, 1.5) # Highlight selected tab
+		tab_grow.modulate = Color(1.5, 1.5, 1.5) 
+		category_sign.set_deferred("texture", sign_grow_texture)
+		right_info.set_deferred("texture", grow_default_info)
 		
-		category_sign.texture = sign_grow_texture
-		right_info.texture = grow_default_info
-		
-		grid_2x2.visible = true
-		grid_3x3.visible = false
+		grid_3x3.set_deferred("visible", false)
+		grid_2x2.set_deferred("visible", true)
 		active_buttons = grid_2x2.get_children()
-		
 		_apply_button_textures(active_buttons, grow_btn_icons)
 
 	elif category == "Glow":
-		tab_glow.modulate = Color(1.5, 1.5, 1.5) # Highlight selected tab
+		tab_glow.modulate = Color(1.5, 1.5, 1.5) 
+		category_sign.set_deferred("texture", sign_glow_texture)
+		right_info.set_deferred("texture", glow_default_info)
 		
-		category_sign.texture = sign_glow_texture
-		right_info.texture = glow_default_info
-		
-		grid_2x2.visible = false
-		grid_3x3.visible = true
+		grid_2x2.set_deferred("visible", false)
+		grid_3x3.set_deferred("visible", true)
 		active_buttons = grid_3x3.get_children()
-		
 		_apply_button_textures(active_buttons, glow_btn_icons)
+		
+	is_updating = false
 
 func _apply_button_textures(buttons: Array, textures: Array):
-	for i in range(buttons.size()):
-		var btn = buttons[i]
-		if i < textures.size():
-			btn.texture_normal = textures[i]
-			btn.visible = true
-		else:
-			# Hide button if we don't have a texture for it
-			btn.visible = false
+	var tex_index = 0
+	for btn in buttons:
+		if btn is BaseButton:
+			if tex_index < textures.size():
+				btn.texture_normal = textures[tex_index]
+				btn.set_deferred("visible", true)
+			else:
+				btn.set_deferred("visible", false)
+			tex_index += 1
 
 func _on_food_button_pressed(pressed_btn: BaseButton, index: int):
-	# Radio Button Logic: Deselect others
+	# NEW LOGIC: Untoggle portion tab when switching food
+	if tab_portion and tab_portion.button_pressed:
+		tab_portion.set_pressed_no_signal(false)
+		tab_portion.modulate = Color.WHITE
+
+	# Radio Button Logic
 	for btn in active_buttons:
-		if btn != pressed_btn:
-			btn.button_pressed = false
+		if btn is BaseButton and btn != pressed_btn:
+			btn.set_pressed_no_signal(false)
 			btn.modulate = Color.WHITE
 	
-	# visual feedback for selected
-	pressed_btn.button_pressed = true
-	pressed_btn.modulate = Color(1.5, 1.5, 1.5) # Glow effect
+	pressed_btn.set_pressed_no_signal(true)
+	pressed_btn.modulate = Color(1.5, 1.5, 1.5) 
 	
-	# Update Right Info Page
 	current_food_index = index
-	_update_info_page()
+	call_deferred("_update_info_page") # Call deferred to prevent layout freeze
 
 func _on_portion_tab_toggled(toggled_on: bool):
-	# Highlight logic for the Portion Tab
 	if toggled_on:
 		tab_portion.modulate = Color(1.5, 1.5, 1.5)
 	else:
 		tab_portion.modulate = Color.WHITE
 
-	# Refresh the info page to show either the standard info or portion info
-	_update_info_page()
+	call_deferred("_update_info_page")
 
 func _update_info_page():
 	var index = current_food_index
 	
-	# If no food is selected, ensure we stick to default category info 
-	# (or you could choose to disable the portion tab here)
 	if index == -1:
 		match current_category:
-			"Go": right_info.texture = go_default_info
-			"Grow": right_info.texture = grow_default_info
-			"Glow": right_info.texture = glow_default_info
+			"Go": right_info.set_deferred("texture", go_default_info)
+			"Grow": right_info.set_deferred("texture", grow_default_info)
+			"Glow": right_info.set_deferred("texture", glow_default_info)
 		return
 
 	var standard_list = []
@@ -196,21 +196,24 @@ func _update_info_page():
 			standard_list = glow_info_pages
 			portion_list = glow_portion_pages
 	
-	# Determine which list to use based on Portion Tab state
 	var target_list = standard_list
 	if tab_portion and tab_portion.button_pressed:
 		target_list = portion_list
 	
-	# Apply texture
 	if index >= 0 and index < target_list.size():
-		right_info.texture = target_list[index]
+		# Using set_deferred here is crucial to preventing the texture loop freeze
+		right_info.set_deferred("texture", target_list[index])
 	else:
 		print("Warning: No info texture found for index ", index)
 
 func _deselect_all_buttons():
-	for btn in grid_2x2.get_children():
-		btn.button_pressed = false
-		btn.modulate = Color.WHITE
-	for btn in grid_3x3.get_children():
-		btn.button_pressed = false
-		btn.modulate = Color.WHITE
+	if grid_2x2:
+		for btn in grid_2x2.get_children():
+			if btn is BaseButton:
+				btn.set_pressed_no_signal(false)
+				btn.modulate = Color.WHITE
+	if grid_3x3:
+		for btn in grid_3x3.get_children():
+			if btn is BaseButton:
+				btn.set_pressed_no_signal(false)
+				btn.modulate = Color.WHITE

@@ -1,14 +1,28 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=4 format=3 uid="uid://d2mntq5kbevox"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://d2mntq5kbevox"]
 
 [ext_resource type="Texture2D" uid="uid://b1b74g4ux5tok" path="res://Assets/Foods/Fish.png" id="1_pgbmo"]
-[ext_resource type="Texture2D" uid="uid://dnyy68yh350ii" path="res://Assets/GrowSection/FishFillet720.png" id="2_scjta"]
+[ext_resource type="Texture2D" uid="uid://88jb7ra0pbl" path="res://Assets/UI/KitchenUI/TEST/FishHalf.png" id="3_24vh5"]
+[ext_resource type="Texture2D" uid="uid://c274ck7n454tm" path="res://Assets/GrowSection/FishHalf2.png" id="3_216va"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_qaar2"]
+[ext_resource type="Texture2D" uid="uid://df77vetgec51q" path="res://Assets/UI/KitchenUI/TEST/FishWhole.png" id="4_2n2iw"]
+[ext_resource type="Texture2D" uid="uid://d08tub8xecgur" path="res://Assets/GrowSection/FishHalf3.png" id="4_3k5fd"]
+[ext_resource type="Texture2D" uid="uid://bwtdjv87tutc7" path="res://Assets/UI/KitchenUI/PortionSelector/Icons/FishHalfIcon.png" id="6_2n2iw"]
+[ext_resource type="Texture2D" uid="uid://dk27x5f57s0m3" path="res://Assets/GrowSection/FishWhole2.png" id="6_bh4mw"]
+[ext_resource type="Texture2D" uid="uid://s3jdtf3ym7nn" path="res://Assets/GrowSection/FishWhole3.png" id="7_3h1e7"]
+[ext_resource type="Texture2D" uid="uid://qtqkqxwvhsnx" path="res://Assets/UI/KitchenUI/PortionSelector/Icons/FishWholeIcon.png" id="7_6i3b5"]
 
 [resource]
 script = ExtResource("3_qaar2")
 item_name = "Fish Fillet"
 internal_key = "FISH_FILLET"
 base_texture = ExtResource("1_pgbmo")
-default_plated_texture = ExtResource("2_scjta")
-texture_count_1 = ExtResource("2_scjta")
+is_portionable = true
+plated_texture_half = ExtResource("3_24vh5")
+plated_texture_half_2 = ExtResource("3_216va")
+plated_texture_half_3 = ExtResource("4_3k5fd")
+plated_texture_whole = ExtResource("4_2n2iw")
+plated_texture_whole_2 = ExtResource("6_bh4mw")
+plated_texture_whole_3 = ExtResource("7_3h1e7")
+selector_icon_half = ExtResource("6_2n2iw")
+selector_icon_whole = ExtResource("7_6i3b5")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

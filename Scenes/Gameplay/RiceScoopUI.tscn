@@ -25,6 +25,7 @@ tex_low = ExtResource("3_mivq6")
 tex_med = ExtResource("4_5sf0u")
 tex_right = ExtResource("5_y4xhs")
 tex_too_high = ExtResource("6_27qcu")
+metadata/_edit_lock_ = true
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0

@@ -30,23 +30,23 @@ linked_image = NodePath("../GoFood")
 position = Vector2(48, -56)
 polygon = PackedVector2Array(-173, -28, -164, -36, 45, -37, 58, -27, 65, -17, 62, 208, 54, 220, 23, 215, -6, 205, -46, 188, -89, 158, -106, 142, -124, 122, -135, 108, -154, 77, -164, 44, -172, 12, -174, -9)
 
-[node name="SlotGrow" type="Area2D" parent="." node_paths=PackedStringArray("linked_image") groups=["plate_slots"]]
+[node name="SlotVeg" type="Area2D" parent="." node_paths=PackedStringArray("linked_image") groups=["plate_slots"]]
 position = Vector2(128, 108)
 script = ExtResource("2_xwyst")
 linked_image = NodePath("../GrowFood")
-slot_type = "Grow"
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotGrow"]
-position = Vector2(-214, -56)
-polygon = PackedVector2Array(111, -23, 110, 210, 117, 219, 151, 213, 196, 199, 243, 174, 281, 141, 309, 105, 327, 70, 336, 39, 343, 2, 342, -30, 335, -36, 122, -34)
-
-[node name="SlotVeg" type="Area2D" parent="." node_paths=PackedStringArray("linked_image") groups=["plate_slots"]]
-position = Vector2(-133, -102)
-script = ExtResource("2_xwyst")
-linked_image = NodePath("../GlowVegFood")
 slot_type = "GlowVeg"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotVeg"]
+position = Vector2(-214, -56)
+polygon = PackedVector2Array(111, -23, 110, 210, 117, 219, 151, 213, 196, 199, 243, 174, 281, 141, 309, 105, 327, 70, 336, 39, 343, 2, 342, -30, 335, -36, 122, -34)
+
+[node name="SlotGrow" type="Area2D" parent="." node_paths=PackedStringArray("linked_image") groups=["plate_slots"]]
+position = Vector2(-133, -102)
+script = ExtResource("2_xwyst")
+linked_image = NodePath("../GlowVegFood")
+slot_type = "Grow"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotGrow"]
 position = Vector2(47, 153)
 polygon = PackedVector2Array(65, -99, 63, -266, 53, -275, 19, -271, -31, -254, -79, -224, -121, -186, -146, -146, -165, -99, -157, -89, 53, -88)
 

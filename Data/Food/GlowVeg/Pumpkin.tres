@@ -1,8 +1,12 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=4 format=3 uid="uid://rucd5es10dwy"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=8 format=3 uid="uid://rucd5es10dwy"]
 
 [ext_resource type="Texture2D" uid="uid://cbwbsxmrxvjft" path="res://Assets/Foods/Pumpkins.png" id="1_a873x"]
-[ext_resource type="Texture2D" uid="uid://cdjhpbgv5gj3o" path="res://Assets/IndividualFoods/Pumpkin343.png" id="2_fbc4x"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_mpxc7"]
+[ext_resource type="Texture2D" uid="uid://bs4kslocqpoi7" path="res://Assets/UI/KitchenUI/VeggiesCup/Kalabasa/KalabasaFull.png" id="4_kxsvx"]
+[ext_resource type="Texture2D" uid="uid://dx3m2ohjdeooq" path="res://Assets/UI/KitchenUI/VeggiesCup/Kalabasa/KalabasaHigh.png" id="5_idbwd"]
+[ext_resource type="Texture2D" uid="uid://bshcre7ickywp" path="res://Assets/UI/KitchenUI/VeggiesCup/Kalabasa/KalabasaLow.png" id="6_t2r6e"]
+[ext_resource type="Texture2D" uid="uid://bvavnmfd340mn" path="res://Assets/UI/KitchenUI/VeggiesCup/Kalabasa/KalabasaMed.png" id="7_kp4yk"]
+[ext_resource type="Texture2D" uid="uid://rrajavpd22md" path="res://Assets/GlowSection/Pumpkin3.png" id="8_idbwd"]
 
 [resource]
 script = ExtResource("3_mpxc7")
@@ -10,5 +14,10 @@ item_name = "Pumpkin"
 internal_key = "PUMPKIN"
 food_category = "GlowVeg"
 base_texture = ExtResource("1_a873x")
-default_plated_texture = ExtResource("2_fbc4x")
+is_veggie_cup = true
+veggie_cup_low = ExtResource("6_t2r6e")
+veggie_cup_med = ExtResource("7_kp4yk")
+veggie_cup_high = ExtResource("5_idbwd")
+veggie_cup_full = ExtResource("4_kxsvx")
+veggie_plated_full = ExtResource("8_idbwd")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

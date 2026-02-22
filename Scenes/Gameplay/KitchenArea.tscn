@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=56 format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/KitchenArea.gd" id="1_k5enx"]
 [ext_resource type="Texture2D" uid="uid://d4bv2haw4iv1n" path="res://Assets/background/Kitchen Countertop.PNG" id="2_slnmu"]
@@ -19,39 +19,40 @@
 [ext_resource type="Resource" uid="uid://0swaooqdh4n5" path="res://Data/Food/Go/Rice.tres" id="17_b3ytg"]
 [ext_resource type="PackedScene" uid="uid://b3eqyuw2etp2" path="res://Scenes/FoodDispenser/FoodDispenser.tscn" id="18_orncx"]
 [ext_resource type="Texture2D" uid="uid://bod6x1pdec17a" path="res://Assets/Foods/Chickens.png" id="19_ntgi7"]
-[ext_resource type="Resource" uid="uid://b2oeopgun652k" path="res://Data/Food/Grow/Chicken.tres" id="20_ekhcp"]
+[ext_resource type="Resource" uid="uid://b2oeopgun652k" path="res://Data/Food/Grow/Chicken.tres" id="20_x03y5"]
 [ext_resource type="Texture2D" uid="uid://b1b74g4ux5tok" path="res://Assets/Foods/Fish.png" id="21_7cwab"]
-[ext_resource type="Resource" uid="uid://d2mntq5kbevox" path="res://Data/Food/Grow/FishFillet.tres" id="22_ghcuk"]
+[ext_resource type="Resource" uid="uid://d2mntq5kbevox" path="res://Data/Food/Grow/FishFillet.tres" id="22_jgock"]
 [ext_resource type="Texture2D" uid="uid://1ecw6i3ykpw6" path="res://Assets/Foods/Corns.png" id="23_aa47t"]
-[ext_resource type="Resource" uid="uid://bvv4bih206vxi" path="res://Data/Food/Go/Corn.tres" id="24_dchi6"]
+[ext_resource type="Resource" uid="uid://bvv4bih206vxi" path="res://Data/Food/Go/Corn.tres" id="24_k5enx"]
 [ext_resource type="Texture2D" uid="uid://cbkoagx0jde1o" path="res://Assets/Foods/Eggplant.png" id="25_6runi"]
-[ext_resource type="Resource" uid="uid://omstc0n2h6vh" path="res://Data/Food/GlowVeg/Eggplant.tres" id="26_nrje0"]
+[ext_resource type="Resource" uid="uid://biwqdd17xlrmg" path="res://Data/Food/Grow/Tofu.tres" id="26_6c5oh"]
+[ext_resource type="Resource" uid="uid://omstc0n2h6vh" path="res://Data/Food/GlowVeg/Eggplant.tres" id="26_slnmu"]
 [ext_resource type="Texture2D" uid="uid://buv78pvmno0i" path="res://Assets/Foods/Tofu.png" id="27_mk63l"]
-[ext_resource type="Resource" uid="uid://biwqdd17xlrmg" path="res://Data/Food/Grow/Tofu.tres" id="28_klji4"]
+[ext_resource type="Resource" uid="uid://5e2miiomgtir" path="res://Data/Food/Go/Eggs.tres" id="28_qtmfp"]
 [ext_resource type="Texture2D" uid="uid://bhh7nh2jclxoe" path="res://Assets/Foods/Eggs.png" id="29_to81c"]
-[ext_resource type="Resource" uid="uid://5e2miiomgtir" path="res://Data/Food/Go/Eggs.tres" id="30_ibg84"]
 [ext_resource type="Texture2D" uid="uid://comko1qjr5kgl" path="res://Assets/Foods/Sitaw.png" id="31_sno60"]
-[ext_resource type="Resource" uid="uid://b620n7sw6261m" path="res://Data/Food/GlowVeg/Sitaw.tres" id="32_wkrru"]
+[ext_resource type="Resource" uid="uid://b620n7sw6261m" path="res://Data/Food/GlowVeg/Sitaw.tres" id="32_i7i4q"]
 [ext_resource type="Texture2D" uid="uid://cbwbsxmrxvjft" path="res://Assets/Foods/Pumpkins.png" id="33_618ji"]
-[ext_resource type="Resource" uid="uid://rucd5es10dwy" path="res://Data/Food/GlowVeg/Pumpkin.tres" id="34_htbuh"]
+[ext_resource type="Resource" uid="uid://rucd5es10dwy" path="res://Data/Food/GlowVeg/Pumpkin.tres" id="34_oxc20"]
 [ext_resource type="Texture2D" uid="uid://d0ve4dwh1ogbf" path="res://Assets/Foods/Carrots.png" id="35_n8rcw"]
-[ext_resource type="Resource" uid="uid://h68n0p1prwgj" path="res://Data/Food/GlowVeg/Carrots.tres" id="36_qmj44"]
+[ext_resource type="Resource" uid="uid://h68n0p1prwgj" path="res://Data/Food/GlowVeg/Carrots.tres" id="36_nflrw"]
 [ext_resource type="Texture2D" uid="uid://cojks02o5t8n6" path="res://Assets/Foods/Papaya.png" id="37_my4v2"]
-[ext_resource type="Resource" uid="uid://buald3s68wkbi" path="res://Data/Food/GlowFru/Papaya.tres" id="38_fn7s7"]
+[ext_resource type="Resource" uid="uid://buald3s68wkbi" path="res://Data/Food/GlowFru/Papaya.tres" id="38_hkpja"]
 [ext_resource type="Texture2D" uid="uid://dci3jfrravicy" path="res://Assets/Foods/Bananas.png" id="39_1vr5x"]
-[ext_resource type="Resource" uid="uid://7wd86iqmmc06" path="res://Data/Food/GlowFru/Banana.tres" id="40_ja4r2"]
+[ext_resource type="Resource" uid="uid://7wd86iqmmc06" path="res://Data/Food/GlowFru/Banana.tres" id="40_kcelb"]
 [ext_resource type="Texture2D" uid="uid://djkqp3ncps3t8" path="res://Assets/Foods/Pandesal.png" id="41_8ieon"]
-[ext_resource type="Resource" uid="uid://cy0uw31wdvh0e" path="res://Data/Food/Go/Pandesal.tres" id="42_qgykl"]
+[ext_resource type="Resource" uid="uid://cy0uw31wdvh0e" path="res://Data/Food/Go/Pandesal.tres" id="42_32cy7"]
 [ext_resource type="Texture2D" uid="uid://bry84prv55v1e" path="res://Assets/Foods/Mangoes.png" id="43_cxrjh"]
-[ext_resource type="Resource" uid="uid://iwjtv5icvmxp" path="res://Data/Food/GlowFru/Mango.tres" id="44_p52ks"]
+[ext_resource type="Resource" uid="uid://iwjtv5icvmxp" path="res://Data/Food/GlowFru/Mango.tres" id="44_t48f3"]
 [ext_resource type="Texture2D" uid="uid://deq768bcdta8y" path="res://Assets/Foods/Melon.png" id="45_bxfjx"]
-[ext_resource type="Resource" uid="uid://dw3v4m5y7nbwm" path="res://Data/Food/GlowFru/Watermelon.tres" id="46_w1lya"]
+[ext_resource type="Resource" uid="uid://dw3v4m5y7nbwm" path="res://Data/Food/GlowFru/Watermelon.tres" id="46_m2bwa"]
 [ext_resource type="PackedScene" uid="uid://ctdosdqx3kc1c" path="res://Scenes/Transition/circle_transition.tscn" id="49_1mo6l"]
 [ext_resource type="Texture2D" uid="uid://bb0gtoq1vuvy5" path="res://Assets/UI/KitchenUI/Serve Section.png" id="50_k5enx"]
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="50_nf282"]
 [ext_resource type="Texture2D" uid="uid://dj4wff5kf1w0r" path="res://Assets/UI/KitchenUI/Trash Section.png" id="51_slnmu"]
 [ext_resource type="Script" uid="uid://bb4a6m5q1e2lt" path="res://Scenes/Gameplay/CameraScroller.gd" id="52_aa5gg"]
-[ext_resource type="PackedScene" uid="uid://pphr73e4o3ik" path="res://Scenes/PortionSelection.tscn" id="52_k5enx"]
+[ext_resource type="PackedScene" uid="uid://pphr73e4o3ik" path="res://Scenes/FoodDispenser/PortionSelection.tscn" id="52_k5enx"]
+[ext_resource type="PackedScene" uid="uid://jjcnedpqlb6a" path="res://Scenes/FoodDispenser/VeggieCup.tscn" id="53_slnmu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhl0g"]
 radius = 151.08276
@@ -178,37 +179,37 @@ clip_contents = true
 custom_minimum_size = Vector2(220, 100)
 layout_mode = 2
 texture = ExtResource("19_ntgi7")
-food_data = ExtResource("20_ekhcp")
+food_data = ExtResource("20_x03y5")
 
 [node name="Slot2" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("21_7cwab")
-food_data = ExtResource("22_ghcuk")
+food_data = ExtResource("22_jgock")
 
 [node name="Slot3" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("23_aa47t")
-food_data = ExtResource("24_dchi6")
+food_data = ExtResource("24_k5enx")
 
 [node name="Slot4" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("25_6runi")
-food_data = ExtResource("26_nrje0")
+food_data = ExtResource("26_slnmu")
 
 [node name="Slot5" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("27_mk63l")
-food_data = ExtResource("28_klji4")
+food_data = ExtResource("26_6c5oh")
 
 [node name="Slot6" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("29_to81c")
-food_data = ExtResource("30_ibg84")
+food_data = ExtResource("28_qtmfp")
 
 [node name="Row2" type="Control" parent="."]
 layout_mode = 3
@@ -235,25 +236,25 @@ theme_override_constants/separation = -15
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("31_sno60")
-food_data = ExtResource("32_wkrru")
+food_data = ExtResource("32_i7i4q")
 
 [node name="Slot2" parent="Row2/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("33_618ji")
-food_data = ExtResource("34_htbuh")
+food_data = ExtResource("34_oxc20")
 
 [node name="Slot3" parent="Row2/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("35_n8rcw")
-food_data = ExtResource("36_qmj44")
+food_data = ExtResource("36_nflrw")
 
 [node name="Slot4" parent="Row2/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("37_my4v2")
-food_data = ExtResource("38_fn7s7")
+food_data = ExtResource("38_hkpja")
 
 [node name="Row3" type="Control" parent="."]
 layout_mode = 3
@@ -282,25 +283,25 @@ theme_override_constants/separation = -15
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("39_1vr5x")
-food_data = ExtResource("40_ja4r2")
+food_data = ExtResource("40_kcelb")
 
 [node name="Slot2" parent="Row3/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("41_8ieon")
-food_data = ExtResource("42_qgykl")
+food_data = ExtResource("42_32cy7")
 
 [node name="Slot3" parent="Row3/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("43_cxrjh")
-food_data = ExtResource("44_p52ks")
+food_data = ExtResource("44_t48f3")
 
 [node name="Slot4" parent="Row3/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("45_bxfjx")
-food_data = ExtResource("46_w1lya")
+food_data = ExtResource("46_m2bwa")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)
@@ -343,10 +344,13 @@ monitoring = false
 position = Vector2(-7.589736, -38.700317)
 polygon = PackedVector2Array(13.2821045, -1.6125488, -11.384644, -4.8375244, -36.05127, -9.675049, -62.615356, -19.35022, -108.15381, -27.41272, -142.30774, -24.187744, -165.0769, -19.35022, -195.43591, -6.4500732, -216.30774, 8.062622, -242.87177, 30.637695, -263.7436, 59.662964, -282.71796, 104.813354, 299.7948, 104.813354, 286.51282, 62.88806, 258.05127, 24.187744, 237.17944, 4.8375244, 203.02563, -14.512573, 166.97437, -25.80017, 127.128174, -29.025269, 92.974365, -22.575195, 66.41028, -12.9001465, 39.84619, -4.8375244)
 
-[node name="Background2" parent="." instance=ExtResource("52_k5enx")]
+[node name="PortionSelector" parent="." instance=ExtResource("52_k5enx")]
 visible = false
 offset_right = 406.0
 offset_bottom = 207.0
+
+[node name="VeggieScoop" parent="." instance=ExtResource("53_slnmu")]
+visible = false
 
 [connection signal="area_entered" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_exited"]

@@ -1,5 +1,6 @@
-extends Node2D
-
+extends Control
+@onready var btn_settings: BaseButton = $Background/TopBarRight/SettingsButton
+@onready var sound_control: Control = $SoundControl
 var button_type = null
 
 func _on_start_pressed() -> void:
@@ -23,4 +24,10 @@ func _on_exit_pressed() -> void:
 func _on_fade_timer_timeout() -> void:
 	if button_type == "start" :
 		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
-	
+
+func _on_settings_button_pressed() -> void:
+	if sound_control:
+		sound_control.visible = true
+		sound_control.move_to_front()
+	else:
+		printerr("GlowDeskManager: SoundControl node is missing!")

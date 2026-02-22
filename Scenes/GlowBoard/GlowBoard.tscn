@@ -1,24 +1,65 @@
-[gd_scene load_steps=21 format=3 uid="uid://bs42us5samyyd"]
+[gd_scene load_steps=62 format=3 uid="uid://bs42us5samyyd"]
 
 [ext_resource type="Script" uid="uid://ejkgyhmbfm6x" path="res://Scripts/Lobby/GlowBoard.gd" id="1_1v4b8"]
+[ext_resource type="Texture2D" uid="uid://cftl0o6kvihpo" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P1.png" id="2_hbvem"]
 [ext_resource type="Texture2D" uid="uid://btc5qgsjdwv2v" path="res://Assets/UI/GlowBoard/GlowBoardBackground.png" id="2_x2fdi"]
 [ext_resource type="Texture2D" uid="uid://dwx8nslak6ukk" path="res://Assets/UI/GlowBoard/BackButton.png" id="3_0er7u"]
+[ext_resource type="Texture2D" uid="uid://dhp5xrtt3nkx7" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P2.png" id="3_v4bkd"]
+[ext_resource type="Texture2D" uid="uid://dpgfalnac2h5c" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P3.png" id="4_b0na2"]
 [ext_resource type="Texture2D" uid="uid://ddg80chhavokp" path="res://Assets/UI/GlowBoard/GlowBoardSign.png" id="4_hetde"]
 [ext_resource type="Texture2D" uid="uid://de6tyysekcw3h" path="res://Assets/UI/GlowBoard/KeysUI.png" id="5_lh86r"]
+[ext_resource type="Texture2D" uid="uid://ba7worswg5dfs" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P4.png" id="5_phni6"]
+[ext_resource type="Texture2D" uid="uid://dkwg7ksxwm30f" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P5.png" id="6_20fw6"]
 [ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="6_k3bx0"]
 [ext_resource type="Texture2D" uid="uid://ryu6th5fud2h" path="res://Assets/UI/GlowBoard/LeoCard.png" id="7_bwta1"]
+[ext_resource type="Texture2D" uid="uid://mjqgeuhws7iy" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P6.png" id="7_itx7g"]
+[ext_resource type="Texture2D" uid="uid://gvqouldsggx8" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P7.png" id="8_5pkxf"]
 [ext_resource type="Texture2D" uid="uid://5w5goee02mmo" path="res://Assets/UI/GlowBoard/InProgressButton.png" id="8_8ph0k"]
 [ext_resource type="Texture2D" uid="uid://d1eebnqnpg85m" path="res://Assets/UI/GlowBoard/MayaCard.png" id="9_q5kgl"]
+[ext_resource type="Texture2D" uid="uid://0psna4qlrj1k" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P8.png" id="9_qla0u"]
 [ext_resource type="Texture2D" uid="uid://5tveh22b30fa" path="res://Assets/UI/GlowBoard/AvailableButton.png" id="10_g0w47"]
+[ext_resource type="Texture2D" uid="uid://5fmdvmsxag0b" path="res://Assets/UI/GlowBoard/Leo/ACT2/LeoAct2P1.png" id="10_yxexw"]
 [ext_resource type="Texture2D" uid="uid://vurakskff3n2" path="res://Assets/UI/GlowBoard/NormaCard.png" id="11_m030s"]
+[ext_resource type="Texture2D" uid="uid://bs52pxln0o4mu" path="res://Assets/UI/GlowBoard/Leo/ACT2/LeoAct2P2.png" id="11_vs2j5"]
+[ext_resource type="Texture2D" uid="uid://cgmxiepx555fu" path="res://Assets/UI/GlowBoard/Leo/ACT2/LeoAct2P3.png" id="12_g6k8r"]
 [ext_resource type="Texture2D" uid="uid://ujkq8qgietge" path="res://Assets/UI/GlowBoard/TwoUnknownCards.png" id="12_m030s"]
 [ext_resource type="Texture2D" uid="uid://dn7fl1pjjwd3d" path="res://Assets/UI/GlowBoard/UnlockedPart1.png" id="13_8ycj0"]
+[ext_resource type="Texture2D" uid="uid://dc334kt6nr1jd" path="res://Assets/UI/GlowBoard/Leo/ACT2/LeoAct2P4.png" id="13_mecvj"]
 [ext_resource type="Texture2D" uid="uid://ct04qbdfphf2j" path="res://Assets/UI/GlowBoard/AvailableButtonPart2.png" id="14_nwv6s"]
+[ext_resource type="Texture2D" uid="uid://btm52ynhmpcgc" path="res://Assets/UI/GlowBoard/Leo/ACT2/LeoAct2P5.png" id="14_ufnat"]
+[ext_resource type="Texture2D" uid="uid://b7k77olikqp1o" path="res://Assets/UI/GlowBoard/Leo/ACT2/LeoAct2P6.png" id="15_svbn4"]
 [ext_resource type="Texture2D" uid="uid://cq5pp85j58lne" path="res://Assets/UI/GlowBoard/LockedPart3.png" id="15_u5tat"]
+[ext_resource type="Texture2D" uid="uid://c4bgpt81vx0r0" path="res://Assets/UI/GlowBoard/Leo/ACT3/LeoAct3P1.png" id="16_0pxvh"]
 [ext_resource type="Texture2D" uid="uid://clv7w8s13y7s" path="res://Assets/UI/GlowBoard/InfoPaper.png" id="16_8ycj0"]
-[ext_resource type="LabelSettings" uid="uid://cq6b2ske61ggc" path="res://Theme/GlowBoardInfoTheme.tres" id="17_nwv6s"]
+[ext_resource type="Texture2D" uid="uid://pq4wj4gsytsy" path="res://Assets/UI/GlowBoard/Leo/ACT3/LeoAct3P2.png" id="17_l1ppi"]
+[ext_resource type="Texture2D" uid="uid://clqc3tj56ps1x" path="res://Assets/UI/GlowBoard/NextButton.png" id="18_1nc3a"]
 [ext_resource type="AudioStream" uid="uid://c147kvm7hc5v8" path="res://Assets/SFX/SuccessSFX.mp3" id="18_jupim"]
+[ext_resource type="Texture2D" uid="uid://6wmjy321t1io" path="res://Assets/UI/GlowBoard/Leo/ACT3/LeoAct3P3.png" id="18_p2qyr"]
 [ext_resource type="AudioStream" uid="uid://b3asxuljoftcf" path="res://Assets/SFX/WrongSound.mp3" id="19_1nc3a"]
+[ext_resource type="Texture2D" uid="uid://bx7u07ie5lx8l" path="res://Assets/UI/GlowBoard/Leo/ACT3/LeoAct3P4.png" id="19_46kkw"]
+[ext_resource type="Texture2D" uid="uid://ol6aquj7v6mp" path="res://Assets/UI/GlowBoard/Maya/ACT1/MayaAct1P1.png" id="20_46kkw"]
+[ext_resource type="Texture2D" uid="uid://d3jtdea0udqqv" path="res://Assets/UI/GlowBoard/Maya/ACT1/MayaAct1P2.png" id="21_xjch0"]
+[ext_resource type="Texture2D" uid="uid://d1hwpe7og3vqb" path="res://Assets/UI/GlowBoard/Maya/ACT1/MayaAct1P3.png" id="22_70xam"]
+[ext_resource type="Texture2D" uid="uid://cu88fmi3fnmfn" path="res://Assets/UI/GlowBoard/Maya/ACT1/MayaAct1P4.png" id="23_7vt5l"]
+[ext_resource type="Texture2D" uid="uid://dhs2rgtb0wow0" path="res://Assets/UI/GlowBoard/Maya/ACT2/MayaAct2P1.png" id="24_rfakx"]
+[ext_resource type="Texture2D" uid="uid://bxpqngsqfuiay" path="res://Assets/UI/GlowBoard/Maya/ACT2/MayaAct2P2.png" id="25_f6b37"]
+[ext_resource type="Texture2D" uid="uid://dkicjl4f3kedk" path="res://Assets/UI/GlowBoard/Maya/ACT2/MayaAct2P3.png" id="26_qo4xq"]
+[ext_resource type="Texture2D" uid="uid://hlwc0rgnpvod" path="res://Assets/UI/GlowBoard/Maya/ACT2/MayaAct2P4.png" id="27_lgvd2"]
+[ext_resource type="Texture2D" uid="uid://v8ly5a0ye4uu" path="res://Assets/UI/GlowBoard/Maya/ACT2/MayaAct2P5.png" id="28_yxc01"]
+[ext_resource type="Texture2D" uid="uid://4hox072105cy" path="res://Assets/UI/GlowBoard/Maya/ACT2/MayaAct2P6.png" id="29_y36uu"]
+[ext_resource type="Texture2D" uid="uid://btmki0tqgvmws" path="res://Assets/UI/GlowBoard/Maya/ACT2/MayaAct2P7.png" id="30_g6m08"]
+[ext_resource type="Texture2D" uid="uid://ofubkppom4yr" path="res://Assets/UI/GlowBoard/Maya/ACT2/MayaAct2P8.png" id="31_h613u"]
+[ext_resource type="Texture2D" uid="uid://dc2i11nyklsx0" path="res://Assets/UI/GlowBoard/Maya/ACT3/MayaAct3P1.png" id="32_j4hs4"]
+[ext_resource type="Texture2D" uid="uid://c4f80qco8pvf5" path="res://Assets/UI/GlowBoard/Maya/ACT3/MayaAct3P2.png" id="33_tvdm3"]
+[ext_resource type="Texture2D" uid="uid://cc3uw7wmori0y" path="res://Assets/UI/GlowBoard/Maya/ACT3/MayaAct3P3.png" id="34_khu27"]
+[ext_resource type="Texture2D" uid="uid://df3fm4d2ehmot" path="res://Assets/UI/GlowBoard/Maya/ACT3/MayaAct3P4.png" id="35_aqene"]
+[ext_resource type="Texture2D" uid="uid://cg7vnmm8gav1f" path="res://Assets/UI/GlowBoard/PrevButton.png" id="36_v4bkd"]
+[ext_resource type="Texture2D" uid="uid://bjwa58aybl6bl" path="res://Assets/UI/GlowBoard/CharacterCards/BetterLeo.png" id="37_qo4xq"]
+[ext_resource type="Texture2D" uid="uid://cyyj1sqpg27d6" path="res://Assets/UI/GlowBoard/CharacterCards/GlowingLeo.png" id="38_lgvd2"]
+[ext_resource type="Texture2D" uid="uid://b5c78m2st6xa0" path="res://Assets/UI/GlowBoard/CharacterCards/BetterMaya.png" id="40_yxc01"]
+[ext_resource type="Texture2D" uid="uid://df8lwrd3gqmb8" path="res://Assets/UI/GlowBoard/CharacterCards/GlowingMaya.png" id="41_y36uu"]
+[ext_resource type="Texture2D" uid="uid://2i5j3rd6k5d3" path="res://Assets/UI/GlowBoard/CharacterCards/BetterNorma.png" id="43_g6m08"]
+[ext_resource type="Texture2D" uid="uid://clby3ge8x5rjo" path="res://Assets/UI/GlowBoard/CharacterCards/GlowingNorma.png" id="44_h613u"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u5tat"]
 font_size = 27
@@ -35,6 +76,21 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_1v4b8")
+leo_act1 = Array[Texture2D]([ExtResource("2_hbvem"), ExtResource("3_v4bkd"), ExtResource("4_b0na2"), ExtResource("5_phni6"), ExtResource("6_20fw6"), ExtResource("7_itx7g"), ExtResource("8_5pkxf"), ExtResource("9_qla0u")])
+leo_act2 = Array[Texture2D]([ExtResource("10_yxexw"), ExtResource("11_vs2j5"), ExtResource("12_g6k8r"), ExtResource("13_mecvj"), ExtResource("14_ufnat"), ExtResource("15_svbn4")])
+leo_act3 = Array[Texture2D]([ExtResource("16_0pxvh"), ExtResource("17_l1ppi"), ExtResource("18_p2qyr"), ExtResource("19_46kkw")])
+maya_act1 = Array[Texture2D]([ExtResource("20_46kkw"), ExtResource("21_xjch0"), ExtResource("22_70xam"), ExtResource("23_7vt5l")])
+maya_act2 = Array[Texture2D]([ExtResource("24_rfakx"), ExtResource("25_f6b37"), ExtResource("26_qo4xq"), ExtResource("27_lgvd2"), ExtResource("28_yxc01"), ExtResource("29_y36uu"), ExtResource("30_g6m08"), ExtResource("31_h613u")])
+maya_act3 = Array[Texture2D]([ExtResource("32_j4hs4"), ExtResource("33_tvdm3"), ExtResource("34_khu27"), ExtResource("35_aqene")])
+leo_dim = ExtResource("7_bwta1")
+leo_better = ExtResource("37_qo4xq")
+leo_glowing = ExtResource("38_lgvd2")
+maya_dim = ExtResource("9_q5kgl")
+maya_better = ExtResource("40_yxc01")
+maya_glowing = ExtResource("41_y36uu")
+norma_dim = ExtResource("11_m030s")
+norma_better = ExtResource("43_g6m08")
+norma_glowing = ExtResource("44_h613u")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 1
@@ -119,7 +175,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Layout1" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -186,6 +241,7 @@ size_flags_vertical = 4
 texture = ExtResource("10_g0w47")
 
 [node name="Layout2" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -341,24 +397,46 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -756.0
-offset_top = -178.0
-offset_right = -80.0
-offset_bottom = 274.0
+offset_left = -843.0
+offset_top = -225.5
+offset_right = -29.0
+offset_bottom = 321.5
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("16_8ycj0")
+stretch_mode = 2
 
-[node name="InfoText" type="Label" parent="Layout3/BackstoryCharacter/LorePaper"]
+[node name="NextButton" type="TextureButton" parent="Layout3/BackstoryCharacter/LorePaper"]
 layout_mode = 0
-offset_left = 29.0
-offset_top = 25.0
-offset_right = 653.0
-offset_bottom = 424.0
-text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat, ligula nec sodales venenatis, nulla orci auctor lacus, sit amet rutrum eros augue a velit. Integer lacinia velit quis tempus laoreet. Nulla id commodo eros. Etiam et orci et nibh posuere sagittis et vel dolor. Maecenas mattis varius quam, at sollicitudin nulla auctor sed. Proin ac dignissim justo. Donec a ultrices felis. Donec rutrum lectus quis ultrices efficitur. In ut ligula a magna blandit condimentum non ut velit. Fusce varius diam nec semper varius. Donec pharetra odio lectus."
-label_settings = ExtResource("17_nwv6s")
-autowrap_mode = 3
-justification_flags = 162
+offset_left = 748.0
+offset_top = 231.5
+offset_right = 813.0
+offset_bottom = 296.5
+texture_normal = ExtResource("18_1nc3a")
+
+[node name="PrevButton" type="TextureButton" parent="Layout3/BackstoryCharacter/LorePaper"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 231.5
+offset_right = 69.0
+offset_bottom = 296.5
+texture_normal = ExtResource("36_v4bkd")
+
+[node name="LorePart" type="TextureRect" parent="Layout3/BackstoryCharacter/LorePaper"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -321.0
+offset_top = -212.0
+offset_right = 321.0
+offset_bottom = 212.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hbvem")
+stretch_mode = 2
 
 [node name="SuccessSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_jupim")

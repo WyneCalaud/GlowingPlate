@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://jjcnedpqlb6a"]
+
+[ext_resource type="Texture2D" uid="uid://cd6orqufvly4n" path="res://Assets/UI/KitchenUI/VeggiesCup/BrownRice/BrownLow.png" id="1_2slag"]
+[ext_resource type="Script" uid="uid://cv1hktfo4t8aw" path="res://Scenes/FoodDispenser/VeggieCupUI.gd" id="1_5uvtm"]
+
+[node name="VeggieScoop" type="Control"]
+top_level = true
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_5uvtm")
+
+[node name="CupProgress" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 137.0
+offset_bottom = 102.0
+texture = ExtResource("1_2slag")
+stretch_mode = 2

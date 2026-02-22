@@ -2,16 +2,16 @@ extends CanvasLayer
 
 # --- UI REFERENCES ---
 @onready var hud_control: Control = $HUDControl
-@onready var menu_button: TextureButton = $HUDControl/TopBarRight/HBoxContainer/MenuGroup/MenuButton
-@onready var settings_button: TextureButton = $HUDControl/TopBarRight/HBoxContainer/MenuGroup/MenuButton/SettingsButton
-@onready var home_button: TextureButton = $HUDControl/TopBarRight/HBoxContainer/MenuGroup/MenuButton/HomeButton
+@onready var menu_button: TextureButton = $HUDControl/TopBarRight/MenuGroup/MenuButton
+@onready var settings_button: TextureButton = $HUDControl/TopBarRight/MenuGroup/MenuButton/SettingsButton
+@onready var home_button: TextureButton = $HUDControl/TopBarRight/MenuGroup/MenuButton/HomeButton
 
 # Labels
 @onready var time_label: Label = $HUDControl/TopBarLeft/HBoxContainer/TimeGroup/DayCycle/Time
 @onready var day_label: Label = $HUDControl/TopBarLeft/HBoxContainer/TimeGroup/DayCycle/Day
 @onready var progress_label: Label = $HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Face/Label
-@onready var cash_label: Label = $HUDControl/TopBarRight/HBoxContainer/MoneyGroup/Money/Label
-@onready var keys_label: Label = $HUDControl/TopBarRight/HBoxContainer/KeyGroup/Key/Label
+@onready var cash_label: Label = $HUDControl/TopBarRight2/HBoxContainer/Money/Label
+@onready var keys_label: Label = $HUDControl/TopBarRight2/HBoxContainer/Key/Label
 
 # Sound Control References
 @onready var sound_control: Control = $HUDControl/SoundControl
@@ -23,16 +23,17 @@ extends CanvasLayer
 
 # Bottom Right Elements
 @onready var bottom_right_container: Control = $HUDControl/BottomRight
-@onready var finish_button: TextureButton = $HUDControl/BottomRight/LobbyButton
+@onready var finish_button: TextureButton = $HUDControl/BottomRight/FinishButton
 
 # --- ANIMATION SETTINGS ---
 var is_menu_open: bool = false
 var menu_tween: Tween
-const SLIDE_DISTANCE: float = 60.0
 const ANIM_DURATION: float = 0.3
+const BUTTON_SPACING: float = 70.0 # Distance between buttons vertically
 
 # --- SCENE PATHS ---
 const MAIN_MENU_PATH = "res://Scenes/Main Menu/Main_menu.tscn"
+const LOBBY_CANTEEN_PATH = "res://Scenes/Lobby Canteen/lobbycanteen.tscn"
 
 # --- INITIALIZATION ---
 func _ready():
@@ -40,14 +41,36 @@ func _ready():
 	self.layer = 1
 	hud_control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
+	# IMPORTANT: Dropdown Configuration
+	# 1. top_level = false (They must stay attached to the MenuButton)
+	# 2. z_index = -1 (They must render BEHIND the MenuButton)
+	# 3. position = Vector2.ZERO (Start exactly underneath the MenuButton)
+	
+	if menu_button:
+		menu_button.z_index = 0 # Parent on top
+	
+	if settings_button:
+		settings_button.top_level = false
+		settings_button.z_index = -1
+		settings_button.position = Vector2.ZERO
+		settings_button.visible = false
+		settings_button.modulate.a = 0.0
+		settings_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
+	if home_button:
+		home_button.top_level = false
+		home_button.z_index = -1
+		home_button.position = Vector2.ZERO
+		home_button.visible = false
+		home_button.modulate.a = 0.0
+		home_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
 	_setup_initial_visibility()
 	_connect_signals()
 	update_all_labels()
 
 func _setup_initial_visibility():
 	# 1. FORCE RESET DEFAULT VISIBILITY
-	# This ensures the Lobby HUD always has Keys/Time/Money visible,
-	# even if they were hidden in the editor for the GlowDesk.
 	var top_left = hud_control.get_node_or_null("TopBarLeft")
 	if top_left: top_left.visible = true
 	
@@ -59,22 +82,12 @@ func _setup_initial_visibility():
 
 	var money_group = hud_control.find_child("MoneyGroup", true, false)
 	if money_group: money_group.visible = true
-	
-	# 2. Setup Menu Button Animations
-	settings_button.modulate.a = 0
-	home_button.modulate.a = 0
-	settings_button.position.x += SLIDE_DISTANCE
-	home_button.position.x += SLIDE_DISTANCE
-	settings_button.visible = false
-	home_button.visible = false
-	settings_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	home_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	
-	# 3. Sound Control
+
+	# 2. Sound Control
 	sound_control.visible = false
 	sound_control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
-	# 4. Lobby Button
+	# 3. Lobby Button
 	show_finish_button(false)
 
 func _connect_signals():
@@ -85,6 +98,8 @@ func _connect_signals():
 	safe_connect.call(menu_button, "pressed", _on_menu_button_pressed)
 	safe_connect.call(settings_button, "pressed", _on_settings_pressed)
 	safe_connect.call(home_button, "pressed", _on_home_pressed)
+	
+	if finish_button: safe_connect.call(finish_button, "pressed", _on_finish_button_pressed)
 	
 	if sound_panel_close_button: safe_connect.call(sound_panel_close_button, "pressed", _on_close_button_pressed)
 	if music_mute_button:
@@ -117,25 +132,31 @@ func _on_menu_button_pressed():
 	menu_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	
 	if is_menu_open:
+		# SHOW (Dropdown)
 		settings_button.visible = true
 		home_button.visible = true
 		settings_button.mouse_filter = Control.MOUSE_FILTER_STOP
 		home_button.mouse_filter = Control.MOUSE_FILTER_STOP
 		
-		menu_tween.tween_property(settings_button, "position:x", settings_button.position.x - SLIDE_DISTANCE, ANIM_DURATION)
+		# Animate Y position downwards (LOCAL coordinates relative to MenuButton)
+		menu_tween.tween_property(settings_button, "position:y", BUTTON_SPACING, ANIM_DURATION)
 		menu_tween.tween_property(settings_button, "modulate:a", 1.0, ANIM_DURATION)
-		menu_tween.tween_property(home_button, "position:x", home_button.position.x - SLIDE_DISTANCE, ANIM_DURATION).set_delay(0.05)
+		
+		menu_tween.tween_property(home_button, "position:y", BUTTON_SPACING * 2, ANIM_DURATION).set_delay(0.05)
 		menu_tween.tween_property(home_button, "modulate:a", 1.0, ANIM_DURATION).set_delay(0.05)
 	else:
+		# HIDE (Slide Up)
 		settings_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		home_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		
-		menu_tween.tween_property(settings_button, "position:x", settings_button.position.x + SLIDE_DISTANCE, ANIM_DURATION)
+		# Animate Y position back to 0 (Behind MenuButton)
+		menu_tween.tween_property(settings_button, "position:y", 0.0, ANIM_DURATION)
 		menu_tween.tween_property(settings_button, "modulate:a", 0.0, ANIM_DURATION)
-		menu_tween.tween_property(home_button, "position:x", home_button.position.x + SLIDE_DISTANCE, ANIM_DURATION)
+		
+		menu_tween.tween_property(home_button, "position:y", 0.0, ANIM_DURATION)
 		menu_tween.tween_property(home_button, "modulate:a", 0.0, ANIM_DURATION)
-		menu_tween.set_parallel(false)
-		menu_tween.tween_callback(func(): 
+		
+		menu_tween.chain().tween_callback(func(): 
 			settings_button.visible = false
 			home_button.visible = false
 		)
@@ -143,7 +164,7 @@ func _on_menu_button_pressed():
 func _on_settings_pressed():
 	sound_control.visible = true
 	sound_control.mouse_filter = Control.MOUSE_FILTER_STOP
-	_on_menu_button_pressed()
+	_on_menu_button_pressed() # Close menu
 
 func _on_close_button_pressed() -> void:
 	sound_control.visible = false
@@ -167,7 +188,15 @@ func _on_sfx_volume_changed(value: float):
 
 func _on_home_pressed():
 	get_tree().paused = false 
-	get_tree().change_scene_to_file(MAIN_MENU_PATH)
+	get_tree().call_deferred("change_scene_to_file", MAIN_MENU_PATH)
+
+func _on_finish_button_pressed():
+	# Transition to Lobby Canteen when the finish button is pressed
+	var GD = get_node_or_null("/root/GameData")
+	if GD and GD.has_method("transition_to_canteen_serve"):
+		GD.call_deferred("transition_to_canteen_serve")
+	else:
+		get_tree().call_deferred("change_scene_to_file", LOBBY_CANTEEN_PATH)
 
 # --- HUD UPDATES ---
 func update_cash(amount: int): if cash_label: cash_label.text = str(amount)
@@ -180,4 +209,8 @@ func show_finish_button(show: bool):
 		finish_button.visible = show
 		var filter = Control.MOUSE_FILTER_STOP if show else Control.MOUSE_FILTER_IGNORE
 		finish_button.mouse_filter = filter
-		bottom_right_container.mouse_filter = filter
+		
+		if bottom_right_container:
+			# FIX: Ensure parent container visibility is also updated!
+			bottom_right_container.visible = show 
+			bottom_right_container.mouse_filter = filter

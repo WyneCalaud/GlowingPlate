@@ -1,13 +1,28 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=4 format=3 uid="uid://biwqdd17xlrmg"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://biwqdd17xlrmg"]
 
 [ext_resource type="Texture2D" uid="uid://buv78pvmno0i" path="res://Assets/Foods/Tofu.png" id="1_xnvlc"]
-[ext_resource type="Texture2D" uid="uid://ca3ibpb2or01q" path="res://Assets/IndividualFoods/Tofu233.png" id="2_upau0"]
+[ext_resource type="Texture2D" uid="uid://bxia2v5cx6jhb" path="res://Assets/UI/KitchenUI/TEST/TokwaHalf.png" id="3_27f0w"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_ffc7r"]
+[ext_resource type="Texture2D" uid="uid://bfm3g6gg6mc3r" path="res://Assets/GrowSection/TokwaHalf2.png" id="3_lmr13"]
+[ext_resource type="Texture2D" uid="uid://dfc56y2mkr470" path="res://Assets/UI/KitchenUI/TEST/TokwaWhole.png" id="4_34in7"]
+[ext_resource type="Texture2D" uid="uid://r070qkga1wd0" path="res://Assets/GrowSection/TokwaHalf3.png" id="4_kscyp"]
+[ext_resource type="Texture2D" uid="uid://ds4fsndmyn0rg" path="res://Assets/UI/KitchenUI/PortionSelector/Icons/TokwaHalfIcon.png" id="6_hlhl7"]
+[ext_resource type="Texture2D" uid="uid://s8s4fstnqn0x" path="res://Assets/GlowSection/TofuPlated2.png" id="6_ox73p"]
+[ext_resource type="Texture2D" uid="uid://vhsqvh2nqp36" path="res://Assets/GlowSection/TofuPlated3.png" id="7_6r2a0"]
+[ext_resource type="Texture2D" uid="uid://bm650f3ka3del" path="res://Assets/UI/KitchenUI/PortionSelector/Icons/TokwaWholeIcon.png" id="7_lmr13"]
 
 [resource]
 script = ExtResource("3_ffc7r")
 item_name = "Tofu"
 internal_key = "TOFU"
 base_texture = ExtResource("1_xnvlc")
-default_plated_texture = ExtResource("2_upau0")
+is_portionable = true
+plated_texture_half = ExtResource("3_27f0w")
+plated_texture_half_2 = ExtResource("3_lmr13")
+plated_texture_half_3 = ExtResource("4_kscyp")
+plated_texture_whole = ExtResource("4_34in7")
+plated_texture_whole_2 = ExtResource("6_ox73p")
+plated_texture_whole_3 = ExtResource("7_6r2a0")
+selector_icon_half = ExtResource("6_hlhl7")
+selector_icon_whole = ExtResource("7_lmr13")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

@@ -1,52 +1,88 @@
-[gd_scene load_steps=5 format=3 uid="uid://du6kd2g4u6epa"]
+[gd_scene load_steps=7 format=3 uid="uid://du6kd2g4u6epa"]
 
 [ext_resource type="Script" uid="uid://dlnjg76pcymn" path="res://Scripts/Main_menu.gd" id="1_b8yyp"]
-[ext_resource type="Texture2D" uid="uid://dnacquwotmcdq" path="res://Assets/UI/ShopBackgroundAI.png" id="2_b8yyp"]
-[ext_resource type="Texture2D" uid="uid://cyd5sucvpckhf" path="res://Buttons/Start button.png" id="3_0lb75"]
+[ext_resource type="Texture2D" uid="uid://dhwsu46o6vnqf" path="res://Assets/UI/GlowingMeBackground.png" id="2_0lb75"]
+[ext_resource type="Texture2D" uid="uid://7yli73eiygfa" path="res://Assets/UI/Play Button.png" id="4_4d0r3"]
 [ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/Transition/fade_transition.tscn" id="4_l1v0r"]
+[ext_resource type="Texture2D" uid="uid://c7o7arewtutfj" path="res://Assets/UI/Interface/SettingsButton.png" id="4_qn4bx"]
+[ext_resource type="PackedScene" uid="uid://ccv4r1x8840d2" path="res://Scenes/GameHUD/SoundControl.tscn" id="6_0lb75"]
 
-[node name="Main Menu" type="Node2D"]
+[node name="Main Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_b8yyp")
 
 [node name="Background" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ColorRect" type="TextureRect" parent="Background"]
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
-texture = ExtResource("2_b8yyp")
+texture = ExtResource("2_0lb75")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="UI" type="Node2D" parent="."]
+[node name="TopBarRight" type="MarginContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -105.0
+offset_bottom = 360.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 23
+theme_override_constants/margin_right = 23
 
-[node name="MenuButtons" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 0
+[node name="SettingsButton" type="TextureButton" parent="Background/TopBarRight"]
+layout_mode = 2
+texture_normal = ExtResource("4_qn4bx")
 
-[node name="Control" type="Control" parent="UI/MenuButtons"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="UI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Start" type="TextureButton" parent="UI/MenuButtons/Control"]
-layout_mode = 0
-offset_left = 428.0
-offset_top = 512.0
-offset_right = 841.0
-offset_bottom = 744.0
-texture_normal = ExtResource("3_0lb75")
-ignore_texture_size = true
-stretch_mode = 0
+[node name="Start" type="TextureButton" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -126.0
+offset_top = 183.5
+offset_right = 126.0
+offset_bottom = 328.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("4_4d0r3")
 
 [node name="fade_transition" parent="." instance=ExtResource("4_l1v0r")]
+layout_mode = 0
 offset_top = 0.0
 offset_right = 1281.0
 offset_bottom = 720.0
 
 [node name="Fade_timer" type="Timer" parent="fade_transition"]
 
-[connection signal="pressed" from="UI/MenuButtons/Control/Start" to="." method="_on_start_pressed"]
+[node name="SoundControl" parent="." instance=ExtResource("6_0lb75")]
+layout_mode = 1
+
+[connection signal="pressed" from="Background/TopBarRight/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="UI/Start" to="." method="_on_start_pressed"]
 [connection signal="timeout" from="fade_transition/Fade_timer" to="." method="_on_fade_timer_timeout"]

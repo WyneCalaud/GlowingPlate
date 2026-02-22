@@ -214,14 +214,24 @@ func _input(event: InputEvent) -> void:
 			reset_liquid_selection_visuals()
 			spawn_and_place_glass()
 
+func is_mat_available(mat: Node2D) -> bool:
+	# Checks if it has no children AND isn't currently reserved by another mid-air item
+	return mat != null and mat.get_child_count() == 0 and not mat.get_meta("reserved", false)
+
 func spawn_and_place_glass():
 	if not EMPTY_GLASS_SCENE: return
 	var target_mat: Node2D = null
-	if mat1 and mat1.get_child_count() == 0: target_mat = mat1
-	elif mat2 and mat2.get_child_count() == 0: target_mat = mat2
+	
+	# Check for an empty and unreserved mat
+	if is_mat_available(mat1): target_mat = mat1
+	elif is_mat_available(mat2): target_mat = mat2
 	else: return
 		
 	is_spawning = true 
+	
+	# INSTANTLY reserve the mat so rapid clicks (or milk clicks) don't steal it
+	target_mat.set_meta("reserved", true)
+	
 	var empty_glass: Node2D = EMPTY_GLASS_SCENE.instantiate()
 	empty_glass.name = "EmptyGlass"
 	
@@ -249,4 +259,7 @@ func spawn_and_place_glass():
 	target_mat.add_child(empty_glass)
 	empty_glass.global_position = current_global_pos
 	empty_glass.global_scale = current_global_scale
+	
+	# Clear the reservation now that the item is physically inside the mat
+	target_mat.set_meta("reserved", false)
 	is_spawning = false

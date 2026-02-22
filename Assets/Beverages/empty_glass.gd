@@ -109,44 +109,8 @@ func spawn_hold_button(ui_scene: PackedScene):
 func _on_fill_finished(_amount_str: String, amount_int: int):
 	is_ui_active = false
 
-	# ✅ GET GAMEDATA FIRST (while still in tree)
-	var gd := get_tree().get_first_node_in_group("GameData")
-	if not gd:
-		push_error("GameData not found!")
-		return
-
 	# 1. Replace the glass visually (this may free self)
 	spawner_controller.replace_glass_with_filled(self, amount_int, active_liquid_type)
 
-	# 2. Resolve beverage type
-	var liquid := active_liquid_type.to_lower()
-	var beverage_key := ""
-
-	if liquid.begins_with("water") or liquid.begins_with("cold") or liquid.begins_with("hot") or liquid.begins_with("lukewarm"):
-		beverage_key = "WATER"
-	elif liquid.begins_with("regularmilk"):
-		beverage_key = "REGULAR_MILK"
-	elif liquid.begins_with("almondmilk"):
-		beverage_key = "ALMOND_MILK"
-
-	if beverage_key == "":
-		push_warning("Unknown beverage type: " + active_liquid_type)
-		return
-
-	# 3. Fetch resource
-	# FIX: Access FOOD_DB from OrderSystem instead of GameData
-	# GameData.FOOD_DB no longer exists.
-	var base_res: CustomItemData = OrderSystem.FOOD_DB.get(beverage_key)
-	
-	if not base_res:
-		push_warning("Beverage not found in FOOD_DB: " + beverage_key)
-		return
-
-	# CRITICAL FIX: duplicate the resource
-	var beverage_res: CustomItemData = base_res.duplicate(true)
-
-	# 4. Store amount (THIS IS CORRECT)
-	beverage_res.set_meta("DrinkAmount", _amount_str)
-
-	# 5. Store in GameData (via wrapper)
-	gd.add_prepared_beverage(beverage_res)
+	# NOTE: The premature GameData saving logic has been removed from here.
+	# The filled_glass.gd script will handle properly storing the beverage once it is dropped into the Serve Zone.
