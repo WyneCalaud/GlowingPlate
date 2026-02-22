@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://bgei1qmoc4kpv" path="res://Assets/UI/LobbyUI/ArrowLeftToRight.png" id="15_fw8iq"]
 [ext_resource type="Script" uid="uid://i7nkla44iwvl" path="res://Scenes/Lobby Canteen/BottomButtons.gd" id="15_krqk6"]
 [ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="15_sgopm"]
-[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
+[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/Fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
 [ext_resource type="Texture2D" uid="uid://buu5n0np3bere" path="res://Assets/UI/LobbyUI/GlowBoard.png" id="16_fw8iq"]
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/GlowBoard/GlowBoard.tscn" id="16_vrvqj"]
 [ext_resource type="Texture2D" uid="uid://dxhvnf11tiqij" path="res://Assets/UI/LobbyUI/GlowShop.png" id="17_krqk6"]
@@ -345,7 +345,7 @@ color = Color(0, 0, 0, 1)
 [node name="AlmanacUI" parent="OverlayCanvas" instance=ExtResource("15_sgopm")]
 visible = false
 
-[node name="BulletinBoardUI" parent="OverlayCanvas" instance=ExtResource("16_vrvqj")]
+[node name="GlowBoard" parent="OverlayCanvas" instance=ExtResource("16_vrvqj")]
 visible = false
 
 [node name="NutriShop" parent="OverlayCanvas" instance=ExtResource("25_7yiff")]
@@ -413,6 +413,7 @@ script = ExtResource("20_k43ou")
 customer_scene = ExtResource("20_5fhlb")
 
 [node name="FinalPlateDisplay" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_left = 496.0
 offset_top = 504.0
@@ -465,13 +466,13 @@ position = Vector2(17, 71)
 position = Vector2(78, 71)
 
 [connection signal="pressed" from="BottomButtons/HBoxContainer/Almanac" to="." method="_on_almanac_pressed"]
-[connection signal="pressed" from="BottomButtons/HBoxContainer/GlowBoard" to="." method="_on_bulletin_board_pressed"]
-[connection signal="pressed" from="BottomButtons/HBoxContainer/GlowShop" to="." method="_on_nutri_shop_button_pressed"]
+[connection signal="pressed" from="BottomButtons/HBoxContainer/GlowBoard" to="." method="_on_glow_board_pressed"]
+[connection signal="pressed" from="BottomButtons/HBoxContainer/GlowShop" to="." method="_on_glow_shop_pressed"]
 [connection signal="pressed" from="BottomButtons/HBoxContainer/GlowDesk" to="." method="_on_glow_desk_pressed"]
 [connection signal="pressed" from="BottomButtons/StartDayButton" to="." method="_on_day_button_pressed"]
 [connection signal="timeout" from="Fade_transition/Fade_timer" to="." method="_on_fade_timer_timeout"]
 [connection signal="closed" from="OverlayCanvas/AlmanacUI" to="." method="_on_almanac_ui_closed"]
-[connection signal="closed" from="OverlayCanvas/BulletinBoardUI" to="." method="_on_bulletin_board_ui_closed"]
+[connection signal="closed" from="OverlayCanvas/GlowBoard" to="." method="_on_bulletin_board_ui_closed"]
 [connection signal="closed" from="OverlayCanvas/NutriShop" to="." method="_on_nutri_shop_closed"]
 [connection signal="closed" from="OverlayCanvas/GlowDesk" to="." method="_on_glow_desk_closed"]
 [connection signal="pressed" from="DayScene/NextCustomer" to="DayScene" method="_on_next_customer_pressed"]

@@ -3,7 +3,7 @@ extends Control
 # --- References ---
 @onready var darken_overlay = $OverlayCanvas/DarkenOverlay
 @onready var almanac_ui = $OverlayCanvas/AlmanacUI
-@onready var bulletin_board_ui = $OverlayCanvas/BulletinBoardUI
+@onready var glowboard = $OverlayCanvas/GlowBoard
 @onready var nutrishop_ui = $OverlayCanvas/NutriShop
 @onready var glow_desk_ui = $OverlayCanvas/GlowDesk
 
@@ -45,9 +45,9 @@ func _ready() -> void:
 		if not almanac_ui.closed.is_connected(_on_almanac_ui_closed):
 			almanac_ui.closed.connect(_on_almanac_ui_closed)
 
-	if bulletin_board_ui.has_signal("closed"):
-		if not bulletin_board_ui.closed.is_connected(_on_bulletin_board_ui_closed):
-			bulletin_board_ui.closed.connect(_on_bulletin_board_ui_closed)
+	if glowboard.has_signal("closed"):
+		if not glowboard.closed.is_connected(_on_glowboard_closed):
+			glowboard.closed.connect(_on_glowboard_closed)
 			
 	if nutrishop_ui.has_signal("closed"):
 		if not nutrishop_ui.closed.is_connected(_on_nutri_shop_closed):
@@ -337,6 +337,27 @@ func close_popup() -> void:
 	)
 
 func _on_almanac_ui_closed() -> void: close_popup()
-func _on_bulletin_board_ui_closed() -> void: close_popup()
+func _on_glowboard_closed() -> void: close_popup()
 func _on_nutri_shop_closed() -> void: close_popup()
 func _on_glow_desk_closed() -> void: close_popup()
+
+
+func _on_almanac_pressed() -> void:
+	if current_open_popup == almanac_ui:
+		close_popup()
+	elif current_open_popup == null:
+		open_popup(almanac_ui)
+
+
+func _on_glow_board_pressed() -> void:
+	if current_open_popup == glowboard:
+		close_popup()
+	elif current_open_popup == null:
+		open_popup(glowboard)
+
+
+func _on_glow_shop_pressed() -> void:
+	if current_open_popup == nutrishop_ui:
+		close_popup()
+	elif current_open_popup == null:
+		open_popup(nutrishop_ui)
