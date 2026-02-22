@@ -5,19 +5,19 @@
 [ext_resource type="Texture2D" uid="uid://dav5ywlogm7fc" path="res://Assets/MiniGame/Exercises/Refined/Cycling.png" id="3_xdroa"]
 [ext_resource type="Texture2D" uid="uid://dpg4mmf714c8i" path="res://Assets/MiniGame/Exercises/Refined/Jumping Jacks.png" id="4_kqnsh"]
 [ext_resource type="Texture2D" uid="uid://bltsnqcbyopet" path="res://Assets/MiniGame/Exercises/Refined/Lunge.png" id="5_x1b3m"]
-[ext_resource type="Texture2D" uid="uid://00mmb580pkmc" path="res://Assets/MiniGame/Exercises/Refined/Planking.png" id="6_m345l"]
 [ext_resource type="Texture2D" uid="uid://cc557cnas122s" path="res://Assets/MiniGame/Exercises/Refined/Jump Rope.png" id="7_bt5ei"]
 [ext_resource type="Texture2D" uid="uid://ckxg24pwbwuao" path="res://Assets/MiniGame/Exercises/Refined/Sit Ups.png" id="8_xtgos"]
 [ext_resource type="Texture2D" uid="uid://cdjsc17b0o87n" path="res://Assets/MiniGame/Exercises/Refined/Squats.png" id="9_b4at2"]
+[ext_resource type="Texture2D" uid="uid://cb64n24pfkm8d" path="res://Assets/MiniGame/Exercises/Refined/ToeTouch.png" id="10_gjhrx"]
 [ext_resource type="Texture2D" uid="uid://d2eo67u6vp2pc" path="res://Assets/MiniGame/Exercises/Refined/Running.png" id="10_pum5n"]
 [ext_resource type="Texture2D" uid="uid://8sgk6pnxlqrb" path="res://Assets/MiniGame/UI/Mini Game Background.png" id="11_3jjgu"]
 [ext_resource type="Texture2D" uid="uid://ip4ht58xwr3k" path="res://Assets/MiniGame/Exercises/Pups/CyclingPup.png" id="11_gjhrx"]
 [ext_resource type="Texture2D" uid="uid://c3ylumcyk4ged" path="res://Assets/MiniGame/Exercises/Pups/JumpingJackPup.png" id="12_8jjub"]
 [ext_resource type="Texture2D" uid="uid://nl3pl5h8tkdt" path="res://Assets/MiniGame/Exercises/Pups/JumpRopePup.png" id="13_e4oyj"]
 [ext_resource type="Texture2D" uid="uid://bu2x84cq6rwqn" path="res://Assets/MiniGame/Exercises/Pups/LungePup.png" id="14_i53an"]
-[ext_resource type="Texture2D" uid="uid://c8mhc6n7lun51" path="res://Assets/MiniGame/Exercises/Pups/PlankPup.png" id="15_gir37"]
 [ext_resource type="Texture2D" uid="uid://dy4el8gq3wdd7" path="res://Assets/MiniGame/Exercises/Pups/RunningPup.png" id="16_u7wj2"]
 [ext_resource type="Texture2D" uid="uid://bh3676iudpsr7" path="res://Assets/MiniGame/Exercises/Pups/SitPups.png" id="17_6wdvu"]
+[ext_resource type="Texture2D" uid="uid://m3yeqdy4wwrr" path="res://Assets/MiniGame/Exercises/Pups/Toepups.png" id="18_8jjub"]
 [ext_resource type="Texture2D" uid="uid://d2xn0cbku1sbl" path="res://Assets/MiniGame/Exercises/Pups/SquatPup.png" id="18_eatd0"]
 [ext_resource type="Texture2D" uid="uid://bb5p40xaifn3j" path="res://Assets/MiniGame/UI/stas.png" id="20_kqnsh"]
 [ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="21_x1b3m"]
@@ -45,36 +45,36 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pssnd")
 card_back = ExtResource("2_xdroa")
-card_faces = Array[Texture2D]([ExtResource("3_xdroa"), ExtResource("7_bt5ei"), ExtResource("4_kqnsh"), ExtResource("5_x1b3m"), ExtResource("6_m345l"), ExtResource("10_pum5n"), ExtResource("8_xtgos"), ExtResource("9_b4at2")])
+card_faces = Array[Texture2D]([ExtResource("3_xdroa"), ExtResource("7_bt5ei"), ExtResource("4_kqnsh"), ExtResource("5_x1b3m"), ExtResource("10_pum5n"), ExtResource("8_xtgos"), ExtResource("9_b4at2"), ExtResource("10_gjhrx")])
 exercise_info = {
 ExtResource("3_xdroa"): "Cycling",
 ExtResource("7_bt5ei"): "Jump Rope",
 ExtResource("4_kqnsh"): "Jumping Jacks",
 ExtResource("5_x1b3m"): "Lunge",
-ExtResource("6_m345l"): "Planking",
 ExtResource("10_pum5n"): "Running",
 ExtResource("8_xtgos"): "Situps",
-ExtResource("9_b4at2"): "Squatts"
+ExtResource("9_b4at2"): "Squatts",
+ExtResource("10_gjhrx"): "Toe-Touch"
 }
 exercise_description = {
 ExtResource("3_xdroa"): "Cycling is wack",
 ExtResource("7_bt5ei"): "Hang yourself using a jump rope",
 ExtResource("4_kqnsh"): "jumpingjumpingjumpingjumping jumpingjumpingjumping jumpingjumping",
 ExtResource("5_x1b3m"): "Lunges is great for nothing",
-ExtResource("6_m345l"): "Planking does absolutely nothing for you",
 ExtResource("10_pum5n"): "Running sucks and you suck fuck u",
 ExtResource("8_xtgos"): "Sit ups yeah they do be upping",
-ExtResource("9_b4at2"): "Squats more like fucks gottem"
+ExtResource("9_b4at2"): "Squats more like fucks gottem",
+ExtResource("10_gjhrx"): "Toe-Touch does absolutely nothing for you"
 }
 match_popup_images = {
 ExtResource("3_xdroa"): ExtResource("11_gjhrx"),
 ExtResource("7_bt5ei"): ExtResource("13_e4oyj"),
 ExtResource("4_kqnsh"): ExtResource("12_8jjub"),
 ExtResource("5_x1b3m"): ExtResource("14_i53an"),
-ExtResource("6_m345l"): ExtResource("15_gir37"),
 ExtResource("10_pum5n"): ExtResource("16_u7wj2"),
 ExtResource("8_xtgos"): ExtResource("17_6wdvu"),
-ExtResource("9_b4at2"): ExtResource("18_eatd0")
+ExtResource("9_b4at2"): ExtResource("18_eatd0"),
+ExtResource("10_gjhrx"): ExtResource("18_8jjub")
 }
 
 [node name="TextureRect" type="TextureRect" parent="."]
