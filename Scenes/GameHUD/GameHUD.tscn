@@ -1,22 +1,24 @@
-[gd_scene load_steps=17 format=3 uid="uid://dy6gawubssej3"]
+[gd_scene load_steps=20 format=3 uid="uid://dy6gawubssej3"]
 
 [ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="1_8k2rj"]
-[ext_resource type="Texture2D" uid="uid://3drenhckqamg" path="res://Assets/StatsBar/DayMeter.png" id="1_1044j"]
 [ext_resource type="Script" uid="uid://pyv06wdu0qoo" path="res://Scenes/GameHUD/GameHUD.gd" id="1_ag13m"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="2_ko41u"]
-[ext_resource type="Texture2D" uid="uid://dqsa3bwb8ux31" path="res://Assets/StatsBar/HappyMeter.png" id="2_pts2n"]
+[ext_resource type="Texture2D" uid="uid://b1cqjv8liqajn" path="res://Assets/UI/Interface/DayCycle.png" id="2_g2pgc"]
 [ext_resource type="Script" uid="uid://uaj3dfuenee4" path="res://Scenes/GameHUD/TimeManager.gd" id="3_lrnd8"]
 [ext_resource type="Texture2D" uid="uid://qww3uhouf8av" path="res://Assets/UI/Interface/SecondCycle.png" id="4_6k04v"]
 [ext_resource type="Texture2D" uid="uid://ceeg78xwticdj" path="res://Assets/UI/Interface/ThirdCycle.png" id="5_pur5n"]
-[ext_resource type="Texture2D" uid="uid://qptyjt1hqs6u" path="res://Assets/UI/Interface/Money.png" id="5_tm5hb"]
-[ext_resource type="Texture2D" uid="uid://dpk3je1j87nfn" path="res://Assets/StatsBar/KeyMeter.png" id="6_ag13m"]
 [ext_resource type="Texture2D" uid="uid://dy0fhsrovhlgv" path="res://Assets/UI/Interface/FourthCycle.png" id="6_i6t2p"]
-[ext_resource type="Texture2D" uid="uid://cpwx2avlbi8ct" path="res://Assets/UI/Interface/Lobby Button.png" id="8_tm5hb"]
-[ext_resource type="Texture2D" uid="uid://bkg0rricjjmar" path="res://Assets/UI/Interface/6-9.png" id="9_2nljy"]
+[ext_resource type="Texture2D" uid="uid://dlx7ijsy5vyib" path="res://Assets/UI/Interface/HappyMeter.png" id="9_df0c7"]
 [ext_resource type="Texture2D" uid="uid://c7o7arewtutfj" path="res://Assets/UI/Interface/SettingsButton.png" id="9_scfow"]
 [ext_resource type="Texture2D" uid="uid://r3v4o7y1w2up" path="res://Assets/UI/Interface/10-12.png" id="10_38rtn"]
 [ext_resource type="Texture2D" uid="uid://dquyayxor6rta" path="res://Assets/UI/Interface/HomeButton.png" id="10_lrnd8"]
+[ext_resource type="Texture2D" uid="uid://bw5itjsktoqfc" path="res://Assets/UI/Interface/User Profile.png" id="11_g2pgc"]
+[ext_resource type="Texture2D" uid="uid://dv4f86gkvydlk" path="res://Assets/UI/Interface/Avatar.png" id="12_df0c7"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://Fonts/Comic_Neue/ComicNeue-Bold.ttf" id="14_8k40n"]
+[ext_resource type="LabelSettings" uid="uid://bxmx2yfdx0m1m" path="res://Theme/GameHUDTheme.tres" id="15_g2pgc"]
 [ext_resource type="PackedScene" uid="uid://ccv4r1x8840d2" path="res://Scenes/GameHUD/SoundControl.tscn" id="16_pur5n"]
+[ext_resource type="Texture2D" uid="uid://cp07tbyxft2d2" path="res://Assets/UI/Interface/FinishButton.png" id="18_g2pgc"]
+[ext_resource type="Texture2D" uid="uid://c0ao7xl25f74g" path="res://Assets/UI/Interface/MoneyBar.png" id="29_64h4a"]
+[ext_resource type="Texture2D" uid="uid://cgrtxjbkvl3iv" path="res://Assets/UI/Interface/KeyBar.png" id="30_8bbf6"]
 
 [node name="GameHUD" type="CanvasLayer"]
 script = ExtResource("1_ag13m")
@@ -32,10 +34,10 @@ mouse_filter = 2
 
 [node name="TopBarLeft" type="MarginContainer" parent="HUDControl"]
 layout_mode = 1
-offset_right = 953.0
-offset_bottom = 78.0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
+offset_right = 618.0
+offset_bottom = 120.0
+theme_override_constants/margin_left = 44
+theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarLeft"]
@@ -47,33 +49,35 @@ layout_mode = 2
 
 [node name="DayCycle" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/TimeGroup"]
 layout_mode = 2
-texture = ExtResource("1_1044j")
-expand_mode = 3
+texture = ExtResource("2_g2pgc")
+stretch_mode = 2
 script = ExtResource("3_lrnd8")
-first_cycle = ExtResource("1_1044j")
+first_cycle = ExtResource("2_g2pgc")
 second_cycle = ExtResource("4_6k04v")
 third_cycle = ExtResource("5_pur5n")
 fourth_cycle = ExtResource("6_i6t2p")
 
 [node name="Time" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/TimeGroup/DayCycle"]
 layout_mode = 0
-offset_left = 48.0
-offset_top = 21.0
-offset_right = 127.0
-offset_bottom = 50.0
-theme_override_fonts/font = ExtResource("2_ko41u")
+offset_left = 71.0
+offset_top = 34.0
+offset_right = 151.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("14_8k40n")
 text = "12:00 AM"
+label_settings = ExtResource("15_g2pgc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Day" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/TimeGroup/DayCycle"]
 layout_mode = 0
-offset_left = 45.0
-offset_top = 3.0
-offset_right = 124.0
-offset_bottom = 32.0
-theme_override_fonts/font = ExtResource("2_ko41u")
+offset_left = 70.0
+offset_top = 9.0
+offset_right = 149.0
+offset_bottom = 38.0
+theme_override_fonts/font = ExtResource("14_8k40n")
 text = "Day: 1"
+label_settings = ExtResource("15_g2pgc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -82,111 +86,169 @@ layout_mode = 2
 
 [node name="Face" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup"]
 layout_mode = 2
-texture = ExtResource("2_pts2n")
-expand_mode = 3
+texture = ExtResource("9_df0c7")
+stretch_mode = 2
 
 [node name="Label" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Face"]
 layout_mode = 0
-offset_left = 44.0
-offset_top = 12.0
-offset_right = 115.0
-offset_bottom = 41.0
-theme_override_fonts/font = ExtResource("2_ko41u")
+offset_left = 77.0
+offset_top = 8.0
+offset_right = 122.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("14_8k40n")
 text = "100%"
+label_settings = ExtResource("15_g2pgc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AgeGroup" type="Control" parent="HUDControl/TopBarLeft/HBoxContainer"]
 layout_mode = 2
 
-[node name="6-9" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("9_2nljy")
+[node name="Face" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
+layout_mode = 2
+texture = ExtResource("4_eb7cu")
+stretch_mode = 2
 
-[node name="10-12" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
+[node name="TopBarLeft2" type="MarginContainer" parent="HUDControl"]
+visible = false
+layout_mode = 1
+offset_right = 211.0
+offset_bottom = 125.0
+theme_override_constants/margin_left = 44
+theme_override_constants/margin_top = 46
+theme_override_constants/margin_right = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarLeft2"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="TimeGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft2/HBoxContainer"]
+layout_mode = 2
+
+[node name="UserProfile" type="TextureRect" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup"]
+layout_mode = 2
+texture = ExtResource("11_g2pgc")
+stretch_mode = 2
+
+[node name="Name" type="Label" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup/UserProfile"]
 layout_mode = 0
-offset_left = -6.0
-offset_right = 159.0
-offset_bottom = 71.0
-texture = ExtResource("10_38rtn")
+offset_left = 72.0
+offset_top = 29.0
+offset_right = 151.0
+offset_bottom = 62.0
+theme_override_fonts/font = ExtResource("14_8k40n")
+text = "Yana"
+label_settings = ExtResource("15_g2pgc")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="DayOfTheWeek" type="Label" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup/UserProfile"]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 8.0
+offset_right = 148.0
+offset_bottom = 35.0
+text = "Monday"
+label_settings = ExtResource("15_g2pgc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup/UserProfile"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 18.0
+offset_right = 54.0
+offset_bottom = 54.0
+texture = ExtResource("12_df0c7")
+stretch_mode = 2
 
 [node name="TopBarRight" type="MarginContainer" parent="HUDControl"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -437.0
-offset_bottom = 78.0
+offset_left = -105.0
+offset_bottom = 360.0
 grow_horizontal = 0
+mouse_filter = 2
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
+theme_override_constants/margin_top = 23
+theme_override_constants/margin_right = 23
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarRight"]
+[node name="MenuGroup" type="VBoxContainer" parent="HUDControl/TopBarRight"]
 layout_mode = 2
-theme_override_constants/separation = 50
-alignment = 2
+mouse_filter = 2
 
-[node name="MoneyGroup" type="HBoxContainer" parent="HUDControl/TopBarRight/HBoxContainer"]
-layout_mode = 2
-
-[node name="Money" type="TextureRect" parent="HUDControl/TopBarRight/HBoxContainer/MoneyGroup"]
-layout_mode = 2
-texture = ExtResource("5_tm5hb")
-expand_mode = 3
-
-[node name="Label" type="Label" parent="HUDControl/TopBarRight/HBoxContainer/MoneyGroup/Money"]
-layout_mode = 0
-offset_left = 57.0
-offset_top = 12.0
-offset_right = 128.0
-offset_bottom = 41.0
-theme_override_fonts/font = ExtResource("2_ko41u")
-text = "100.00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="KeyGroup" type="HBoxContainer" parent="HUDControl/TopBarRight/HBoxContainer"]
-layout_mode = 2
-
-[node name="Key" type="TextureRect" parent="HUDControl/TopBarRight/HBoxContainer/KeyGroup"]
-layout_mode = 2
-texture = ExtResource("6_ag13m")
-expand_mode = 3
-
-[node name="Label" type="Label" parent="HUDControl/TopBarRight/HBoxContainer/KeyGroup/Key"]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 12.0
-offset_right = 111.0
-offset_bottom = 41.0
-theme_override_fonts/font = ExtResource("2_ko41u")
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MenuGroup" type="VBoxContainer" parent="HUDControl/TopBarRight/HBoxContainer"]
-layout_mode = 2
-
-[node name="MenuButton" type="TextureButton" parent="HUDControl/TopBarRight/HBoxContainer/MenuGroup"]
+[node name="MenuButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup"]
 layout_mode = 2
 texture_normal = ExtResource("1_8k2rj")
 
-[node name="SettingsButton" type="TextureButton" parent="HUDControl/TopBarRight/HBoxContainer/MenuGroup/MenuButton"]
+[node name="SettingsButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton"]
 layout_mode = 0
-offset_top = 62.0
+offset_top = 73.0
 offset_right = 62.0
-offset_bottom = 62.0
+offset_bottom = 131.0
 texture_normal = ExtResource("9_scfow")
 
-[node name="HomeButton" type="TextureButton" parent="HUDControl/TopBarRight/HBoxContainer/MenuGroup/MenuButton"]
+[node name="HomeButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton"]
 layout_mode = 0
-offset_top = 128.0
+offset_top = 146.0
 offset_right = 62.0
-offset_bottom = 186.0
+offset_bottom = 204.0
 texture_normal = ExtResource("10_lrnd8")
+
+[node name="TopBarRight2" type="MarginContainer" parent="HUDControl"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -480.0
+offset_bottom = 95.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 136
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarRight2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Money" type="TextureRect" parent="HUDControl/TopBarRight2/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("29_64h4a")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="HUDControl/TopBarRight2/HBoxContainer/Money"]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 8.0
+offset_right = 128.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("14_8k40n")
+text = "100"
+label_settings = ExtResource("15_g2pgc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Key" type="TextureRect" parent="HUDControl/TopBarRight2/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("30_8bbf6")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="HUDControl/TopBarRight2/HBoxContainer/Key"]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 8.0
+offset_right = 128.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("14_8k40n")
+text = "100"
+label_settings = ExtResource("15_g2pgc")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BottomRight" type="MarginContainer" parent="HUDControl"]
 visible = false
@@ -204,9 +266,9 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="LobbyButton" type="TextureButton" parent="HUDControl/BottomRight"]
+[node name="FinishButton" type="TextureButton" parent="HUDControl/BottomRight"]
 layout_mode = 2
-texture_normal = ExtResource("8_tm5hb")
+texture_normal = ExtResource("18_g2pgc")
 
 [node name="SoundControl" parent="HUDControl" instance=ExtResource("16_pur5n")]
 layout_mode = 1

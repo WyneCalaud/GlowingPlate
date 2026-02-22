@@ -1,8 +1,12 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=4 format=3 uid="uid://h68n0p1prwgj"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=8 format=3 uid="uid://h68n0p1prwgj"]
 
 [ext_resource type="Texture2D" uid="uid://d0ve4dwh1ogbf" path="res://Assets/Foods/Carrots.png" id="1_en7m4"]
-[ext_resource type="Texture2D" uid="uid://cf8mia7i3c2sx" path="res://Assets/IndividualFoods/Carrots409.png" id="2_niaso"]
+[ext_resource type="Texture2D" uid="uid://dcynk4jl4osoj" path="res://Assets/UI/KitchenUI/VeggiesCup/Carrots/CarrotsFull.png" id="3_80xfw"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_a3cib"]
+[ext_resource type="Texture2D" uid="uid://duix5777ykl2k" path="res://Assets/UI/KitchenUI/VeggiesCup/Carrots/CarrotHigh.png" id="4_hsoh8"]
+[ext_resource type="Texture2D" uid="uid://6usgkfxdkxoq" path="res://Assets/UI/KitchenUI/VeggiesCup/Carrots/CarrotLow.png" id="5_iqp3o"]
+[ext_resource type="Texture2D" uid="uid://cpr413rd0j11k" path="res://Assets/UI/KitchenUI/VeggiesCup/Carrots/CarrotMed.png" id="6_xo627"]
+[ext_resource type="Texture2D" uid="uid://bwwaf7jdwm0sd" path="res://Assets/GlowSection/CarrotsPlated3.png" id="7_80xfw"]
 
 [resource]
 script = ExtResource("3_a3cib")
@@ -10,5 +14,10 @@ item_name = "Carrots"
 internal_key = "CARROTS"
 food_category = "GlowVeg"
 base_texture = ExtResource("1_en7m4")
-default_plated_texture = ExtResource("2_niaso")
+is_veggie_cup = true
+veggie_cup_low = ExtResource("5_iqp3o")
+veggie_cup_med = ExtResource("6_xo627")
+veggie_cup_high = ExtResource("4_hsoh8")
+veggie_cup_full = ExtResource("3_80xfw")
+veggie_plated_full = ExtResource("7_80xfw")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

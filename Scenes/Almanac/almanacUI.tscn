@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://clbki6vphqy7t"]
+[gd_scene load_steps=67 format=3 uid="uid://clbki6vphqy7t"]
 
 [ext_resource type="Script" uid="uid://buuoq4bsevlop" path="res://Scripts/Lobby/almanac_ui.gd" id="1_8l0e0"]
 [ext_resource type="Texture2D" uid="uid://c364h4j3e0aq2" path="res://Assets/UI/DarkenLayer.png" id="2_jpf65"]
@@ -11,16 +11,17 @@
 [ext_resource type="Texture2D" uid="uid://cqhv4wkfjlnjw" path="res://Assets/UI/AlmanacUI/GlowTab.png" id="5_8eymg"]
 [ext_resource type="Texture2D" uid="uid://2fddj7usspxk" path="res://Assets/UI/AlmanacUI/GoFoods/GoFoodsSign.png" id="8_b6es5"]
 [ext_resource type="Texture2D" uid="uid://b6pkpsolnhgyk" path="res://Assets/UI/AlmanacUI/GoFoods/WhiteRiceIcon.png" id="9_ubeeb"]
-[ext_resource type="Texture2D" uid="uid://dedi35lyntch5" path="res://Assets/UI/AlmanacUI/FoodInfo/WhiteRiceInfo.png" id="10_bt3gs"]
 [ext_resource type="Texture2D" uid="uid://dn1a4fs8rhspj" path="res://Assets/UI/AlmanacUI/GrowFoods/GrowFoodInfo.png" id="10_g02hj"]
 [ext_resource type="Texture2D" uid="uid://dhj0xilnxn1r5" path="res://Assets/UI/AlmanacUI/GoFoods/BrownRiceIcon.png" id="10_i56je"]
+[ext_resource type="Texture2D" uid="uid://byu3484ckv8lq" path="res://Assets/UI/AlmanacUI/FoodInfo/WhiteRiceInfoPage.png" id="10_lurp0"]
 [ext_resource type="Texture2D" uid="uid://voa7ottw0aia" path="res://Assets/UI/AlmanacUI/GrowFoods/ChickenIcon.png" id="11_4ko4i"]
 [ext_resource type="Texture2D" uid="uid://dn3juv2e6ma7a" path="res://Assets/UI/AlmanacUI/GoFoods/PandesalIcon.png" id="11_6fjyo"]
-[ext_resource type="Texture2D" uid="uid://dm452yy2jqsh8" path="res://Assets/UI/AlmanacUI/FoodInfo/PandesalInfo.png" id="11_8vcey"]
 [ext_resource type="Texture2D" uid="uid://coagatwiunxtd" path="res://Assets/UI/AlmanacUI/GoFoods/GoFoodsInfo.png" id="11_46u4c"]
+[ext_resource type="Texture2D" uid="uid://cotnrr5fpw7fl" path="res://Assets/UI/AlmanacUI/FoodInfo/BrownRiceInfoPage.png" id="11_ex2iu"]
 [ext_resource type="Texture2D" uid="uid://c0xi2l6oixx5a" path="res://Assets/UI/AlmanacUI/GrowFoods/FishIcon.png" id="12_8elnb"]
-[ext_resource type="Texture2D" uid="uid://dgi717msfa7ql" path="res://Assets/UI/AlmanacUI/FoodInfo/MaisInfo.png" id="12_bkm4a"]
 [ext_resource type="Texture2D" uid="uid://bln1y8urjft45" path="res://Assets/UI/AlmanacUI/GoFoods/CornIcon.png" id="12_i0gx2"]
+[ext_resource type="Texture2D" uid="uid://y45ce0nvx31l" path="res://Assets/UI/AlmanacUI/FoodInfo/PandesalInfoPage.png" id="12_ylyat"]
+[ext_resource type="Texture2D" uid="uid://dwv5bw4dnj86k" path="res://Assets/UI/AlmanacUI/FoodInfo/CornInfoPage.png" id="13_2ff4h"]
 [ext_resource type="Texture2D" uid="uid://bj7guaqe5ye7o" path="res://Assets/UI/AlmanacUI/Portions/WhiteRicePortion.png" id="13_5wsof"]
 [ext_resource type="Texture2D" uid="uid://b52etsid7fycm" path="res://Assets/UI/AlmanacUI/GrowFoods/EggIcon.png" id="13_y5vdk"]
 [ext_resource type="Texture2D" uid="uid://wml2c6u1ohj5" path="res://Assets/UI/AlmanacUI/GrowFoods/TofuIcon.png" id="14_0r2jp"]
@@ -31,28 +32,33 @@
 [ext_resource type="Texture2D" uid="uid://ca2tseushq0" path="res://Assets/UI/AlmanacUI/Portions/CornPortion.png" id="16_np3uf"]
 [ext_resource type="Texture2D" uid="uid://y1lqs5yn7fpa" path="res://Assets/UI/AlmanacUI/GlowFoods/EggplantIcon.png" id="16_v5ayx"]
 [ext_resource type="Texture2D" uid="uid://br2fcqbh4376q" path="res://Assets/UI/AlmanacUI/GlowFoods/CarrotIcon.png" id="17_fp46j"]
-[ext_resource type="Texture2D" uid="uid://brmwksle5ikbo" path="res://Assets/UI/AlmanacUI/FoodInfo/ChickenInfo.png" id="18_eu52s"]
 [ext_resource type="Texture2D" uid="uid://uerbfyllaf1s" path="res://Assets/UI/AlmanacUI/GlowFoods/KalabasaIcon.png" id="18_nr56u"]
 [ext_resource type="Texture2D" uid="uid://dgaaglt1lv1bn" path="res://Assets/UI/AlmanacUI/GlowFoods/WatermelonIcon.png" id="19_lf1pw"]
-[ext_resource type="Texture2D" uid="uid://cxey52g5ylgox" path="res://Assets/UI/AlmanacUI/FoodInfo/FishInfo.png" id="19_rhjvu"]
 [ext_resource type="Texture2D" uid="uid://q74v45odehl" path="res://Assets/UI/AlmanacUI/GlowFoods/PapayaIcon.png" id="20_n54g7"]
-[ext_resource type="Texture2D" uid="uid://b8efvelyee7lg" path="res://Assets/UI/AlmanacUI/FoodInfo/EggInfo.png" id="20_y5udw"]
 [ext_resource type="Texture2D" uid="uid://dqvut775aadqj" path="res://Assets/UI/AlmanacUI/GlowFoods/BananaIcon.png" id="21_bt3gs"]
-[ext_resource type="Texture2D" uid="uid://cg210rwi4sbcm" path="res://Assets/UI/AlmanacUI/FoodInfo/TokwaInfo.png" id="21_ntibk"]
 [ext_resource type="Texture2D" uid="uid://ciksm4ky2qtqn" path="res://Assets/UI/AlmanacUI/GlowFoods/MangoIcon.png" id="22_8vcey"]
+[ext_resource type="Texture2D" uid="uid://itbmqrqtp640" path="res://Assets/UI/AlmanacUI/FoodInfo/ChickenInfoPage.png" id="23_ivpej"]
+[ext_resource type="Texture2D" uid="uid://bgeye4xvntr0q" path="res://Assets/UI/AlmanacUI/FoodInfo/FishInfoPage.png" id="24_fh3j3"]
+[ext_resource type="Texture2D" uid="uid://2f114vm2wxt7" path="res://Assets/UI/AlmanacUI/FoodInfo/EggInfoPage.png" id="25_mg0v4"]
 [ext_resource type="Texture2D" uid="uid://bm0g15xhyn4jk" path="res://Assets/UI/AlmanacUI/Portions/ChickenPortion.png" id="26_edqf5"]
+[ext_resource type="Texture2D" uid="uid://cbnk613q8rps3" path="res://Assets/UI/AlmanacUI/FoodInfo/TokwaInfoPage.png" id="26_wjqnk"]
 [ext_resource type="Texture2D" uid="uid://w2sqouglqmlr" path="res://Assets/UI/AlmanacUI/Portions/FishPortion.png" id="27_wl5j4"]
 [ext_resource type="Texture2D" uid="uid://0alacqx6l2uj" path="res://Assets/UI/AlmanacUI/Portions/EggPortion.png" id="28_lurp0"]
 [ext_resource type="Texture2D" uid="uid://d3jomajdpi1de" path="res://Assets/UI/AlmanacUI/Portions/TokwaPortion.png" id="29_ex2iu"]
-[ext_resource type="Texture2D" uid="uid://vgii74d0wkk5" path="res://Assets/UI/AlmanacUI/FoodInfo/SitawInfo.png" id="31_bt3gs"]
-[ext_resource type="Texture2D" uid="uid://c2lau7lo2wy61" path="res://Assets/UI/AlmanacUI/FoodInfo/CarrotsInfo.png" id="32_plwhi"]
-[ext_resource type="Texture2D" uid="uid://b71k6fq8eqm45" path="res://Assets/UI/AlmanacUI/FoodInfo/KalabasaInfo.png" id="33_xu4kx"]
 [ext_resource type="Texture2D" uid="uid://b3fsngx2sdcg4" path="res://Assets/UI/AlmanacUI/PortionTab.png" id="37_8vcey"]
+[ext_resource type="Texture2D" uid="uid://bahdynm6ll8bb" path="res://Assets/UI/AlmanacUI/FoodInfo/SitawInfoPage.png" id="40_ff3e4"]
+[ext_resource type="Texture2D" uid="uid://cofefs0bxftm4" path="res://Assets/UI/AlmanacUI/FoodInfo/EggplantInfoPage.png" id="41_u5dsw"]
+[ext_resource type="Texture2D" uid="uid://dvij4q6hfwt8m" path="res://Assets/UI/AlmanacUI/FoodInfo/CarrotsInfoPage.png" id="42_tcoq7"]
 [ext_resource type="Texture2D" uid="uid://b728d3vntwnkf" path="res://Assets/UI/AlmanacUI/Portions/SitawPortion.png" id="42_ylyat"]
 [ext_resource type="Texture2D" uid="uid://cqbwmsxy5r6uj" path="res://Assets/UI/AlmanacUI/Portions/EggplantPortion.png" id="43_2ff4h"]
+[ext_resource type="Texture2D" uid="uid://beubhqt8ambpq" path="res://Assets/UI/AlmanacUI/FoodInfo/KalabasaInfoPage.png" id="43_v0e6r"]
+[ext_resource type="Texture2D" uid="uid://do6vry51ro3p8" path="res://Assets/UI/AlmanacUI/FoodInfo/WatermelonInfoPage.png" id="44_g51u7"]
 [ext_resource type="Texture2D" uid="uid://bv2xpv5lo2ciq" path="res://Assets/UI/AlmanacUI/Portions/CarrotsPortion.png" id="44_ivpej"]
+[ext_resource type="Texture2D" uid="uid://dpoffu6i8064a" path="res://Assets/UI/AlmanacUI/FoodInfo/PapayaInfoPage.png" id="45_8n8yg"]
 [ext_resource type="Texture2D" uid="uid://qqc65r4sosrk" path="res://Assets/UI/AlmanacUI/Portions/SquashPortion.png" id="45_fh3j3"]
+[ext_resource type="Texture2D" uid="uid://bo0bdk2hb5vu5" path="res://Assets/UI/AlmanacUI/FoodInfo/BananaInfoPage.png" id="46_lurp0"]
 [ext_resource type="Texture2D" uid="uid://bbfrw0d05dymg" path="res://Assets/UI/AlmanacUI/Portions/WatermelonPortion.png" id="46_mg0v4"]
+[ext_resource type="Texture2D" uid="uid://swqdaeeb1foi" path="res://Assets/UI/AlmanacUI/FoodInfo/MangoInfoPage.png" id="47_ovlqo"]
 [ext_resource type="Texture2D" uid="uid://nuoxkqydjyo0" path="res://Assets/UI/AlmanacUI/Portions/PapayaPortion.png" id="47_wjqnk"]
 [ext_resource type="Texture2D" uid="uid://yvko0oiy4bko" path="res://Assets/UI/AlmanacUI/Portions/BananaPortion.png" id="48_ff3e4"]
 [ext_resource type="Texture2D" uid="uid://cc0ryn0gbmjx5" path="res://Assets/UI/AlmanacUI/Portions/MangoPortion.png" id="49_u5dsw"]
@@ -85,15 +91,15 @@ sign_grow_texture = SubResource("AtlasTexture_6fjyo")
 sign_glow_texture = SubResource("AtlasTexture_i0gx2")
 go_default_info = ExtResource("11_46u4c")
 go_btn_icons = Array[Texture2D]([ExtResource("9_ubeeb"), ExtResource("10_i56je"), ExtResource("11_6fjyo"), ExtResource("12_i0gx2")])
-go_info_pages = Array[Texture2D]([ExtResource("10_bt3gs"), null, ExtResource("11_8vcey"), ExtResource("12_bkm4a")])
+go_info_pages = Array[Texture2D]([ExtResource("10_lurp0"), ExtResource("11_ex2iu"), ExtResource("12_ylyat"), ExtResource("13_2ff4h")])
 go_portion_pages = Array[Texture2D]([ExtResource("13_5wsof"), ExtResource("14_he6pn"), ExtResource("15_5sr1u"), ExtResource("16_np3uf")])
 grow_default_info = ExtResource("10_g02hj")
 grow_btn_icons = Array[Texture2D]([ExtResource("11_4ko4i"), ExtResource("12_8elnb"), ExtResource("13_y5vdk"), ExtResource("14_0r2jp")])
-grow_info_pages = Array[Texture2D]([ExtResource("18_eu52s"), ExtResource("19_rhjvu"), ExtResource("20_y5udw"), ExtResource("21_ntibk")])
+grow_info_pages = Array[Texture2D]([ExtResource("23_ivpej"), ExtResource("24_fh3j3"), ExtResource("25_mg0v4"), ExtResource("26_wjqnk")])
 grow_portion_pages = Array[Texture2D]([ExtResource("26_edqf5"), ExtResource("27_wl5j4"), ExtResource("28_lurp0"), ExtResource("29_ex2iu")])
 glow_default_info = ExtResource("15_4ko4i")
 glow_btn_icons = Array[Texture2D]([ExtResource("15_byxuj"), ExtResource("16_v5ayx"), ExtResource("17_fp46j"), ExtResource("18_nr56u"), ExtResource("19_lf1pw"), ExtResource("20_n54g7"), ExtResource("21_bt3gs"), ExtResource("22_8vcey")])
-glow_info_pages = Array[Texture2D]([ExtResource("31_bt3gs"), null, ExtResource("32_plwhi"), ExtResource("33_xu4kx"), null, null, null, null])
+glow_info_pages = Array[Texture2D]([ExtResource("40_ff3e4"), ExtResource("41_u5dsw"), ExtResource("42_tcoq7"), ExtResource("43_v0e6r"), ExtResource("44_g51u7"), ExtResource("45_8n8yg"), ExtResource("46_lurp0"), ExtResource("47_ovlqo")])
 glow_portion_pages = Array[Texture2D]([ExtResource("42_ylyat"), ExtResource("43_2ff4h"), ExtResource("44_ivpej"), ExtResource("45_fh3j3"), ExtResource("46_mg0v4"), ExtResource("47_wjqnk"), ExtResource("48_ff3e4"), ExtResource("49_u5dsw")])
 
 [node name="DarkenBackground" type="TextureRect" parent="."]
@@ -129,9 +135,9 @@ texture_normal = ExtResource("3_3xfrq")
 [node name="PortionTab" type="TextureButton" parent="Almanac"]
 layout_mode = 0
 offset_left = 840.0
-offset_top = 17.0
+offset_top = 265.0
 offset_right = 940.0
-offset_bottom = 88.0
+offset_bottom = 336.0
 toggle_mode = true
 texture_normal = ExtResource("37_8vcey")
 ignore_texture_size = true
@@ -359,10 +365,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -15.0
-offset_top = -6.0
-offset_right = 5.3200073
-offset_bottom = 13.255981
+offset_left = -4.0000305
+offset_top = -1.0
+offset_right = 3.8200378
+offset_bottom = 0.25598145
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("11_46u4c")

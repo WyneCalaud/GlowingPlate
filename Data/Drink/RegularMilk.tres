@@ -1,17 +1,13 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=5 format=3 uid="uid://n40hs8itaxie"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=4 format=3 uid="uid://n40hs8itaxie"]
 
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="1_dcntu"]
-[ext_resource type="Texture2D" uid="uid://cacj1j2algte7" path="res://Assets/UI/Milk/MilkCartons.png" id="1_gxc2g"]
-[ext_resource type="Texture2D" uid="uid://bwf1i4irynbwg" path="res://Assets/Beverages/MilkStation/RegularMilk/Milk512.png" id="1_x86qk"]
-[ext_resource type="Texture2D" uid="uid://cdsee1ndcwmht" path="res://Assets/Beverages/MilkStation/RegularMilk/MilkSelected512.png" id="2_vxyit"]
+[ext_resource type="Texture2D" uid="uid://dyylu7on32de2" path="res://Assets/UI/Milk/Milk.png" id="1_x86qk"]
+[ext_resource type="Texture2D" uid="uid://cpbkscxx88ou6" path="res://Assets/UI/Milk/MilkPlated.png" id="2_gxc2g"]
 
 [resource]
 script = ExtResource("1_dcntu")
 item_name = "Regular Milk"
 internal_key = "REGULAR_MILK"
 food_category = "Milk"
-base_texture = ExtResource("1_gxc2g")
-default_plated_texture = ExtResource("2_vxyit")
-plated_texture_small = ExtResource("1_x86qk")
-plated_texture_medium = ExtResource("1_x86qk")
-plated_texture_too_high = ExtResource("1_x86qk")
+base_texture = ExtResource("1_x86qk")
+default_plated_texture = ExtResource("2_gxc2g")

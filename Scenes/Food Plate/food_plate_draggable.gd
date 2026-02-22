@@ -8,7 +8,7 @@ signal trashed
 signal drag_state_changed(is_dragging_now: bool)
 
 # --- Z-INDEX & LAYER CONSTANTS ---
-const DRAG_Z_INDEX: int = 4096 # Maximum possible Z-Index
+const DRAG_Z_INDEX: int = 4096 
 const DEFAULT_Z_INDEX: int = 10
 const RETURN_SPEED: float = 8.0
 
@@ -31,6 +31,7 @@ var is_dragging: bool = false:
 var drag_offset: Vector2 = Vector2.ZERO
 var original_local_pos: Vector2 
 var is_returning: bool = false
+var _service_complete_triggered: bool = false 
 
 # --- DROP ZONE STATE ---
 var is_over_serve_zone: bool = false
@@ -45,15 +46,23 @@ func _ready():
 		
 # --- DROP ZONE DETECTION ---
 func _on_area_2d_area_entered(area: Area2D):
-	if area.name == "GlobalServeZone" or area.is_in_group("serve_zone"):
+	var a_name = area.name.to_lower()
+	var p_name = area.get_parent().name.to_lower()
+	
+	if a_name.contains("serve") or p_name.contains("serve") or area.is_in_group("serve_zone"):
 		is_over_serve_zone = true
-	elif area.name == "GlobalTrashZone" or area.is_in_group("trash_zone"):
+		print("DEBUG [Plate]: Entered Serve Zone")
+	elif a_name.contains("trash") or p_name.contains("trash") or area.is_in_group("trash_zone"):
 		is_over_trash_zone = true
+		print("DEBUG [Plate]: Entered Trash Zone")
 
 func _on_area_2d_area_exited(area: Area2D):
-	if area.name == "GlobalServeZone" or area.is_in_group("serve_zone"):
+	var a_name = area.name.to_lower()
+	var p_name = area.get_parent().name.to_lower()
+	
+	if a_name.contains("serve") or p_name.contains("serve") or area.is_in_group("serve_zone"):
 		is_over_serve_zone = false
-	elif area.name == "GlobalTrashZone" or area.is_in_group("trash_zone"):
+	elif a_name.contains("trash") or p_name.contains("trash") or area.is_in_group("trash_zone"):
 		is_over_trash_zone = false
 
 # --- INPUT HANDLING ---
@@ -68,9 +77,7 @@ func _input(event):
 
 	if is_press:
 		if is_returning: is_returning = false
-			
-		if is_mouse_over_plate_slot():
-			return 
+		if is_mouse_over_plate_slot(): return 
 			
 		if is_point_inside_area(mouse_pos):
 			if get_plate_contents().size() > 0:
@@ -95,31 +102,38 @@ func _process(delta):
 			self.z_index = DEFAULT_Z_INDEX
 			self.z_as_relative = true
 
+	# --- CONTINUOUS SERVICE CHECK ---
+	var order_sys = get_node_or_null("/root/OrderSystem")
+	if order_sys:
+		var is_full_service = order_sys.prepared_plate_contents.size() > 0 and order_sys.prepared_beverage_data.size() > 0
+		if is_full_service and not _service_complete_triggered:
+			_service_complete_triggered = true
+			get_tree().call_group("HUD", "show_finish_button", true)
+		elif not is_full_service and _service_complete_triggered:
+			_service_complete_triggered = false
+
 func _on_drop():
+	# RECOVERY: Do a manual check because signals might have exited as the UI hid
+	_manual_zone_recovery()
+	
 	var plate_contents = get_plate_contents()
 	var is_plate_truly_empty = plate_contents.size() == 0
-	
 	var handled = false
 	
-	# CASE 1: SERVE ZONE
 	if is_over_serve_zone:
 		handled = true
 		if not is_plate_truly_empty and is_instance_valid(GameData):
 			GameData.store_plate_contents(plate_contents)
+			get_tree().call_group("service_manager", "serve_plate", plate_contents)
 			_animate_new_plate_arrival()
 		else:
 			is_returning = true
 			
-	# CASE 2: TRASH ZONE
 	elif is_over_trash_zone:
 		handled = true
 		if not is_plate_truly_empty:
 			if is_instance_valid(GameData):
-				if GameData.has_method("add_money"):
-					GameData.add_money(-5)
-				elif GameData.has_method("adjust_money"):
-					GameData.adjust_money(-5)
-				
+				GameData.add_money(-5)
 			emit_signal("trashed")
 			_animate_new_plate_arrival()
 		else:
@@ -128,44 +142,44 @@ func _on_drop():
 	if not handled:
 		is_returning = true
 
-# --- NEW PLATE ANIMATION ---
+# Checks for zones even if signals were missed
+func _manual_zone_recovery():
+	if not plate_area: return
+	var overlapping = plate_area.get_overlapping_areas()
+	for area in overlapping:
+		var a_name = area.name.to_lower()
+		var p_name = area.get_parent().name.to_lower()
+		if a_name.contains("serve") or p_name.contains("serve"):
+			is_over_serve_zone = true
+		if a_name.contains("trash") or p_name.contains("trash"):
+			is_over_trash_zone = true
+
 func _animate_new_plate_arrival():
 	is_returning = false
 	self.z_index = DEFAULT_Z_INDEX
 	self.z_as_relative = true
-	
 	reset_plate_visuals()
-	
-	var spawn_offset = Vector2(0, 600) 
-	position = original_local_pos + spawn_offset
-	
+	position = original_local_pos + Vector2(0, 600)
 	var tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_property(self, "position", original_local_pos, 0.6)
 
-# --- FIXED LOGIC HERE ---
 func get_plate_contents() -> Array:
 	var contents = []
 	for child in get_children():
-		# Check if it's a plate slot using the Group or Script property
 		if child.is_in_group("plate_slot"):
-			if child.get("is_filled") and child.get("item_resource") != null:
-				# DIRECTLY get the type from the slot's exported variable
-				var type = child.get("slot_type")
-				
-				# Fallback just in case
-				if type == null or type == "": 
-					print("WARNING: Slot ", child.name, " has no slot_type set!")
-					type = "UNKNOWN"
-					
-				contents.append({"item": child.item_resource, "accepted_type": type})
+			if child.get("is_filled") and child.get("item_resource"):
+				contents.append({
+					"item": child.item_resource,
+					"accepted_type": child.slot_type,
+					"count": child.get("current_quantity"),
+					"portion_type": child.get("current_portion_type")
+				})
 	return contents
 
 func reset_plate_visuals():
 	for child in get_children():
-		# Use group check here too for consistency
-		if child.is_in_group("plate_slot"):
-			if child.has_method("clear_slot"): child.clear_slot()
-			elif child.has_method("clear_food"): child.clear_food()
+		if child.is_in_group("plate_slot") and child.has_method("clear_slot"):
+			child.clear_slot()
 
 func is_mouse_over_plate_slot() -> bool:
 	var mouse_pos = get_global_mouse_position()

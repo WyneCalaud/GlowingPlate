@@ -11,6 +11,7 @@ const FoodDispenserGlobals = preload("res://Scripts/Global/FoodDispenserGlobal.g
 @export_group("Animations")
 @export var hover_scale: float = 1.1
 @export var anim_speed: float = 0.1
+@export var selected_z_index: int = 100 
 
 var is_selected: bool = false
 var original_scale: Vector2
@@ -20,7 +21,7 @@ var drag_threshold: float = 10.0
 var press_pos: Vector2
 var is_pressing: bool = false
 
-# New: Stores "Half", "Whole", or "" 
+# Stores "Half", "Whole", "VeggieFull" or "" 
 var portion_type: String = ""
 
 func _ready():
@@ -62,10 +63,18 @@ func _gui_input(event):
 
 func toggle_selection():
 	if is_selected:
-		# If we are already selected and it's a portion item, clicking again 
-		# might be intended to re-open the portion menu to switch choice
+		# If we are already selected and it's a portion/veggie item, clicking again 
+		# might be intended to re-open the UI to switch choice or tap again
 		if food_data and "is_portionable" in food_data and food_data.is_portionable:
 			_trigger_portion_selector()
+		elif food_data and "is_veggie_cup" in food_data and food_data.is_veggie_cup:
+			var ui = get_tree().get_first_node_in_group("veggie_cup_ui")
+			if ui and ui.visible and ui.target_dispenser == self:
+				# SAFE CALL: Continuous tapping while selected
+				if ui.has_method("_on_tap"):
+					ui.call_deferred("_on_tap")
+			else:
+				_trigger_veggie_cup_ui()
 		else:
 			deselect()
 	else:
@@ -76,26 +85,42 @@ func select():
 	is_selected = true
 	FoodDispenserGlobals.CURRENTLY_SELECTED_DISPENSER = self
 	
-	z_index = 10 
+	pivot_offset = size / 2
+	z_index = selected_z_index 
 	
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(self, "scale", original_scale * hover_scale, anim_speed)
 	tween.tween_property(self, "modulate", Color(1.3, 1.3, 1.3), anim_speed)
 
-	# Check for Portion Logic
+	# Check for Portion Logic or Veggie Cup Logic
 	if food_data and "is_portionable" in food_data and food_data.is_portionable:
 		_trigger_portion_selector()
+	elif food_data and "is_veggie_cup" in food_data and food_data.is_veggie_cup:
+		_trigger_veggie_cup_ui()
 	else:
-		portion_type = "" # Reset for non-portion items
+		portion_type = "" 
 
 func _trigger_portion_selector():
 	var selector = get_tree().get_first_node_in_group("portion_selector")
 	if selector:
-		selector.open(self)
+		selector.call_deferred("open", self)
+		selector.call_deferred("move_to_front")
 	else:
 		print("Warning: No 'PortionSelector' found in scene group 'portion_selector'")
 
-# Called by the PortionSelector UI when a button is clicked
+func _trigger_veggie_cup_ui():
+	var ui = get_tree().get_first_node_in_group("veggie_cup_ui")
+	if ui:
+		# SAFE CALL: Deferred ensures UI logic doesn't crash input event
+		ui.call_deferred("open", self)
+		ui.call_deferred("move_to_front")
+		# Simulated first tap
+		if ui.has_method("_on_tap"):
+			ui.call_deferred("_on_tap")
+	else:
+		print("Warning: No 'veggie_cup_ui' found in scene group 'veggie_cup_ui'")
+
+# Called by the PortionSelector UI or VeggieCup UI when a button is clicked or cup is filled
 func set_portion(type: String):
 	portion_type = type
 	print("Dispenser ", name, " set to portion: ", portion_type)
@@ -105,8 +130,7 @@ func deselect():
 	if FoodDispenserGlobals.CURRENTLY_SELECTED_DISPENSER == self:
 		FoodDispenserGlobals.CURRENTLY_SELECTED_DISPENSER = null
 	
-	z_index = 0
-	
+	z_index = 0 
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(self, "scale", original_scale, anim_speed)
 	tween.tween_property(self, "modulate", Color.WHITE, anim_speed)

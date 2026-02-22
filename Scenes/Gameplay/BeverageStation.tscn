@@ -9,15 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://ry0sij3lf8qo" path="res://Assets/Beverages/WaterStation/Water Pitcher (Hot).PNG" id="7_0fyd5"]
 [ext_resource type="Script" uid="uid://dl5b6gat7441v" path="res://Scenes/Gameplay/stack_glass_spawner.gd" id="8_mcnup"]
 [ext_resource type="Texture2D" uid="uid://cacj1j2algte7" path="res://Assets/UI/Milk/MilkCartons.png" id="8_rft6r"]
+[ext_resource type="Script" uid="uid://buffnjxiqte7a" path="res://Scenes/Gameplay/MilkCartonSpawner.gd" id="9_xsyws"]
+[ext_resource type="PackedScene" uid="uid://dk18m03jpielk" path="res://Scenes/LiquidDispenser/DraggableMilk.tscn" id="10_3v2pv"]
 [ext_resource type="Texture2D" uid="uid://b4t6anq2kh5dv" path="res://Assets/UI/Water/StackGlass.png" id="12_tdqx7"]
-[ext_resource type="Texture2D" uid="uid://blobu2nbtq44c" path="res://Assets/Buttons/Finish (1).png" id="18_0fyd5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xsyws"]
 radius = 195.01257
 height = 799.1057
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tdqx7"]
-size = Vector2(249.50726, 172.97104)
 
 [node name="BeveragesStation" type="Node2D"]
 script = ExtResource("1_xqbgv")
@@ -91,27 +89,23 @@ visible = false
 position = Vector2(-41.809296, 8.78042)
 shape = SubResource("CapsuleShape2D_xsyws")
 
-[node name="MilkStation" type="Node2D" parent="."]
-position = Vector2(951, 61)
+[node name="MilkStation" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 951.0
+offset_top = 61.0
+offset_right = 951.0
+offset_bottom = 61.0
 
-[node name="MilkCarton" type="Sprite2D" parent="MilkStation"]
-position = Vector2(122.999985, 144)
-scale = Vector2(1.0267775, 1.1204706)
-texture = ExtResource("8_rft6r")
-
-[node name="Area2D" type="Area2D" parent="MilkStation/MilkCarton"]
-collision_mask = 2
-monitorable = false
-script = ExtResource("3_vjurt")
-liquid_type = "RegularMilk"
-unselected_texture = ExtResource("8_rft6r")
-selected_texture = ExtResource("8_rft6r")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MilkStation/MilkCarton/Area2D"]
-visible = false
-position = Vector2(0.46374512, -4.849655)
-scale = Vector2(1, 1.0000001)
-shape = SubResource("RectangleShape2D_tdqx7")
+[node name="MilkCartons" type="TextureButton" parent="MilkStation" node_paths=PackedStringArray("mat1", "mat2")]
+layout_mode = 0
+offset_right = 276.0
+offset_bottom = 188.0
+texture_normal = ExtResource("8_rft6r")
+script = ExtResource("9_xsyws")
+milk_scene = ExtResource("10_3v2pv")
+mat1 = NodePath("../../Mat/Mat1")
+mat2 = NodePath("../../Mat/Mat2")
 
 [node name="Glasses" type="Node2D" parent="."]
 position = Vector2(247, 205)
@@ -123,13 +117,3 @@ position = Vector2(161, 2)
 scale = Vector2(0.54658383, 0.5566502)
 texture = ExtResource("12_tdqx7")
 script = ExtResource("8_mcnup")
-
-[node name="BtnFinish" type="Button" parent="."]
-offset_left = 997.0
-offset_top = 599.0
-offset_right = 1245.0
-offset_bottom = 701.0
-icon = ExtResource("18_0fyd5")
-flat = true
-
-[connection signal="pressed" from="BtnFinish" to="." method="_on_btn_finish_pressed"]

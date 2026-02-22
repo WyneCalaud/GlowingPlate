@@ -23,10 +23,25 @@ class_name CustomItemData
 @export_group("Portion Mechanics")
 @export var is_portionable: bool = false
 @export var plated_texture_half: Texture2D
+@export var plated_texture_half_2: Texture2D
+@export var plated_texture_half_3: Texture2D
 @export var plated_texture_whole: Texture2D
+@export var plated_texture_whole_2: Texture2D
+@export var plated_texture_whole_3: Texture2D
 # New: Images specifically for the Selector UI Buttons
 @export var selector_icon_half: Texture2D
 @export var selector_icon_whole: Texture2D
+
+# --- Veggie Cup Mechanics ---
+@export_group("Veggie Cup Mechanics")
+@export var is_veggie_cup: bool = false
+# Images for the CupProgress UI (1 to 4 taps)
+@export var veggie_cup_low: Texture2D
+@export var veggie_cup_med: Texture2D
+@export var veggie_cup_high: Texture2D
+@export var veggie_cup_full: Texture2D
+# Image for when it is finally placed on the plate (Only allowed when full)
+@export var veggie_plated_full: Texture2D
 
 # --- Rice Mechanic Specific Plated Textures ---
 @export_group("Rice Mechanic Textures")

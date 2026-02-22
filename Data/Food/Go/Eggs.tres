@@ -1,11 +1,18 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=7 format=3 uid="uid://5e2miiomgtir"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=14 format=3 uid="uid://5e2miiomgtir"]
 
 [ext_resource type="Texture2D" uid="uid://bhh7nh2jclxoe" path="res://Assets/Foods/Eggs.png" id="1_vbdmj"]
-[ext_resource type="Texture2D" uid="uid://b6me70l6rx0bf" path="res://Assets/IndividualFoods/Egg189.png" id="2_ggq3u"]
-[ext_resource type="Texture2D" uid="uid://58c3ov3a6qju" path="res://Assets/GoSection/medrice512.png" id="3_y8b8p"]
-[ext_resource type="Texture2D" uid="uid://oj0oes3vf6cp" path="res://Assets/GoSection/lowrice512.png" id="4_yi6s1"]
-[ext_resource type="Texture2D" uid="uid://vg6jplsit2nt" path="res://Assets/GoSection/toohighrice 512.png" id="5_h1feh"]
+[ext_resource type="Texture2D" uid="uid://caxmh0h53125p" path="res://Assets/GoSection/EggHalf2.png" id="3_gnrgo"]
+[ext_resource type="Texture2D" uid="uid://byy2fukpddi70" path="res://Assets/UI/KitchenUI/TEST/EggHalf.png" id="3_h1feh"]
+[ext_resource type="Texture2D" uid="uid://bpvdnx7gw1wqv" path="res://Assets/GoSection/medrice512.png" id="3_y8b8p"]
+[ext_resource type="Texture2D" uid="uid://cmjc1we0c8afp" path="res://Assets/GoSection/EggHalf3.png" id="4_0to4o"]
+[ext_resource type="Texture2D" uid="uid://dve0ig4h81rnp" path="res://Assets/GoSection/lowrice512.png" id="4_yi6s1"]
+[ext_resource type="Texture2D" uid="uid://ddjikhlq0jk20" path="res://Assets/GoSection/toohighrice 512.png" id="5_h1feh"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="6_twuwg"]
+[ext_resource type="Texture2D" uid="uid://uqoycgeajf8i" path="res://Assets/UI/KitchenUI/TEST/EggWhole.png" id="7_twuwg"]
+[ext_resource type="Texture2D" uid="uid://g2ggmkx486ck" path="res://Assets/GoSection/EggWhole2.png" id="9_gnrgo"]
+[ext_resource type="Texture2D" uid="uid://2cvbuwkxnb2u" path="res://Assets/UI/KitchenUI/PortionSelector/Icons/EggHalfIcon.png" id="9_oyev6"]
+[ext_resource type="Texture2D" uid="uid://baicm46c54mt" path="res://Assets/GoSection/EggWhole3.png" id="10_0to4o"]
+[ext_resource type="Texture2D" uid="uid://b31307e4oboj7" path="res://Assets/UI/KitchenUI/PortionSelector/Icons/EggWholeIcon.png" id="10_gnrgo"]
 
 [resource]
 script = ExtResource("6_twuwg")
@@ -13,7 +20,15 @@ item_name = "Egg"
 internal_key = "EGG"
 food_category = "Go"
 base_texture = ExtResource("1_vbdmj")
-default_plated_texture = ExtResource("2_ggq3u")
+is_portionable = true
+plated_texture_half = ExtResource("3_h1feh")
+plated_texture_half_2 = ExtResource("3_gnrgo")
+plated_texture_half_3 = ExtResource("4_0to4o")
+plated_texture_whole = ExtResource("7_twuwg")
+plated_texture_whole_2 = ExtResource("9_gnrgo")
+plated_texture_whole_3 = ExtResource("10_0to4o")
+selector_icon_half = ExtResource("9_oyev6")
+selector_icon_whole = ExtResource("10_gnrgo")
 plated_texture_small = ExtResource("4_yi6s1")
 plated_texture_medium = ExtResource("3_y8b8p")
 plated_texture_too_high = ExtResource("5_h1feh")

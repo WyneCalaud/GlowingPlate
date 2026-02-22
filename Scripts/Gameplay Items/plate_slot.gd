@@ -8,34 +8,21 @@ const FoodDispenserGlobals = preload("res://Scripts/Global/FoodDispenserGlobal.g
 @export var plated_scale_factor: float = 0.4
 @export var slot_type: String = "Go" 
 
-# --- New Stacking Variables ---
+# --- Stacking & Portion Variables ---
 var current_quantity: int = 0
-const MAX_QUANTITY: int = 5
+var current_portion_type: String = "" # Stores "Half", "Whole", "VeggieFull" or ""
+const MAX_QUANTITY: int = 3 
 
 signal slot_updated(resource, filled)
 
 func _ready():
-	# Crucial: Enable pickable and set the filter
 	self.input_pickable = true
 	add_to_group(&"plate_slot")
 	
 	if linked_image:
 		linked_image.visible = false
-	
-	# Connect the standard input event which is more reliable than manual checks
-	if not is_connected("input_event", _on_input_event):
-		connect("input_event", _on_input_event)
 
-# Use the built-in signal for perfect collision detection
-func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	var is_click = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed
-	var is_touch = event is InputEventScreenTouch and event.pressed
-	
-	if is_click or is_touch:
-		_process_placement_attempt()
-
-# We keep _unhandled_input as a fallback
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	var is_click = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed
 	var is_touch = event is InputEventScreenTouch and event.pressed
 	
@@ -49,7 +36,7 @@ func _is_pos_inside(global_pos: Vector2) -> bool:
 		if child is CollisionShape2D:
 			if child.shape:
 				var rect = child.shape.get_rect()
-				rect.position += child.position # Offset the rect by the node's position
+				rect.position += child.position 
 				if rect.has_point(local_pos):
 					return true
 		elif child is CollisionPolygon2D:
@@ -61,66 +48,63 @@ func _is_pos_inside(global_pos: Vector2) -> bool:
 	return false
 
 func _process_placement_attempt():
-	# Check if we have a dispenser selected
 	if FoodDispenserGlobals.CURRENTLY_SELECTED_DISPENSER == null:
 		return
 
 	var selected = FoodDispenserGlobals.CURRENTLY_SELECTED_DISPENSER
 	
-	# If slot is filled, check if we can stack (Same item + Under Limit)
 	if is_filled:
-		# Get data from selected dispenser to compare
 		var data_to_check = selected.get("food_data") if "food_data" in selected else selected.get("item_resource")
-		if data_to_check != item_resource:
-			return # Different item, ignore
+		var current_name = item_resource.get("item_name") if item_resource else ""
+		var incoming_name = data_to_check.get("item_name") if data_to_check else ""
 		
+		if current_name != incoming_name:
+			return 
+		
+		var incoming_portion = selected.get("portion_type") if "portion_type" in selected else ""
+		if incoming_portion != "" and incoming_portion != current_portion_type:
+			return
+
 		if current_quantity >= MAX_QUANTITY:
-			return # Full, ignore
+			return 
 
 	var success = try_place_food(selected)
 	if success:
 		if selected.has_method("deselect"):
 			selected.deselect()
-		# Consume the event so it doesn't click things behind the plate
+		get_tree().call_group("portion_selector", "_close_selector")
+		get_tree().call_group("veggie_cup_ui", "_close_ui") 
 		get_viewport().set_input_as_handled()
 
 func try_place_food(incoming_data: Variant) -> bool:
 	var placement_results = _get_placement_data(incoming_data)
-	if placement_results.is_empty(): return false
+	if placement_results.is_empty(): 
+		return false
 	
 	var incoming_resource = placement_results.food_resource
 	var incoming_initial_texture = placement_results.final_texture
+	var incoming_portion = placement_results.portion_type
+	var rice_amount = placement_results.get("rice_amount", "")
+	
+	# CRITICAL: Always duplicate to ensure metadata doesn't leak back to the dispenser
+	incoming_resource = incoming_resource.duplicate(true)
+	
+	# Bake metadata into the resource so LobbyCanteen/OrderSystem can see it
+	if incoming_portion != "":
+		incoming_resource.set_meta("Portion", incoming_portion)
+	if rice_amount != "":
+		incoming_resource.set_meta("RiceAmount", rice_amount)
 	
 	if not is_filled:
-		# --- Initial Placement ---
-		
-		# Category validation
 		if incoming_resource.get("food_category") != slot_type:
-			print("⚠️ Misplaced item: ", incoming_resource.get("food_category"), " vs ", slot_type)
+			print("⚠️ Misplaced item category")
 
 		item_resource = incoming_resource
 		is_filled = true
 		current_quantity = 1
-		
-		# Check if "Count 1" texture exists, otherwise use the calculated default
-		var tex_1 = item_resource.get("texture_count_1")
-		if tex_1:
-			_update_visuals(tex_1)
-		else:
-			_update_visuals(incoming_initial_texture)
-	
+		current_portion_type = incoming_portion
+		_update_visuals(incoming_initial_texture)
 	else:
-		# --- Stacking Logic ---
-		
-		# Double check identity just in case
-		if item_resource != incoming_resource:
-			return false
-		
-		# Double check limit
-		if current_quantity >= MAX_QUANTITY:
-			print("Slot is full (Max %s)" % MAX_QUANTITY)
-			return false
-			
 		current_quantity += 1
 		_update_stacking_visuals()
 
@@ -129,20 +113,27 @@ func try_place_food(incoming_data: Variant) -> bool:
 
 func _update_stacking_visuals():
 	if not item_resource: return
-	
+	if item_resource.get("is_veggie_cup"): return
+
 	var next_texture = null
-	
-	match current_quantity:
-		1: next_texture = item_resource.get("texture_count_1")
-		2: next_texture = item_resource.get("texture_count_2")
-		3: next_texture = item_resource.get("texture_count_3")
-		4: next_texture = item_resource.get("texture_count_4")
-		5: next_texture = item_resource.get("texture_count_5")
+	if current_portion_type == "Half":
+		match current_quantity:
+			1: next_texture = item_resource.get("plated_texture_half")
+			2: next_texture = item_resource.get("plated_texture_half_2")
+			3: next_texture = item_resource.get("plated_texture_half_3")
+	elif current_portion_type == "Whole":
+		match current_quantity:
+			1: next_texture = item_resource.get("plated_texture_whole")
+			2: next_texture = item_resource.get("plated_texture_whole_2")
+			3: next_texture = item_resource.get("plated_texture_whole_3")
+	else:
+		match current_quantity:
+			1: next_texture = item_resource.get("texture_count_1")
+			2: next_texture = item_resource.get("texture_count_2")
+			3: next_texture = item_resource.get("texture_count_3")
 	
 	if next_texture:
 		_update_visuals(next_texture)
-	else:
-		print("No texture found for quantity: ", current_quantity)
 
 func _update_visuals(tex: Texture2D):
 	linked_image.texture = tex
@@ -152,39 +143,49 @@ func _update_visuals(tex: Texture2D):
 func _get_placement_data(incoming_data: Variant) -> Dictionary:
 	var food_resource: Resource = null
 	var final_texture: Texture2D = null
+	var portion = ""
+	var rice_amt = ""
 	
 	if incoming_data is Resource:
 		food_resource = incoming_data
 	elif incoming_data is Node:
-		if "food_data" in incoming_data:
-			food_resource = incoming_data.food_data
-		elif "item_resource" in incoming_data:
-			food_resource = incoming_data.item_resource
+		food_resource = incoming_data.get("food_data") if "food_data" in incoming_data else incoming_data.get("item_resource")
+		portion = incoming_data.get("portion_type") if "portion_type" in incoming_data else ""
+		rice_amt = incoming_data.get("current_rice_amount") if "current_rice_amount" in incoming_data else ""
 	
 	if not food_resource: return {}
 
-	var amount = incoming_data.get("current_rice_amount") if incoming_data is Node else null
-	
-	if amount == "Small" and food_resource.get("plated_texture_small"):
-		final_texture = food_resource.plated_texture_small
-	elif amount == "Medium" and food_resource.get("plated_texture_medium"):
-		final_texture = food_resource.plated_texture_medium
-	elif amount == "TooHigh" and food_resource.get("plated_texture_too_high"):
-		final_texture = food_resource.plated_texture_too_high
-	else:
-		if "default_plated_texture" in food_resource and food_resource.default_plated_texture:
-			final_texture = food_resource.default_plated_texture
-		else:
-			final_texture = food_resource.base_texture
+	if food_resource.get("is_veggie_cup"):
+		if portion == "VeggieFull":
+			final_texture = food_resource.veggie_plated_full
+	elif portion == "Half":
+		final_texture = food_resource.plated_texture_half
+	elif portion == "Whole":
+		final_texture = food_resource.plated_texture_whole
+	elif rice_amt != "":
+		match rice_amt:
+			"Small": final_texture = food_resource.plated_texture_small
+			"Medium": final_texture = food_resource.plated_texture_medium
+			"TooHigh": final_texture = food_resource.plated_texture_too_high
+			"RightAmount": final_texture = food_resource.default_plated_texture
+
+	if not final_texture:
+		final_texture = food_resource.texture_count_1 if food_resource.get("texture_count_1") else food_resource.default_plated_texture
 
 	if not final_texture: return {}
 		
-	return { "food_resource": food_resource, "final_texture": final_texture }
+	return { 
+		"food_resource": food_resource, 
+		"final_texture": final_texture,
+		"portion_type": portion,
+		"rice_amount": rice_amt
+	}
 
 func clear_slot():
 	is_filled = false
 	item_resource = null
 	current_quantity = 0
+	current_portion_type = ""
 	if linked_image:
 		linked_image.texture = null
 		linked_image.visible = false
