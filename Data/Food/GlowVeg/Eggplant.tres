@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=8 format=3 uid="uid://omstc0n2h6vh"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=9 format=3 uid="uid://omstc0n2h6vh"]
 
 [ext_resource type="Texture2D" uid="uid://cbkoagx0jde1o" path="res://Assets/Foods/Eggplant.png" id="1_asc4f"]
 [ext_resource type="Texture2D" uid="uid://47dyocjm84i8" path="res://Assets/UI/KitchenUI/VeggiesCup/Eggplant/EggplantFull.png" id="3_l75a3"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cpi8jx5b1v3j5" path="res://Assets/UI/KitchenUI/VeggiesCup/Eggplant/EggplantLow.png" id="5_bsc5x"]
 [ext_resource type="Texture2D" uid="uid://bsmkyqc7kc8o7" path="res://Assets/UI/KitchenUI/VeggiesCup/Eggplant/EggplantMed.png" id="6_mmf0u"]
 [ext_resource type="Texture2D" uid="uid://dsxorja6sl7xw" path="res://Assets/GlowSection/EggplantPlated3.png" id="7_l75a3"]
+[ext_resource type="Texture2D" uid="uid://b56mj3ge1cqe5" path="res://Assets/GlowSection/EggplantPlated2.png" id="8_ql6fr"]
 
 [resource]
 script = ExtResource("3_tp5th")
@@ -19,5 +20,6 @@ veggie_cup_low = ExtResource("5_bsc5x")
 veggie_cup_med = ExtResource("6_mmf0u")
 veggie_cup_high = ExtResource("4_ql6fr")
 veggie_cup_full = ExtResource("3_l75a3")
+veggie_plated_high = ExtResource("8_ql6fr")
 veggie_plated_full = ExtResource("7_l75a3")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

@@ -111,6 +111,48 @@ func _check_for_returned_items() -> void:
 
 
 # ---------------------------------------------------------
+# DEBUG HELPERS
+# ---------------------------------------------------------
+
+func _debug_plate_slots() -> void:
+	print("==== 🧪 PLATE DEBUG ====")
+
+	# Explicitly typed dictionaries
+	var expected: Dictionary = OrderSystem.current_customer_order.required_plate
+	var plated: Dictionary = {}
+
+	# Build what the player plated
+	for entry: Dictionary in OrderSystem.prepared_plate_contents:
+		var slot: String = entry.get("accepted_type", "") as String
+		if slot != "":
+			var item = entry.get("item")
+			if item and item.has_method("get"):
+				plated[slot] = item.internal_key
+
+	# Explicitly typed slot list
+	var slots: Array[String] = ["Go", "Grow", "GlowVeg", "GlowFru"]
+
+	for slot: String in slots:
+		var exp: String = expected.get(slot, "") as String
+		var act: String = plated.get(slot, "") as String
+
+		var status: String = "✅ OK"
+		if act == "":
+			status = "❌ MISSING"
+		elif act != exp:
+			status = "❌ WRONG"
+
+		print(
+			slot.lpad(8),
+			"| Expected:", exp.lpad(14),
+			"| Actual:", act.lpad(14),
+			"|", status
+		)
+
+	print("========================")
+
+
+# ---------------------------------------------------------
 # TEXTURE RESOLUTION (FIXED)
 # ---------------------------------------------------------
 
@@ -127,9 +169,13 @@ func _get_item_texture(entry: Dictionary) -> Texture2D:
 
 	var count: int = int(entry.get("count", 1))
 
-	# --- Veggie Cup Full ---
+	# --- Veggie Cup Handling ---
 	if portion == "VeggieFull":
 		var veg_tex = res.get("veggie_plated_full")
+		if veg_tex:
+			return veg_tex
+	elif portion == "VeggieHigh":
+		var veg_tex = res.get("veggie_plated_high")
 		if veg_tex:
 			return veg_tex
 
@@ -241,6 +287,8 @@ func _on_btn_final_serve_pressed() -> void:
 	var GD = get_node("/root/GameData")
 	is_waiting_for_serve = false
 
+	_debug_plate_slots() # 👈 DEBUG CALL
+
 	var correct := (
 		OrderSystem.is_plate_correct()
 		and OrderSystem.is_beverage_correct()
@@ -293,6 +341,27 @@ func _on_day_button_pressed() -> void:
 	]
 	GD.start_day_with_orders(day_orders)
 	_restore_day_ui_state()
+
+
+func _emit_customer_exit():
+	var manager = get_tree().get_first_node_in_group("CustomerManager")
+	if manager and manager.current_customer:
+		manager.customer_leave()
+
+# --- Scene Transitions ---
+
+func _start_transition(type: String):
+	button_type = type
+	$Fade_transition.show()
+	$Fade_transition/Fade_timer.start()
+	$Fade_transition/AnimationPlayer.play("Fade_In")
+
+func _on_fade_timer_timeout() -> void:
+	if button_type == "menu":
+		get_tree().change_scene_to_file("res://Scenes/Main Menu/Main_menu.tscn")
+
+func _on_settings_button_pressed() -> void:
+	_start_transition("menu")
 
 
 # ---------------------------------------------------------

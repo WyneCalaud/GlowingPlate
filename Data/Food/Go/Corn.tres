@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://bvv4bih206vxi"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=12 format=3 uid="uid://bvv4bih206vxi"]
 
 [ext_resource type="Texture2D" uid="uid://1ecw6i3ykpw6" path="res://Assets/Foods/Corns.png" id="1_u72oa"]
 [ext_resource type="Texture2D" uid="uid://bpvdnx7gw1wqv" path="res://Assets/GoSection/medrice512.png" id="3_skris"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c615pdi474tcx" path="res://Assets/UI/KitchenUI/VeggiesCup/Corn/CornLow.png" id="9_t3567"]
 [ext_resource type="Texture2D" uid="uid://boy1p2usjvhag" path="res://Assets/GoSection/CornPlated4.png" id="10_pfapb"]
 [ext_resource type="Texture2D" uid="uid://hyh8qu6smxy3" path="res://Assets/UI/KitchenUI/VeggiesCup/Corn/CornMed.png" id="10_upcer"]
+[ext_resource type="Texture2D" uid="uid://bevj7qxixbg4h" path="res://Assets/GoSection/CornPlated3.png" id="11_8k7qh"]
 
 [resource]
 script = ExtResource("6_8k7qh")
@@ -22,6 +23,7 @@ veggie_cup_low = ExtResource("9_t3567")
 veggie_cup_med = ExtResource("10_upcer")
 veggie_cup_high = ExtResource("8_8k7qh")
 veggie_cup_full = ExtResource("7_pfapb")
+veggie_plated_high = ExtResource("11_8k7qh")
 veggie_plated_full = ExtResource("10_pfapb")
 plated_texture_small = ExtResource("4_nfcvw")
 plated_texture_medium = ExtResource("3_skris")
