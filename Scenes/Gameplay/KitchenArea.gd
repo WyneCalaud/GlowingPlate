@@ -39,6 +39,8 @@ var drop_zones_default_position: Vector2
 @onready var food_plate: Node2D = $Plate/FoodPlate 
 @onready var camera: Camera2D = get_viewport().get_camera_2d()
 
+@onready var order_ticket = $OrderTicket
+
 # --- UI & HUD ---
 @onready var game_hud = $OverlayCanvas/GameHUD
 
@@ -70,7 +72,8 @@ func _ready():
 		if game_hud.has_method("show_finish_button"):
 			game_hud.show_finish_button(false)
 
-
+	if GameData.saved_customer_order:
+		order_ticket.set_order_display(GameData.saved_customer_order)
 # ---------------------------------------------------------
 # DROP ZONE CONTROL
 # ---------------------------------------------------------

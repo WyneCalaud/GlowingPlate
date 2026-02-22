@@ -169,7 +169,7 @@ func save_customer(order: Resource, tex: Texture2D):
 
 	# ⭐ NEW
 	if order and order.has_method("get"):
-		current_customer_age_group = order.age_group
+		current_customer_age_group = order.get_age_group()
 
 	# Tell HUD to refresh
 	get_tree().call_group("HUD", "update_age_group_display")

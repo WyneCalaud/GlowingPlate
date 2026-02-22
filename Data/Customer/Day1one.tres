@@ -7,6 +7,7 @@ script = ExtResource("1_kt5s1")
 customer_name = "Leo"
 order_text = "I’d like to try the rice, chicken, sitaw, and mango combo please.Cold water is fine, and don’t forget my milk too!"
 expanded_text = "Go: Rice Grow: Chicken Glow: Sitaw (vegetable) + Mango (fruit) Drink: Cold water + milk"
+age = 6
 needs = {
 "GlowFru": "MANGO",
 "GlowVeg": "SITAW",

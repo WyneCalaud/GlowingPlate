@@ -7,9 +7,10 @@ script = ExtResource("1_wqqiq")
 customer_name = "Maya"
 order_text = "One healthy lunch for a girl like me please."
 expanded_text = "idk"
+age = 9
 needs = {
 "GlowFru": "",
-"GlowVeg": "MIXED_VEGGIES",
+"GlowVeg": "MANGO",
 "Go": "RICE",
 "Grow": "CHICKEN_LEG"
 }
