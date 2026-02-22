@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=8 format=3 uid="uid://rucd5es10dwy"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=9 format=3 uid="uid://rucd5es10dwy"]
 
 [ext_resource type="Texture2D" uid="uid://cbwbsxmrxvjft" path="res://Assets/Foods/Pumpkins.png" id="1_a873x"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_mpxc7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bshcre7ickywp" path="res://Assets/UI/KitchenUI/VeggiesCup/Kalabasa/KalabasaLow.png" id="6_t2r6e"]
 [ext_resource type="Texture2D" uid="uid://bvavnmfd340mn" path="res://Assets/UI/KitchenUI/VeggiesCup/Kalabasa/KalabasaMed.png" id="7_kp4yk"]
 [ext_resource type="Texture2D" uid="uid://rrajavpd22md" path="res://Assets/GlowSection/Pumpkin3.png" id="8_idbwd"]
+[ext_resource type="Texture2D" uid="uid://brqbirde3xiyg" path="res://Assets/GlowSection/Pumpkin2.png" id="8_t2r6e"]
 
 [resource]
 script = ExtResource("3_mpxc7")
@@ -19,5 +20,6 @@ veggie_cup_low = ExtResource("6_t2r6e")
 veggie_cup_med = ExtResource("7_kp4yk")
 veggie_cup_high = ExtResource("5_idbwd")
 veggie_cup_full = ExtResource("4_kxsvx")
+veggie_plated_high = ExtResource("8_t2r6e")
 veggie_plated_full = ExtResource("8_idbwd")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

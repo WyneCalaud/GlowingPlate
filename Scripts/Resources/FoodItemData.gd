@@ -16,8 +16,6 @@ class_name CustomItemData
 @export var texture_count_1: Texture2D
 @export var texture_count_2: Texture2D
 @export var texture_count_3: Texture2D
-@export var texture_count_4: Texture2D
-@export var texture_count_5: Texture2D
 
 # --- Portion Mechanics (New) ---
 @export_group("Portion Mechanics")
@@ -40,8 +38,8 @@ class_name CustomItemData
 @export var veggie_cup_med: Texture2D
 @export var veggie_cup_high: Texture2D
 @export var veggie_cup_full: Texture2D
-# Image for when it is finally placed on the plate (Only allowed when full)
-@export var veggie_plated_full: Texture2D
+@export var veggie_plated_high: Texture2D # AGE GROUP (6-9)
+@export var veggie_plated_full: Texture2D # AGE GROUP (10-12)
 
 # --- Rice Mechanic Specific Plated Textures ---
 @export_group("Rice Mechanic Textures")

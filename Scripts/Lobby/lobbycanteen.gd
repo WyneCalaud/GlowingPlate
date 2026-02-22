@@ -3,7 +3,7 @@ extends Control
 # --- References ---
 @onready var darken_overlay = $OverlayCanvas/DarkenOverlay
 @onready var almanac_ui = $OverlayCanvas/AlmanacUI
-@onready var bulletin_board_ui = $OverlayCanvas/BulletinBoardUI
+@onready var glowboard = $OverlayCanvas/GlowBoard
 @onready var nutrishop_ui = $OverlayCanvas/NutriShop
 @onready var glow_desk_ui = $OverlayCanvas/GlowDesk
 
@@ -45,9 +45,9 @@ func _ready() -> void:
 		if not almanac_ui.closed.is_connected(_on_almanac_ui_closed):
 			almanac_ui.closed.connect(_on_almanac_ui_closed)
 
-	if bulletin_board_ui.has_signal("closed"):
-		if not bulletin_board_ui.closed.is_connected(_on_bulletin_board_ui_closed):
-			bulletin_board_ui.closed.connect(_on_bulletin_board_ui_closed)
+	if glowboard.has_signal("closed"):
+		if not glowboard.closed.is_connected(_on_glowboard_closed):
+			glowboard.closed.connect(_on_glowboard_closed)
 			
 	if nutrishop_ui.has_signal("closed"):
 		if not nutrishop_ui.closed.is_connected(_on_nutri_shop_closed):
@@ -111,6 +111,48 @@ func _check_for_returned_items() -> void:
 
 
 # ---------------------------------------------------------
+# DEBUG HELPERS
+# ---------------------------------------------------------
+
+func _debug_plate_slots() -> void:
+	print("==== 🧪 PLATE DEBUG ====")
+
+	# Explicitly typed dictionaries
+	var expected: Dictionary = OrderSystem.current_customer_order.required_plate
+	var plated: Dictionary = {}
+
+	# Build what the player plated
+	for entry: Dictionary in OrderSystem.prepared_plate_contents:
+		var slot: String = entry.get("accepted_type", "") as String
+		if slot != "":
+			var item = entry.get("item")
+			if item and item.has_method("get"):
+				plated[slot] = item.internal_key
+
+	# Explicitly typed slot list
+	var slots: Array[String] = ["Go", "Grow", "GlowVeg", "GlowFru"]
+
+	for slot: String in slots:
+		var exp: String = expected.get(slot, "") as String
+		var act: String = plated.get(slot, "") as String
+
+		var status: String = "✅ OK"
+		if act == "":
+			status = "❌ MISSING"
+		elif act != exp:
+			status = "❌ WRONG"
+
+		print(
+			slot.lpad(8),
+			"| Expected:", exp.lpad(14),
+			"| Actual:", act.lpad(14),
+			"|", status
+		)
+
+	print("========================")
+
+
+# ---------------------------------------------------------
 # TEXTURE RESOLUTION (FIXED)
 # ---------------------------------------------------------
 
@@ -127,9 +169,13 @@ func _get_item_texture(entry: Dictionary) -> Texture2D:
 
 	var count: int = int(entry.get("count", 1))
 
-	# --- Veggie Cup Full ---
+	# --- Veggie Cup Handling ---
 	if portion == "VeggieFull":
 		var veg_tex = res.get("veggie_plated_full")
+		if veg_tex:
+			return veg_tex
+	elif portion == "VeggieHigh":
+		var veg_tex = res.get("veggie_plated_high")
 		if veg_tex:
 			return veg_tex
 
@@ -241,6 +287,8 @@ func _on_btn_final_serve_pressed() -> void:
 	var GD = get_node("/root/GameData")
 	is_waiting_for_serve = false
 
+	_debug_plate_slots() # 👈 DEBUG CALL
+
 	var correct := (
 		OrderSystem.is_plate_correct()
 		and OrderSystem.is_beverage_correct()
@@ -295,6 +343,27 @@ func _on_day_button_pressed() -> void:
 	_restore_day_ui_state()
 
 
+func _emit_customer_exit():
+	var manager = get_tree().get_first_node_in_group("CustomerManager")
+	if manager and manager.current_customer:
+		manager.customer_leave()
+
+# --- Scene Transitions ---
+
+func _start_transition(type: String):
+	button_type = type
+	$Fade_transition.show()
+	$Fade_transition/Fade_timer.start()
+	$Fade_transition/AnimationPlayer.play("Fade_In")
+
+func _on_fade_timer_timeout() -> void:
+	if button_type == "menu":
+		get_tree().change_scene_to_file("res://Scenes/Main Menu/Main_menu.tscn")
+
+func _on_settings_button_pressed() -> void:
+	_start_transition("menu")
+
+
 # ---------------------------------------------------------
 # POPUP LOGIC
 # ---------------------------------------------------------
@@ -337,6 +406,27 @@ func close_popup() -> void:
 	)
 
 func _on_almanac_ui_closed() -> void: close_popup()
-func _on_bulletin_board_ui_closed() -> void: close_popup()
+func _on_glowboard_closed() -> void: close_popup()
 func _on_nutri_shop_closed() -> void: close_popup()
 func _on_glow_desk_closed() -> void: close_popup()
+
+
+func _on_almanac_pressed() -> void:
+	if current_open_popup == almanac_ui:
+		close_popup()
+	elif current_open_popup == null:
+		open_popup(almanac_ui)
+
+
+func _on_glow_board_pressed() -> void:
+	if current_open_popup == glowboard:
+		close_popup()
+	elif current_open_popup == null:
+		open_popup(glowboard)
+
+
+func _on_glow_shop_pressed() -> void:
+	if current_open_popup == nutrishop_ui:
+		close_popup()
+	elif current_open_popup == null:
+		open_popup(nutrishop_ui)
