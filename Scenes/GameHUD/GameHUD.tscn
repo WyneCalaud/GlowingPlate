@@ -105,6 +105,11 @@ vertical_alignment = 1
 [node name="AgeGroup" type="Control" parent="HUDControl/TopBarLeft/HBoxContainer"]
 layout_mode = 2
 
+[node name="6-9" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
+layout_mode = 0
+texture = ExtResource("11_df0c7")
+stretch_mode = 2
+
 [node name="10-12" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
 layout_mode = 0
 texture = ExtResource("10")

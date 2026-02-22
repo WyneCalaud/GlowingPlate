@@ -48,7 +48,7 @@ slot_type = "Grow"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotGrow"]
 position = Vector2(47, 153)
-polygon = PackedVector2Array(70, -267, 70, -91, 54, -83, -154, -83, -170, -99, -154, -139, -114, -203, -34, -259, 54, -283)
+polygon = PackedVector2Array(70, -259, 70, -91, 54, -83, -154, -83, -170, -99, -138, -171, -82, -227, -10, -267, 46, -275, 62, -275)
 
 [node name="SlotGlowFru" type="Area2D" parent="." node_paths=PackedStringArray("linked_image") groups=["plate_slots"]]
 position = Vector2(128, -102)
