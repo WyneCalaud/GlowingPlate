@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://daeaohujm4hnk"]
+
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://Fonts/Comic_Neue/ComicNeue-Bold.ttf" id="1_cqmtg"]
+
+[resource]
+font = ExtResource("1_cqmtg")
+font_size = 20
+outline_size = 2
+outline_color = Color(0.29411766, 0.08235294, 0.105882354, 1)

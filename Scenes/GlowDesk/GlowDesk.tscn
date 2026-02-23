@@ -74,6 +74,7 @@ texture = ExtResource("1_057f4")
 metadata/_edit_lock_ = true
 
 [node name="PracticeOrBrowse" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_left = 218.0
 offset_top = 95.0
@@ -317,7 +318,6 @@ grow_vertical = 0
 texture_normal = ExtResource("16_u0x3h")
 
 [node name="BrowseGroupSelected" type="Control" parent="."]
-visible = false
 anchors_preset = 0
 offset_left = 218.0
 offset_top = 95.0
@@ -906,3 +906,4 @@ texture_normal = ExtResource("2_ac1q2")
 
 [node name="SoundControl" parent="." instance=ExtResource("42_qu1ft")]
 layout_mode = 1
+script = null

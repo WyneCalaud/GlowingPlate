@@ -1,4 +1,9 @@
-[gd_resource type="LabelSettings" format=3 uid="uid://bxmx2yfdx0m1m"]
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bxmx2yfdx0m1m"]
+
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://Fonts/Comic_Neue/ComicNeue-Bold.ttf" id="1_ycoql"]
 
 [resource]
-font_size = 20
+font = ExtResource("1_ycoql")
+font_size = 14
+outline_size = 2
+outline_color = Color(0.29411766, 0.08235294, 0.105882354, 1)

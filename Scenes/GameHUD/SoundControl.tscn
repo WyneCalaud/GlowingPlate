@@ -1,7 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://ccv4r1x8840d2"]
+[gd_scene load_steps=21 format=3 uid="uid://ccv4r1x8840d2"]
 
-[ext_resource type="Texture2D" uid="uid://d3vxoqpokf5xg" path="res://Assets/UI/SoundSettingsUI/CloseButton1.png" id="1_tbf2x"]
-[ext_resource type="Texture2D" uid="uid://cbt1e8js4x6n7" path="res://Assets/UI/SoundSettingsUI/SoundSettings.png" id="2_yy33u"]
+[ext_resource type="Script" uid="uid://c8xoeufpmgkl8" path="res://Scripts/Utility/SoundControl.gd" id="1_jxku6"]
+[ext_resource type="Texture2D" uid="uid://c5ui0ks2ghgqs" path="res://Assets/UI/Interface/Niger.png" id="1_ry2qj"]
+[ext_resource type="Texture2D" uid="uid://cjwqakd3pubtk" path="res://Assets/UI/CloseButton1.png" id="1_yy33u"]
+[ext_resource type="Texture2D" uid="uid://52mpmjq87htm" path="res://Assets/UI/Interface/SettingsMenu.png" id="2_yy33u"]
+[ext_resource type="FontFile" uid="uid://b443ju2lx1p21" path="res://Fonts/Comic_Neue/ComicNeue-BoldItalic.ttf" id="3_jxku6"]
 [ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/Fonts/Rowdies-Regular.ttf" id="3_ry2qj"]
 [ext_resource type="LabelSettings" uid="uid://dnbs1daf6c8v5" path="res://Theme/LabelTheme.tres" id="4_jxku6"]
 [ext_resource type="Texture2D" uid="uid://baxfeu7t2d6xf" path="res://Assets/UI/SoundSettingsUI/MusicButton.png" id="5_pgnl1"]
@@ -11,7 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://bbc81nyq4qd35" path="res://Assets/UI/SoundSettingsUI/SoundButton.png" id="9_cwkrk"]
 [ext_resource type="Texture2D" uid="uid://ccxmd4kg5r5t" path="res://Assets/UI/SoundSettingsUI/MuteSoundButton.png" id="10_n11vq"]
 [ext_resource type="Texture2D" uid="uid://dq3wcwpyf0fu0" path="res://Assets/UI/SoundSettingsUI/LanguageButton.png" id="11_oe1vw"]
-[ext_resource type="Texture2D" uid="uid://dpmjnvmhk8b78" path="res://Assets/UI/SoundSettingsUI/LanguageOptions.png" id="12_2jakt"]
+[ext_resource type="Texture2D" uid="uid://fwamirilwjrf" path="res://Assets/UI/Interface/RectangleLanguage.png" id="13_pgnl1"]
+
+[sub_resource type="FontVariation" id="FontVariation_pgnl1"]
+base_font = ExtResource("3_jxku6")
+spacing_glyph = 3
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w5x8q"]
 
@@ -40,14 +47,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jxku6")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("1_ry2qj")
+stretch_mode = 2
 
 [node name="CloseButton" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 786.0
-offset_top = 50.0
+offset_top = 18.0
 offset_right = 960.0
-offset_bottom = 159.0
-texture_normal = ExtResource("1_tbf2x")
+offset_bottom = 127.0
+texture_normal = ExtResource("1_yy33u")
 
 [node name="SettingsPanel" type="TextureRect" parent="."]
 layout_mode = 1
@@ -57,22 +72,29 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -333.5
-offset_top = -227.0
+offset_top = -266.0
 offset_right = 333.5
-offset_bottom = 227.0
+offset_bottom = 266.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_yy33u")
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Music" type="Label" parent="SettingsPanel"]
 layout_mode = 0
-offset_left = 293.5
-offset_top = 123.0
-offset_right = 372.5
-offset_bottom = 160.0
+offset_left = 245.5
+offset_top = 162.0
+offset_right = 425.5
+offset_bottom = 190.0
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_ry2qj")
-theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0.35686275, 0.23137255, 0.1882353, 1)
+theme_override_fonts/font = SubResource("FontVariation_pgnl1")
+theme_override_font_sizes/font_size = 24
 text = "Music"
 label_settings = ExtResource("4_jxku6")
 horizontal_alignment = 1
@@ -81,9 +103,9 @@ vertical_alignment = 1
 [node name="Sound Effects" type="Label" parent="SettingsPanel"]
 layout_mode = 0
 offset_left = 117.5
-offset_top = 211.0
+offset_top = 255.0
 offset_right = 549.5
-offset_bottom = 248.0
+offset_bottom = 292.0
 theme_override_fonts/font = ExtResource("3_ry2qj")
 theme_override_font_sizes/font_size = 32
 text = "Sound Effects"
@@ -94,9 +116,9 @@ vertical_alignment = 1
 [node name="Language" type="Label" parent="SettingsPanel"]
 layout_mode = 0
 offset_left = 117.5
-offset_top = 307.0
+offset_top = 373.0
 offset_right = 549.5
-offset_bottom = 344.0
+offset_bottom = 410.0
 theme_override_fonts/font = ExtResource("3_ry2qj")
 theme_override_font_sizes/font_size = 32
 text = "Language"
@@ -111,13 +133,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -248.0
-offset_top = -104.0
-offset_right = 184.0
-offset_bottom = 213.0
+offset_left = -219.0
+offset_top = -127.5
+offset_right = 158.0
+offset_bottom = 198.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 10
 
 [node name="HSeparator3" type="HSeparator" parent="SettingsPanel/VolumeSettings"]
 layout_mode = 2
@@ -126,6 +148,7 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_w5x8q")
 
 [node name="MusicGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="MusicMuteButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/MusicGroup"]
 layout_mode = 2
@@ -155,6 +178,7 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_w5x8q")
 
 [node name="SFXGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="SFXMuteButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/SFXGroup"]
 layout_mode = 2
@@ -184,6 +208,7 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_w5x8q")
 
 [node name="LanguageGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="LanguageButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/LanguageGroup"]
 layout_mode = 2
@@ -194,5 +219,7 @@ texture_normal = ExtResource("11_oe1vw")
 [node name="LanguageOptions" type="NinePatchRect" parent="SettingsPanel/VolumeSettings/LanguageGroup"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("12_2jakt")
+texture = ExtResource("13_pgnl1")
 region_rect = Rect2(4, 0, 302, 43)
+
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://b1dvwltxkj1ft" path="res://Assets/UI/QuizUI/QuizTemplateX3.png" id="3_nc0by"]
 [ext_resource type="FontFile" uid="uid://btg6v4f2xjtf8" path="res://monogram.ttf" id="4_8s52k"]
 [ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="4_cwbs8"]
+[ext_resource type="Texture2D" uid="uid://dqjjqqhrm1up0" path="res://Assets/UI/GlowDesk/AChoice.png" id="5_nc0by"]
 [ext_resource type="LabelSettings" uid="uid://dar4gad22igrx" path="res://Theme/AnswerText.tres" id="5_vc1sw"]
-[ext_resource type="Texture2D" uid="uid://c6kj011esgoxj" path="res://Assets/UI/QuizUI/AnswerBlock1.png" id="5_yo6g2"]
-[ext_resource type="Texture2D" uid="uid://b68l4oid0e8dh" path="res://Assets/UI/QuizUI/AnswerBlock2.png" id="6_h0ls5"]
 [ext_resource type="LabelSettings" uid="uid://c7ptqt68bqpsk" path="res://Theme/QuizText.tres" id="6_yo6g2"]
-[ext_resource type="Texture2D" uid="uid://cg0ww4f47e6c1" path="res://Assets/UI/QuizUI/AnswerBlock3.png" id="7_kt8ux"]
+[ext_resource type="Texture2D" uid="uid://cq3ah0b7dcaar" path="res://Assets/UI/GlowDesk/BChoice.png" id="7_vc1sw"]
+[ext_resource type="Texture2D" uid="uid://yue64ka8ictw" path="res://Assets/UI/GlowDesk/CChoice.png" id="8_1wj21"]
 [ext_resource type="FontFile" uid="uid://b443ju2lx1p21" path="res://Fonts/Comic_Neue/ComicNeue-BoldItalic.ttf" id="10_nc0by"]
 [ext_resource type="AudioStream" uid="uid://bcp43wsb52wne" path="res://Assets/SFX/CorrectSound.mp3" id="11_nc0by"]
 [ext_resource type="AudioStream" uid="uid://b3asxuljoftcf" path="res://Assets/SFX/WrongSound.mp3" id="12_vc1sw"]
@@ -47,6 +47,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_nc0by")
 expand_mode = 1
+metadata/_edit_lock_ = true
 
 [node name="QuizPanel" type="Control" parent="."]
 layout_mode = 1
@@ -110,14 +111,14 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("5_yo6g2")
+texture_normal = ExtResource("5_nc0by")
 
 [node name="AText" type="Label" parent="QuizPanel/AnswersContainer/A"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 237.0
-offset_bottom = 79.0
+offset_left = 54.0
+offset_top = 19.0
+offset_right = 249.0
+offset_bottom = 124.0
 text = "GO FOOD"
 label_settings = ExtResource("6_yo6g2")
 horizontal_alignment = 1
@@ -125,63 +126,88 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="AImage" type="TextureRect" parent="QuizPanel/AnswersContainer/A"]
-layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 237.0
-offset_bottom = 79.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -79.5
+offset_top = -44.0
+offset_right = 112.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 2
 
 [node name="B" type="TextureButton" parent="QuizPanel/AnswersContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("6_h0ls5")
+texture_normal = ExtResource("7_vc1sw")
 
 [node name="BText" type="Label" parent="QuizPanel/AnswersContainer/B"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 237.0
-offset_bottom = 79.0
-text = "Grow Food"
+offset_left = 54.0
+offset_top = 19.0
+offset_right = 249.0
+offset_bottom = 124.0
+text = "GO FOOD"
 label_settings = ExtResource("6_yo6g2")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="BImage" type="TextureRect" parent="QuizPanel/AnswersContainer/B"]
-layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 237.0
-offset_bottom = 79.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -79.5
+offset_top = -44.0
+offset_right = 112.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 2
 
 [node name="C" type="TextureButton" parent="QuizPanel/AnswersContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("7_kt8ux")
+texture_normal = ExtResource("8_1wj21")
 
 [node name="CText" type="Label" parent="QuizPanel/AnswersContainer/C"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 237.0
-offset_bottom = 79.0
-text = "Glow Food"
+offset_left = 54.0
+offset_top = 19.0
+offset_right = 249.0
+offset_bottom = 124.0
+text = "GO FOOD"
 label_settings = ExtResource("6_yo6g2")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="CImage" type="TextureRect" parent="QuizPanel/AnswersContainer/C"]
-layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 237.0
-offset_bottom = 79.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -79.5
+offset_top = -44.0
+offset_right = 112.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 2
 
 [node name="Result" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_left = 576.0
 offset_top = 296.0

@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GameData="*res://Scripts/Global/GameData.gd"
 QuizSystem="*res://Scripts/Global/QuizSystem.gd"
 OrderSystem="*res://Scripts/Global/OrderSystem.gd"
+QuizProgress="*res://Scripts/Quiz/QuizProgress.gd"
 FoodDispenserGlobal="*res://Scripts/Global/FoodDispenserGlobal.gd"
 Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
 
