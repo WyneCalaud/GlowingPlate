@@ -26,7 +26,6 @@ signal closed
 @onready var btn_group_c: BaseButton = $BrowseGroup/HBoxContainer/GroupCCard/GroupCButton
 
 # --- UI & HUD (Local) ---
-# New paths provided by user
 @onready var back_button: BaseButton = $UI/BackButtonImage/TopLeftButton/BackButton
 @onready var money_label: Label = $UI/TopBarRight/HBoxContainer/MoneyGroup/Money/Label
 
@@ -35,10 +34,8 @@ signal closed
 @onready var btn_settings: BaseButton = $UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/SettingsButton
 @onready var btn_home: BaseButton = $UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/HomeButton
 
-# Pause Layer (New)
+# Pause Layer
 @onready var pause_layer: Control = $UI/PauseLayer
-
-# Sound Control (Instantiated Scene)
 @onready var sound_control: Control = $SoundControl
 
 # --- GAMEPLAY ELEMENTS ---
@@ -115,19 +112,16 @@ func _ready():
 	if screen_gameplay:
 		original_panel_pos = screen_gameplay.position
 	
-	# Populate screen list
 	all_screens = [
 		screen_main, screen_practice_select, screen_browse_groups, 
 		screen_browse_list, screen_browse_question, screen_gameplay, 
 		screen_countdown
 	]
 	
-	# Set Pivot Offset
 	for screen in all_screens:
 		if screen:
 			screen.call_deferred("set_pivot_offset", screen.size / 2)
 	
-	# Helper list for animations
 	answer_buttons_list = [
 		{"btn": btn_ans_a, "lbl": lbl_ans_a, "tex": tex_ans_a},
 		{"btn": btn_ans_b, "lbl": lbl_ans_b, "tex": tex_ans_b},
@@ -138,7 +132,6 @@ func _ready():
 	_sync_user_progress()
 	_setup_local_ui()
 
-	# Connect Main Buttons
 	if btn_practice: btn_practice.pressed.connect(_on_practice_pressed)
 	if btn_browse: btn_browse.pressed.connect(_on_browse_pressed)
 	
@@ -163,11 +156,10 @@ func _exit_tree():
 	if menu_tween: menu_tween.kill()
 
 func _setup_local_ui():
-	# 1. Setup Menu Dropdown (Initially hidden)
 	if btn_settings:
 		btn_settings.visible = false
 		btn_settings.modulate.a = 0.0
-		btn_settings.position = Vector2.ZERO # Start underneath the menu button
+		btn_settings.position = Vector2.ZERO
 		if not btn_settings.pressed.is_connected(_on_settings_pressed):
 			btn_settings.pressed.connect(_on_settings_pressed)
 
@@ -182,38 +174,32 @@ func _setup_local_ui():
 		if not btn_menu.pressed.is_connected(_toggle_menu):
 			btn_menu.pressed.connect(_toggle_menu)
 	
-	# 2. Setup Pause Layer (Initially hidden)
 	if pause_layer:
 		pause_layer.visible = false
 
-	# 3. Setup Sound Control (Hidden by default)
 	if sound_control:
 		sound_control.visible = false
-		# Try to find a CloseButton inside SoundControl to hide it when clicked
 		var close_btn = sound_control.find_child("CloseButton", true, false)
 		if close_btn:
-			# Disconnect any existing connections that might close the whole HUD
 			var connections = close_btn.get_signal_connection_list("pressed")
 			for conn in connections:
 				close_btn.disconnect("pressed", conn.callable)
 			
-			# Add local close logic
 			if not close_btn.pressed.is_connected(func(): sound_control.visible = false):
 				close_btn.pressed.connect(func(): sound_control.visible = false)
 
 func _sync_user_progress():
-	if has_node("/root/QuizSystem"):
-		answered_questions_ref = get_node("/root/QuizSystem").quiz_progress
+	# CRITICAL FIX: The data we want is in QuizProgress, not QuizSystem!
+	if has_node("/root/QuizProgress"):
+		answered_questions_ref = get_node("/root/QuizProgress").question_progress
 	else:
-		printerr("GlowDeskManager: QuizSystem Global not found! Defaulting to empty.")
+		printerr("GlowDeskManager: QuizProgress Global not found! Defaulting to empty.")
 		answered_questions_ref = {}
 
 func _process(delta: float):
-	# Update Money Display from GameData
 	if money_label and has_node("/root/GameData"):
 		money_label.text = str(get_node("/root/GameData").money)
 
-	# Only run timer if game is active AND menu is NOT open (Paused)
 	if is_game_active and current_game_mode == "Quick" and not is_menu_open:
 		game_time_left -= delta
 		if is_instance_valid(lbl_timer):
@@ -239,19 +225,16 @@ func _fix_mouse_filters():
 func _toggle_menu():
 	is_menu_open = !is_menu_open
 	
-	# Toggle Pause Layer visibility
 	if pause_layer:
 		pause_layer.visible = is_menu_open
 	
 	if menu_tween: menu_tween.kill()
 	menu_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	
-	# Define drop distances (pixels down from parent)
 	var settings_y = 65.0 
 	var home_y = 130.0
 	
 	if is_menu_open:
-		# ANIMATE OPEN
 		btn_settings.visible = true
 		btn_home.visible = true
 		btn_settings.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -263,7 +246,6 @@ func _toggle_menu():
 		menu_tween.tween_property(btn_home, "position:y", home_y, 0.3).set_delay(0.05)
 		menu_tween.tween_property(btn_home, "modulate:a", 1.0, 0.3).set_delay(0.05)
 	else:
-		# ANIMATE CLOSE
 		btn_settings.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		btn_home.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		
@@ -280,19 +262,14 @@ func _toggle_menu():
 		)
 
 func _on_settings_pressed():
-	_toggle_menu() # Close menu
+	_toggle_menu()
 	if sound_control:
 		sound_control.visible = true
 		sound_control.move_to_front()
-	else:
-		printerr("GlowDeskManager: SoundControl node is missing!")
 
 func _on_home_pressed():
-	# Close the menu/pause layer if it's open
 	if is_menu_open:
 		_toggle_menu()
-
-	# Close the desk logic
 	visible = false
 	closed.emit()
 
@@ -316,7 +293,6 @@ func _on_back_pressed():
 		_show_only(previous_screen)
 
 func _show_only(target: Control, instant: bool = false):
-	# INSTANT MODE (Startup)
 	if instant:
 		if active_tween: active_tween.kill()
 		is_transitioning = false
@@ -327,7 +303,6 @@ func _show_only(target: Control, instant: bool = false):
 				screen.scale = Vector2.ONE
 		return
 
-	# POP ANIMATION MODE
 	if active_tween: active_tween.kill()
 	is_transitioning = true
 	
@@ -389,7 +364,7 @@ func _start_gameplay(mode: String):
 	
 	for q in all_qs:
 		var q_id = q.get("id", "??")
-		if answered_questions_ref.has(q_id):
+		if answered_questions_ref.has(q_id) and answered_questions_ref[q_id]["unlocked"]:
 			game_questions_pool.append(q)
 	
 	game_questions_pool.shuffle()
@@ -465,8 +440,6 @@ func _check_answer(btn_index: int):
 	var ui = answer_buttons_list[btn_index]
 	var selected_text = ui.lbl.text
 	var is_correct = (selected_text == correct_answer_text)
-
-	var feedback_tween = create_tween().set_parallel(true)
 	
 	for i in range(3):
 		var item = answer_buttons_list[i]
@@ -479,10 +452,10 @@ func _check_answer(btn_index: int):
 	if is_correct:
 		print("Correct!")
 		current_score += 10
-		_animate_correct_feedback(btn_index, feedback_tween)
+		_animate_correct_feedback(btn_index)
 	else:
 		print("Wrong!")
-		_animate_incorrect_feedback(btn_index, feedback_tween)
+		_animate_incorrect_feedback(btn_index)
 		if current_game_mode == "Endless":
 			current_lives -= 1
 
@@ -496,7 +469,7 @@ func _check_answer(btn_index: int):
 	else:
 		_load_next_question()
 
-# --- ANIMATIONS ---
+# --- ANIMATIONS (FIXED TO PREVENT GPU/ENGINE CRASHES) ---
 
 func _animate_button_error(btn: BaseButton):
 	if not btn: return
@@ -525,27 +498,41 @@ func _animate_button_error(btn: BaseButton):
 			btn.set_meta("is_animating_error", false)
 	)
 
-func _animate_correct_feedback(idx: int, tween: Tween):
+func _animate_correct_feedback(idx: int):
 	var btn = answer_buttons_list[idx].btn
 	if not is_instance_valid(btn): return
-	tween.tween_property(btn, "scale", Vector2.ONE * 1.1, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.chain().tween_property(btn, "scale", Vector2.ONE, 0.2)
+	
+	btn.pivot_offset = btn.size / 2
+	var tween = create_tween().set_parallel(true)
+	
+	# 1. Pop up (Scale instead of position to prevent layout engine infinite loop crashes)
+	tween.tween_property(btn, "scale", Vector2(1.15, 1.15), 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	# 2. Shine (Over-modulate to bright white/green glow)
+	tween.tween_property(btn, "modulate", Color(2.0, 2.5, 2.0), 0.15)
+	
+	var return_tween = create_tween().set_parallel(true)
+	# 3. Come back down to normal size
+	return_tween.tween_property(btn, "scale", Vector2.ONE, 0.2).set_delay(0.15).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	# 4. Return to normal green
+	return_tween.tween_property(btn, "modulate", Color.GREEN, 0.2).set_delay(0.15)
 
-func _animate_incorrect_feedback(idx: int, tween: Tween):
+func _animate_incorrect_feedback(idx: int):
 	var btn = answer_buttons_list[idx].btn
 	if not is_instance_valid(btn): return
 	
+	btn.pivot_offset = btn.size / 2
 	var shake_tween = create_tween()
-	for i in range(6):
-		var offset = original_panel_pos + Vector2(randf_range(-10, 10), randf_range(-5, 5))
-		shake_tween.tween_property(screen_gameplay, "position", offset, 0.05)
-	shake_tween.tween_property(screen_gameplay, "position", original_panel_pos, 0.05)
 	
-	var vib_tween = create_tween()
+	# Buzz aggressively (Use rotation instead of position to avoid layout crashes)
 	for i in range(4):
-		vib_tween.tween_property(btn, "rotation_degrees", 3.0, 0.05)
-		vib_tween.tween_property(btn, "rotation_degrees", -3.0, 0.05)
-	vib_tween.tween_property(btn, "rotation_degrees", 0.0, 0.05)
+		shake_tween.tween_property(btn, "rotation_degrees", 4.0, 0.04)
+		shake_tween.tween_property(btn, "rotation_degrees", -4.0, 0.04)
+	shake_tween.tween_property(btn, "rotation_degrees", 0.0, 0.04)
+	
+	# Flash bright red
+	var color_tween = create_tween()
+	btn.modulate = Color(2.5, 0.5, 0.5)
+	color_tween.tween_property(btn, "modulate", Color.RED, 0.3)
 
 func _game_over():
 	is_game_active = false
@@ -570,15 +557,18 @@ func _open_question_list(group_id: String):
 	for i in range(buttons.size()):
 		var btn = buttons[i]
 		if btn is TextureButton or btn is BaseButton:
-			if btn.pressed.is_connected(_on_question_clicked):
-				btn.pressed.disconnect(_on_question_clicked)
+			# FIX: Clear all previous pressed signal connections securely
+			var connections = btn.get_signal_connection_list("pressed")
+			for conn in connections:
+				btn.disconnect("pressed", conn.callable)
+				
 			var lbl = btn.get_node_or_null("QuestionText")
 			
 			if i < questions.size():
 				var q_data = questions[i]
 				var q_id = q_data["id"]
 				
-				if answered_questions_ref.has(q_id):
+				if answered_questions_ref.has(q_id) and answered_questions_ref[q_id]["unlocked"]:
 					if lbl: lbl.text = q_data["q"]
 					btn.disabled = false
 					btn.modulate = Color.WHITE
