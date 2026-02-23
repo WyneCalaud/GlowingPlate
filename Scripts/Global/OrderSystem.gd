@@ -80,13 +80,71 @@ var current_customer_order: Dictionary = {
 	"required_beverage": []
 }
 
+func _generate_portion_rules(customer_order: CustomerOrder) -> Dictionary:
+	var rules := {}
+	var age_group := customer_order.get_age_group()
+	var plate := customer_order.needs
+
+	for category in plate.keys():
+		var key : String = plate[category]
+
+		# 🔹 ADD THIS BLOCK RIGHT HERE
+		if key == "ANY":
+			match category:
+				"Grow":
+					rules[category] = "Whole" if age_group == "10-12" else "Half"
+				"GlowVeg":
+					rules[category] = "VeggieFull" if age_group == "10-12" else "VeggieHigh"
+				"Go":
+					rules[category] = "TooHigh" if age_group == "10-12" else "RightAmount"
+				"GlowFru":
+					rules[category] = "Single"
+			continue
+		# 🔹 END OF NEW BLOCK
+
+		match key:
+
+			# ---------------- GROW ----------------
+			"CHICKEN_LEG", "FISH_FILLET":
+				rules[category] = "Whole" if age_group == "10-12" else "Half"
+
+			"EGG", "TOFU":
+				rules[category] = "Whole" if age_group == "10-12" else "Half"
+
+			# ---------------- GO ----------------
+			"RICE":
+				rules[category] = "TooHigh" if age_group == "10-12" else "RightAmount"
+
+			"CORN":
+				rules[category] = "VeggieFull" if age_group == "10-12" else "VeggieHigh"
+
+			"PANDESAL":
+				rules[category] = 4 if age_group == "10-12" else 3
+
+			# ---------------- GLOW VEG ----------------
+			"SITAW", "CARROTS", "EGGPLANT", "PUMPKIN":
+				rules[category] = "VeggieFull" if age_group == "10-12" else "VeggieHigh"
+
+			# ---------------- GLOW FRU ----------------
+			"WATERMELON", "MANGO", "BANANA", "PAPAYA":
+				rules[category] = "Single"
+
+	return rules
+
 func set_order_from_customer(customer_order: CustomerOrder) -> void:
 
-	# plate
+	var age_group := customer_order.get_age_group()
+
+	current_customer_order.age_group = age_group
+
+	# Copy plate base keys
 	current_customer_order.required_plate = customer_order.needs.duplicate()
 
-	# beverage
+	# Beverage
 	current_customer_order.required_beverage = customer_order.beverage_needs.duplicate()
+
+	# NEW: Attach required portion rules
+	current_customer_order["required_portions"] = _generate_portion_rules(customer_order)
 
 
 
@@ -159,20 +217,108 @@ func generate_order_for_day(day: int) -> Dictionary:
 # ---------------------------------------------------------
 
 func is_plate_correct() -> bool:
-	var plated_map: Dictionary = {}
+
+	print("----- VALIDATING PLATE -----")
+
+	var plated_map := {}
 
 	for entry in prepared_plate_contents:
+
 		var slot_type: String = str(entry.get("accepted_type", "")).strip_edges()
-		if slot_type != "":
-			plated_map[slot_type] = entry["item"].internal_key
+		if slot_type == "":
+			continue
+
+		var item: Resource = entry["item"]
+
+		plated_map[slot_type] = {
+			"key": item.internal_key,
+			"portion": item.get_meta("Portion") if item.has_meta("Portion") else "",
+			"rice": item.get_meta("RiceAmount") if item.has_meta("RiceAmount") else "",
+			"quantity": entry.get("count", 1)
+		}
+
+		print("Plated ->", slot_type,
+			"| Item:", item.internal_key,
+			"| Portion:", plated_map[slot_type].portion,
+			"| Rice:", plated_map[slot_type].rice,
+			"| Qty:", plated_map[slot_type].quantity
+		)
 
 	for category in current_customer_order.required_plate.keys():
-		var required: String = current_customer_order.required_plate[category]
-		var actual: String = plated_map.get(category, "")
-		if actual != required:
+
+		var required_key = current_customer_order.required_plate[category]
+		var required_portion = current_customer_order.required_portions.get(category, null)
+
+		print("Required ->", category,
+			"| Item:", required_key,
+			"| Portion:", required_portion
+		)
+
+		if not plated_map.has(category):
+			print("❌ Missing category:", category)
 			return false
 
+		var actual = plated_map[category]
+
+		# 1️⃣ Check item
+		if required_key != "ANY":
+			if actual.key != required_key:
+				print("❌ Wrong food for", category)
+				return false
+				
+		else:
+			#validate category onlly
+			var food_res = FOOD_DB.get(actual.key)
+			if food_res and food_res.food_category != category:
+				print("❌ Item not valid for ANY", category)
+				return false
+
+		# 2️⃣ Portion validation
+		match required_key:
+
+			"CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU":
+				if actual.portion != required_portion:
+					print("❌ Wrong portion for", category,
+						"| Expected:", required_portion,
+						"| Got:", actual.portion)
+					return false
+
+			"RICE":
+				if actual.rice != required_portion:
+					print("❌ Wrong rice amount for", category,
+						"| Expected:", required_portion,
+						"| Got:", actual.rice)
+					return false
+
+			"CORN":
+				if actual.portion != required_portion:
+					print("❌ Wrong corn portion for", category,
+						"| Expected:", required_portion,
+						"| Got:", actual.portion)
+					return false
+
+			"SITAW", "CARROTS", "EGGPLANT", "PUMPKIN":
+				if actual.portion != required_portion:
+					print("❌ Wrong veggie amount for", category,
+						"| Expected:", required_portion,
+						"| Got:", actual.portion)
+					return false
+
+			"PANDESAL":
+				if actual.quantity != required_portion:
+					print("❌ Wrong pandesal quantity",
+						"| Expected:", required_portion,
+						"| Got:", actual.quantity)
+					return false
+
+	print("✅ Plate is correct!")
 	return true
+
+func entry_quantity_for(category: String) -> int:
+	for entry in prepared_plate_contents:
+		if entry.get("accepted_type") == category:
+			return entry.get("quantity", 1)
+	return 0
 
 
 func is_beverage_correct() -> bool:

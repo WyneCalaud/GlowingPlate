@@ -271,5 +271,11 @@ func finish_quiz():
 		"correct_count": total_correct_answers,
 		"bonus_money": reward_money
 	}
+
 	QuizSystem.apply_quiz_results(quiz_results)
+
+	# Defer scene change to avoid tree-null crash
+	game_data.call_deferred("start_next_day_flow")
+
+	# Immediately stop this scene
 	queue_free()

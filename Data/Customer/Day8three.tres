@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://bd1bwsevxuer0"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_lgiml"]
+
+[resource]
+script = ExtResource("1_lgiml")
+customer_name = "Jenna"
+order_text = "Pan de sal, egg, carrot, and mango please!Any water is fine, and milk is okay."
+expanded_text = "Go: Pan de sal Grow: Egg Glow: Carrot + Mango Drink: Any water + milk"
+age = 6
+needs = {
+"GlowFru": "MANGO",
+"GlowVeg": "SITAW",
+"Go": "RICE",
+"Grow": "FISH"
+}
+beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

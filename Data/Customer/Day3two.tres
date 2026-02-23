@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://bxkgse31xjwdn"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_3j5fa"]
+
+[resource]
+script = ExtResource("1_3j5fa")
+customer_name = "Jenna"
+order_text = "I actually want to find out if fish is smelly.I’ll have pan de sal, fish, sitaw, and mango.Any water is fine, and milk is okay."
+expanded_text = "Go: Pan de sal Grow: Fish Glow: Sitaw + Mango Drink: Any water + milk"
+age = 6
+needs = {
+"GlowFru": "MANGO",
+"GlowVeg": "SITAW",
+"Go": "RICE",
+"Grow": "ANY"
+}
+beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

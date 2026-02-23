@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://bb7g02dkxixue"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_hqv5a"]
+
+[resource]
+script = ExtResource("1_hqv5a")
+customer_name = "Jenna"
+order_text = "Pan de sal please.I want a grow food that isn’t fried, plus a vegetable and a fruit.Hot water please, and milk is fine. Thank you!"
+expanded_text = "Go: Pan de sal Grow: Fish Glow: Sitaw + Mango Drink: Hot water + milk"
+age = 9
+needs = {
+"GlowFru": "MANGO",
+"GlowVeg": "SITAW",
+"Go": "RICE",
+"Grow": "ANY"
+}
+beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

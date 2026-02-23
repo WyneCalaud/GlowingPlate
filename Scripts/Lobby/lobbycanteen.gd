@@ -334,11 +334,37 @@ func _on_btn_final_serve_pressed() -> void:
 
 func _on_day_button_pressed() -> void:
 	var GD := get_node("/root/GameData")
-	var day_orders: Array = [
-		preload("res://Data/Customer/Day1one.tres"),
-		preload("res://Data/Customer/Day1two.tres"),
-		preload("res://Data/Customer/Day1three.tres")
-	]
+	var day_orders: Array = []
+
+	match GD.current_day:
+
+		1:
+			day_orders = [
+				preload("res://Data/Customer/Day1one.tres"),
+				preload("res://Data/Customer/Day1two.tres"),
+				preload("res://Data/Customer/Day1three.tres")
+			]
+
+		2:
+			day_orders = [
+				preload("res://Data/Customer/Day2one.tres"),
+				preload("res://Data/Customer/Day2two.tres"),
+				preload("res://Data/Customer/Day2three.tres"),
+				preload("res://Data/Customer/Day2four.tres")
+			]
+
+		3:
+			day_orders = [
+				preload("res://Data/Customer/Day3one.tres"),
+				preload("res://Data/Customer/Day3two.tres"),
+				preload("res://Data/Customer/Day3three.tres")
+			]
+
+		_:
+			day_orders = [
+				preload("res://Data/Customer/Day1one.tres")
+			]
+
 	GD.start_day_with_orders(day_orders)
 	_restore_day_ui_state()
 

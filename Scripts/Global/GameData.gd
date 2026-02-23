@@ -5,10 +5,13 @@ var current_customer_age_group: String = ""
 var player_name : String = ""
 
 # --- Core Progression Variables ---
-var current_day: int = 1         
+var current_day: int = 6         
 const TOTAL_DAYS: int = 7         
 var money: int = 900                
 var keys: int = 60  
+
+var matching_tutorial_completed: bool = false
+
 
 # --- GLOW BOARD PROGRESSION ---
 var character_progress: Dictionary = {
@@ -142,6 +145,7 @@ func finalize_service(day_result: Dictionary):
 	get_tree().call_group("HUD", "update_all_labels")
 
 	if remaining_customers.is_empty():
+		day_started = false
 		current_day += 1
 		transition_to_end_day()
 
@@ -190,3 +194,17 @@ func get_character_stage(char_name: String) -> int:
 	if character_stage.has(char_name):
 		return character_stage[char_name]
 	return 1
+
+
+func start_next_day_flow():
+
+	if current_day == 1:
+		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+		return
+
+	if current_day >= 2 and current_day <= 5:
+		get_tree().change_scene_to_file("res://Scenes/News/news_scene.tscn")
+		return
+
+	# Day 6+ → no news
+	get_tree().change_scene_to_file("res://Scenes/MiniGame/matching_game.tscn")

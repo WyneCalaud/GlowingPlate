@@ -67,13 +67,32 @@ func set_order_display(customer_order: CustomerOrder):
 	name_label.text = customer_order.customer_name
 	age_label.text = "" + str(customer_order.age)
 
-	var db = OrderSystem.FOOD_DB
 	var plate = customer_order.needs
+	var db = OrderSystem.FOOD_DB
 
-	go_icon.texture = db[plate["Go"]].get("default_plated_texture")
-	grow_icon.texture = db[plate["Grow"]].get("plated_texture_whole")
-	veg_icon.texture = db[plate["GlowVeg"]].get("veggie_plated_full")
-	fru_icon.texture = db[plate["GlowFru"]].get("texture_count_1")
+	# GO
+	if plate["Go"] == "ANY":
+		go_icon.texture = preload("res://Assets/Ticket/ANY GO FOOD.png")
+	else:
+		go_icon.texture = db[plate["Go"]].default_plated_texture
+
+	# GROW
+	if plate["Grow"] == "ANY":
+		grow_icon.texture = preload("res://Assets/Ticket/ANY GROW FOOD.png")
+	else:
+		grow_icon.texture = db[plate["Grow"]].plated_texture_whole
+
+	# GLOW VEG
+	if plate["GlowVeg"] == "ANY":
+		veg_icon.texture = preload("res://Assets/Ticket/ANY GLOW VEGETABLE FOOD.png")
+	else:
+		veg_icon.texture = db[plate["GlowVeg"]].veggie_plated_full
+
+	# GLOW FRU
+	if plate["GlowFru"] == "ANY":
+		fru_icon.texture = preload("res://Assets/Ticket/ANY GLOW FRUIT FOOD.png")
+	else:
+		fru_icon.texture = db[plate["GlowFru"]].texture_count_1
 
 	#water_icon.visible = order["required_beverage"].has("")
 	#milk_icon.visible = order["required_beverage"].has("")

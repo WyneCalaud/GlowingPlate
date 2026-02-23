@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://bl5givqrk65mb"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_onf2b"]
+
+[resource]
+script = ExtResource("1_onf2b")
+customer_name = "Jenna"
+order_text = "I don’t feel like eating meat or fish today.Can I have tokwa instead, with a complete healthy meal?Cold water please, and no milk."
+expanded_text = "Grow: Tokwa Go: Any Glow: Any vegetable + any fruit Drink: Cold water, no milk"
+age = 6
+needs = {
+"GlowFru": "MANGO",
+"GlowVeg": "SITAW",
+"Go": "RICE",
+"Grow": "FISH"
+}
+beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

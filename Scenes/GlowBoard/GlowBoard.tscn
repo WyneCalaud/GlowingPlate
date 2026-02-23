@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://de6tyysekcw3h" path="res://Assets/UI/GlowBoard/KeysUI.png" id="5_lh86r"]
 [ext_resource type="Texture2D" uid="uid://ba7worswg5dfs" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P4.png" id="5_phni6"]
 [ext_resource type="Texture2D" uid="uid://dkwg7ksxwm30f" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P5.png" id="6_20fw6"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="6_k3bx0"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="6_k3bx0"]
 [ext_resource type="Texture2D" uid="uid://ryu6th5fud2h" path="res://Assets/UI/GlowBoard/LeoCard.png" id="7_bwta1"]
 [ext_resource type="Texture2D" uid="uid://mjqgeuhws7iy" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P6.png" id="7_itx7g"]
 [ext_resource type="Texture2D" uid="uid://gvqouldsggx8" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P7.png" id="8_5pkxf"]
