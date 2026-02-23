@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dy6gawubssej3"]
+[gd_scene load_steps=23 format=3 uid="uid://dy6gawubssej3"]
 
 [ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="1"]
 [ext_resource type="Script" uid="uid://pyv06wdu0qoo" path="res://Scenes/GameHUD/GameHUD.gd" id="2"]
@@ -18,8 +18,10 @@
 [ext_resource type="LabelSettings" uid="uid://bxmx2yfdx0m1m" path="res://Theme/GameHUDTheme.tres" id="15"]
 [ext_resource type="PackedScene" uid="uid://ccv4r1x8840d2" path="res://Scenes/GameHUD/SoundControl.tscn" id="16"]
 [ext_resource type="Texture2D" uid="uid://cp07tbyxft2d2" path="res://Assets/UI/Interface/FinishButton.png" id="17"]
+[ext_resource type="Texture2D" uid="uid://bx8ne7k621gyf" path="res://Assets/UI/Interface/MenuAlmanac.png" id="17_g7tnq"]
 [ext_resource type="Texture2D" uid="uid://c0ao7xl25f74g" path="res://Assets/UI/Interface/MoneyBar.png" id="18"]
 [ext_resource type="Texture2D" uid="uid://cgrtxjbkvl3iv" path="res://Assets/UI/Interface/KeyBar.png" id="19"]
+[ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="21_uq2nh"]
 
 [node name="GameHUD" type="CanvasLayer"]
 script = ExtResource("2")
@@ -204,6 +206,14 @@ offset_right = 62.0
 offset_bottom = 204.0
 texture_normal = ExtResource("11")
 
+[node name="AlmanacButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 221.0
+offset_right = 61.0
+offset_bottom = 279.0
+texture_normal = ExtResource("17_g7tnq")
+
 [node name="TopBarRight2" type="MarginContainer" parent="HUDControl"]
 layout_mode = 1
 anchors_preset = 1
@@ -278,3 +288,8 @@ texture_normal = ExtResource("17")
 
 [node name="SoundControl" parent="HUDControl" instance=ExtResource("16")]
 layout_mode = 1
+
+[node name="AlmanacUI" parent="." instance=ExtResource("21_uq2nh")]
+visible = false
+
+[connection signal="pressed" from="HUDControl/TopBarRight/MenuGroup/MenuButton/AlmanacButton" to="." method="_on_almanac_pressed"]

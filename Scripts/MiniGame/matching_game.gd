@@ -579,9 +579,11 @@ func show_exercise_result():
 	tween.tween_property(result_desc,"modulate:a",1.0,0.7)
 
 func _on_continue_button_pressed() -> void:
+	get_node("/root/GameData").save_game()
 	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 
 func _on_main_menu_button_pressed() -> void:
+	get_node("/root/GameData").save_game()
 	get_tree().change_scene_to_file("res://Scenes/Main Menu/Main_menu.tscn")
 
 # =========================
