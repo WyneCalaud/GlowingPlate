@@ -10,6 +10,10 @@ const TOTAL_DAYS: int = 7
 var money: int = 900                
 var keys: int = 60  
 
+var matching_tutorial_completed: bool = false
+
+const SAVE_PATH := "user://save_data.json"
+
 # --- GLOW BOARD PROGRESSION ---
 var character_progress: Dictionary = {
 	"Leo": 0.0,
@@ -56,6 +60,7 @@ const QUIZ_SCENE_PATH = "res://Scenes/Quiz/QuizScene.tscn"
 
 func _ready():
 	add_to_group("GameData")
+	load_game()
 
 # --- ECONOMY HELPER (FIX FOR CRASH) ---
 func add_money(amount: int) -> void:
@@ -142,8 +147,11 @@ func finalize_service(day_result: Dictionary):
 	get_tree().call_group("HUD", "update_all_labels")
 
 	if remaining_customers.is_empty():
+		day_started = false
 		current_day += 1
 		transition_to_end_day()
+	
+	save_game()
 
 # --- WRAPPERS & TRANSITIONS ---
 func store_plate_contents(contents: Array): OrderSystem.prepared_plate_contents = contents
@@ -169,7 +177,7 @@ func save_customer(order: Resource, tex: Texture2D):
 
 	# ⭐ NEW
 	if order and order.has_method("get"):
-		current_customer_age_group = order.age_group
+		current_customer_age_group = order.get_age_group()
 
 	# Tell HUD to refresh
 	get_tree().call_group("HUD", "update_age_group_display")
@@ -190,3 +198,66 @@ func get_character_stage(char_name: String) -> int:
 	if character_stage.has(char_name):
 		return character_stage[char_name]
 	return 1
+
+
+func start_next_day_flow():
+	save_game()
+	if current_day == 1:
+		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+		return
+
+	if current_day >= 2 and current_day <= 5:
+		get_tree().change_scene_to_file("res://Scenes/News/news_scene.tscn")
+		return
+
+	# Day 6+ → no news
+	get_tree().change_scene_to_file("res://Scenes/MiniGame/matching_game.tscn")
+
+
+func save_game():
+	var save_data = {
+		"current_day": current_day,
+		"money": money,
+		"keys": keys,
+		"player_name": player_name,
+		"matching_tutorial_completed": matching_tutorial_completed,
+		"character_progress": character_progress,
+		"character_stage": character_stage
+	}
+
+	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(save_data))
+		file.close()
+		print("Game Saved.")
+	else:
+		print("Save Failed.")
+
+
+func load_game():
+	if not FileAccess.file_exists(SAVE_PATH):
+		print("No save file found.")
+		return
+
+	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
+	if not file:
+		print("Failed to open save file.")
+		return
+
+	var content = file.get_as_text()
+	file.close()
+
+	var data = JSON.parse_string(content)
+	if typeof(data) != TYPE_DICTIONARY:
+		print("Corrupted save file.")
+		return
+
+	current_day = data.get("current_day", 1)
+	money = data.get("money", 900)
+	keys = data.get("keys", 60)
+	player_name = data.get("player_name", "")
+	matching_tutorial_completed = data.get("matching_tutorial_completed", false)
+	character_progress = data.get("character_progress", character_progress)
+	character_stage = data.get("character_stage", character_stage)
+
+	print("Game Loaded.")

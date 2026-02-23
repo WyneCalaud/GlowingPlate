@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://dfc72g3mct0iy"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_nsx58"]
+
+[resource]
+script = ExtResource("1_nsx58")
+customer_name = "Jenna"
+order_text = "Oooh, corn! I want that as my Go food.The rest is up to you, just make it healthy.Hot water please, and no milk."
+expanded_text = "Go: Corn Grow:Fish Glow: Sitaw or Squash + Mango or Watermelon Drink: Hot water, no milk"
+age = 6
+needs = {
+"GlowFru": "MANGO",
+"GlowVeg": "SITAW",
+"Go": "RICE",
+"Grow": "FISH"
+}
+beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

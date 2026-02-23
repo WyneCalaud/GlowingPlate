@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://dig4160d1eqsf"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_7soym"]
+
+[resource]
+script = ExtResource("1_7soym")
+customer_name = "Jenna"
+order_text = "Oooh, carrots! I want that as my vegetable.The rest is up to you, just make it healthy.Cold water please, and no milk."
+expanded_text = "Vegetable: Carrot Go: Any Grow: Any Fruit: Any Drink: Cold water, no milk"
+age = 6
+needs = {
+"GlowFru": "MANGO",
+"GlowVeg": "SITAW",
+"Go": "RICE",
+"Grow": "FISH"
+}
+beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

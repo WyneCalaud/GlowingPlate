@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://c6vvge1kl8kk0"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_rf21f"]
+
+[resource]
+script = ExtResource("1_rf21f")
+customer_name = "Jenna"
+order_text = "I want something purple for my vegetable, brown for my rice, eggs for my Grow food, green for a vegetable, and yellow for my fruit.Hot water please, and milk is fine."
+expanded_text = "Go: Brown Rice Grow: Egg Glow: Sitaw (green) + Mango (yellow) Drink: Hot water + milk"
+age = 6
+needs = {
+"GlowFru": "MANGO",
+"GlowVeg": "SITAW",
+"Go": "RICE",
+"Grow": "FISH"
+}
+beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

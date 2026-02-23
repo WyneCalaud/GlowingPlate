@@ -101,8 +101,14 @@ func _ready():
 	await get_tree().process_frame
 	preview_all_cards()
 
-	if is_tutorial:
+	var GD = get_node("/root/GameData")
+
+	if not GD.matching_tutorial_completed:
+		is_tutorial = true
 		start_tutorial()
+	else:
+		is_tutorial = false
+		tutorial_overlay.visible = false
 
 	tutorial_step_image.gui_input.connect(_on_tutorial_clicked)
 	tutorial_popup_image.gui_input.connect(_on_tutorial_popup_clicked)
@@ -276,6 +282,9 @@ func handle_tutorial_progress(card):
 
 func end_tutorial():
 
+	var GD = get_node("/root/GameData")
+	GD.matching_tutorial_completed = true   # 👈 ADD THIS
+
 	tutorial_overlay.visible = false
 	set_background_dim(1.0)
 
@@ -287,12 +296,10 @@ func _on_go_retry():
 	get_tree().reload_current_scene()
 
 func _on_go_menu():
-	print("🏠 Main Menu pressed")
-	# replace later with scene change
+	get_tree().change_scene_to_file("res://Scenes/Main Menu/Main_menu.tscn")
 
 func _on_go_skip():
-	print("⏭ Skip pressed")
-
+	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 
 # =========================
 # GAMEPLAY
@@ -571,6 +578,13 @@ func show_exercise_result():
 	tween.tween_property(result_label,"modulate:a",1.0,0.5)
 	tween.tween_property(result_desc,"modulate:a",1.0,0.7)
 
+func _on_continue_button_pressed() -> void:
+	get_node("/root/GameData").save_game()
+	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+
+func _on_main_menu_button_pressed() -> void:
+	get_node("/root/GameData").save_game()
+	get_tree().change_scene_to_file("res://Scenes/Main Menu/Main_menu.tscn")
 
 # =========================
 # GAME OVER

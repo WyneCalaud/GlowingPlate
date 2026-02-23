@@ -58,7 +58,8 @@ var all_news = {
 		},
 		{
 			"image": preload("res://Assets/News/onenine.png"),
-			"text": "Plus, drinking water is one of the simplest thing you can do to be healthier"
+			"text": "Plus, drinking water is one of the simplest 
+			thing you can do to be healthier"
 		},
 		{
 			"image": preload("res://Assets/News/oneten.png"),
@@ -430,8 +431,7 @@ func _end_news():
 
 	await fade.finished
 
-	# Finally go to lobby
-	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+	get_tree().change_scene_to_file("res://Scenes/MiniGame/matching_game.tscn")
 
 
 # =========================

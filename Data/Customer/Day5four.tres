@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://m0evux4g0lej"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_vyx4i"]
+
+[resource]
+script = ExtResource("1_vyx4i")
+customer_name = "Jenna"
+order_text = "Hi! What if I don’t want rice?I want seafood, a green vegetable, and a red fruit.Cold water please, and no milk."
+expanded_text = "Go: Pan de sal Grow: Fish Glow: Sitaw (green vegetable) + Watermelon (red fruit) Drink: Cold water, no milk"
+age = 6
+needs = {
+"GlowFru": "MANGO",
+"GlowVeg": "SITAW",
+"Go": "RICE",
+"Grow": "ANY"
+}
+beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

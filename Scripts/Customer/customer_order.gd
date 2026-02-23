@@ -1,4 +1,3 @@
-# res://Scripts/Customer/customer_order.gd
 extends Resource
 class_name CustomerOrder
 
@@ -6,9 +5,8 @@ class_name CustomerOrder
 @export var order_text: String
 @export var expanded_text: String
 
-# ⭐ NEW
-# "6-9" or "10-12"
-@export var age_group: String = "6-9"
+# ⭐ NEW – Exact age
+@export var age: int = 8
 
 # plate requirements
 @export var needs: Dictionary = {
@@ -20,3 +18,10 @@ class_name CustomerOrder
 
 # beverage requirements
 @export var beverage_needs: Array[String] = []
+
+# ⭐ Computed property (auto age group)
+func get_age_group() -> String:
+	if age <= 9:
+		return "6-9"
+	else:
+		return "10-12"

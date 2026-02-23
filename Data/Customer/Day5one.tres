@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://c55dra1jiclmf"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_i3cj3"]
+
+[resource]
+script = ExtResource("1_i3cj3")
+customer_name = "Jenna"
+order_text = "Oooh, a watermelon! I’ll have it as my fruit.Add some rice, seafood, and an orange-colored vegetable in there.Cold water please, and no milk. Thanks!"
+expanded_text = "Go: Rice Grow: Fish Glow: Squash (vegetable) + Watermelon (fruit) Drink: Cold water, no milk"
+age = 6
+needs = {
+"GlowFru": "MANGO",
+"GlowVeg": "SITAW",
+"Go": "RICE",
+"Grow": "ANY"
+}
+beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"
