@@ -102,11 +102,11 @@ func _ready():
 func _setup_menu_buttons():
 	if menu_button:
 		menu_button.pressed.connect(_on_menu_button_pressed)
-		menu_button.z_index = 0
 		
 	if settings_button:
 		settings_button.top_level = false
-		settings_button.z_index = -1
+		settings_button.show_behind_parent = true # FIX: Renders behind MenuButton without clipping behind the whole UI
+		settings_button.z_index = 0
 		settings_button.position = Vector2.ZERO
 		settings_button.visible = false
 		settings_button.modulate.a = 0.0
@@ -114,7 +114,8 @@ func _setup_menu_buttons():
 		
 	if home_button:
 		home_button.top_level = false
-		home_button.z_index = -1
+		home_button.show_behind_parent = true # FIX
+		home_button.z_index = 0
 		home_button.position = Vector2.ZERO
 		home_button.visible = false
 		home_button.modulate.a = 0.0
@@ -326,7 +327,6 @@ func _animate_incorrect_feedback(idx: int):
 # ==========================================================
 
 func _on_menu_button_pressed():
-	# If any essential menu button is missing, abort safely
 	if not settings_button or not home_button: return
 	
 	is_menu_open = !is_menu_open
@@ -364,7 +364,6 @@ func _on_menu_button_pressed():
 			menu_tween.tween_property(home_button, "position:y", 0.0, ANIM_DURATION)
 			menu_tween.tween_property(home_button, "modulate:a", 0.0, ANIM_DURATION)
 			
-		
 		menu_tween.chain().tween_callback(func():
 			if settings_button: settings_button.visible = false
 			if home_button: home_button.visible = false
