@@ -1,34 +1,29 @@
-[gd_scene load_steps=11 format=3 uid="uid://ccvy7eyr4ht8l"]
+[gd_scene load_steps=16 format=3 uid="uid://ccvy7eyr4ht8l"]
 
 [ext_resource type="Script" uid="uid://c05tk15qol8jt" path="res://Scripts/Results/EndDayResults.gd" id="1_rhjxp"]
-[ext_resource type="Texture2D" uid="uid://bbi8lrleu7bf6" path="res://Background/canteen lobby final.png" id="2_ep7c6"]
+[ext_resource type="Texture2D" uid="uid://dhwsu46o6vnqf" path="res://Assets/UI/GlowingMeBackground.png" id="2_1i4kd"]
 [ext_resource type="Theme" uid="uid://b5mpvf81owwdn" path="res://Theme/QuizTheme.tres" id="3_464tc"]
 [ext_resource type="FontFile" uid="uid://btg6v4f2xjtf8" path="res://monogram.ttf" id="3_ej7a3"]
-[ext_resource type="Texture2D" uid="uid://crkg7i8lp1a4o" path="res://Assets/Buttons/Got it.png" id="3_l3ycq"]
+[ext_resource type="Texture2D" uid="uid://c364h4j3e0aq2" path="res://Assets/UI/DarkenLayer.png" id="3_kcqk4"]
 [ext_resource type="LabelSettings" uid="uid://dnbs1daf6c8v5" path="res://Theme/LabelTheme.tres" id="5_1i4kd"]
+[ext_resource type="Texture2D" uid="uid://bamjttl66drml" path="res://Assets/UI/KitchenUI/ConfirmationModal.png" id="5_wfqtg"]
+[ext_resource type="LabelSettings" uid="uid://dar4gad22igrx" path="res://Theme/AnswerText.tres" id="7_ykigs"]
+[ext_resource type="Texture2D" uid="uid://nnrumvef44xt" path="res://Assets/UI/LobbyUI/GotItButton.png" id="9_kcqk4"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ej7a3"]
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-expand_margin_top = 20.0
-expand_margin_bottom = 20.0
-shadow_size = 20
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yhygm"]
+texture = ExtResource("5_wfqtg")
 
 [sub_resource type="Theme" id="Theme_ej7a3"]
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_ej7a3"]
-thickness = 5
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_c5ypx"]
+color = Color(0.54509807, 0.22352941, 0.02745098, 1)
+thickness = 3
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_464tc"]
-thickness = 5
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1bm52"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qewp5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2w0l1"]
 
 [node name="EndDayResult" type="Control"]
 layout_mode = 3
@@ -46,14 +41,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_ep7c6")
+texture = ExtResource("2_1i4kd")
 expand_mode = 1
 
-[node name="DarkenBG" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.08235294, 0.08235294, 0.08235294, 0.70980394)
+[node name="DarkenLayer" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_kcqk4")
+expand_mode = 1
 
 [node name="CenterContainer" type="Panel" parent="."]
 layout_mode = 1
@@ -69,36 +68,48 @@ offset_bottom = 165.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_464tc")
-theme_override_styles/panel = SubResource("StyleBoxFlat_ej7a3")
+theme_override_styles/panel = SubResource("StyleBoxTexture_yhygm")
 
 [node name="Layout" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 2.75
+offset_top = 4.25
+offset_right = -2.75
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_ej7a3")
+alignment = 1
 
 [node name="Title" type="Label" parent="CenterContainer/Layout"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("3_ej7a3")
 theme_override_font_sizes/font_size = 32
-text = "End of the Day
-Results"
+text = "Day 0 Complete!"
+label_settings = ExtResource("7_ykigs")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/Layout"]
 layout_mode = 2
-theme_override_constants/separation = 50
-theme_override_styles/separator = SubResource("StyleBoxLine_ej7a3")
+theme_override_styles/separator = SubResource("StyleBoxLine_c5ypx")
+
+[node name="HSeparator3" type="HSeparator" parent="CenterContainer/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 30
+theme_override_styles/separator = SubResource("StyleBoxEmpty_1bm52")
 
 [node name="MoneyRow" type="HBoxContainer" parent="CenterContainer/Layout"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+
+[node name="VSeparator" type="VSeparator" parent="CenterContainer/Layout/MoneyRow"]
+layout_mode = 2
+theme_override_constants/separation = 60
+theme_override_styles/separator = SubResource("StyleBoxEmpty_qewp5")
 
 [node name="TotalEarned" type="Label" parent="CenterContainer/Layout/MoneyRow"]
 layout_mode = 2
@@ -113,10 +124,17 @@ theme_override_fonts/font = ExtResource("3_ej7a3")
 theme_override_font_sizes/font_size = 32
 label_settings = ExtResource("5_1i4kd")
 
+[node name="HSeparator2" type="HSeparator" parent="CenterContainer/Layout"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2w0l1")
+
 [node name="ReputationRow" type="HBoxContainer" parent="CenterContainer/Layout"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+
+[node name="VSeparator2" type="VSeparator" parent="CenterContainer/Layout/ReputationRow"]
+layout_mode = 2
+theme_override_constants/separation = 60
+theme_override_styles/separator = SubResource("StyleBoxEmpty_qewp5")
 
 [node name="Reputation" type="Label" parent="CenterContainer/Layout/ReputationRow"]
 layout_mode = 2
@@ -131,13 +149,13 @@ theme_override_fonts/font = ExtResource("3_ej7a3")
 theme_override_font_sizes/font_size = 32
 label_settings = ExtResource("5_1i4kd")
 
-[node name="HSeparator2" type="HSeparator" parent="CenterContainer/Layout"]
+[node name="HSeparator4" type="HSeparator" parent="CenterContainer/Layout"]
 layout_mode = 2
-theme_override_constants/separation = 50
-theme_override_styles/separator = SubResource("StyleBoxLine_464tc")
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxEmpty_1bm52")
 
 [node name="EndDayButton" type="TextureButton" parent="CenterContainer/Layout"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
-texture_normal = ExtResource("3_l3ycq")
+texture_normal = ExtResource("9_kcqk4")

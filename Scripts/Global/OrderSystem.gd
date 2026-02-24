@@ -162,7 +162,7 @@ func clear_prepared_data() -> void:
 
 
 # ---------------------------------------------------------
-# SAFE BEVERAGE STORAGE (FIXED)
+# SAFE BEVERAGE STORAGE (FIXED FOR MULTIPLES)
 # ---------------------------------------------------------
 
 func add_prepared_beverage(beverage_res: Resource) -> void:
@@ -180,13 +180,14 @@ func add_prepared_beverage(beverage_res: Resource) -> void:
 	if key == "":
 		key = str(beverage_res.get_instance_id())
 
-	# Store entry
-	prepared_beverage_data[key] = {
-		"item": beverage_res
-	}
+	# Create a unique dictionary key so multiples of the same drink don't overwrite each other
+	var unique_id = key + "_" + str(Time.get_ticks_msec()) + "_" + str(randi() % 1000)
 
-	# Debug (optional, remove later)
-	# print("Beverage stored under key:", key)
+	# Store entry
+	prepared_beverage_data[unique_id] = {
+		"item": beverage_res,
+		"base_key": key
+	}
 
 
 # ---------------------------------------------------------
@@ -322,9 +323,24 @@ func entry_quantity_for(category: String) -> int:
 
 
 func is_beverage_correct() -> bool:
+	var required_counts = {}
+	var prepared_counts = {}
+
+	# Count required beverages
 	for bev_key in current_customer_order.required_beverage:
 		var normalized_key: String = str(bev_key).strip_edges().to_upper()
-		if not prepared_beverage_data.has(normalized_key):
+		required_counts[normalized_key] = required_counts.get(normalized_key, 0) + 1
+
+	# Count prepared beverages
+	for entry in prepared_beverage_data.values():
+		var item_key: String = entry.get("base_key", "")
+		if item_key == "":
+			item_key = str(entry.item.get("internal_key", "")).strip_edges().to_upper()
+		prepared_counts[item_key] = prepared_counts.get(item_key, 0) + 1
+
+	# Ensure everything required is prepared in the correct quantity
+	for req_key in required_counts.keys():
+		if prepared_counts.get(req_key, 0) < required_counts[req_key]:
 			return false
 
 	return true
