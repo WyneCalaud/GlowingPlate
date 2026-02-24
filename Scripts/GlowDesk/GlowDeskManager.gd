@@ -3,7 +3,10 @@ extends Control
 # --- SIGNALS ---
 signal closed
 
-# --- SCREENS ---
+# --- SOUND CONTROL ---
+@onready var sound_control: Control = $SoundControl
+
+# --- SCREENS (The different UI States) ---
 @onready var screen_main: Control = $PracticeOrBrowse
 @onready var screen_practice_select: Control = $QuickOrEndlessSelection
 @onready var screen_browse_groups: Control = $BrowseGroup
@@ -12,55 +15,52 @@ signal closed
 @onready var screen_gameplay: Control = $QuickOrEndlessMode
 @onready var screen_countdown: Control = $Countdown
 
-# --- BUTTONS (Main) ---
+# --- BUTTONS (Main Navigation) ---
 @onready var btn_practice: BaseButton = $PracticeOrBrowse/HBoxContainer/PracticeCard/PracticeButton
 @onready var btn_browse: BaseButton = $PracticeOrBrowse/HBoxContainer/BrowseCard/BrowseButton
 
-# --- BUTTONS (Practice) ---
+# --- BUTTONS (Practice Path) ---
 @onready var btn_quick: BaseButton = $QuickOrEndlessSelection/HBoxContainer/QuickCard/QuickButton
 @onready var btn_endless: BaseButton = $QuickOrEndlessSelection/HBoxContainer/EndlessCard/EndlessButton
 
-# --- BUTTONS (Browse) ---
+# --- BUTTONS (Browse Path) ---
 @onready var btn_group_a: BaseButton = $BrowseGroup/HBoxContainer/GroupACard/GroupAButton
 @onready var btn_group_b: BaseButton = $BrowseGroup/HBoxContainer/GroupBCard/GroupBButton
 @onready var btn_group_c: BaseButton = $BrowseGroup/HBoxContainer/GroupCCard/GroupCButton
 
-# --- UI & HUD (Local) ---
+# --- UI ---
 @onready var back_button: BaseButton = $UI/BackButtonImage/TopLeftButton/BackButton
-@onready var money_label: Label = $UI/TopBarRight/HBoxContainer/MoneyGroup/Money/Label
-
-# Menu Group
+# Menu Dropdown
 @onready var btn_menu: BaseButton = $UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton
 @onready var btn_settings: BaseButton = $UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/SettingsButton
 @onready var btn_home: BaseButton = $UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/HomeButton
 
-# Pause Layer
-@onready var pause_layer: Control = $UI/PauseLayer
-@onready var sound_control: Control = $SoundControl
-
-# --- GAMEPLAY ELEMENTS ---
+# --- DYNAMIC ELEMENTS REFERENCES ---
+# Practice Mode Elements (Gameplay)
 @onready var sign_gameplay: TextureRect = $QuickOrEndlessMode/QuickOrEndlessSign
 @onready var lbl_game_q: Label = $QuickOrEndlessMode/AnswerBox/HBoxContainer/QuestionText
 @onready var tex_game_q: TextureRect = $QuickOrEndlessMode/AnswerBox/HBoxContainer/QuestionImage
 @onready var lbl_timer: Label = $QuickOrEndlessMode/Timer 
-
-# Answer Buttons & Labels
+# Answer Buttons
 @onready var btn_ans_a: BaseButton = $QuickOrEndlessMode/AnswersContainer/A
 @onready var btn_ans_b: BaseButton = $QuickOrEndlessMode/AnswersContainer/B
 @onready var btn_ans_c: BaseButton = $QuickOrEndlessMode/AnswersContainer/C
 @onready var lbl_ans_a: Label = $QuickOrEndlessMode/AnswersContainer/A/AText
 @onready var lbl_ans_b: Label = $QuickOrEndlessMode/AnswersContainer/B/BText
 @onready var lbl_ans_c: Label = $QuickOrEndlessMode/AnswersContainer/C/CText
+# Answer Images
 @onready var tex_ans_a: TextureRect = $QuickOrEndlessMode/AnswersContainer/A/AImage
 @onready var tex_ans_b: TextureRect = $QuickOrEndlessMode/AnswersContainer/B/BImage
 @onready var tex_ans_c: TextureRect = $QuickOrEndlessMode/AnswersContainer/C/CImage
 
-# Countdown
+# Countdown Elements
 @onready var tex_count_icon: TextureRect = $Countdown/HBoxContainer/CountIcon 
 
-# Browse Elements
+# Browse List Elements
 @onready var sign_browse_list: TextureRect = $BrowseGroupSelected/GroupSign
-@onready var grid_questions: GridContainer = $BrowseGroupSelected/GridContainer
+@onready var grid_questions: GridContainer = $BrowseGroupSelected/ScrollContainer/GridContainer
+
+# Browse Question Detail Elements
 @onready var sign_browse_question: TextureRect = $BrowseQuestionBox/GroupSign
 @onready var lbl_question_text: Label = $BrowseQuestionBox/AnswerBox/HBoxContainer/QuestionText
 @onready var tex_question_image: TextureRect = $BrowseQuestionBox/AnswerBox/HBoxContainer/QuestionImage
@@ -69,7 +69,7 @@ signal closed
 @onready var tex_right_answer: TextureRect = $BrowseQuestionBox/AnswersContainer/RightAnswerButton/RightAnswerImage
 @onready var lbl_explanation: Label = $BrowseQuestionBox/AnswersContainer/ExplanationText
 
-# --- TEXTURES ---
+# --- TEXTURES CONFIGURATION (Assign in Inspector) ---
 @export_group("Signs")
 @export var sign_quick: Texture2D
 @export var sign_endless: Texture2D
@@ -82,35 +82,34 @@ signal closed
 @export var tex_count_2: Texture2D
 @export var tex_count_1: Texture2D
 
+# --- DATA ---
+var question_data: Dictionary = {}
+
 # --- STATE VARIABLES ---
 var navigation_stack: Array[Control] = []
 var all_screens: Array[Control] = []
 var active_tween: Tween
-var is_transitioning: bool = false 
-var original_panel_pos: Vector2 
-
-# Menu Animation State
-var is_menu_open: bool = false
 var menu_tween: Tween
+var is_transitioning: bool = false 
+var is_answering: bool = false # Prevents clicking multiple answers during animation
 
 # Gameplay State
 var current_game_mode: String = ""
 var current_score: int = 0
-var current_lives: int = 3
 var game_time_left: float = 60.0 
 var is_game_active: bool = false 
 var correct_answer_text: String = "" 
 var current_question_obj: Dictionary = {} 
 var game_questions_pool: Array = []
-var answer_buttons_list: Array = [] 
 
-# --- DATA ---
-var answered_questions_ref: Dictionary = {} 
+# --- DAILY QUIZ / SRS SYSTEM ---
+var game_day: int = 1
+var user_progress: Dictionary = {} 
+const QUESTIONS_PER_DAY: int = 3
+const SRS_INTERVALS: Dictionary = { 0: 1, 1: 3, 2: 7, 3: 14 }
 
 func _ready():
-	# Capture original position for shake animations
-	if screen_gameplay:
-		original_panel_pos = screen_gameplay.position
+	question_data = QuestionDatabase.data
 	
 	all_screens = [
 		screen_main, screen_practice_select, screen_browse_groups, 
@@ -118,25 +117,13 @@ func _ready():
 		screen_countdown
 	]
 	
-	for screen in all_screens:
-		if screen:
-			screen.call_deferred("set_pivot_offset", screen.size / 2)
-	
-	answer_buttons_list = [
-		{"btn": btn_ans_a, "lbl": lbl_ans_a, "tex": tex_ans_a},
-		{"btn": btn_ans_b, "lbl": lbl_ans_b, "tex": tex_ans_b},
-		{"btn": btn_ans_c, "lbl": lbl_ans_c, "tex": tex_ans_c}
-	]
-	
 	_fix_mouse_filters()
-	_sync_user_progress()
-	_setup_local_ui()
 
 	if btn_practice: btn_practice.pressed.connect(_on_practice_pressed)
 	if btn_browse: btn_browse.pressed.connect(_on_browse_pressed)
 	
-	if btn_quick: btn_quick.pressed.connect(func(): _on_mode_button_pressed("Quick", btn_quick))
-	if btn_endless: btn_endless.pressed.connect(func(): _on_mode_button_pressed("Endless", btn_endless))
+	if btn_quick: btn_quick.pressed.connect(func(): _start_gameplay("Quick"))
+	if btn_endless: btn_endless.pressed.connect(func(): _start_gameplay("Endless"))
 	
 	if btn_group_a: btn_group_a.pressed.connect(func(): _open_question_list("A"))
 	if btn_group_b: btn_group_b.pressed.connect(func(): _open_question_list("B"))
@@ -144,139 +131,57 @@ func _ready():
 	
 	if back_button: back_button.pressed.connect(_on_back_pressed)
 	
-	if btn_ans_a: btn_ans_a.pressed.connect(_check_answer.bind(0))
-	if btn_ans_b: btn_ans_b.pressed.connect(_check_answer.bind(1))
-	if btn_ans_c: btn_ans_c.pressed.connect(_check_answer.bind(2))
+	if btn_menu:
+		btn_menu.pressed.connect(_toggle_menu)
+		if btn_settings: btn_settings.visible = false
+		if btn_home: btn_home.visible = false
+	if btn_home: btn_home.pressed.connect(_on_home_pressed)
+
+	if btn_ans_a: btn_ans_a.pressed.connect(func(): _check_answer(lbl_ans_a.text, btn_ans_a))
+	if btn_ans_b: btn_ans_b.pressed.connect(func(): _check_answer(lbl_ans_b.text, btn_ans_b))
+	if btn_ans_c: btn_ans_c.pressed.connect(func(): _check_answer(lbl_ans_c.text, btn_ans_c))
 	
 	navigation_stack.clear()
 	call_deferred("_show_only", screen_main, true)
 
-func _exit_tree():
-	if active_tween: active_tween.kill()
-	if menu_tween: menu_tween.kill()
-
-func _setup_local_ui():
-	if btn_settings:
-		btn_settings.visible = false
-		btn_settings.modulate.a = 0.0
-		btn_settings.position = Vector2.ZERO
-		if not btn_settings.pressed.is_connected(_on_settings_pressed):
-			btn_settings.pressed.connect(_on_settings_pressed)
-
-	if btn_home:
-		btn_home.visible = false
-		btn_home.modulate.a = 0.0
-		btn_home.position = Vector2.ZERO
-		if not btn_home.pressed.is_connected(_on_home_pressed):
-			btn_home.pressed.connect(_on_home_pressed)
-			
-	if btn_menu:
-		if not btn_menu.pressed.is_connected(_toggle_menu):
-			btn_menu.pressed.connect(_toggle_menu)
-	
-	if pause_layer:
-		pause_layer.visible = false
-
-	if sound_control:
-		sound_control.visible = false
-		var close_btn = sound_control.find_child("CloseButton", true, false)
-		if close_btn:
-			var connections = close_btn.get_signal_connection_list("pressed")
-			for conn in connections:
-				close_btn.disconnect("pressed", conn.callable)
-			
-			if not close_btn.pressed.is_connected(func(): sound_control.visible = false):
-				close_btn.pressed.connect(func(): sound_control.visible = false)
-
-func _sync_user_progress():
-	# CRITICAL FIX: The data we want is in QuizProgress, not QuizSystem!
-	if has_node("/root/QuizProgress"):
-		answered_questions_ref = get_node("/root/QuizProgress").question_progress
-	else:
-		printerr("GlowDeskManager: QuizProgress Global not found! Defaulting to empty.")
-		answered_questions_ref = {}
-
 func _process(delta: float):
-	if money_label and has_node("/root/GameData"):
-		money_label.text = str(get_node("/root/GameData").money)
-
-	if is_game_active and current_game_mode == "Quick" and not is_menu_open:
+	if is_game_active and current_game_mode == "Quick":
 		game_time_left -= delta
-		if is_instance_valid(lbl_timer):
+		if lbl_timer:
 			var m = int(game_time_left / 60)
 			var s = int(game_time_left) % 60
-			var new_text = "%d:%02d" % [m, s]
-			if lbl_timer.text != new_text:
-				lbl_timer.text = new_text
-				
+			lbl_timer.text = "%d:%02d" % [m, s]
 		if game_time_left <= 0:
 			game_time_left = 0
-			if is_instance_valid(lbl_timer): lbl_timer.text = "0:00"
+			if lbl_timer: lbl_timer.text = "0:00"
 			_game_over()
 
 func _fix_mouse_filters():
-	var buttons = [btn_practice, btn_browse, btn_quick, btn_endless, btn_group_a, btn_group_b, btn_group_c]
+	var buttons = [btn_practice, btn_browse, btn_quick, btn_endless, btn_group_a, btn_group_b, btn_group_c, btn_menu]
 	for btn in buttons:
 		if btn and btn.get_parent() is Control:
 			btn.get_parent().mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-# --- UI LOGIC (MENU ANIMATION) ---
-
+# --- UI LOGIC ---
 func _toggle_menu():
-	is_menu_open = !is_menu_open
-	
-	if pause_layer:
-		pause_layer.visible = is_menu_open
-	
+	if not btn_settings or not btn_home: return
+	var is_opening = not btn_settings.visible
+	var buttons = [btn_settings, btn_home]
 	if menu_tween: menu_tween.kill()
-	menu_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
-	
-	var settings_y = 65.0 
-	var home_y = 130.0
-	
-	if is_menu_open:
-		btn_settings.visible = true
-		btn_home.visible = true
-		btn_settings.mouse_filter = Control.MOUSE_FILTER_STOP
-		btn_home.mouse_filter = Control.MOUSE_FILTER_STOP
-		
-		menu_tween.tween_property(btn_settings, "position:y", settings_y, 0.3)
-		menu_tween.tween_property(btn_settings, "modulate:a", 1.0, 0.3)
-		
-		menu_tween.tween_property(btn_home, "position:y", home_y, 0.3).set_delay(0.05)
-		menu_tween.tween_property(btn_home, "modulate:a", 1.0, 0.3).set_delay(0.05)
+	menu_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	if is_opening:
+		for btn in buttons:
+			btn.visible = true
+			menu_tween.tween_property(btn, "modulate:a", 1.0, 0.25)
 	else:
-		btn_settings.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		btn_home.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		
-		menu_tween.tween_property(btn_settings, "position:y", 0.0, 0.3)
-		menu_tween.tween_property(btn_settings, "modulate:a", 0.0, 0.3)
-		
-		menu_tween.tween_property(btn_home, "position:y", 0.0, 0.3)
-		menu_tween.tween_property(btn_home, "modulate:a", 0.0, 0.3)
-		
+		for btn in buttons: menu_tween.tween_property(btn, "modulate:a", 0.0, 0.2)
 		menu_tween.chain().tween_callback(func():
-			if not is_menu_open:
-				btn_settings.visible = false
-				btn_home.visible = false
+			for btn in buttons: btn.visible = false
 		)
 
-func _on_settings_pressed():
-	_toggle_menu()
-	if sound_control:
-		sound_control.visible = true
-		sound_control.move_to_front()
-
-func _on_home_pressed():
-	if is_menu_open:
-		_toggle_menu()
-	visible = false
-	closed.emit()
-
+func _on_home_pressed(): closed.emit()
 func _on_practice_pressed(): _change_screen(screen_practice_select)
 func _on_browse_pressed(): _change_screen(screen_browse_groups)
-
-# --- NAVIGATION & TRANSITIONS ---
 
 func _change_screen(target_screen: Control):
 	if is_transitioning: return
@@ -287,7 +192,7 @@ func _change_screen(target_screen: Control):
 func _on_back_pressed():
 	if is_transitioning: return
 	if navigation_stack.is_empty():
-		_on_home_pressed()
+		closed.emit()
 	else:
 		var previous_screen = navigation_stack.pop_back()
 		_show_only(previous_screen)
@@ -300,36 +205,19 @@ func _show_only(target: Control, instant: bool = false):
 			if screen:
 				screen.visible = (screen == target)
 				screen.modulate.a = 1.0 if (screen == target) else 0.0
-				screen.scale = Vector2.ONE
 		return
 
 	if active_tween: active_tween.kill()
 	is_transitioning = true
-	
-	active_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	
+	active_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	var current = _get_current_screen()
-	
 	if current and current != target:
-		if is_instance_valid(current):
-			current.pivot_offset = current.size / 2
-			active_tween.tween_property(current, "scale", Vector2(0.9, 0.9), 0.2)
-			active_tween.tween_property(current, "modulate:a", 0.0, 0.15)
-			active_tween.tween_callback(func(): 
-				if is_instance_valid(current): current.visible = false
-			).set_delay(0.2)
-
-	if target and is_instance_valid(target):
+		active_tween.tween_property(current, "modulate:a", 0.0, 0.25)
+		active_tween.tween_callback(func(): current.visible = false).set_delay(0.25)
+	if target:
 		target.visible = true
-		target.pivot_offset = target.size / 2
-		
-		if target.modulate.a > 0.9: 
-			target.modulate.a = 0.0
-			target.scale = Vector2(0.8, 0.8)
-		
-		active_tween.tween_property(target, "scale", Vector2.ONE, 0.3)
-		active_tween.tween_property(target, "modulate:a", 1.0, 0.2)
-
+		if target.modulate.a > 0.9: target.modulate.a = 0.0 
+		active_tween.tween_property(target, "modulate:a", 1.0, 0.25)
 	active_tween.chain().tween_callback(func(): is_transitioning = false)
 
 func _get_current_screen() -> Control:
@@ -340,44 +228,41 @@ func _get_current_screen() -> Control:
 
 # --- GAMEPLAY LOGIC ---
 
-func _on_mode_button_pressed(mode: String, btn_ref: BaseButton):
+func _start_gameplay(mode: String):
 	if is_transitioning: return
 	
-	_sync_user_progress()
-	
-	if answered_questions_ref.is_empty():
-		print("LOCKED: No questions answered yet!")
-		_animate_button_error(btn_ref)
-		return
-		
-	_start_gameplay(mode)
-
-func _start_gameplay(mode: String):
 	current_game_mode = mode
 	current_score = 0
-	current_lives = 3
 	game_time_left = 60.0
 	is_game_active = false 
 	game_questions_pool.clear()
 
+	# Fetch ONLY unlocked questions based on user_progress (populated via QuizScene)
 	var all_qs = QuestionDatabase.get_all_questions()
-	
+	var unlocked_qs = []
 	for q in all_qs:
-		var q_id = q.get("id", "??")
-		if answered_questions_ref.has(q_id) and answered_questions_ref[q_id]["unlocked"]:
-			game_questions_pool.append(q)
-	
-	game_questions_pool.shuffle()
-	
-	if game_questions_pool.is_empty():
+		var id = q.get("id", "??")
+		if user_progress.has(id):
+			unlocked_qs.append(q)
+
+	# Cannot play if nothing is unlocked yet
+	if unlocked_qs.is_empty():
+		print("No unlocked questions available!")
+		var target_btn = btn_quick if mode == "Quick" else btn_endless
+		if target_btn:
+			_shake_locked_btn(target_btn, Color.WHITE) # Shake and return to White
 		return
+
+	# Load the unlocked questions into the pool
+	game_questions_pool.append_array(unlocked_qs)
+	game_questions_pool.shuffle()
 
 	if mode == "Quick":
 		if sign_gameplay and sign_quick: sign_gameplay.texture = sign_quick
 		if lbl_timer: lbl_timer.visible = true; lbl_timer.text = "1:00"
 	elif mode == "Endless":
 		if sign_gameplay and sign_endless: sign_gameplay.texture = sign_endless
-		if lbl_timer: lbl_timer.visible = false
+		if lbl_timer: lbl_timer.visible = false 
 
 	_change_screen(screen_countdown)
 	if tex_count_icon:
@@ -400,150 +285,132 @@ func _load_next_question():
 		return
 
 	var q_data = game_questions_pool.pop_front()
-	if current_game_mode == "Endless":
-		game_questions_pool.append(q_data)
-		
 	current_question_obj = q_data 
 	correct_answer_text = q_data["ans"]
 	
+	# Set Question UI
 	if lbl_game_q: lbl_game_q.text = q_data["q"]
 	if tex_game_q:
 		tex_game_q.texture = q_data.get("q_img", null)
 		tex_game_q.visible = (tex_game_q.texture != null)
 		
+	# PREPARE ANSWERS (Explicit Wrongs)
 	var options = []
-	options.append({ "text": q_data["ans"], "img": q_data.get("ans_img"), "is_correct": true })
-	options.append({ "text": q_data.get("wrong1", "Wrong"), "img": q_data.get("wrong1_img"), "is_correct": false })
-	options.append({ "text": q_data.get("wrong2", "Incorrect"), "img": q_data.get("wrong2_img"), "is_correct": false })
+	
+	# Correct Answer
+	options.append({ 
+		"text": q_data["ans"], 
+		"img": q_data.get("ans_img"),
+		"is_correct": true
+	})
+	
+	# Wrong 1 (Explicit or Fallback)
+	var w1_txt = q_data.get("wrong1", "Wrong")
+	options.append({ 
+		"text": w1_txt, 
+		"img": q_data.get("wrong1_img"),
+		"is_correct": false
+	})
+	
+	# Wrong 2 (Explicit or Fallback)
+	var w2_txt = q_data.get("wrong2", "Incorrect")
+	options.append({ 
+		"text": w2_txt, 
+		"img": q_data.get("wrong2_img"),
+		"is_correct": false
+	})
+	
 	options.shuffle()
+	
+	# ASSIGN TO BUTTONS
+	var ui_sets = [
+		{"lbl": lbl_ans_a, "tex": tex_ans_a},
+		{"lbl": lbl_ans_b, "tex": tex_ans_b},
+		{"lbl": lbl_ans_c, "tex": tex_ans_c}
+	]
 	
 	for i in range(3):
 		var opt = options[i]
-		var ui = answer_buttons_list[i]
+		var set = ui_sets[i]
 		
-		ui.btn.visible = true
-		ui.btn.disabled = false
-		ui.btn.modulate = Color.WHITE
-		ui.btn.scale = Vector2.ONE
-		ui.btn.rotation_degrees = 0
-		ui.btn.pivot_offset = ui.btn.size / 2
+		# Set Text and dynamic font size
+		if set.lbl:
+			set.lbl.text = opt.text
+			
+			var words = opt.text.strip_edges().split(" ", false)
+			var target_size = 30
+			if words.size() >= 4 or opt.text.length() > 13:
+				target_size = 20
+				
+			if set.lbl.label_settings:
+				var new_settings = set.lbl.label_settings.duplicate()
+				new_settings.font_size = target_size
+				set.lbl.label_settings = new_settings
+			else:
+				set.lbl.add_theme_font_size_override("font_size", target_size)
 		
-		if ui.lbl: ui.lbl.text = opt.text
-		if ui.tex:
-			ui.tex.texture = opt.img
-			ui.tex.visible = (opt.img != null)
+		# Set Image (and toggle visibility)
+		if set.tex:
+			set.tex.texture = opt.img
+			set.tex.visible = (opt.img != null)
 
-func _check_answer(btn_index: int):
-	if is_transitioning: return
-	is_transitioning = true 
+func _check_answer(selected_text: String, btn_node: BaseButton):
+	if is_transitioning or is_answering: return
+	is_answering = true # Lock inputs during animation
 	
-	var ui = answer_buttons_list[btn_index]
-	var selected_text = ui.lbl.text
 	var is_correct = (selected_text == correct_answer_text)
 	
-	for i in range(3):
-		var item = answer_buttons_list[i]
-		item.btn.disabled = true
-		if item.lbl.text == correct_answer_text:
-			item.btn.modulate = Color.GREEN
-		elif i == btn_index and not is_correct:
-			item.btn.modulate = Color.RED
+	# SRS UPDATE (Only applies to unlocked questions, tracking streak/review schedules)
+	var q_id = current_question_obj.get("id")
+	if current_game_mode == "Quick" and q_id and user_progress.has(q_id):
+		var entry = user_progress[q_id]
+		var new_streak = 0
+		if is_correct: new_streak = min(entry.streak + 1, 3) 
+		else: new_streak = 0
+		entry.streak = new_streak
+		entry.next_review_day = game_day + SRS_INTERVALS.get(new_streak, 1)
 
+	# --- ANIMATION & LOGIC ---
+	btn_node.pivot_offset = btn_node.size / 2
+	
 	if is_correct:
-		print("Correct!")
 		current_score += 10
-		_animate_correct_feedback(btn_index)
-	else:
-		print("Wrong!")
-		_animate_incorrect_feedback(btn_index)
-		if current_game_mode == "Endless":
-			current_lives -= 1
-
-	await get_tree().create_timer(1.5).timeout
-	if not is_instance_valid(self): return
-	
-	is_transitioning = false 
-	
-	if current_game_mode == "Endless" and current_lives <= 0:
-		_game_over()
-	else:
-		_load_next_question()
-
-# --- ANIMATIONS (FIXED TO PREVENT GPU/ENGINE CRASHES) ---
-
-func _animate_button_error(btn: BaseButton):
-	if not btn: return
-	
-	if btn.has_meta("is_animating_error") and btn.get_meta("is_animating_error"):
-		return
 		
-	btn.set_meta("is_animating_error", true)
-	
-	var tween = create_tween()
-	var target_color = Color.WHITE 
-	
-	btn.pivot_offset = btn.size / 2
-	
-	tween.tween_property(btn, "modulate", Color.RED, 0.1)
-	
-	for i in range(4):
-		tween.tween_property(btn, "rotation_degrees", 3.0, 0.05)
-		tween.tween_property(btn, "rotation_degrees", -3.0, 0.05)
-	
-	tween.tween_property(btn, "rotation_degrees", 0.0, 0.05)
-	tween.tween_property(btn, "modulate", target_color, 0.2)
-	
-	tween.tween_callback(func(): 
-		if is_instance_valid(btn): 
-			btn.set_meta("is_animating_error", false)
-	)
-
-func _animate_correct_feedback(idx: int):
-	var btn = answer_buttons_list[idx].btn
-	if not is_instance_valid(btn): return
-	
-	btn.pivot_offset = btn.size / 2
-	var tween = create_tween().set_parallel(true)
-	
-	# 1. Pop up (Scale instead of position to prevent layout engine infinite loop crashes)
-	tween.tween_property(btn, "scale", Vector2(1.15, 1.15), 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	# 2. Shine (Over-modulate to bright white/green glow)
-	tween.tween_property(btn, "modulate", Color(2.0, 2.5, 2.0), 0.15)
-	
-	var return_tween = create_tween().set_parallel(true)
-	# 3. Come back down to normal size
-	return_tween.tween_property(btn, "scale", Vector2.ONE, 0.2).set_delay(0.15).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-	# 4. Return to normal green
-	return_tween.tween_property(btn, "modulate", Color.GREEN, 0.2).set_delay(0.15)
-
-func _animate_incorrect_feedback(idx: int):
-	var btn = answer_buttons_list[idx].btn
-	if not is_instance_valid(btn): return
-	
-	btn.pivot_offset = btn.size / 2
-	var shake_tween = create_tween()
-	
-	# Buzz aggressively (Use rotation instead of position to avoid layout crashes)
-	for i in range(4):
-		shake_tween.tween_property(btn, "rotation_degrees", 4.0, 0.04)
-		shake_tween.tween_property(btn, "rotation_degrees", -4.0, 0.04)
-	shake_tween.tween_property(btn, "rotation_degrees", 0.0, 0.04)
-	
-	# Flash bright red
-	var color_tween = create_tween()
-	btn.modulate = Color(2.5, 0.5, 0.5)
-	color_tween.tween_property(btn, "modulate", Color.RED, 0.3)
+		# Correct Animation (Pop and Green Flash)
+		var tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		btn_node.modulate = Color(0.2, 1.0, 0.2, 1.0) # Greenish tint
+		tween.tween_property(btn_node, "scale", Vector2(1.1, 1.1), 0.2)
+		tween.tween_property(btn_node, "scale", Vector2.ONE, 0.2)
+		
+		await get_tree().create_timer(0.5).timeout
+		btn_node.modulate = Color.WHITE
+		is_answering = false
+		_load_next_question()
+	else:
+		# Wrong Animation (Shake and Red Flash)
+		var tween = create_tween().set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+		btn_node.modulate = Color(1.0, 0.2, 0.2, 1.0) # Reddish tint
+		
+		tween.tween_property(btn_node, "rotation_degrees", 5.0, 0.05)
+		tween.tween_property(btn_node, "rotation_degrees", -5.0, 0.1)
+		tween.tween_property(btn_node, "rotation_degrees", 0.0, 0.05)
+		
+		await get_tree().create_timer(0.5).timeout
+		btn_node.modulate = Color.WHITE
+		is_answering = false
+		
+		# Exhaust pool rather than deducting lives in Endless mode
+		_load_next_question()
 
 func _game_over():
 	is_game_active = false
-	print("Game Over. Score: ", current_score)
+	if current_game_mode == "Quick": game_day += 1
 	_change_screen(screen_practice_select)
 
-# --- BROWSE LOGIC (Strict Lock) ---
+# --- BROWSE LOGIC ---
 
 func _open_question_list(group_id: String):
 	if is_transitioning: return
-	_sync_user_progress()
 	
 	var tex = null
 	if group_id == "A": tex = sign_group_a
@@ -551,42 +418,63 @@ func _open_question_list(group_id: String):
 	elif group_id == "C": tex = sign_group_c
 	if sign_browse_list and tex: sign_browse_list.texture = tex
 	
-	var questions = QuestionDatabase.data.get(group_id, [])
-	var buttons = grid_questions.get_children()
+	var questions = question_data.get(group_id, [])
 	
-	for i in range(buttons.size()):
-		var btn = buttons[i]
-		if btn is TextureButton or btn is BaseButton:
-			# FIX: Clear all previous pressed signal connections securely
-			var connections = btn.get_signal_connection_list("pressed")
-			for conn in connections:
-				btn.disconnect("pressed", conn.callable)
-				
-			var lbl = btn.get_node_or_null("QuestionText")
+	# 1. Target the Template Button (List1)
+	if grid_questions.get_child_count() == 0:
+		return
+		
+	var template_btn = grid_questions.get_child(0)
+	template_btn.visible = false # Hide the original
+	
+	# 2. Safely clear out any old duplicated buttons
+	for child in grid_questions.get_children():
+		if child != template_btn and not child.is_queued_for_deletion():
+			child.queue_free()
+	
+	# 3. Create a new button for every question dynamically
+	for i in range(questions.size()):
+		var data = questions[i]
+		var new_btn = template_btn.duplicate()
+		
+		# Check unlock status
+		var is_unlocked = user_progress.has(data.get("id", ""))
+		
+		# Make it visible and add to grid
+		new_btn.visible = true
+		grid_questions.add_child(new_btn)
+		
+		# Setup visuals (Text and Color)
+		var lbl = new_btn.get_node_or_null("QuestionBox/QuestionText")
+		if lbl: 
+			lbl.text = data["q"] if is_unlocked else "Locked"
 			
-			if i < questions.size():
-				var q_data = questions[i]
-				var q_id = q_data["id"]
+		if is_unlocked:
+			new_btn.modulate = Color.WHITE
+		else:
+			new_btn.modulate = Color(0.5, 0.5, 0.5, 1.0) # Greyed out
+			
+		# Connect the click event
+		var clickable_node = new_btn
+		if new_btn is BaseButton: pass
+		elif new_btn.has_node("Button"): clickable_node = new_btn.get_node("Button")
+		elif new_btn.has_node("QuestionBox"):
+			var qbox = new_btn.get_node("QuestionBox")
+			if qbox is BaseButton: clickable_node = qbox
 				
-				if answered_questions_ref.has(q_id) and answered_questions_ref[q_id]["unlocked"]:
-					if lbl: lbl.text = q_data["q"]
-					btn.disabled = false
-					btn.modulate = Color.WHITE
-					btn.pressed.connect(_on_question_clicked.bind(group_id, i))
-				else:
-					if lbl: lbl.text = "Locked"
-					btn.disabled = true
-					btn.modulate = Color(0.5, 0.5, 0.5, 0.8)
-			else:
-				if lbl: lbl.text = "---"
-				btn.disabled = true
-				btn.modulate = Color(0.3, 0.3, 0.3, 0.5)
+		clickable_node.pressed.connect(func(): _on_question_clicked(group_id, i, is_unlocked, new_btn))
 
 	_change_screen(screen_browse_list)
 
-func _on_question_clicked(group_id: String, index: int):
+func _on_question_clicked(group_id: String, index: int, is_unlocked: bool = true, btn_node: Control = null):
 	if is_transitioning: return
-	var questions = QuestionDatabase.data.get(group_id, [])
+	
+	# Trigger Shake if Locked
+	if not is_unlocked:
+		if btn_node: _shake_locked_btn(btn_node) # Uses default return color (gray)
+		return
+		
+	var questions = question_data.get(group_id, [])
 	if index >= questions.size(): return
 	var data = questions[index]
 	
@@ -600,10 +488,54 @@ func _on_question_clicked(group_id: String, index: int):
 	if tex_question_image:
 		tex_question_image.texture = data.get("q_img")
 		tex_question_image.visible = (tex_question_image.texture != null)
-	if lbl_right_answer: lbl_right_answer.text = data["ans"]
+		
+	if lbl_right_answer: 
+		var ans_str: String = data["ans"]
+		lbl_right_answer.text = ans_str
+		
+		# Count words cleanly and check character length
+		var words = ans_str.strip_edges().split(" ", false)
+		var target_size = 30
+		if words.size() >= 4 or ans_str.length() > 13:
+			target_size = 20
+		
+		# Apply size override considering LabelSettings
+		if lbl_right_answer.label_settings:
+			var new_settings = lbl_right_answer.label_settings.duplicate()
+			new_settings.font_size = target_size
+			lbl_right_answer.label_settings = new_settings
+		else:
+			lbl_right_answer.add_theme_font_size_override("font_size", target_size)
+			
 	if tex_right_answer:
 		tex_right_answer.texture = data.get("ans_img")
 		tex_right_answer.visible = (tex_right_answer.texture != null)
 	if lbl_explanation: lbl_explanation.text = data["expl"]
 	
 	_change_screen(screen_browse_question)
+
+func _shake_locked_btn(node: Control, return_color: Color = Color(0.5, 0.5, 0.5, 1.0)):
+	var shake_tween = create_tween().set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	node.pivot_offset = node.size / 2
+	
+	# Slight left/right rotation shake
+	shake_tween.tween_property(node, "rotation_degrees", 5.0, 0.05)
+	shake_tween.tween_property(node, "rotation_degrees", -5.0, 0.1)
+	shake_tween.tween_property(node, "rotation_degrees", 0.0, 0.05)
+	
+	# Flash red, then return to target color
+	var color_tween = create_tween()
+	color_tween.tween_property(node, "modulate", Color(0.8, 0.3, 0.3, 1.0), 0.1)
+	color_tween.tween_property(node, "modulate", return_color, 0.2)
+
+
+func _on_settings_button_pressed() -> void:
+	if sound_control:
+		sound_control.visible = true
+		sound_control.move_to_front()
+	else:
+		printerr("GlowDeskManager: SoundControl node is missing!")
+
+
+func _on_home_button_pressed() -> void:
+	pass # Replace with function body.

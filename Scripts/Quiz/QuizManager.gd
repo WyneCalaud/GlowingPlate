@@ -9,8 +9,8 @@ extends Control
 
 # --- UI NODE REFERENCES ---
 @onready var quiz_panel: Control = $QuizPanel
-@onready var question_label: Label = $QuizPanel/Questionaire/QuestionText
-@onready var image_display: TextureRect = $QuizPanel/Questionaire/QuestionImage
+@onready var question_label: Label = $QuizPanel/Questionaire/HBoxContainer/QuestionText
+@onready var image_display: TextureRect = $QuizPanel/Questionaire/HBoxContainer/QuestionImage
 
 @onready var answer_nodes = [
 	{
@@ -32,6 +32,16 @@ extends Control
 
 @onready var result_label: Label = $Result/ResultLabel
 
+# --- MENU & PAUSE NODE REFERENCES ---
+@onready var menu_button: BaseButton = $TopBarRight/MenuGroup/MenuButton
+@onready var settings_button: BaseButton = $TopBarRight/MenuGroup/MenuButton/SettingsButton
+@onready var home_button: BaseButton = $TopBarRight/MenuGroup/MenuButton/HomeButton
+@onready var pause_layer: Control = $PauseLayer
+
+# --- AGE GROUP REFERENCES ---
+@onready var sixtonine: TextureRect = get_node_or_null("UI/TopBarLeft/HBoxContainer/AgeGroup/6-9")
+@onready var tentotwelve: TextureRect = get_node_or_null("UI/TopBarLeft/HBoxContainer/AgeGroup/10-12")
+
 # --- QUIZ STATE ---
 var current_quiz_set: Array = []
 var current_question_index: int = 0
@@ -40,8 +50,14 @@ var MAX_QUESTIONS: int = 3
 var is_mechanic_active: bool = true
 var current_day: int = 1
 var original_panel_pos: Vector2
-var current_correct_answer: String = ""
+var correct_button_index: int = -1
 var current_concept: String = ""
+
+# --- MENU STATE ---
+var is_menu_open: bool = false
+var menu_tween: Tween
+const BUTTON_SPACING: float = 70.0
+const ANIM_DURATION: float = 0.3
 
 # ==========================================================
 # INITIALIZATION
@@ -50,6 +66,10 @@ var current_concept: String = ""
 func _ready():
 	current_day = game_data.current_day
 	original_panel_pos = quiz_panel.position
+
+	# Setup Menu, Pause Layer & Age Display
+	_setup_menu_buttons()
+	update_age_group_display()
 
 	# Initialize concept scheduler
 	QuizSystem.initialize_concepts(current_day)
@@ -79,6 +99,50 @@ func _ready():
 			btn.pressed.connect(_on_answer_button_pressed.bind(i))
 			btn.pivot_offset = btn.size / 2
 
+func _setup_menu_buttons():
+	if menu_button:
+		menu_button.pressed.connect(_on_menu_button_pressed)
+		menu_button.z_index = 0
+		
+	if settings_button:
+		settings_button.top_level = false
+		settings_button.z_index = -1
+		settings_button.position = Vector2.ZERO
+		settings_button.visible = false
+		settings_button.modulate.a = 0.0
+		settings_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
+	if home_button:
+		home_button.top_level = false
+		home_button.z_index = -1
+		home_button.position = Vector2.ZERO
+		home_button.visible = false
+		home_button.modulate.a = 0.0
+		home_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
+	if pause_layer:
+		pause_layer.visible = false
+
+# ==========================================================
+# AGE GROUP DISPLAY
+# ==========================================================
+
+func update_age_group_display():
+	if not has_node("/root/GameData"):
+		return
+
+	var GD = get_node("/root/GameData")
+	var age: String = GD.get("current_customer_age_group") if "current_customer_age_group" in GD else "6-9"
+
+	if sixtonine: sixtonine.visible = false
+	if tentotwelve: tentotwelve.visible = false
+
+	match age:
+		"6-9":
+			if sixtonine: sixtonine.visible = true
+		"10-12":
+			if tentotwelve: tentotwelve.visible = true
+
 # ==========================================================
 # CONCEPT-BASED QUESTION SELECTION
 # ==========================================================
@@ -90,7 +154,7 @@ func _get_due_concept_questions():
 	var daily_questions = QuestionDatabase.get_questions_for_day(current_day)
 	current_quiz_set.append_array(daily_questions)
 
-	# 2. Add due SM-2 concepts (if implemented with concept tags in the future)
+	# 2. Add due SM-2 concepts
 	var due_concepts = QuizSystem.get_due_concepts(current_day, 2)
 	for concept in due_concepts:
 		var questions = QuestionDatabase.get_questions_by_concept(concept)
@@ -123,10 +187,7 @@ func load_question():
 	quiz_panel.position = original_panel_pos
 
 	var q_data: Dictionary = current_quiz_set[current_question_index]
-
-	# Safe fallback: if concept tag is missing, use the question ID as the concept
 	current_concept = q_data.get("concept", q_data["id"]) 
-	current_correct_answer = q_data["ans"]
 
 	question_label.text = q_data["q"]
 
@@ -136,19 +197,19 @@ func load_question():
 	var options = []
 
 	options.append({
-		"text": q_data["ans"],
+		"text": q_data.get("ans") if q_data.get("ans") != null else "",
 		"img": q_data.get("ans_img"),
 		"is_correct": true
 	})
 
 	options.append({
-		"text": q_data.get("wrong1", "Wrong"),
+		"text": q_data.get("wrong1") if q_data.get("wrong1") != null else "",
 		"img": q_data.get("wrong1_img"),
 		"is_correct": false
 	})
 
 	options.append({
-		"text": q_data.get("wrong2", "Incorrect"),
+		"text": q_data.get("wrong2") if q_data.get("wrong2") != null else "",
 		"img": q_data.get("wrong2_img"),
 		"is_correct": false
 	})
@@ -159,6 +220,9 @@ func load_question():
 		var nodes = answer_nodes[i]
 		var btn = nodes.button
 		var opt = options[i]
+		
+		if opt.is_correct:
+			correct_button_index = i
 
 		btn.visible = true
 		btn.disabled = false
@@ -168,6 +232,7 @@ func load_question():
 		btn.pivot_offset = btn.size / 2
 
 		nodes.text.text = opt.text
+		nodes.text.visible = (opt.text != "") 
 		nodes.image.texture = opt.img
 		nodes.image.visible = (opt.img != null)
 
@@ -182,14 +247,11 @@ func _on_answer_button_pressed(button_index: int):
 	is_mechanic_active = false
 
 	var q_data: Dictionary = current_quiz_set[current_question_index]
-	var selected_text = answer_nodes[button_index].text.text
-	var is_correct = (selected_text == current_correct_answer)
+	var is_correct = (button_index == correct_button_index)
 
-	# Unlock question safely
 	if has_node("/root/QuizProgress"):
 		QuizProgress.record_attempt(q_data["id"], is_correct)
 
-	# Update concept SM-2 safely
 	if has_node("/root/QuizSystem"):
 		var quality = 4 if is_correct else 0
 		QuizSystem.update_concept_progress(current_concept, quality, current_day)
@@ -202,10 +264,9 @@ func _on_answer_button_pressed(button_index: int):
 
 	for i in range(answer_nodes.size()):
 		var btn = answer_nodes[i].button
-		var txt = answer_nodes[i].text.text
 		btn.disabled = true
 
-		if txt == current_correct_answer:
+		if i == correct_button_index:
 			btn.modulate = Color.GREEN
 		elif i == button_index and not is_correct:
 			btn.modulate = Color.RED
@@ -241,10 +302,7 @@ func _animate_correct_feedback(idx: int):
 	btn.pivot_offset = btn.size / 2
 	var tween = create_tween()
 	
-	# 1. Pop up (Scale)
 	tween.tween_property(btn, "scale", Vector2(1.15, 1.15), 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	
-	# 2. Come back down to normal size
 	tween.tween_property(btn, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 
 func _animate_incorrect_feedback(idx: int):
@@ -254,16 +312,63 @@ func _animate_incorrect_feedback(idx: int):
 	btn.pivot_offset = btn.size / 2
 	var shake_tween = create_tween()
 	
-	# Buzz aggressively (Use rotation to avoid layout crashes)
 	for i in range(4):
 		shake_tween.tween_property(btn, "rotation_degrees", 4.0, 0.04)
 		shake_tween.tween_property(btn, "rotation_degrees", -4.0, 0.04)
 	shake_tween.tween_property(btn, "rotation_degrees", 0.0, 0.04)
 	
-	# Flash bright red
 	var color_tween = create_tween()
 	btn.modulate = Color(2.5, 0.5, 0.5)
 	color_tween.tween_property(btn, "modulate", Color.RED, 0.3)
+
+# ==========================================================
+# MENU, ALMANAC & PAUSE LOGIC
+# ==========================================================
+
+func _on_menu_button_pressed():
+	# If any essential menu button is missing, abort safely
+	if not settings_button or not home_button: return
+	
+	is_menu_open = !is_menu_open
+	
+	if menu_tween and menu_tween.is_valid():
+		menu_tween.kill()
+		
+	menu_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	
+	if is_menu_open:
+		if pause_layer: pause_layer.visible = true
+		
+		if settings_button:
+			settings_button.visible = true
+			settings_button.mouse_filter = Control.MOUSE_FILTER_STOP
+			menu_tween.tween_property(settings_button, "position:y", BUTTON_SPACING, ANIM_DURATION)
+			menu_tween.tween_property(settings_button, "modulate:a", 1.0, ANIM_DURATION)
+		
+		if home_button:
+			home_button.visible = true
+			home_button.mouse_filter = Control.MOUSE_FILTER_STOP
+			menu_tween.tween_property(home_button, "position:y", BUTTON_SPACING * 2, ANIM_DURATION).set_delay(0.05)
+			menu_tween.tween_property(home_button, "modulate:a", 1.0, ANIM_DURATION).set_delay(0.05)
+			
+	else:
+		if pause_layer: pause_layer.visible = false
+		
+		if settings_button:
+			settings_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			menu_tween.tween_property(settings_button, "position:y", 0.0, ANIM_DURATION)
+			menu_tween.tween_property(settings_button, "modulate:a", 0.0, ANIM_DURATION)
+		
+		if home_button:
+			home_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			menu_tween.tween_property(home_button, "position:y", 0.0, ANIM_DURATION)
+			menu_tween.tween_property(home_button, "modulate:a", 0.0, ANIM_DURATION)
+			
+		
+		menu_tween.chain().tween_callback(func():
+			if settings_button: settings_button.visible = false
+			if home_button: home_button.visible = false
+		)
 
 # ==========================================================
 # FINISH

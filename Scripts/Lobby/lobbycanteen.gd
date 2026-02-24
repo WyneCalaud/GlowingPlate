@@ -13,6 +13,7 @@ extends Control
 @onready var customer_manager = $DayScene/CustomerManager
 
 @onready var bottom_buttons = $BottomButtons
+@onready var hideshowbutton = $BottomButtons/HBoxContainer/HideShowButton
 @onready var almanac_btn = $BottomButtons/HBoxContainer/Almanac
 @onready var bulletin_btn = $BottomButtons/HBoxContainer/GlowBoard
 @onready var start_day_btn = $BottomButtons/StartDayButton
@@ -87,6 +88,8 @@ func _restore_day_ui_state() -> void:
 		start_day_btn.hide()
 		nutridesk_btn.hide()
 		nutrishop_btn.hide()
+		hideshowbutton.hide()
+		bottom_buttons.hide() # <-- ADDED THIS
 	else:
 		is_waiting_for_serve = false
 		next_customer_btn.hide()
@@ -96,6 +99,8 @@ func _restore_day_ui_state() -> void:
 		start_day_btn.show()
 		nutridesk_btn.show()
 		nutrishop_btn.show()
+		hideshowbutton.show()
+		bottom_buttons.show() # <-- ADDED THIS
 
 
 func _check_for_returned_items() -> void:
