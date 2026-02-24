@@ -1,6 +1,8 @@
 # GameData.gd
 extends Node
 
+var kitchen_tutorial_completed: bool = false
+
 var current_customer_age_group: String = ""
 var player_name : String = ""
 
@@ -216,6 +218,7 @@ func start_next_day_flow():
 
 func save_game():
 	var save_data = {
+		"kitchen_tutorial_completed": kitchen_tutorial_completed,
 		"current_day": current_day,
 		"money": money,
 		"keys": keys,
@@ -259,5 +262,6 @@ func load_game():
 	matching_tutorial_completed = data.get("matching_tutorial_completed", false)
 	character_progress = data.get("character_progress", character_progress)
 	character_stage = data.get("character_stage", character_stage)
+	kitchen_tutorial_completed = data.get("kitchen_tutorial_completed", false)
 
 	print("Game Loaded.")

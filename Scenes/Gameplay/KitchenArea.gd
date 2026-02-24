@@ -74,6 +74,20 @@ func _ready():
 
 	if GameData.saved_customer_order:
 		order_ticket.set_order_display(GameData.saved_customer_order)
+		
+	var GD = get_node("/root/GameData")
+	if GD and not GD.kitchen_tutorial_completed:
+		start_kitchen_tutorial()
+
+#-----------------------------
+# TUTORIAL
+#-----------------------------
+
+func start_kitchen_tutorial():
+	var tutorial_scene = preload("res://Scenes/Tutorial/KitchenTutorialOverlay.tscn")
+	var tutorial_instance = tutorial_scene.instantiate()
+	add_child(tutorial_instance)
+
 # ---------------------------------------------------------
 # DROP ZONE CONTROL
 # ---------------------------------------------------------

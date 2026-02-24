@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=58 format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/KitchenArea.gd" id="1_k5enx"]
 [ext_resource type="Texture2D" uid="uid://d4bv2haw4iv1n" path="res://Assets/background/Kitchen Countertop.PNG" id="2_slnmu"]
@@ -54,6 +54,7 @@
 [ext_resource type="PackedScene" uid="uid://jjcnedpqlb6a" path="res://Scenes/FoodDispenser/VeggieCup.tscn" id="53_slnmu"]
 [ext_resource type="PackedScene" uid="uid://chdn7q1q0s44g" path="res://Scenes/Ticket/order_ticket.tscn" id="54_i7i4q"]
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="54_nf282"]
+[ext_resource type="PackedScene" uid="uid://cyiaiw5yaae5b" path="res://Scenes/Tutorial/KitchenTutorialOverlay.tscn" id="55_oxc20"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhl0g"]
 radius = 151.08276
@@ -351,6 +352,9 @@ offset_right = 406.0
 offset_bottom = 207.0
 
 [node name="VeggieScoop" parent="." instance=ExtResource("53_slnmu")]
+visible = false
+
+[node name="KitchenTutorialOverlay" parent="." instance=ExtResource("55_oxc20")]
 visible = false
 
 [node name="OrderTicket" parent="." instance=ExtResource("54_i7i4q")]
