@@ -376,6 +376,7 @@ tex_count_1 = null
 script = ExtResource("17_wdy5h")
 
 [node name="NextCustomer" type="Button" parent="DayScene"]
+visible = false
 offset_left = 968.0
 offset_top = 440.0
 offset_right = 1221.0
@@ -423,6 +424,17 @@ offset_right = 698.0
 offset_bottom = 411.0
 theme = SubResource("Theme_myl55")
 icon = ExtResource("29_7yiff")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="BtnPrincipalLeave" type="Button" parent="DayScene"]
+offset_left = 376.0
+offset_top = 304.0
+offset_right = 581.0
+offset_bottom = 398.0
+theme = SubResource("Theme_myl55")
+icon = ExtResource("28_q6g5s")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -497,4 +509,5 @@ position = Vector2(78, 71)
 [connection signal="pressed" from="DayScene/NextCustomer" to="DayScene" method="_on_next_customer_pressed"]
 [connection signal="pressed" from="DayScene/BtnAccept" to="DayScene" method="_on_btn_accept_pressed"]
 [connection signal="pressed" from="DayScene/BtnContinue" to="DayScene" method="_on_btn_continue_pressed"]
+[connection signal="pressed" from="DayScene/BtnPrincipalLeave" to="." method="_on_btn_principal_leave_pressed"]
 [connection signal="pressed" from="FinalPlateDisplay/BtnFinalServe" to="." method="_on_btn_final_serve_pressed"]

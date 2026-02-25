@@ -5,12 +5,12 @@
 [resource]
 script = ExtResource("1_5la1g")
 customer_name = "Leo"
-order_text = "Hi! I’d like to try the corn, chicken, sitaw, and mango combo today, please!Cold water please, and milk is fine."
-expanded_text = "Go: Corn Grow: Chicken Glow: Sitaw + Mango Drink: Cold water + milk"
+order_text = "Hi! I’d like to try the corn, chicken, squash, and mango combo today, please!Cold water please, and milk is fine."
+expanded_text = "Go: Corn Grow: Chicken Glow: Squash + Mango Drink: Cold water + milk"
 age = 7
 needs = {
 "GlowFru": "MANGO",
-"GlowVeg": "SITAW",
+"GlowVeg": "PUMPKIN",
 "Go": "CORN",
 "Grow": "CHICKEN_LEG"
 }
