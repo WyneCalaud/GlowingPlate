@@ -54,7 +54,7 @@
 [ext_resource type="PackedScene" uid="uid://jjcnedpqlb6a" path="res://Scenes/FoodDispenser/VeggieCup.tscn" id="53_slnmu"]
 [ext_resource type="PackedScene" uid="uid://chdn7q1q0s44g" path="res://Scenes/Ticket/order_ticket.tscn" id="54_i7i4q"]
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="54_nf282"]
-[ext_resource type="PackedScene" uid="uid://cyiaiw5yaae5b" path="res://Scenes/Tutorial/KitchenTutorialOverlay.tscn" id="55_oxc20"]
+[ext_resource type="PackedScene" uid="uid://b0kfb415lxkpn" path="res://Scenes/Tutorial/FoodIntroOverlay.tscn" id="55_oxc20"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhl0g"]
 radius = 151.08276
@@ -354,14 +354,14 @@ offset_bottom = 207.0
 [node name="VeggieScoop" parent="." instance=ExtResource("53_slnmu")]
 visible = false
 
-[node name="KitchenTutorialOverlay" parent="." instance=ExtResource("55_oxc20")]
-visible = false
-
 [node name="OrderTicket" parent="." instance=ExtResource("54_i7i4q")]
 offset_left = -3.0
 offset_top = 1.0
 offset_right = 354.0
 offset_bottom = 721.0
+
+[node name="FoodIntroOverlay" parent="." instance=ExtResource("55_oxc20")]
+visible = false
 
 [connection signal="area_entered" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_exited"]

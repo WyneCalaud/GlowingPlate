@@ -1,20 +1,22 @@
 # GameData.gd
 extends Node
 
-var kitchen_tutorial_completed: bool = false
+var kitchen_tutorial_completed: bool = true
 
 var current_customer_age_group: String = ""
 var player_name : String = ""
 
 # --- Core Progression Variables ---
 var current_day: int = 1         
-const TOTAL_DAYS: int = 7         
+const TOTAL_DAYS: int = 14         
 var money: int = 900                
 var keys: int = 60  
 
 var matching_tutorial_completed: bool = false
 
 const SAVE_PATH := "user://save_data.json"
+var shown_food_intros := {}
+	
 
 # --- GLOW BOARD PROGRESSION ---
 var character_progress: Dictionary = {
@@ -225,7 +227,8 @@ func save_game():
 		"player_name": player_name,
 		"matching_tutorial_completed": matching_tutorial_completed,
 		"character_progress": character_progress,
-		"character_stage": character_stage
+		"character_stage": character_stage,
+		"shown_food_intros": shown_food_intros
 	}
 
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -263,5 +266,6 @@ func load_game():
 	character_progress = data.get("character_progress", character_progress)
 	character_stage = data.get("character_stage", character_stage)
 	kitchen_tutorial_completed = data.get("kitchen_tutorial_completed", false)
+	shown_food_intros = data.get("shown_food_intros", {})
 
 	print("Game Loaded.")

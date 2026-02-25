@@ -4,15 +4,15 @@
 
 [resource]
 script = ExtResource("1_ry44x")
-customer_name = "Jenna"
+customer_name = "Leo"
 order_text = "Pumpkin, pumpkin, pumpkin… does that even taste good?Well, I’ll have one rice meal with fish in it.Make sure there’s a fruit, too.Any water is fine, and milk is okay."
 expanded_text = "Go: Rice Grow: Fish Glow: Pumpkin + Mango Drink: Any water + milk"
-age = 6
+age = 7
 needs = {
 "GlowFru": "MANGO",
-"GlowVeg": "SITAW",
+"GlowVeg": "PUMPKIN",
 "Go": "RICE",
-"Grow": "ANY"
+"Grow": "FISH_FILLET"
 }
 beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
 metadata/_custom_type_script = "uid://b6ratnvhx4aau"

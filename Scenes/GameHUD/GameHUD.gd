@@ -14,6 +14,8 @@ extends CanvasLayer
 @onready var progress_label: Label = $HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Face/Label
 @onready var cash_label: Label = $HUDControl/TopBarRight2/HBoxContainer/Money/Label
 @onready var keys_label: Label = $HUDControl/TopBarRight2/HBoxContainer/Key/Label
+@onready var profile_name: Label = $HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile/Name
+@onready var day_name: Label = $HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile/Day
 
 # Sound Control References
 @onready var sound_control: Control = $HUDControl/SoundControl
@@ -30,6 +32,8 @@ extends CanvasLayer
 #AgeGroup
 @onready var sixtonine: TextureRect = $"HUDControl/TopBarLeft/HBoxContainer/AgeGroup/6-9"
 @onready var tentotwelve: TextureRect = $"HUDControl/TopBarLeft/HBoxContainer/AgeGroup/10-12"
+
+const WEEK_DAYS := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
 # --- ANIMATION SETTINGS ---
 var is_menu_open: bool = false
@@ -139,6 +143,7 @@ func update_all_labels():
 		update_day(GD.current_day)
 		update_keys(GD.keys)
 		refresh_time_display()
+		update_profile_display(GD)
 
 func refresh_time_display():
 	if has_node("/root/GameData"):
@@ -271,3 +276,14 @@ func _on_almanac_pressed() -> void:
 	almanac_ui.visible = true
 	almanac_ui.mouse_filter = Control.MOUSE_FILTER_STOP
 	_on_menu_button_pressed() # close dropdown
+
+func get_weekday_from_day(day_number: int) -> String:
+	var index = (day_number - 1) % WEEK_DAYS.size()
+	return WEEK_DAYS[index]
+
+func update_profile_display(GD):
+	if profile_name:
+		profile_name.text = GD.player_name if GD.player_name != "" else "Player"
+	
+	if day_name:
+		day_name.text = get_weekday_from_day(GD.current_day)

@@ -4,6 +4,8 @@ extends Node2D
 # --- STATE ---
 var plate_served: bool = false
 var beverage_served: bool = false
+var kitchen_locked := false
+const DISABLE_KITCHEN_TUTORIAL := true
 
 # --- STORE ORIGINAL DROP ZONE POSITION ---
 var drop_zones_default_position: Vector2
@@ -50,6 +52,51 @@ var drop_zones_default_position: Vector2
 @onready var trash_zone: Area2D = $ServeOrTrash/Trash/GlobalTrashZone
 
 
+const FOOD_INTRO_TEXT := {
+	2: "We now have Pan de sal, in case a student wants something other than rice. 
+	Let’s try serving these cute kids some pan de sal, shall we?",
+	
+	3: "Turns out, there are kids who don’t like chicken, good thing we now have fish to serve them. 
+	This is a good way for them to eat variety of grow foods too!Let’s try serving these cute kids some fish now, shall we?",
+	
+	4: "It’s time to introduce these kids to another vegetable.
+	Something that is high in vitamin A this time. I hope they  get used to eating vegetables soon!
+	Let’s try serving these cute kids some squash, shall we?",
+	
+	5: "Fruits are so yummy, aren’t they? They’re yummy and also healthy!Good thing we have another 
+	fruit to serve now, and I hope the kids get to enjoy it very much.
+	Let’s try serving these cute kids some watermelon, shall we?",
+	
+	6: "Rice isn’t the only Go food that gives us energy!Today, we’re introducing corn. It’s yummy, 
+	and helps kids stay active and energized. Some students might want to try corn instead of rice or bread.
+	Let’s try serving these cute kids some corn today, shall we?",
+	
+	7: "Not all Grow foods are meat or fish! Today, we’re introducing eggs. They help kids grow 
+	strong and are a great source of protein. This is perfect for students who want something soft 
+	or don’t feel like eating meat or fish today.Let’s try serving these cute kids some eggs, shall we?.",
+	
+	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. 
+	They’re crunchy, colorful, and full of vitamin A.Some kids might be curious about how carrots 
+	taste, and that’s okay! Let’s try serving these cute kids some carrots today, shall we?",
+	
+	9: "Rice gives us energy, but did you know there are different kinds of rice too? Today, we’re 
+	introducing brown rice — it’s a Go food that helps keep our tummy healthy and gives long-lasting energy.
+	Some kids might want to try brown rice instead of white rice today.
+	Let’s try serving these cute kids some brown rice, shall we?",
+	
+	10: "Grow foods don’t always come from meat, fish, or eggs. Today, we’re introducing tokwa — 
+	it’s made from soybeans and helps our body grow strong too! This is a great option for kids 
+	who want a plant-based Grow food.Let’s try serving these cute kids some tokwa today, shall we?",
+	
+	11: "Vegetables come in many shapes, colors, and tastes! Today, we’re introducing eggplant — 
+	it’s a purple vegetable that helps keep our body healthy. Some kids might be curious or 
+	unsure about its taste, and that’s okay.Let’s try serving these cute kids some eggplant today, shall we?",
+	
+	12: "Fruits help keep us healthy and give us vitamins! Today, we’re introducing banana — 
+	it’s sweet, soft, and gives quick energy. Many kids love bananas, so you might hear them ask for it today.
+	Let’s try serving these cute kids some bananas, shall we?"
+}
+
 func _ready():
 	add_to_group("service_manager")
 
@@ -61,6 +108,7 @@ func _ready():
 		print("Error: ServeOrTrash node not found at $ServeOrTrash")
 	
 	setup_kitchen_for_today()
+	check_food_intro()
 		
 	await get_tree().process_frame
 	if is_instance_valid(food_plate):
@@ -76,8 +124,9 @@ func _ready():
 		order_ticket.set_order_display(GameData.saved_customer_order)
 		
 	var GD = get_node("/root/GameData")
-	if GD and not GD.kitchen_tutorial_completed:
-		start_kitchen_tutorial()
+	if not DISABLE_KITCHEN_TUTORIAL:
+		if GD and not GD.kitchen_tutorial_completed:
+			start_kitchen_tutorial()
 
 #-----------------------------
 # TUTORIAL
@@ -182,20 +231,25 @@ func update_station_list(station_nodes: Array, menu_data: Dictionary, category_k
 		food_keys = [food_data]
 	elif food_data is Array:
 		food_keys = food_data
-			
+
 	for i in range(station_nodes.size()):
 		var dispenser = station_nodes[i]
-		if !dispenser: continue
-		
+		if !dispenser:
+			continue
+
+		# 🔹 ALWAYS reset first
+		dispenser.food_data = null
+		dispenser.texture = null
+		dispenser.hide()
+
+		# 🔹 Only enable if allowed today
 		if i < food_keys.size():
-			dispenser.show()
 			var item_key = food_keys[i]
 			var db = get_node("/root/OrderSystem").FOOD_DB
-			
+
 			if db.has(item_key):
-				update_dispenser_visuals(dispenser, db[item_key])
-		else:
-			dispenser.hide()
+				dispenser.food_data = db[item_key]
+				dispenser.show()
 
 
 func update_dispenser_visuals(dispenser_node, food_res: Resource):
@@ -224,3 +278,41 @@ func _on_plate_drag_state_changed(is_dragging_now: bool):
 
 func _on_exit_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+
+func lock_kitchen_input():
+	kitchen_locked = true
+
+func unlock_kitchen_input():
+	kitchen_locked = false
+
+func check_food_intro():
+	
+	var GD = get_node("/root/GameData")
+	var day = GD.current_day
+
+	if GD.shown_food_intros.get(day, false):
+		return
+
+	if not FOOD_INTRO_TEXT.has(day):
+		return
+
+	GD.shown_food_intros[day] = true
+	GD.save_game()
+
+	lock_kitchen_input()
+
+	var intro_scene = preload("res://Scenes/Tutorial/FoodIntroOverlay.tscn")
+	var intro = intro_scene.instantiate()
+
+	add_child(intro)
+
+	intro.setup_intro(FOOD_INTRO_TEXT[day])
+
+	intro.intro_closed.connect(_on_food_intro_closed)
+
+func _on_food_intro_closed():
+	unlock_kitchen_input()
+	
+func _unhandled_input(event):
+	if kitchen_locked:
+		return

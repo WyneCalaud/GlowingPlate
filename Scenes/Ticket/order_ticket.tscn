@@ -62,7 +62,13 @@ offset_top = 101.0
 offset_right = 353.0
 offset_bottom = 195.0
 
-[node name="GoIcon" type="TextureRect" parent="Content/GoRow"]
+[node name="GoIcon1" type="TextureRect" parent="Content/GoRow"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GoIcon2" type="TextureRect" parent="Content/GoRow"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 expand_mode = 1
@@ -75,7 +81,13 @@ offset_top = 200.0
 offset_right = 352.0
 offset_bottom = 294.0
 
-[node name="GrowIcon" type="TextureRect" parent="Content/GrowRow"]
+[node name="GrowIcon1" type="TextureRect" parent="Content/GrowRow"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GrowIcon2" type="TextureRect" parent="Content/GrowRow"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 expand_mode = 1
@@ -88,7 +100,13 @@ offset_top = 301.0
 offset_right = 211.0
 offset_bottom = 398.0
 
-[node name="GlowVegIcon" type="TextureRect" parent="Content/GlowVegRow"]
+[node name="GlowVegIcon1" type="TextureRect" parent="Content/GlowVegRow"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GlowVegIcon2" type="TextureRect" parent="Content/GlowVegRow"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 expand_mode = 1
@@ -101,7 +119,13 @@ offset_top = 301.0
 offset_right = 304.0
 offset_bottom = 403.0
 
-[node name="GlowFruIcon" type="TextureRect" parent="Content/GlowFruRow"]
+[node name="GlowFruIcon1" type="TextureRect" parent="Content/GlowFruRow"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GlowFruIcon2" type="TextureRect" parent="Content/GlowFruRow"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 expand_mode = 1

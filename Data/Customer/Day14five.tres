@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://dtannf4ltraqq"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_ygf6e"]
+
+[resource]
+script = ExtResource("1_ygf6e")
+customer_name = "Miggy"
+order_text = "I don’t want sour fruits today.Can I have a banana instead?Hot water please, and milk is fine."
+expanded_text = "Don’t want sour fruits Fruit: Banana Go: Any Grow: Any Vegetable: Any Drink: Hot water + milk"
+age = 9
+needs = {
+"GlowFru": "BANANA",
+"GlowVeg": "ANY",
+"Go": "ANY",
+"Grow": "ANY"
+}
+beverage_needs = Array[String](["HOT_WATER", "REGULAR_MILK"])
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

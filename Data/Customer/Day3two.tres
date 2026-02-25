@@ -4,15 +4,15 @@
 
 [resource]
 script = ExtResource("1_3j5fa")
-customer_name = "Jenna"
+customer_name = "Bree"
 order_text = "I actually want to find out if fish is smelly.I’ll have pan de sal, fish, sitaw, and mango.Any water is fine, and milk is okay."
 expanded_text = "Go: Pan de sal Grow: Fish Glow: Sitaw + Mango Drink: Any water + milk"
-age = 6
+age = 12
 needs = {
 "GlowFru": "MANGO",
 "GlowVeg": "SITAW",
-"Go": "RICE",
-"Grow": "ANY"
+"Go": "PANDESAL",
+"Grow": "FISH_FILLET"
 }
 beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
 metadata/_custom_type_script = "uid://b6ratnvhx4aau"
