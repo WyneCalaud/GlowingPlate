@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=45 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://dt5he77x83jrn" path="res://Assets/UI/LobbyUI/LobbyBackground/OutsideBackground.png" id="3_vtn67"]
@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" uid="uid://c5l8auaitpptq" path="res://Scenes/GlowDesk/GlowDesk.tscn" id="28_uu58y"]
 [ext_resource type="Texture2D" uid="uid://1ttof10olivl" path="res://Assets/UI/LobbyUI/Hint Button.png" id="29_7yiff"]
 [ext_resource type="Texture2D" uid="uid://bnof2a6ttm3fl" path="res://Assets/UI/LobbyUI/Dialogue Box Medium.png" id="32_uu58y"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="33_nk7xc"]
 [ext_resource type="Texture2D" uid="uid://ccx1a6h1n05n0" path="res://Assets/UI/Interface/ServeButton.png" id="39_uu58y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uu58y"]
@@ -48,6 +49,10 @@ region = Rect2(0, 578, 1280, 142)
 font = ExtResource("15_wdy5h")
 font_size = 30
 font_color = Color(0.9137255, 0.8352941, 0.6862745, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_vtn67"]
+base_font = ExtResource("33_nk7xc")
+spacing_glyph = 5
 
 [sub_resource type="Theme" id="Theme_myl55"]
 
@@ -403,8 +408,8 @@ offset_left = 41.0
 offset_top = 45.0
 offset_right = 705.0
 offset_bottom = 169.0
-theme_override_fonts/normal_font = ExtResource("15_wdy5h")
-theme_override_font_sizes/normal_font_size = 25
+theme_override_fonts/normal_font = SubResource("FontVariation_vtn67")
+theme_override_font_sizes/normal_font_size = 24
 horizontal_alignment = 1
 
 [node name="BtnAccept" type="Button" parent="DayScene"]
