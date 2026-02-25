@@ -11,11 +11,17 @@ extends CanvasLayer
 # Labels
 @onready var time_label: Label = $HUDControl/TopBarLeft/HBoxContainer/TimeGroup/DayCycle/Time
 @onready var day_label: Label = $HUDControl/TopBarLeft/HBoxContainer/TimeGroup/DayCycle/Day
-@onready var progress_label: Label = $HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Face/Label
+@onready var progress_label: Label = $HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg/PatiencePercent
 @onready var cash_label: Label = $HUDControl/TopBarRight2/HBoxContainer/Money/Label
 @onready var keys_label: Label = $HUDControl/TopBarRight2/HBoxContainer/Key/Label
 @onready var profile_name: Label = $HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile/Name
 @onready var day_name: Label = $HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile/Day
+
+# Faces
+@onready var happy_face: TextureRect = $HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg/Happy
+@onready var neutral_face: TextureRect = $HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg/Neutral
+@onready var sad_face: TextureRect = $HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg/Sad
+@onready var angry_face: TextureRect = $HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg/Angry
 
 # Sound Control References
 @onready var sound_control: Control = $HUDControl/SoundControl
@@ -45,8 +51,19 @@ const BUTTON_SPACING: float = 70.0 # Distance between buttons vertically
 const MAIN_MENU_PATH = "res://Scenes/Main Menu/Main_menu.tscn"
 const LOBBY_CANTEEN_PATH = "res://Scenes/Lobby Canteen/lobbycanteen.tscn"
 
+# -----------------------------
+# PATIENCE SYSTEM
+# -----------------------------
+var patience := 100.0
+var patience_active := false
+
+# ~70 seconds to empty
+var patience_decay_rate := 1.0
+
+
 # --- INITIALIZATION ---
 func _ready():
+	_reset_happiness_ui()
 	add_to_group("HUD")
 	self.layer = 1
 	hud_control.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -87,6 +104,10 @@ func _ready():
 	_connect_signals()
 	update_all_labels()
 	update_age_group_display() # ⭐ NEW
+	var GD = get_node("/root/GameData")
+	update_progress_display(GD.customer_patience)
+	if GD.patience_running:
+		start_patience()
 
 func _setup_initial_visibility():
 	# 1. FORCE RESET DEFAULT VISIBILITY
@@ -226,12 +247,23 @@ func _on_home_pressed():
 	get_tree().call_deferred("change_scene_to_file", MAIN_MENU_PATH)
 
 func _on_finish_button_pressed():
-	# Transition to Lobby Canteen when the finish button is pressed
+	progress_label.show()
+
 	var GD = get_node_or_null("/root/GameData")
+
+	if GD:
+		# ✅ pause instead of reset
+		GD.patience_running = false
+
+	get_tree().call_group("HUD", "stop_patience")
+
 	if GD and GD.has_method("transition_to_canteen_serve"):
 		GD.call_deferred("transition_to_canteen_serve")
 	else:
-		get_tree().call_deferred("change_scene_to_file", LOBBY_CANTEEN_PATH)
+		get_tree().call_deferred(
+			"change_scene_to_file",
+			LOBBY_CANTEEN_PATH
+		)
 
 # --- HUD UPDATES ---
 func update_cash(amount: int): if cash_label: cash_label.text = str(amount)
@@ -287,3 +319,97 @@ func update_profile_display(GD):
 	
 	if day_name:
 		day_name.text = get_weekday_from_day(GD.current_day)
+
+# =====================================================
+# PATIENCE / HAPPINESS SYSTEM
+# =====================================================
+
+func start_patience():
+	var GD = get_node("/root/GameData")
+
+	GD.customer_patience = 100.0
+	GD.patience_running = true
+
+	patience_active = true
+
+	var group = hud_control.get_node("TopBarLeft/HBoxContainer/HappinessGroup")
+	group.visible = true
+
+	patience = GD.customer_patience
+	update_progress_display(patience)
+	_update_face()
+
+
+func stop_patience():
+	var GD = get_node("/root/GameData")
+
+	GD.patience_running = false
+	patience_active = false
+
+	# ✅ KEEP BAR VISIBLE
+	var group = hud_control.get_node("TopBarLeft/HBoxContainer/HappinessGroup")
+	group.visible = true
+
+	update_progress_display(GD.customer_patience)
+	_update_face()
+
+
+func reset_patience():
+	var GD = get_node("/root/GameData")
+
+	GD.patience_running = false
+	GD.customer_patience = 100.0
+
+	patience = 100.0
+	patience_active = false
+
+	_reset_happiness_ui()
+
+
+func _reset_happiness_ui():
+	var group = hud_control.get_node("TopBarLeft/HBoxContainer/HappinessGroup")
+	group.visible = false
+	
+	happy_face.hide()
+	neutral_face.hide()
+	sad_face.hide()
+	angry_face.hide()
+
+
+func _process(delta):
+
+	var GD = get_node("/root/GameData")
+
+	if not GD.patience_running:
+		return
+
+	# Decay patience globally
+	var decay = patience_decay_rate / GD.customer_patience_multiplier
+	GD.customer_patience -= decay * delta
+	GD.customer_patience = clamp(GD.customer_patience, 0.0, 100.0)
+
+	# Sync local HUD value
+	patience = GD.customer_patience
+
+	# ⭐ REAL-TIME LABEL UPDATE
+	if progress_label:
+		progress_label.text = str(int(patience)) + "%"
+
+	_update_face()
+
+
+func _update_face():
+
+	happy_face.hide()
+	neutral_face.hide()
+	sad_face.hide()
+	angry_face.hide()
+
+	if patience >= 75:
+		happy_face.show()
+	elif patience >= 50:
+		neutral_face.show()
+	elif patience >= 25:
+		sad_face.show()
+	else:
+		angry_face.show()

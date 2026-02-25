@@ -374,17 +374,25 @@ func _on_menu_button_pressed():
 # ==========================================================
 
 func finish_quiz():
+
 	var reward_money = total_correct_answers * 50
+
 	var quiz_results = {
 		"correct_count": total_correct_answers,
 		"bonus_money": reward_money
 	}
-	
+
 	if has_node("/root/QuizSystem"):
 		QuizSystem.apply_quiz_results(quiz_results)
-	else:
-		GameData.money += reward_money
-		GameData.daily_money_earned += reward_money
-		GameData.start_new_day()
-		
-	queue_free()
+
+	if game_data:
+		game_data.add_money(reward_money)
+		game_data.save_game()
+
+	# ✅ VERY IMPORTANT
+	# Change scene using deferred call
+	call_deferred("_continue_after_quiz")
+
+func _continue_after_quiz():
+	if game_data:
+		game_data.start_next_day_flow()

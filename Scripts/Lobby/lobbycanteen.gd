@@ -23,6 +23,7 @@ extends Control
 @onready var final_plate_display = $FinalPlateDisplay
 @onready var final_beverage_display = $FinalBeverageDisplay
 
+@onready var principal_leave_btn = $DayScene/BtnPrincipalLeave
 # --- State Variables ---
 var current_open_popup: Control = null
 var current_popup_tween: Tween
@@ -32,7 +33,7 @@ var current_happiness: float = 100.0
 var happiness_decay_rate: float = 2.0
 var is_waiting_for_serve: bool = false
 
-
+var is_food_intro_active := false
 # ---------------------------------------------------------
 # LIFECYCLE
 # ---------------------------------------------------------
@@ -41,6 +42,7 @@ func _ready() -> void:
 	dialogue_box.hide()
 	$DayScene/BtnAccept.hide()
 	$DayScene/BtnContinue.hide()
+	principal_leave_btn.hide()
 
 	if almanac_ui.has_signal("closed"):
 		if not almanac_ui.closed.is_connected(_on_almanac_ui_closed):
@@ -64,11 +66,142 @@ func _ready() -> void:
 
 	_check_for_returned_items()
 	_restore_day_ui_state()
-
+	
+	if not principal_leave_btn.pressed.is_connected(_on_principal_leave_pressed):
+		principal_leave_btn.pressed.connect(_on_principal_leave_pressed)
+	
+	_restore_patience_ui()
 
 func _process(delta: float) -> void:
 	if is_waiting_for_serve:
 		current_happiness = max(0.0, current_happiness - (happiness_decay_rate * delta))
+
+
+# ---------------------------------------------------------
+# FOOD INTRO STUFF
+# ---------------------------------------------------------
+
+func start_real_day():
+	var GD = get_node("/root/GameData")
+
+	# Day officially begins
+	GD.service_state = GameData.ServiceState.IDLE
+
+	# Show next customer button
+	next_customer_btn.show()
+
+	# Make sure lobby UI stays hidden during service
+	almanac_btn.hide()
+	bulletin_btn.hide()
+	start_day_btn.hide()
+	nutridesk_btn.hide()
+	nutrishop_btn.hide()
+	hideshowbutton.hide()
+	bottom_buttons.hide()
+
+const FOOD_INTRO_TEXT := {
+	2: "We now have Pan de sal, in case a student wants something other than rice. 
+	Let’s try serving these cute kids some pan de sal, shall we?",
+	
+	3: "Turns out, there are kids who don’t like chicken, good thing we now have fish to serve them. 
+	This is a good way for them to eat variety of grow foods too!Let’s try serving these cute kids some fish now, shall we?",
+	
+	4: "It’s time to introduce these kids to another vegetable.
+	Something that is high in vitamin A this time. I hope they  get used to eating vegetables soon!
+	Let’s try serving these cute kids some squash, shall we?",
+	
+	5: "Fruits are so yummy, aren’t they? They’re yummy and also healthy!Good thing we have another 
+	fruit to serve now, and I hope the kids get to enjoy it very much.
+	Let’s try serving these cute kids some watermelon, shall we?",
+	
+	6: "Rice isn’t the only Go food that gives us energy!Today, we’re introducing corn. It’s yummy, 
+	and helps kids stay active and energized. Some students might want to try corn instead of rice or bread.
+	Let’s try serving these cute kids some corn today, shall we?",
+	
+	7: "Not all Grow foods are meat or fish! Today, we’re introducing eggs. They help kids grow 
+	strong and are a great source of protein. This is perfect for students who want something soft 
+	or don’t feel like eating meat or fish today.Let’s try serving these cute kids some eggs, shall we?.",
+	
+	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. 
+	They’re crunchy, colorful, and full of vitamin A.Some kids might be curious about how carrots 
+	taste, and that’s okay! Let’s try serving these cute kids some carrots today, shall we?",
+	
+	9: "Rice gives us energy, but did you know there are different kinds of rice too? Today, we’re 
+	introducing brown rice — it’s a Go food that helps keep our tummy healthy and gives long-lasting energy.
+	Some kids might want to try brown rice instead of white rice today.
+	Let’s try serving these cute kids some brown rice, shall we?",
+	
+	10: "Grow foods don’t always come from meat, fish, or eggs. Today, we’re introducing tokwa — 
+	it’s made from soybeans and helps our body grow strong too! This is a great option for kids 
+	who want a plant-based Grow food.Let’s try serving these cute kids some tokwa today, shall we?",
+	
+	11: "Vegetables come in many shapes, colors, and tastes! Today, we’re introducing eggplant — 
+	it’s a purple vegetable that helps keep our body healthy. Some kids might be curious or 
+	unsure about its taste, and that’s okay.Let’s try serving these cute kids some eggplant today, shall we?",
+	
+	12: "Fruits help keep us healthy and give us vitamins! Today, we’re introducing banana — 
+	it’s sweet, soft, and gives quick energy. Many kids love bananas, so you might hear them ask for it today.
+	Let’s try serving these cute kids some bananas, shall we?",
+	
+	13: "Today, we’re shining the spotlight on squash — a bright and cheerful veggie that helps keep our bodies 
+	healthy and strong. Squash can be yellow, green, or even orange, and it tastes a little sweet and soft when it’s cooked. 
+	It’s full of vitamins that help our eyes see clearly, our skin glow, and our bodies grow big and strong."
+}
+
+func play_food_intro_if_needed():
+	var GD = get_node("/root/GameData")
+	var day = GD.current_day
+
+	if GD.shown_food_intros.get(day, false):
+		start_real_day()
+		return
+
+	if not FOOD_INTRO_TEXT.has(day):
+		start_real_day()
+		return
+
+	GD.shown_food_intros[day] = true
+	GD.save_game()
+
+	spawn_principal_intro(FOOD_INTRO_TEXT[day])
+
+func spawn_principal_intro(text:String):
+
+	is_food_intro_active = true
+	next_customer_btn.hide()
+
+	var tex = preload("res://Assets/Customers/Principal_.png")
+
+	customer_manager.spawn_customer(null, tex)
+
+	await customer_manager.customer_arrived
+
+	dialogue_box.show()
+	dialogue_box.get_node("OrderText").text = text
+
+	principal_leave_btn.show()
+func _on_principal_confirm():
+
+	dialogue_box.hide()
+	$DayScene/BtnAccept.hide()
+
+	customer_manager.next_customer()
+
+	await customer_manager.customer_left
+
+	start_real_day()
+
+func _on_principal_leave_pressed() -> void:
+	
+	principal_leave_btn.hide()
+	dialogue_box.hide()
+
+	customer_manager.next_customer()
+
+	await customer_manager.customer_left
+
+	is_food_intro_active = false
+	start_real_day()
 
 
 # ---------------------------------------------------------
@@ -80,7 +213,7 @@ func _restore_day_ui_state() -> void:
 
 	if gd.day_started:
 		var is_idle = (gd.service_state == GameData.ServiceState.IDLE)
-		next_customer_btn.visible = is_idle
+		next_customer_btn.visible = is_idle and not is_food_intro_active
 		is_waiting_for_serve = !is_idle
 
 		almanac_btn.hide()
@@ -289,10 +422,15 @@ func show_final_beverages(beverage_data: Dictionary) -> void:
 # ---------------------------------------------------------
 
 func _on_btn_final_serve_pressed() -> void:
+
+	# ✅ RESET FIRST (before possible scene change)
+	if is_inside_tree():
+		get_tree().call_group("HUD", "stop_patience")
+
 	var GD = get_node("/root/GameData")
 	is_waiting_for_serve = false
 
-	_debug_plate_slots() # 👈 DEBUG CALL
+	_debug_plate_slots()
 
 	var correct := (
 		OrderSystem.is_plate_correct()
@@ -309,7 +447,7 @@ func _on_btn_final_serve_pressed() -> void:
 	GD.finalize_service({
 		"earned_money": 10 if correct else 0,
 		"reputation_change": 1.0 if correct else -0.5,
-		"happiness": current_happiness,
+		"happiness": get_hud_patience(),
 		"character_id": character_id,
 		"prog_gain": 34.0 if correct else 0.0,
 		"is_correct": correct
@@ -317,6 +455,7 @@ func _on_btn_final_serve_pressed() -> void:
 
 	GD.clear_customer()
 	GD.service_state = GameData.ServiceState.SERVED
+
 	current_happiness = 100.0
 
 	final_beverage_display.hide()
@@ -331,7 +470,6 @@ func _on_btn_final_serve_pressed() -> void:
 
 	if not GD.remaining_customers.is_empty():
 		next_customer_btn.show()
-
 
 # ---------------------------------------------------------
 # DAY BUTTON
@@ -362,7 +500,121 @@ func _on_day_button_pressed() -> void:
 			day_orders = [
 				preload("res://Data/Customer/Day3one.tres"),
 				preload("res://Data/Customer/Day3two.tres"),
-				preload("res://Data/Customer/Day3three.tres")
+				preload("res://Data/Customer/Day3three.tres"),
+				preload("res://Data/Customer/Day3four.tres"),
+				preload("res://Data/Customer/Day3five.tres")
+			]
+
+		4:
+			day_orders = [
+				preload("res://Data/Customer/Day4one.tres"),
+				preload("res://Data/Customer/Day4two.tres"),
+				preload("res://Data/Customer/Day4three.tres"),
+				preload("res://Data/Customer/Day4four.tres"),
+				preload("res://Data/Customer/Day4five.tres")
+			]
+
+		5:
+			day_orders = [
+				preload("res://Data/Customer/Day5one.tres"),
+				preload("res://Data/Customer/Day5two.tres"),
+				preload("res://Data/Customer/Day5three.tres"),
+				preload("res://Data/Customer/Day5four.tres"),
+				preload("res://Data/Customer/Day5five.tres")
+			]
+
+		6:
+			day_orders = [
+				preload("res://Data/Customer/Day6one.tres"),
+				preload("res://Data/Customer/Day6two.tres"),
+				preload("res://Data/Customer/Day6three.tres"),
+				preload("res://Data/Customer/Day6four.tres"),
+				preload("res://Data/Customer/Day6five.tres"),
+				preload("res://Data/Customer/Day6six.tres")
+			]
+
+		7:
+			day_orders = [
+				preload("res://Data/Customer/Day7one.tres"),
+				preload("res://Data/Customer/Day7two.tres"),
+				preload("res://Data/Customer/Day7three.tres"),
+				preload("res://Data/Customer/Day7four.tres"),
+				preload("res://Data/Customer/Day7five.tres"),
+				preload("res://Data/Customer/Day7six.tres"),
+				preload("res://Data/Customer/Day7seven.tres")
+			]
+
+		8:
+			day_orders = [
+				preload("res://Data/Customer/Day8one.tres"),
+				preload("res://Data/Customer/Day8two.tres"),
+				preload("res://Data/Customer/Day8three.tres"),
+				preload("res://Data/Customer/Day8four.tres"),
+				preload("res://Data/Customer/Day8five.tres"),
+				preload("res://Data/Customer/Day8six.tres"),
+				preload("res://Data/Customer/Day8seven.tres")
+			]
+
+		9:
+			day_orders = [
+				preload("res://Data/Customer/Day9one.tres"),
+				preload("res://Data/Customer/Day9two.tres"),
+				preload("res://Data/Customer/Day9three.tres"),
+				preload("res://Data/Customer/Day9four.tres"),
+				preload("res://Data/Customer/Day9five.tres"),
+				preload("res://Data/Customer/Day9six.tres")
+			]
+
+		10:
+			day_orders = [
+				preload("res://Data/Customer/Day10one.tres"),
+				preload("res://Data/Customer/Day10two.tres"),
+				preload("res://Data/Customer/Day10three.tres"),
+				preload("res://Data/Customer/Day10four.tres"),
+				preload("res://Data/Customer/Day10five.tres"),
+				preload("res://Data/Customer/Day10six.tres")
+			]
+
+		11:
+			day_orders = [
+				preload("res://Data/Customer/Day11one.tres"),
+				preload("res://Data/Customer/Day11two.tres"),
+				preload("res://Data/Customer/Day11three.tres"),
+				preload("res://Data/Customer/Day11four.tres"),
+				preload("res://Data/Customer/Day11five.tres"),
+				preload("res://Data/Customer/Day11six.tres")
+			]
+
+		12:
+			day_orders = [
+				preload("res://Data/Customer/Day12one.tres"),
+				preload("res://Data/Customer/Day12two.tres"),
+				preload("res://Data/Customer/Day12three.tres"),
+				preload("res://Data/Customer/Day12four.tres"),
+				preload("res://Data/Customer/Day12five.tres"),
+				preload("res://Data/Customer/Day12six.tres"),
+				preload("res://Data/Customer/Day12seven.tres")
+			]
+
+		13:
+			day_orders = [
+				preload("res://Data/Customer/Day13one.tres"),
+				preload("res://Data/Customer/Day13two.tres"),
+				preload("res://Data/Customer/Day13three.tres"),
+				preload("res://Data/Customer/Day13four.tres"),
+				preload("res://Data/Customer/Day13five.tres"),
+				preload("res://Data/Customer/Day13six.tres")
+			]
+
+		14:
+			day_orders = [
+				preload("res://Data/Customer/Day14one.tres"),
+				preload("res://Data/Customer/Day14two.tres"),
+				preload("res://Data/Customer/Day14three.tres"),
+				preload("res://Data/Customer/Day14four.tres"),
+				preload("res://Data/Customer/Day14five.tres"),
+				preload("res://Data/Customer/Day14six.tres"),
+				preload("res://Data/Customer/Day14seven.tres")
 			]
 
 		_:
@@ -371,6 +623,7 @@ func _on_day_button_pressed() -> void:
 			]
 
 	GD.start_day_with_orders(day_orders)
+	play_food_intro_if_needed()
 	_restore_day_ui_state()
 
 
@@ -461,3 +714,24 @@ func _on_glow_shop_pressed() -> void:
 		close_popup()
 	elif current_open_popup == null:
 		open_popup(nutrishop_ui)
+
+func get_hud_patience() -> float:
+	var hud = get_tree().get_first_node_in_group("HUD")
+	if hud:
+		return hud.patience
+	return 100.0
+
+func _restore_patience_ui():
+
+	var GD = get_node("/root/GameData")
+	var hud = get_tree().get_first_node_in_group("HUD")
+
+	if not hud:
+		return
+
+	# Customer still being served (returned from kitchen)
+	if GD.service_state == GameData.ServiceState.IN_KITCHEN \
+	or GD.service_state == GameData.ServiceState.SERVED:
+
+		# ✅ keep meter visible but paused
+		hud.stop_patience()

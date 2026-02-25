@@ -197,6 +197,15 @@ func _generate_portion_rules(customer_order: CustomerOrder) -> Dictionary:
 
 func set_order_from_customer(customer_order: CustomerOrder) -> void:
 
+	# ✅ FOOD INTRO / NON-CUSTOMER SAFETY
+	if customer_order == null:
+		current_customer_order.age_group = ""
+		current_customer_order.required_plate.clear()
+		current_customer_order.required_beverage.clear()
+		current_customer_order["required_portions"] = {}
+
+		return
+
 	var age_group := customer_order.get_age_group()
 
 	current_customer_order.age_group = age_group
@@ -207,7 +216,7 @@ func set_order_from_customer(customer_order: CustomerOrder) -> void:
 	# Beverage
 	current_customer_order.required_beverage = customer_order.beverage_needs.duplicate()
 
-	# NEW: Attach required portion rules
+	# Portion rules
 	current_customer_order["required_portions"] = _generate_portion_rules(customer_order)
 
 

@@ -490,6 +490,15 @@ func win_game():
 	$CanvasLayer.hide()
 	win_overlay.visible = true
 
+	# ✅ GIVE REWARD ONLY IF PLAYER BEAT GAME
+	if score >= WIN_SCORE:
+		var GD = get_node("/root/GameData")
+
+		GD.add_money(100)
+		GD.save_game()
+
+		print("Matching Game Reward: +100 Money")
+
 
 func _input(event):
 	if win_overlay.visible and event is InputEventMouseButton and event.pressed:

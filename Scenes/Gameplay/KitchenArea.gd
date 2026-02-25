@@ -108,7 +108,6 @@ func _ready():
 		print("Error: ServeOrTrash node not found at $ServeOrTrash")
 	
 	setup_kitchen_for_today()
-	check_food_intro()
 		
 	await get_tree().process_frame
 	if is_instance_valid(food_plate):
@@ -277,42 +276,13 @@ func _on_plate_drag_state_changed(is_dragging_now: bool):
 
 
 func _on_exit_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
-
-func lock_kitchen_input():
-	kitchen_locked = true
-
-func unlock_kitchen_input():
-	kitchen_locked = false
-
-func check_food_intro():
-	
 	var GD = get_node("/root/GameData")
-	var day = GD.current_day
 
-	if GD.shown_food_intros.get(day, false):
-		return
+	# ✅ Pause patience when returning to serve
+	GD.patience_running = false
 
-	if not FOOD_INTRO_TEXT.has(day):
-		return
+	get_tree().call_group("HUD", "stop_patience")
 
-	GD.shown_food_intros[day] = true
-	GD.save_game()
-
-	lock_kitchen_input()
-
-	var intro_scene = preload("res://Scenes/Tutorial/FoodIntroOverlay.tscn")
-	var intro = intro_scene.instantiate()
-
-	add_child(intro)
-
-	intro.setup_intro(FOOD_INTRO_TEXT[day])
-
-	intro.intro_closed.connect(_on_food_intro_closed)
-
-func _on_food_intro_closed():
-	unlock_kitchen_input()
-	
-func _unhandled_input(event):
-	if kitchen_locked:
-		return
+	get_tree().change_scene_to_file(
+		"res://Scenes/Lobby Canteen/lobbycanteen.tscn"
+	)
