@@ -346,13 +346,15 @@ func stop_patience():
 	GD.patience_running = false
 	patience_active = false
 
-	# ✅ KEEP BAR VISIBLE
+	# ⭐ IMPORTANT: Sync local patience
+	patience = GD.customer_patience
+
+	# Keep bar visible (paused state)
 	var group = hud_control.get_node("TopBarLeft/HBoxContainer/HappinessGroup")
 	group.visible = true
 
-	update_progress_display(GD.customer_patience)
+	update_progress_display(patience)
 	_update_face()
-
 
 func reset_patience():
 	var GD = get_node("/root/GameData")

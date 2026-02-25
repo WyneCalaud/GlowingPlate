@@ -299,7 +299,12 @@ func _on_go_menu():
 	get_tree().change_scene_to_file("res://Scenes/Main Menu/Main_menu.tscn")
 
 func _on_go_skip():
-	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+	var GD = get_node("/root/GameData")
+
+	if GD.current_day >= 2 and GD.current_day <= 5:
+		get_tree().change_scene_to_file("res://Scenes/News/news_scene.tscn")
+	else:
+		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 
 # =========================
 # GAMEPLAY
@@ -588,8 +593,16 @@ func show_exercise_result():
 	tween.tween_property(result_desc,"modulate:a",1.0,0.7)
 
 func _on_continue_button_pressed() -> void:
-	get_node("/root/GameData").save_game()
-	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+
+	var GD = get_node("/root/GameData")
+	GD.save_game()
+
+	# If day 2–5 → go to News
+	if GD.current_day >= 2 and GD.current_day <= 5:
+		get_tree().change_scene_to_file("res://Scenes/News/news_scene.tscn")
+	else:
+		# Day 6+ skip news
+		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 
 func _on_main_menu_button_pressed() -> void:
 	get_node("/root/GameData").save_game()
