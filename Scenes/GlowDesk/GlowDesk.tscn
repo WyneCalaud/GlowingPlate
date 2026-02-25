@@ -318,6 +318,7 @@ grow_vertical = 0
 texture_normal = ExtResource("16_u0x3h")
 
 [node name="BrowseGroupSelected" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_left = 218.0
 offset_top = 95.0
@@ -339,30 +340,33 @@ grow_horizontal = 2
 texture = ExtResource("14_nunxq")
 stretch_mode = 4
 
-[node name="GridContainer" type="GridContainer" parent="BrowseGroupSelected"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -386.0
-offset_top = -155.5
-offset_right = 386.0
-offset_bottom = 220.5
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ScrollContainer" type="ScrollContainer" parent="BrowseGroupSelected"]
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 0
+offset_left = 29.0
+offset_top = 78.0
+offset_right = 829.0
+offset_bottom = 478.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="BrowseGroupSelected/ScrollContainer"]
+layout_mode = 2
 theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 20
 columns = 2
 
-[node name="QuestionBox" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
+[node name="List1" type="VBoxContainer" parent="BrowseGroupSelected/ScrollContainer/GridContainer"]
+layout_mode = 2
+
+[node name="QuestionBox" type="TextureButton" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List1"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 texture_normal = ExtResource("18_bqq7l")
 
-[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox"]
+[node name="QuestionText" type="Label" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List1/QuestionBox"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -378,101 +382,16 @@ label_settings = ExtResource("19_uoomi")
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="QuestionBox2" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
+[node name="List2" type="VBoxContainer" parent="BrowseGroupSelected/ScrollContainer/GridContainer"]
+layout_mode = 2
+
+[node name="QuestionBox" type="TextureButton" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List2"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 texture_normal = ExtResource("18_bqq7l")
 
-[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 21.0
-offset_top = 13.0
-offset_right = -87.0
-offset_bottom = -17.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Which of the following is a Grow Food?"
-label_settings = ExtResource("19_uoomi")
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="QuestionBox3" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-texture_normal = ExtResource("18_bqq7l")
-
-[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 21.0
-offset_top = 13.0
-offset_right = -87.0
-offset_bottom = -17.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Which food gives you energy?"
-label_settings = ExtResource("19_uoomi")
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="QuestionBox4" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-texture_normal = ExtResource("18_bqq7l")
-
-[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox4"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 21.0
-offset_top = 13.0
-offset_right = -87.0
-offset_bottom = -17.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Which food gives you energy?"
-label_settings = ExtResource("19_uoomi")
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="QuestionBox5" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-texture_normal = ExtResource("18_bqq7l")
-
-[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox5"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 21.0
-offset_top = 13.0
-offset_right = -87.0
-offset_bottom = -17.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Which food gives you energy?"
-label_settings = ExtResource("19_uoomi")
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="QuestionBox6" type="TextureButton" parent="BrowseGroupSelected/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-texture_normal = ExtResource("18_bqq7l")
-
-[node name="QuestionText" type="Label" parent="BrowseGroupSelected/GridContainer/QuestionBox6"]
+[node name="QuestionText" type="Label" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List2/QuestionBox"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -489,7 +408,6 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="BrowseQuestionBox" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -548,6 +466,7 @@ autowrap_mode = 3
 [node name="QuestionImage" type="TextureRect" parent="BrowseQuestionBox/AnswerBox/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("16_ksixq")
+stretch_mode = 2
 
 [node name="AnswersContainer" type="HBoxContainer" parent="BrowseQuestionBox"]
 layout_mode = 1
@@ -577,19 +496,19 @@ texture_normal = ExtResource("17_a6lix")
 layout_mode = 0
 offset_left = 73.0
 offset_top = 3.0
-offset_right = 237.0
+offset_right = 218.0
 offset_bottom = 79.0
-text = "GO FOOD"
+text = "GO FOOD, GROW FOOD, GLOW FOOD"
 label_settings = ExtResource("18_gaam1")
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="RightAnswerImage" type="TextureRect" parent="BrowseQuestionBox/AnswersContainer/RightAnswerButton"]
 layout_mode = 0
 offset_left = 73.0
 offset_top = 3.0
-offset_right = 237.0
+offset_right = 217.0
 offset_bottom = 79.0
 
 [node name="ExplanationText" type="Label" parent="BrowseQuestionBox/AnswersContainer"]
@@ -722,6 +641,7 @@ autowrap_mode = 3
 [node name="QuestionImage" type="TextureRect" parent="QuickOrEndlessMode/AnswerBox/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("16_ksixq")
+stretch_mode = 2
 
 [node name="AnswersContainer" type="HBoxContainer" parent="QuickOrEndlessMode"]
 layout_mode = 1
@@ -747,7 +667,7 @@ texture_normal = ExtResource("17_a6lix")
 layout_mode = 0
 offset_left = 73.0
 offset_top = 3.0
-offset_right = 237.0
+offset_right = 217.0
 offset_bottom = 79.0
 text = "GO FOOD"
 label_settings = ExtResource("18_gaam1")
@@ -759,7 +679,7 @@ autowrap_mode = 2
 layout_mode = 0
 offset_left = 73.0
 offset_top = 3.0
-offset_right = 237.0
+offset_right = 217.0
 offset_bottom = 79.0
 
 [node name="B" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer"]
@@ -772,7 +692,7 @@ texture_normal = ExtResource("19_2jg6t")
 layout_mode = 0
 offset_left = 73.0
 offset_top = 3.0
-offset_right = 237.0
+offset_right = 215.0
 offset_bottom = 79.0
 text = "Grow Food"
 label_settings = ExtResource("18_gaam1")
@@ -784,7 +704,7 @@ autowrap_mode = 2
 layout_mode = 0
 offset_left = 73.0
 offset_top = 3.0
-offset_right = 237.0
+offset_right = 215.0
 offset_bottom = 79.0
 
 [node name="C" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer"]
@@ -797,7 +717,7 @@ texture_normal = ExtResource("20_m2bnn")
 layout_mode = 0
 offset_left = 73.0
 offset_top = 3.0
-offset_right = 237.0
+offset_right = 214.0
 offset_bottom = 79.0
 text = "Glow Food"
 label_settings = ExtResource("18_gaam1")
@@ -809,7 +729,7 @@ autowrap_mode = 2
 layout_mode = 0
 offset_left = 73.0
 offset_top = 3.0
-offset_right = 237.0
+offset_right = 216.0
 offset_bottom = 79.0
 
 [node name="UI" type="Control" parent="."]
@@ -907,3 +827,6 @@ texture_normal = ExtResource("2_ac1q2")
 [node name="SoundControl" parent="." instance=ExtResource("42_qu1ft")]
 layout_mode = 1
 script = null
+
+[connection signal="pressed" from="UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/HomeButton" to="." method="_on_home_button_pressed"]

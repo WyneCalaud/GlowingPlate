@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://du6kd2g4u6epa"]
 
 [ext_resource type="Script" uid="uid://dlnjg76pcymn" path="res://Scripts/Main_menu.gd" id="1_b8yyp"]
-[ext_resource type="Texture2D" uid="uid://dhwsu46o6vnqf" path="res://Assets/UI/GlowingMeBackground.png" id="2_0lb75"]
+[ext_resource type="Texture2D" uid="uid://cwperytqq0uwj" path="res://Assets/UI/FinalBackground.png" id="2_0lb75"]
 [ext_resource type="Texture2D" uid="uid://ch0ig0ng0cw8x" path="res://Assets/UI/TitleMenu/SettingsButton.png" id="3_0lb75"]
 [ext_resource type="PackedScene" uid="uid://dcwwodf7rl3pk" path="res://Scenes/Transition/fade_transition.tscn" id="4_l1v0r"]
 [ext_resource type="Texture2D" uid="uid://77ukco3hu38q" path="res://Assets/UI/TitleMenu/StartButton.png" id="4_qn4bx"]
@@ -83,7 +83,6 @@ offset_bottom = 720.0
 [node name="Fade_timer" type="Timer" parent="fade_transition"]
 
 [node name="SoundControl" parent="." instance=ExtResource("6_0lb75")]
-visible = false
 layout_mode = 1
 
 [connection signal="pressed" from="Background/TopBarRight/SettingsButton" to="." method="_on_settings_button_pressed"]

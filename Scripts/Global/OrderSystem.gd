@@ -226,7 +226,7 @@ func clear_prepared_data() -> void:
 
 
 # ---------------------------------------------------------
-# SAFE BEVERAGE STORAGE (FIXED)
+# SAFE BEVERAGE STORAGE (FIXED FOR MULTIPLES)
 # ---------------------------------------------------------
 
 func add_prepared_beverage(beverage_res: Resource) -> void:
