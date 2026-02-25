@@ -74,6 +74,10 @@ func set_order_display(customer_order: CustomerOrder):
 	var plate = customer_order.needs
 	var db = OrderSystem.FOOD_DB
 
+	# --------------------------------------------------
+	# PLATE SECTION
+	# --------------------------------------------------
+
 	# GO
 	if plate["Go"] == "ANY":
 		go_icon.texture = preload("res://Assets/Ticket/ANY GO FOOD.png")
@@ -98,5 +102,38 @@ func set_order_display(customer_order: CustomerOrder):
 	else:
 		fru_icon.texture = db[plate["GlowFru"]].texture_count_1
 
+	# --------------------------------------------------
+	# BEVERAGE SECTION (NEW)
+	# --------------------------------------------------
+
+	# Reset visibility first
+	water_icon.visible = false
+	milk_icon.visible = false
+
+	var beverages := customer_order.beverage_needs
+
+	for bev in beverages:
+
+		var bev_upper = str(bev).to_upper()
+
+		# --- HOT WATER ---
+		if bev_upper == "HOT_WATER":
+			water_icon.texture = preload("res://Assets/Ticket/HotWater.png")
+			water_icon.visible = true
+
+		# --- COLD WATER ---
+		elif bev_upper == "COLD_WATER":
+			water_icon.texture = preload("res://Assets/Ticket/ColdWater.png")
+			water_icon.visible = true
+
+		# --- GENERIC WATER (fallback support) ---
+		elif bev_upper == "WATER":
+			# Default to cold visual if generic
+			water_icon.texture = preload("res://Assets/Ticket/ColdWater.png")
+			water_icon.visible = true
+
+		# --- MILK ---
+		elif bev_upper == "REGULAR_MILK":
+			milk_icon.visible = true
 	#water_icon.visible = order["required_beverage"].has("")
 	#milk_icon.visible = order["required_beverage"].has("")

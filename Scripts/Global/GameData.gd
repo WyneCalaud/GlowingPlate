@@ -235,15 +235,13 @@ func get_character_stage(char_name: String) -> int:
 
 func start_next_day_flow():
 	save_game()
+
+	# Day 1 has no news, just go to lobby
 	if current_day == 1:
-		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+		get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
 		return
 
-	if current_day >= 2 and current_day <= 5:
-		get_tree().change_scene_to_file("res://Scenes/News/news_scene.tscn")
-		return
-
-	# Day 6+ → no news
+	# ALWAYS go to MiniGame first
 	get_tree().change_scene_to_file("res://Scenes/MiniGame/matching_game.tscn")
 
 

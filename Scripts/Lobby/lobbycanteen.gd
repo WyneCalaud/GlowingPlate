@@ -235,6 +235,8 @@ func _restore_day_ui_state() -> void:
 		hideshowbutton.show()
 		bottom_buttons.show() # <-- ADDED THIS
 
+		get_tree().call_group("HUD", "_reset_happiness_ui")
+
 
 func _check_for_returned_items() -> void:
 	if OrderSystem.prepared_plate_contents.size() > 0:

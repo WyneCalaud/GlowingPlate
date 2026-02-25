@@ -53,18 +53,18 @@ ExtResource("4_kqnsh"): "Jumping Jacks",
 ExtResource("5_x1b3m"): "Lunge",
 ExtResource("10_pum5n"): "Running",
 ExtResource("8_xtgos"): "Situps",
-ExtResource("9_b4at2"): "Squatts",
+ExtResource("9_b4at2"): "Squats",
 ExtResource("10_gjhrx"): "Toe-Touch"
 }
 exercise_description = {
-ExtResource("3_xdroa"): "Cycling is wack",
-ExtResource("7_bt5ei"): "Hang yourself using a jump rope",
-ExtResource("4_kqnsh"): "jumpingjumpingjumpingjumping jumpingjumpingjumping jumpingjumping",
-ExtResource("5_x1b3m"): "Lunges is great for nothing",
-ExtResource("10_pum5n"): "Running sucks and you suck fuck u",
-ExtResource("8_xtgos"): "Sit ups yeah they do be upping",
-ExtResource("9_b4at2"): "Squats more like fucks gottem",
-ExtResource("10_gjhrx"): "Toe-Touch does absolutely nothing for you"
+ExtResource("3_xdroa"): "Cycling is a cardio exercise that makes your heart and lungs stronger. It works your legs and helps improve endurance and balance.",
+ExtResource("7_bt5ei"): "Jump rope is a fun cardio workout. It strengthens your legs, improves coordination, and helps your heart stay healthy.",
+ExtResource("4_kqnsh"): "Jumping jacks are a full-body exercise. They raise your heart rate and help improve coordination and stamina.",
+ExtResource("5_x1b3m"): "Lunges strengthen your legs and glutes. They also improve balance and help build lower-body strength.",
+ExtResource("10_pum5n"): "Running is great for your heart and lungs. It builds endurance, strengthens your legs, and boosts overall fitness.",
+ExtResource("8_xtgos"): "Sit-ups strengthen your abdominal muscles. They help improve core strength and support better posture.",
+ExtResource("9_b4at2"): "Squats build strong legs and glutes. They also help improve balance and make everyday movements easier.",
+ExtResource("10_gjhrx"): "Toe-touches are a stretching exercise. They improve flexibility in your hamstrings and lower back."
 }
 match_popup_images = {
 ExtResource("3_xdroa"): ExtResource("11_gjhrx"),

@@ -92,6 +92,9 @@ var tex_act3_available = preload("res://Assets/UI/GlowBoard/AvailableButtonPart3
 var tex_act3_bought = preload("res://Assets/UI/GlowBoard/UnlockedPart3.png")
 
 func _ready():
+	# ⭐ LOAD SAVED PURCHASES
+	for char_name in GameData.purchased_upgrades.keys():
+		purchased_acts[char_name] = GameData.purchased_upgrades[char_name]
 	_setup_ui()
 	update_key_display()
 
@@ -203,45 +206,43 @@ func _handle_act_interaction(act_key: String, btn: TextureButton):
 		_purchase_failed(btn)
 
 func _purchase_success(act_key: String, btn: TextureButton, price: int):
+
 	GameData.keys -= price
 	purchased_acts[current_character_name].append(act_key)
+
+	# ⭐ SAVE PURCHASED ACTS INTO GAMEDATA
+	GameData.purchased_upgrades[current_character_name] = purchased_acts[current_character_name]
+
 	update_key_display()
 
-	# ⭐ Update HUD display
+	# ⭐ Update visual stage
+	_sync_character_progress()
+
+	# ⭐ SAVE IMMEDIATELY
+	GameData.save_game()
+
+	# Update HUD display
 	get_tree().call_group("HUD", "update_all_labels")
 
-	
-	# Update the character portrait immediately based on new purchased act
+	# Update portrait
 	var updated_portrait = _get_current_character_portrait()
 	if updated_portrait:
 		character_picture_l2.texture_normal = updated_portrait
 		character_picture_l3.texture_normal = updated_portrait
 		
-		# Animate the target L2 picture
-		_celebrate_portrait(character_picture_l2)
-		
-		# Assign to L1 and animate so it looks awesome when they go back
 		match current_character_name:
-			"Leo": 
+			"Leo":
 				leo_pic.texture_normal = updated_portrait
-				_celebrate_portrait(leo_pic)
-			"Maya": 
+			"Maya":
 				maya_pic.texture_normal = updated_portrait
-				_celebrate_portrait(maya_pic)
-			"Norma": 
+			"Norma":
 				norma_pic.texture_normal = updated_portrait
-				_celebrate_portrait(norma_pic)
-	
-	# Play Success Sound
-	if success_sfx: success_sfx.play()
-	
-	var tween = create_tween().set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
-	# Bright white sheen on the button instead of green
-	btn.modulate = Color(2.5, 2.5, 2.5)
-	tween.tween_property(btn, "modulate", Color.WHITE, 0.5)
-	
+
+	if success_sfx:
+		success_sfx.play()
+
 	_refresh_act_textures()
-	
+
 	await get_tree().create_timer(0.6).timeout
 	_on_act_selected(btn, act_key)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=63 format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/KitchenArea.gd" id="1_k5enx"]
 [ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="2_i7i4q"]
@@ -395,7 +395,6 @@ offset_bottom = 207.0
 visible = false
 
 [node name="OrderTicket" parent="." instance=ExtResource("54_i7i4q")]
-visible = false
 offset_left = -3.0
 offset_top = 1.0
 offset_right = 354.0
