@@ -4,15 +4,15 @@
 
 [resource]
 script = ExtResource("1_4k4hh")
-customer_name = "Jenna"
+customer_name = "Norma"
 order_text = "I’ll eat whatever you give me today, as long as my meal is complete.Any water is fine, and milk is okay."
 expanded_text = "Go: Any Grow: Any Glow: Any vegetable + any fruit Drink: Any water + milk"
-age = 6
+age = 12
 needs = {
-"GlowFru": "MANGO",
-"GlowVeg": "SITAW",
-"Go": "RICE",
-"Grow": "FISH"
+"GlowFru": "ANY",
+"GlowVeg": "ANY",
+"Go": "ANY",
+"Grow": "ANY"
 }
 beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
 metadata/_custom_type_script = "uid://b6ratnvhx4aau"

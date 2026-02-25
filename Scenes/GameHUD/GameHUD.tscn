@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dy6gawubssej3"]
+[gd_scene load_steps=25 format=3 uid="uid://dy6gawubssej3"]
 
 [ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="1"]
 [ext_resource type="Script" uid="uid://pyv06wdu0qoo" path="res://Scenes/GameHUD/GameHUD.gd" id="2"]
@@ -57,26 +57,24 @@ layout_mode = 2
 texture = ExtResource("2_uq2nh")
 stretch_mode = 2
 
-[node name="Day" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile"]
+[node name="Name" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile"]
 layout_mode = 0
 offset_left = 62.0
 offset_top = 29.0
 offset_right = 142.0
 offset_bottom = 58.0
 theme_override_fonts/font = ExtResource("14")
-text = "Yana"
 label_settings = ExtResource("4_g7tnq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Name" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile"]
+[node name="Day" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile"]
 layout_mode = 0
 offset_left = 65.0
 offset_top = 7.0
 offset_right = 144.0
 offset_bottom = 36.0
 theme_override_fonts/font = ExtResource("14")
-text = "Monday"
 label_settings = ExtResource("15")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -120,7 +118,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HappinessGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft/HBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Face" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup"]
@@ -141,7 +138,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AgeGroup" type="Control" parent="HUDControl/TopBarLeft/HBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="6-9" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]

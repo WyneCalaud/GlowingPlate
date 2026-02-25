@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://dry7k3og6l0ak"]
+
+[ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_ncw8y"]
+
+[resource]
+script = ExtResource("1_ncw8y")
+customer_name = "Jenna"
+order_text = "I’d like to try the rice, chicken, sitaw, and mango combo please.Cold water is fine, and don’t forget my milk too!"
+expanded_text = "Go: Rice Grow: Chicken Glow: Sitaw (vegetable) + Mango (fruit) Drink: Cold water + milk"
+age = 12
+needs = {
+"GlowFru": "MANGO",
+"GlowVeg": "SITAW",
+"Go": "RICE",
+"Grow": "CHICKEN_LEG"
+}
+beverage_needs = Array[String](["COLD_WATER", "REGULAR_MILK"])
+metadata/_custom_type_script = "uid://b6ratnvhx4aau"

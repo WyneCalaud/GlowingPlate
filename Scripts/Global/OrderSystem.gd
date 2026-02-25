@@ -25,7 +25,8 @@ const FOOD_DB: Dictionary = {
 	"BANANA": preload("res://Data/Food/GlowFru/Banana.tres"),
 	
 	"REGULAR_MILK": preload("res://Data/Drink/RegularMilk.tres"),
-	"WATER": preload("res://Data/Drink/Water.tres")
+	"HOT_WATER": preload("res://Data/Drink/HotWater.tres"),
+	"COLD_WATER": preload("res://Data/Drink/ColdWater.tres")
 }
 
 # ---------------------------------------------------------
@@ -34,39 +35,102 @@ const FOOD_DB: Dictionary = {
 
 const MENU_SCHEDULE: Dictionary = {
 	1: {
-		"Go": ["PANDESAL", "EGG", "CORN"],
-		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "TOFU"],
-		"GlowVeg": ["SITAW", "CARROTS", "EGGPLANT", "PUMPKIN"],
-		"GlowFru": ["WATERMELON", "MANGO", "BANANA", "PAPAYA"],
+		"Go": "RICE",
+		"Grow": "CHICKEN_LEG",
+		"GlowVeg": "SITAW",
+		"GlowFru": "MANGO",
 		"Beverage": ["REGULAR_MILK", "WATER"]
 	},
 	2: {
-		"Go": "RICE",
-		"Grow": "FISH_FILLET",
+		"Go": ["RICE", "PANDESAL"],
+		"Grow": "CHICKEN_LEG",
 		"GlowVeg": "SITAW",
 		"GlowFru": "MANGO",
-		"Beverage": "WATER"
+		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	3: {
-		"Go": "RICE",
-		"Grow": "CHICKEN_LEG",
+		"Go": "PANDESAL",
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET"],
 		"GlowVeg": "SITAW",
-		"GlowFru": "WATERMELON",
-		"Beverage": "REGULAR_MILK"
+		"GlowFru": "MANGO",
+		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	4: {
-		"Go": "PANDESAL",
-		"Grow": "CHICKEN_LEG",
-		"GlowVeg": "SITAW",
-		"GlowFru": "BANANA",
-		"Beverage": "WATER"
+		"Go": ["RICE", "PANDESAL"],
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET"],
+		"GlowVeg": ["SITAW", "PUMPKIN"],
+		"GlowFru": "MANGO",
+		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	5: {
-		"Go": "RICE",
-		"Grow": "FISH_FILLET",
-		"GlowVeg": "SITAW", 
-		"GlowFru": "MANGO",
-		"Beverage": "REGULAR_MILK"
+		"Go": ["RICE", "PANDESAL"],
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET"],
+		"GlowVeg": ["SITAW", "PUMPKIN"],
+		"GlowFru": ["MANGO", "WATERMELON"],
+		"Beverage": ["WATER", "REGULAR_MILK"]
+	},
+	6: {
+		"Go": ["RICE", "PANDESAL", "CORN"],
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET"],
+		"GlowVeg": ["SITAW", "PUMPKIN"],
+		"GlowFru": ["MANGO", "WATERMELON"],
+		"Beverage": ["WATER", "REGULAR_MILK"]
+	},
+	7: {
+		"Go": ["RICE", "PANDESAL", "CORN"],
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG"],
+		"GlowVeg": ["SITAW", "PUMPKIN"],
+		"GlowFru": ["MANGO", "WATERMELON"],
+		"Beverage": ["WATER", "REGULAR_MILK"]
+	},
+	8: {
+		"Go": ["RICE", "PANDESAL", "CORN"],
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG"],
+		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS"],
+		"GlowFru": ["MANGO", "WATERMELON"],
+		"Beverage": ["WATER", "REGULAR_MILK"]
+	},
+	9: {
+		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG"],
+		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS"],
+		"GlowFru": ["MANGO", "WATERMELON"],
+		"Beverage": ["WATER", "REGULAR_MILK"]
+	},
+	10: {
+		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
+		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS"],
+		"GlowFru": ["MANGO", "WATERMELON"],
+		"Beverage": ["WATER", "REGULAR_MILK"]
+	},
+	11: {
+		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
+		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
+		"GlowFru": ["MANGO", "WATERMELON"],
+		"Beverage": ["WATER", "REGULAR_MILK"]
+	},
+	12: {
+		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
+		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
+		"GlowFru": ["MANGO", "WATERMELON", "BANANA"],
+		"Beverage": ["WATER", "REGULAR_MILK"]
+	},
+	13: {
+		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
+		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
+		"GlowFru": ["MANGO", "WATERMELON", "BANANA", "PAPAYA"],
+		"Beverage": ["WATER", "REGULAR_MILK"]
+	},
+	14: {
+		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
+		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
+		"GlowFru": ["MANGO", "WATERMELON", "BANANA", "PAPAYA"],
+		"Beverage": ["WATER", "REGULAR_MILK"]
 	}
 }
 
@@ -169,24 +233,21 @@ func add_prepared_beverage(beverage_res: Resource) -> void:
 	if beverage_res == null:
 		return
 
-	# Get internal_key safely and enforce uppercase consistency
-	var key: String = str(beverage_res.get("internal_key")).strip_edges().to_upper()
+	var liquid_type := ""
 
-	# Fallback protection (should not trigger if resource is correct)
-	if key == "":
-		key = str(beverage_res.resource_name).strip_edges().to_upper()
+	if "internal_key" in beverage_res:
+		liquid_type = str(beverage_res.internal_key).to_upper()
 
-	# Absolute fallback (guarantees uniqueness)
-	if key == "":
-		key = str(beverage_res.get_instance_id())
+	if liquid_type == "":
+		push_warning("Beverage has no internal_key!")
+		return
 
-	# Store entry
-	prepared_beverage_data[key] = {
-		"item": beverage_res
+	print("Storing beverage | LiquidType:", liquid_type)
+
+	prepared_beverage_data[liquid_type] = {
+		"item": beverage_res,
+		"liquid_type": liquid_type
 	}
-
-	# Debug (optional, remove later)
-	# print("Beverage stored under key:", key)
 
 
 # ---------------------------------------------------------
@@ -217,6 +278,8 @@ func generate_order_for_day(day: int) -> Dictionary:
 # ---------------------------------------------------------
 
 func is_plate_correct() -> bool:
+	print("Required Plate:", current_customer_order.required_plate)
+	print("Required Portions:", current_customer_order.required_portions)
 
 	print("----- VALIDATING PLATE -----")
 
@@ -262,10 +325,20 @@ func is_plate_correct() -> bool:
 
 		# 1️⃣ Check item
 		if required_key != "ANY":
-			if actual.key != required_key:
-				print("❌ Wrong food for", category)
-				return false
-				
+			# If single option
+			if required_key is String:
+				if actual.key != required_key:
+					print("❌ Wrong food for", category,
+						"| Expected:", required_key,
+						"| Got:", actual.key)
+					return false
+		# If multiple options
+			elif required_key is Array:
+				if not required_key.has(actual.key):
+					print("❌ Wrong food for", category,
+						"| Expected one of:", required_key,
+						"| Got:", actual.key)
+					return false
 		else:
 			#validate category onlly
 			var food_res = FOOD_DB.get(actual.key)
@@ -322,9 +395,42 @@ func entry_quantity_for(category: String) -> int:
 
 
 func is_beverage_correct() -> bool:
-	for bev_key in current_customer_order.required_beverage:
-		var normalized_key: String = str(bev_key).strip_edges().to_upper()
-		if not prepared_beverage_data.has(normalized_key):
+
+	print("----- VALIDATING BEVERAGE -----")
+
+	var required_list : Array = current_customer_order.required_beverage
+	var prepared_list := prepared_beverage_data.keys()
+
+	# 1️⃣ First: Check counts match exactly
+	if prepared_list.size() != required_list.size():
+		print("❌ Extra or missing beverages.")
+		return false
+
+	for required in required_list:
+
+		var required_upper = str(required).to_upper()
+		var found := false
+
+		for entry in prepared_beverage_data.values():
+
+			var actual_type = str(entry.get("liquid_type", "")).to_upper()
+
+			print("Checking Beverage | Required:", required_upper,
+				"| Got:", actual_type)
+
+			# --- ANY WATER SUPPORT ---
+			if required_upper == "WATER":
+				if actual_type == "HOT_WATER" or actual_type == "COLD_WATER":
+					found = true
+					break
+			else:
+				if actual_type == required_upper:
+					found = true
+					break
+
+		if not found:
+			print("❌ Missing or wrong beverage:", required_upper)
 			return false
 
+	print("✅ Beverage is correct!")
 	return true

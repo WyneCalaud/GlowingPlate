@@ -4,10 +4,14 @@ extends Control
 @onready var name_label = $Content/CustomerName
 @onready var age_label = $Content/CustomerAge
 
-@onready var go_icon = $Content/GoRow/GoIcon
-@onready var grow_icon = $Content/GrowRow/GrowIcon
-@onready var veg_icon = $Content/GlowVegRow/GlowVegIcon
-@onready var fru_icon = $Content/GlowFruRow/GlowFruIcon
+@onready var go_icon = $Content/GoRow/GoIcon1
+@onready var go_icon_2 = $Content/GoRow/GoIcon2
+@onready var grow_icon = $Content/GrowRow/GrowIcon1
+@onready var grow_icon_2 = $Content/GoRow/GoIcon2
+@onready var veg_icon = $Content/GlowVegRow/GlowVegIcon1
+@onready var veg_icon_2 = $Content/GlowVegRow/GlowVegIcon2
+@onready var fru_icon = $Content/GlowFruRow/GlowFruIcon1
+@onready var fru_icon_2 = $Content/GlowVegRow/GlowVegIcon2
 @onready var water_icon = $Content/BeverageRow/WaterIcon
 @onready var milk_icon = $Content/BeverageRow/MilkIcon
 

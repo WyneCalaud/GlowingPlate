@@ -210,6 +210,8 @@ func _on_confirmbutton_pressed() -> void:
 		return
 
 	GameData.player_name = player_name
+	GameData.save_game()
+	get_tree().call_group("HUD", "update_all_labels")
 
 	step += 1
 	show_step()

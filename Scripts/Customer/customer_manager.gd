@@ -4,7 +4,7 @@ signal customer_arrived(order: CustomerOrder)
 signal customer_left
 
 @export var customer_scene: PackedScene
-@export var spawn_y: float = 10
+@export var spawn_y: float = 7
 @export var offscreen_x: float = 1399
 @export var onscreen_x: float = 1080
 @export var move_duration: float = 0.6
