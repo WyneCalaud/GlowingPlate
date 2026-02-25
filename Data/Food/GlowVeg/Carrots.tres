@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=9 format=3 uid="uid://h68n0p1prwgj"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://h68n0p1prwgj"]
 
 [ext_resource type="Texture2D" uid="uid://d0ve4dwh1ogbf" path="res://Assets/Foods/Carrots.png" id="1_en7m4"]
 [ext_resource type="Texture2D" uid="uid://dcynk4jl4osoj" path="res://Assets/UI/KitchenUI/VeggiesCup/Carrots/CarrotsFull.png" id="3_80xfw"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://cpr413rd0j11k" path="res://Assets/UI/KitchenUI/VeggiesCup/Carrots/CarrotMed.png" id="6_xo627"]
 [ext_resource type="Texture2D" uid="uid://bwwaf7jdwm0sd" path="res://Assets/GlowSection/CarrotsPlated3.png" id="7_80xfw"]
 [ext_resource type="Texture2D" uid="uid://dnawscmvt1mmi" path="res://Assets/GlowSection/CarrotsPlated2.png" id="8_hsoh8"]
+[ext_resource type="Texture2D" uid="uid://b5orin4jxu2ec" path="res://Assets/UI/VeggiesPlated/CarrotPlated0.png" id="9_xo627"]
+[ext_resource type="Texture2D" uid="uid://dexlnw30lv07e" path="res://Assets/UI/VeggiesPlated/CarrotPlated1.png" id="10_ed7vi"]
 
 [resource]
 script = ExtResource("3_a3cib")
@@ -20,6 +22,8 @@ veggie_cup_low = ExtResource("5_iqp3o")
 veggie_cup_med = ExtResource("6_xo627")
 veggie_cup_high = ExtResource("4_hsoh8")
 veggie_cup_full = ExtResource("3_80xfw")
+veggie_plated_low = ExtResource("9_xo627")
+veggie_plated_med = ExtResource("10_ed7vi")
 veggie_plated_high = ExtResource("8_hsoh8")
 veggie_plated_full = ExtResource("7_80xfw")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

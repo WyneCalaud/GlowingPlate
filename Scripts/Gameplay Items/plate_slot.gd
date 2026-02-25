@@ -160,6 +160,10 @@ func _get_placement_data(incoming_data: Variant) -> Dictionary:
 			final_texture = food_resource.veggie_plated_full
 		elif portion == "VeggieHigh":
 			final_texture = food_resource.veggie_plated_high
+		elif portion == "VeggieMed":
+			final_texture = food_resource.veggie_plated_med
+		elif portion == "VeggieLow":
+			final_texture = food_resource.veggie_plated_low
 	elif portion == "Half":
 		final_texture = food_resource.plated_texture_half
 	elif portion == "Whole":

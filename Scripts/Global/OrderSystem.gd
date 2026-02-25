@@ -9,6 +9,7 @@ const FOOD_DB: Dictionary = {
 	"PANDESAL": preload("res://Data/Food/Go/Pandesal.tres"),
 	"EGG": preload("res://Data/Food/Go/Eggs.tres"),
 	"CORN": preload("res://Data/Food/Go/Corn.tres"),
+	"BROWN_RICE": preload("res://Data/Food/Go/BrownRice.tres"),
 	
 	"CHICKEN_LEG": preload("res://Data/Food/Grow/Chicken.tres"),
 	"FISH_FILLET": preload("res://Data/Food/Grow/FishFillet.tres"),

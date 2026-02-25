@@ -31,9 +31,9 @@ signal closed
 # --- UI ---
 @onready var back_button: BaseButton = $UI/BackButtonImage/TopLeftButton/BackButton
 # Menu Dropdown
-@onready var btn_menu: BaseButton = $UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton
-@onready var btn_settings: BaseButton = $UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/SettingsButton
-@onready var btn_home: BaseButton = $UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/HomeButton
+@onready var btn_menu: BaseButton = $UI/TopBarRight2/MenuGroup/MenuButton
+@onready var btn_settings: BaseButton = $UI/TopBarRight2/MenuGroup/MenuButton/SettingsButton
+@onready var btn_home: BaseButton = $UI/TopBarRight2/MenuGroup/MenuButton/HomeButton
 
 # --- DYNAMIC ELEMENTS REFERENCES ---
 # Practice Mode Elements (Gameplay)
