@@ -163,7 +163,11 @@ func replace_glass_with_filled(empty_glass: Node2D, fill_level: int, liquid_type
 		
 		# 4. Create Filled Glass
 		var filled_glass: Node2D = FILLED_GLASS_GENERIC_SCENE.instantiate()
-		
+		var os = get_node("/root/OrderSystem")
+		if liquid_lower.contains("hot"):
+			filled_glass.water_data = os.FOOD_DB["HOT_WATER"]
+		elif liquid_lower.contains("cold"):
+			filled_glass.water_data = os.FOOD_DB["COLD_WATER"]
 		# Apply the determined texture
 		if filled_glass is Sprite2D:
 			filled_glass.texture = target_texture
@@ -173,7 +177,7 @@ func replace_glass_with_filled(empty_glass: Node2D, fill_level: int, liquid_type
 
 		if filled_glass.get("current_liquid_amount") != null:
 			filled_glass.current_liquid_amount = amount_string
-
+			filled_glass.set_meta("LiquidType", check_liquid)
 		# 5. Swap in Scene Tree
 		var parent = empty_glass.get_parent()
 		if parent:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=58 format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/KitchenArea.gd" id="1_k5enx"]
 [ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="2_i7i4q"]
@@ -59,6 +59,7 @@
 [ext_resource type="PackedScene" uid="uid://jjcnedpqlb6a" path="res://Scenes/FoodDispenser/VeggieCup.tscn" id="53_slnmu"]
 [ext_resource type="PackedScene" uid="uid://chdn7q1q0s44g" path="res://Scenes/Ticket/order_ticket.tscn" id="54_i7i4q"]
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="54_nf282"]
+[ext_resource type="PackedScene" uid="uid://b0kfb415lxkpn" path="res://Scenes/Tutorial/FoodIntroOverlay.tscn" id="55_oxc20"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhl0g"]
 radius = 151.08276
@@ -399,6 +400,9 @@ offset_left = -3.0
 offset_top = 1.0
 offset_right = 354.0
 offset_bottom = 721.0
+
+[node name="FoodIntroOverlay" parent="." instance=ExtResource("55_oxc20")]
+visible = false
 
 [connection signal="area_entered" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_exited"]

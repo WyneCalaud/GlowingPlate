@@ -4,15 +4,15 @@
 
 [resource]
 script = ExtResource("1_i3cj3")
-customer_name = "Jenna"
+customer_name = "Norma"
 order_text = "Oooh, a watermelon! I’ll have it as my fruit.Add some rice, seafood, and an orange-colored vegetable in there.Cold water please, and no milk. Thanks!"
 expanded_text = "Go: Rice Grow: Fish Glow: Squash (vegetable) + Watermelon (fruit) Drink: Cold water, no milk"
-age = 6
+age = 11
 needs = {
-"GlowFru": "MANGO",
-"GlowVeg": "SITAW",
+"GlowFru": "WATERMELON",
+"GlowVeg": "PUMPKIN",
 "Go": "RICE",
-"Grow": "ANY"
+"Grow": "FISH_FILLET"
 }
-beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+beverage_needs = Array[String](["COLD_WATER"])
 metadata/_custom_type_script = "uid://b6ratnvhx4aau"

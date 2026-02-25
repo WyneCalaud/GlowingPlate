@@ -152,6 +152,9 @@ func on_plate_placement_success():
 	# Store drink amount
 	if current_liquid_amount != "":
 		beverage_res.set_meta("DrinkAmount", current_liquid_amount)
+	# 🔥 STORE LIQUID TYPE HERE (safe and guaranteed)
+		if has_meta("LiquidType"):
+			beverage_res.set_meta("LiquidType", str(get_meta("LiquidType")).to_upper())
 
 	# Store in GameData if method exists
 	if gd.has_method("add_prepared_beverage"):

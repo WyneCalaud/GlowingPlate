@@ -4,14 +4,13 @@
 
 [resource]
 script = ExtResource("1_af8kf")
-customer_name = "Leo"
+customer_name = "Boba"
 order_text = "I’ll eat whatever you have today on the menu. Thanks!Any water is okay, and milk is fine."
 expanded_text = "Any Go food Grow: Chicken Glow: Sitaw + Mango Drink: Any water + milk"
-age = 7
 needs = {
 "GlowFru": "MANGO",
 "GlowVeg": "SITAW",
-"Go": "RICE",
+"Go": "ANY",
 "Grow": "CHICKEN_LEG"
 }
 beverage_needs = Array[String](["WATER", "REGULAR_MILK"])

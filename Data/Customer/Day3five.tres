@@ -4,15 +4,15 @@
 
 [resource]
 script = ExtResource("1_hqv5a")
-customer_name = "Jenna"
+customer_name = "Cyril"
 order_text = "Pan de sal please.I want a grow food that isn’t fried, plus a vegetable and a fruit.Hot water please, and milk is fine. Thank you!"
 expanded_text = "Go: Pan de sal Grow: Fish Glow: Sitaw + Mango Drink: Hot water + milk"
-age = 9
+age = 10
 needs = {
 "GlowFru": "MANGO",
 "GlowVeg": "SITAW",
-"Go": "RICE",
-"Grow": "ANY"
+"Go": "PANDESAL",
+"Grow": "FISH_FILLET"
 }
-beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+beverage_needs = Array[String](["HOT_WATER", "REGULAR_MILK"])
 metadata/_custom_type_script = "uid://b6ratnvhx4aau"

@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0kfb415lxkpn"]
+
+[ext_resource type="Script" uid="uid://b0xqtlghqb8xv" path="res://FoodIntroOverlay.gd" id="1_lwo8m"]
+[ext_resource type="Texture2D" uid="uid://6aareh6hmtee" path="res://Assets/Tutorial/catfoodintro.png" id="2_wtg52"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="3_38dig"]
+
+[node name="FoodIntroOverlay" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_lwo8m")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.21568628, 0.11764706, 0.03137255, 0.3882353)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 212.0
+offset_top = 191.0
+offset_right = 1035.0
+offset_bottom = 467.0
+mouse_filter = 0
+texture = ExtResource("2_wtg52")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 242.0
+offset_top = 108.0
+offset_right = 807.0
+offset_bottom = 229.0
+theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
+theme_override_fonts/font = ExtResource("3_38dig")
+theme_override_font_sizes/font_size = 19
+autowrap_mode = 2

@@ -32,12 +32,12 @@
 [ext_resource type="Script" uid="uid://fti83bbe01wh" path="res://Scripts/Customer/customer_manager.gd" id="20_k43ou"]
 [ext_resource type="Texture2D" uid="uid://7yli73eiygfa" path="res://Assets/UI/Play Button.png" id="21_uu58y"]
 [ext_resource type="PackedScene" uid="uid://chcm4mgm880ef" path="res://Scenes/NutriShop/NutriShop.tscn" id="25_7yiff"]
-[ext_resource type="Texture2D" uid="uid://da1juwk10cg45" path="res://Assets/UI/LobbyUI/Order Dialogue.png" id="27_502pm"]
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="27_cmvyw"]
 [ext_resource type="Texture2D" uid="uid://daqtdvdiuidiq" path="res://Assets/Serving Tray/Serving Tray.png" id="27_hcpvu"]
 [ext_resource type="Texture2D" uid="uid://4ssy3iheafjj" path="res://Assets/UI/LobbyUI/Okay Button.png" id="28_q6g5s"]
 [ext_resource type="PackedScene" uid="uid://c5l8auaitpptq" path="res://Scenes/GlowDesk/GlowDesk.tscn" id="28_uu58y"]
 [ext_resource type="Texture2D" uid="uid://1ttof10olivl" path="res://Assets/UI/LobbyUI/Hint Button.png" id="29_7yiff"]
+[ext_resource type="Texture2D" uid="uid://bnof2a6ttm3fl" path="res://Assets/UI/LobbyUI/Dialogue Box Medium.png" id="32_uu58y"]
 [ext_resource type="Texture2D" uid="uid://ccx1a6h1n05n0" path="res://Assets/UI/Interface/ServeButton.png" id="39_uu58y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uu58y"]
@@ -376,6 +376,7 @@ tex_count_1 = null
 script = ExtResource("17_wdy5h")
 
 [node name="NextCustomer" type="Button" parent="DayScene"]
+visible = false
 offset_left = 968.0
 offset_top = 440.0
 offset_right = 1221.0
@@ -384,11 +385,11 @@ icon = ExtResource("13_wdy5h")
 flat = true
 
 [node name="DialogueBox" type="TextureRect" parent="DayScene"]
-offset_left = 264.0
-offset_top = 24.0
-offset_right = 888.0
-offset_bottom = 328.0
-texture = ExtResource("27_502pm")
+offset_left = 113.0
+offset_top = 91.0
+offset_right = 867.0
+offset_bottom = 356.0
+texture = ExtResource("32_uu58y")
 expand_mode = 1
 
 [node name="CustomerName" type="Label" parent="DayScene/DialogueBox"]
@@ -398,30 +399,44 @@ offset_bottom = 23.0
 
 [node name="OrderText" type="RichTextLabel" parent="DayScene/DialogueBox"]
 layout_mode = 0
-offset_left = 88.0
-offset_top = 88.0
-offset_right = 513.0
-offset_bottom = 203.0
+offset_left = 41.0
+offset_top = 45.0
+offset_right = 705.0
+offset_bottom = 169.0
 theme_override_fonts/normal_font = ExtResource("15_wdy5h")
 theme_override_font_sizes/normal_font_size = 25
+horizontal_alignment = 1
 
 [node name="BtnAccept" type="Button" parent="DayScene"]
-offset_left = 418.0
-offset_top = 275.0
-offset_right = 590.0
-offset_bottom = 349.0
+offset_left = 273.0
+offset_top = 316.0
+offset_right = 480.0
+offset_bottom = 409.0
 icon = ExtResource("28_q6g5s")
 flat = true
+icon_alignment = 1
 expand_icon = true
 
 [node name="BtnContinue" type="Button" parent="DayScene"]
-offset_left = 590.0
-offset_top = 274.0
-offset_right = 762.0
-offset_bottom = 348.0
+offset_left = 493.0
+offset_top = 317.0
+offset_right = 698.0
+offset_bottom = 411.0
 theme = SubResource("Theme_myl55")
 icon = ExtResource("29_7yiff")
 flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="BtnPrincipalLeave" type="Button" parent="DayScene"]
+offset_left = 376.0
+offset_top = 304.0
+offset_right = 581.0
+offset_bottom = 398.0
+theme = SubResource("Theme_myl55")
+icon = ExtResource("28_q6g5s")
+flat = true
+icon_alignment = 1
 expand_icon = true
 
 [node name="CustomerManager" type="Node" parent="DayScene"]
@@ -494,4 +509,5 @@ position = Vector2(78, 71)
 [connection signal="pressed" from="DayScene/NextCustomer" to="DayScene" method="_on_next_customer_pressed"]
 [connection signal="pressed" from="DayScene/BtnAccept" to="DayScene" method="_on_btn_accept_pressed"]
 [connection signal="pressed" from="DayScene/BtnContinue" to="DayScene" method="_on_btn_continue_pressed"]
+[connection signal="pressed" from="DayScene/BtnPrincipalLeave" to="." method="_on_btn_principal_leave_pressed"]
 [connection signal="pressed" from="FinalPlateDisplay/BtnFinalServe" to="." method="_on_btn_final_serve_pressed"]

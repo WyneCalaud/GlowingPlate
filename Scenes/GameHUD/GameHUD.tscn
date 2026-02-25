@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dy6gawubssej3"]
+[gd_scene load_steps=29 format=3 uid="uid://dy6gawubssej3"]
 
 [ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="1"]
 [ext_resource type="Script" uid="uid://pyv06wdu0qoo" path="res://Scenes/GameHUD/GameHUD.gd" id="2"]
@@ -9,15 +9,19 @@
 [ext_resource type="Texture2D" uid="uid://qww3uhouf8av" path="res://Assets/UI/Interface/SecondCycle.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://ceeg78xwticdj" path="res://Assets/UI/Interface/ThirdCycle.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://dy0fhsrovhlgv" path="res://Assets/UI/Interface/FourthCycle.png" id="7"]
-[ext_resource type="Texture2D" uid="uid://dlx7ijsy5vyib" path="res://Assets/UI/Interface/HappyMeter.png" id="8"]
 [ext_resource type="Texture2D" uid="uid://c7o7arewtutfj" path="res://Assets/UI/Interface/SettingsButton.png" id="9"]
 [ext_resource type="Texture2D" uid="uid://r3v4o7y1w2up" path="res://Assets/UI/Interface/10-12.png" id="10"]
 [ext_resource type="Texture2D" uid="uid://dquyayxor6rta" path="res://Assets/UI/Interface/HomeButton.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://dvmuy8wvmsysj" path="res://Assets/UI/Interface/hapinessbg.png" id="11_2nljy"]
 [ext_resource type="Texture2D" uid="uid://bkg0rricjjmar" path="res://Assets/UI/Interface/6-9.png" id="11_df0c7"]
 [ext_resource type="Texture2D" uid="uid://bw5itjsktoqfc" path="res://Assets/UI/Interface/User Profile.png" id="12"]
+[ext_resource type="Texture2D" uid="uid://bvpt4iq7kni2d" path="res://Assets/UI/Interface/HappyFace.png" id="12_38rtn"]
 [ext_resource type="Texture2D" uid="uid://dv4f86gkvydlk" path="res://Assets/UI/Interface/Avatar.png" id="13"]
-[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://Fonts/Comic_Neue/ComicNeue-Bold.ttf" id="14"]
+[ext_resource type="Texture2D" uid="uid://crnbadthib023" path="res://Assets/UI/Interface/NeutralFace.png" id="13_2q6du"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="14"]
+[ext_resource type="Texture2D" uid="uid://c4sxtc4364rxp" path="res://Assets/UI/Interface/SadFace.png" id="14_v6160"]
 [ext_resource type="LabelSettings" uid="uid://bxmx2yfdx0m1m" path="res://Theme/GameHUDTheme.tres" id="15"]
+[ext_resource type="Texture2D" uid="uid://q4tsyv5lxofc" path="res://Assets/UI/Interface/AngryFace.png" id="15_64h4a"]
 [ext_resource type="PackedScene" uid="uid://ccv4r1x8840d2" path="res://Scenes/GameHUD/SoundControl.tscn" id="16"]
 [ext_resource type="Texture2D" uid="uid://cp07tbyxft2d2" path="res://Assets/UI/Interface/FinishButton.png" id="17"]
 [ext_resource type="Texture2D" uid="uid://bx8ne7k621gyf" path="res://Assets/UI/Interface/MenuAlmanac.png" id="17_g7tnq"]
@@ -57,26 +61,24 @@ layout_mode = 2
 texture = ExtResource("2_uq2nh")
 stretch_mode = 2
 
-[node name="Day" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile"]
+[node name="Name" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile"]
 layout_mode = 0
 offset_left = 62.0
 offset_top = 29.0
 offset_right = 142.0
 offset_bottom = 58.0
 theme_override_fonts/font = ExtResource("14")
-text = "Yana"
 label_settings = ExtResource("4_g7tnq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Name" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile"]
+[node name="Day" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile"]
 layout_mode = 0
 offset_left = 65.0
 offset_top = 7.0
 offset_right = 144.0
 offset_bottom = 36.0
 theme_override_fonts/font = ExtResource("14")
-text = "Monday"
 label_settings = ExtResource("15")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -120,28 +122,58 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HappinessGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft/HBoxContainer"]
-visible = false
 layout_mode = 2
 
-[node name="Face" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup"]
+[node name="Happinessbg" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup"]
 layout_mode = 2
-texture = ExtResource("8")
+texture = ExtResource("11_2nljy")
 stretch_mode = 2
 
-[node name="Label" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Face"]
+[node name="Happy" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 15.0
+offset_right = 62.0
+offset_bottom = 57.0
+texture = ExtResource("12_38rtn")
+stretch_mode = 5
+
+[node name="Neutral" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg"]
+layout_mode = 0
+offset_left = 2.0
+offset_right = 71.0
+offset_bottom = 71.0
+texture = ExtResource("13_2q6du")
+expand_mode = 1
+
+[node name="Sad" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg"]
+layout_mode = 0
+offset_left = 2.0
+offset_right = 71.0
+offset_bottom = 71.0
+texture = ExtResource("14_v6160")
+expand_mode = 1
+
+[node name="Angry" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg"]
+layout_mode = 0
+offset_left = 2.0
+offset_right = 71.0
+offset_bottom = 71.0
+texture = ExtResource("15_64h4a")
+expand_mode = 1
+
+[node name="PatiencePercent" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg"]
 layout_mode = 0
 offset_left = 77.0
 offset_top = 8.0
 offset_right = 122.0
 offset_bottom = 63.0
 theme_override_fonts/font = ExtResource("14")
-text = "100%"
 label_settings = ExtResource("4_g7tnq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AgeGroup" type="Control" parent="HUDControl/TopBarLeft/HBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="6-9" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]

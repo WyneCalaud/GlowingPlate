@@ -286,10 +286,12 @@ func _on_card_action(card_node):
 			gd.add_money(-cost)
 			print("Purchased: ", item_name)
 			unlocked_registry[item_name] = true
+			gd.save_game()
 			
 			if category == "Upgrades":
 				# Upgrades equip immediately and stay equipped
 				card_node.update_state("EQUIPPED")
+				_apply_upgrade_effect(item_name)
 			else:
 				# Decor just unlocks
 				card_node.update_state("UNLOCKED")
@@ -455,3 +457,23 @@ func _setup_scrollbar_style(scroll: ScrollContainer):
 		bar.add_theme_stylebox_override("grabber_pressed", style_grabber)
 	if h_bar: apply_style.call(h_bar)
 	if v_bar: apply_style.call(v_bar)
+
+
+
+func _apply_upgrade_effect(upgrade_name:String):
+
+	var GD = get_tree().get_first_node_in_group("GameData")
+	if not GD:
+		return
+
+	match upgrade_name:
+
+		# ⭐ PATIENT CUSTOMERS UPGRADE
+		"PatientCustomers":
+			GD.customer_patience_multiplier = 1.5
+
+		# future upgrades go here
+		# "FastServing":
+		# "MoreCustomers":
+
+	print("Upgrade applied:", upgrade_name)

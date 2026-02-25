@@ -4,14 +4,15 @@
 
 [resource]
 script = ExtResource("1_mbn3k")
-customer_name = "Jenna"
+customer_name = "Miggy"
 order_text = "Hi! I’m actually allergic to chicken, so I’ll have fish, rice, a vegetable, and a fruit.Cold water please, and no milk."
 expanded_text = "Go: Rice Grow: Fish Glow: Sitaw (vegetable) + Mango (fruit) Drink: Cold water, no milk"
+age = 11
 needs = {
 "GlowFru": "MANGO",
 "GlowVeg": "SITAW",
 "Go": "RICE",
-"Grow": "ANY"
+"Grow": "FISH_FILLET"
 }
-beverage_needs = Array[String](["WATER", "REGULAR_MILK"])
+beverage_needs = Array[String](["COLD_WATER"])
 metadata/_custom_type_script = "uid://b6ratnvhx4aau"

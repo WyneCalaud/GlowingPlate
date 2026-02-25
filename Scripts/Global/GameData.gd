@@ -1,18 +1,22 @@
 # GameData.gd
 extends Node
 
+var kitchen_tutorial_completed: bool = true
+
 var current_customer_age_group: String = ""
 var player_name : String = ""
 
 # --- Core Progression Variables ---
 var current_day: int = 1         
-const TOTAL_DAYS: int = 7         
+const TOTAL_DAYS: int = 14         
 var money: int = 900                
 var keys: int = 60  
 
 var matching_tutorial_completed: bool = false
 
 const SAVE_PATH := "user://save_data.json"
+var shown_food_intros := {}
+	
 
 # --- GLOW BOARD PROGRESSION ---
 var character_progress: Dictionary = {
@@ -36,6 +40,8 @@ var character_stage: Dictionary = {
 var max_customers_today: int = 4  
 var customer_patience_multiplier: float = 1.0 
 
+var purchased_upgrades: Dictionary = {}
+
 # --- DAILY TRACKING ---
 var daily_money_earned: int = 0
 var daily_keys_earned: int = 0
@@ -51,6 +57,13 @@ var service_state: ServiceState = ServiceState.IDLE
 var remaining_customers: Array = []
 var day_started: bool = false
 
+# -----------------------------
+# GLOBAL PATIENCE SYSTEM
+# -----------------------------
+var customer_patience := 100.0
+var patience_running := false
+
+
 # --- SCENE PATHS ---
 const KITCHEN_SCENE_PATH = "res://Scenes/Gameplay/fullgameplay.tscn"
 const BEVERAGE_SCENE_PATH = "res://Scenes/Gameplay/BeveragesStation.tscn"
@@ -61,6 +74,12 @@ const QUIZ_SCENE_PATH = "res://Scenes/Quiz/QuizScene.tscn"
 func _ready():
 	add_to_group("GameData")
 	load_game()
+	_apply_saved_upgrades()
+
+func _apply_saved_upgrades():
+
+	if purchased_upgrades.has("PatientCustomers"):
+		customer_patience_multiplier = 1.5
 
 # --- ECONOMY HELPER (FIX FOR CRASH) ---
 func add_money(amount: int) -> void:
@@ -117,8 +136,22 @@ func finalize_service(day_result: Dictionary):
 	# Extract happiness and calculate payout
 	var base_earned = day_result.get("earned_money", 0)
 	var happiness = day_result.get("happiness", 100.0)
+
+	var performance_multiplier := 1.0
+
+	if happiness >= 75:
+		performance_multiplier = 1.0        # full pay
+	elif happiness >= 50:
+		performance_multiplier = 0.8
+	elif happiness >= 25:
+		performance_multiplier = 0.6
+	else:
+		performance_multiplier = 0.4
+
+	var adjusted_base = int(base_earned * performance_multiplier)
+
 	var tip = calculate_tip(happiness)
-	var total_earned = base_earned + tip
+	var total_earned = adjusted_base + tip
 	
 	money += total_earned
 	daily_money_earned += total_earned
@@ -216,13 +249,16 @@ func start_next_day_flow():
 
 func save_game():
 	var save_data = {
+		"kitchen_tutorial_completed": kitchen_tutorial_completed,
 		"current_day": current_day,
 		"money": money,
 		"keys": keys,
 		"player_name": player_name,
 		"matching_tutorial_completed": matching_tutorial_completed,
 		"character_progress": character_progress,
-		"character_stage": character_stage
+		"character_stage": character_stage,
+		"purchased_upgrades": purchased_upgrades,
+		"shown_food_intros": shown_food_intros
 	}
 
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -259,5 +295,8 @@ func load_game():
 	matching_tutorial_completed = data.get("matching_tutorial_completed", false)
 	character_progress = data.get("character_progress", character_progress)
 	character_stage = data.get("character_stage", character_stage)
+	kitchen_tutorial_completed = data.get("kitchen_tutorial_completed", false)
+	shown_food_intros = data.get("shown_food_intros", {})
+	purchased_upgrades = data.get("purchased_upgrades", {})
 
 	print("Game Loaded.")

@@ -6,6 +6,14 @@ var order_index := 0
 
 
 func _on_next_customer_pressed():
+	
+	get_tree().call_group("HUD", "_reset_happiness_ui")
+	
+	# ✅ New customer = reset patience
+	GameData.customer_patience = 100.0
+	GameData.patience_running = false
+	get_tree().call_group("HUD", "reset_patience")
+
 	$NextCustomer.hide()
 
 	print("Remaining customers:", GameData.remaining_customers.size()) 
@@ -145,11 +153,16 @@ func _on_customer_left():
 func _on_btn_accept_pressed() -> void:
 	GameData.service_state = GameData.ServiceState.IN_KITCHEN
 
+	# START GLOBAL PATIENCE
+	GameData.customer_patience = 100.0
+	GameData.patience_running = true
+
+	get_tree().call_group("HUD", "start_patience")
+
 	$BtnAccept.hide()
 	$BtnContinue.hide()
 
 	get_tree().change_scene_to_file("res://Scenes/Gameplay/KitchenArea.tscn")
-
 
 func _on_btn_continue_pressed() -> void:
 	if active_order == null:
