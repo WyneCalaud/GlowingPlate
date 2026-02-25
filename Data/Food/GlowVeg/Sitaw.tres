@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=9 format=3 uid="uid://b620n7sw6261m"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://b620n7sw6261m"]
 
 [ext_resource type="Texture2D" uid="uid://comko1qjr5kgl" path="res://Assets/Foods/Sitaw.png" id="1_nr06r"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_gmk55"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://dev3yt30ghf7a" path="res://Assets/UI/KitchenUI/VeggiesCup/Sitaw/SitawMed.png" id="6_jyfbu"]
 [ext_resource type="Texture2D" uid="uid://d30fqwm8a3h6n" path="res://Assets/GlowSection/SitawPlated3.png" id="7_vqxq5"]
 [ext_resource type="Texture2D" uid="uid://d0kilp2awitks" path="res://Assets/GlowSection/SitawPlated2.png" id="8_4afm4"]
+[ext_resource type="Texture2D" uid="uid://bs5rqbxr6n6eu" path="res://Assets/UI/VeggiesPlated/SitawPlated0.png" id="9_jyfbu"]
+[ext_resource type="Texture2D" uid="uid://dknglaqb5kye1" path="res://Assets/UI/VeggiesPlated/SitawPlated1.png" id="10_ml6r5"]
 
 [resource]
 script = ExtResource("3_gmk55")
@@ -20,6 +22,8 @@ veggie_cup_low = ExtResource("5_aet2i")
 veggie_cup_med = ExtResource("6_jyfbu")
 veggie_cup_high = ExtResource("4_4afm4")
 veggie_cup_full = ExtResource("3_vqxq5")
+veggie_plated_low = ExtResource("9_jyfbu")
+veggie_plated_med = ExtResource("10_ml6r5")
 veggie_plated_high = ExtResource("8_4afm4")
 veggie_plated_full = ExtResource("7_vqxq5")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

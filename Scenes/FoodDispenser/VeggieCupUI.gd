@@ -91,8 +91,16 @@ func _on_tap():
 
 	if cup_progress:
 		match tap_count:
-			1: cup_progress.texture = tex_low
-			2: cup_progress.texture = tex_med
+			1: 
+				cup_progress.texture = tex_low
+				# Silently set to VeggieHigh so it's ready to serve if they stop tapping here
+				if is_instance_valid(target_dispenser) and target_dispenser.has_method("set_portion"):
+					target_dispenser.set_portion("VeggieLow")
+			2: 
+				cup_progress.texture = tex_med
+				# Silently set to VeggieHigh so it's ready to serve if they stop tapping here
+				if is_instance_valid(target_dispenser) and target_dispenser.has_method("set_portion"):
+					target_dispenser.set_portion("VeggieMed")
 			3: 
 				cup_progress.texture = tex_high
 				# Silently set to VeggieHigh so it's ready to serve if they stop tapping here

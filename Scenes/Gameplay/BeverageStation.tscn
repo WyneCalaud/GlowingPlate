@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://chaqv2o4rajlv"]
 
 [ext_resource type="Script" uid="uid://bteybm5j11cxh" path="res://Scripts/Gameplay/beverage_station.gd" id="1_xqbgv"]
-[ext_resource type="Texture2D" uid="uid://d4bv2haw4iv1n" path="res://Assets/background/Kitchen Countertop.PNG" id="2_xqbgv"]
+[ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="2_3v2pv"]
 [ext_resource type="Texture2D" uid="uid://bskxkak4gn6ug" path="res://Assets/Beverages/WaterStation/Water Pitcher (Cold).PNG" id="3_5tifh"]
 [ext_resource type="Script" uid="uid://drf28y3466o7l" path="res://Scenes/Gameplay/LiquidDispenser.gd" id="3_vjurt"]
 [ext_resource type="Texture2D" uid="uid://ldahrl6rkxw3" path="res://Assets/UI/KitchenUI/LongMat.png" id="3_xhudw"]
@@ -28,7 +28,7 @@ offset_right = 1281.0
 offset_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("2_xqbgv")
+texture = ExtResource("2_3v2pv")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 

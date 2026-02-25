@@ -1,7 +1,7 @@
-[gd_scene load_steps=57 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=62 format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/KitchenArea.gd" id="1_k5enx"]
-[ext_resource type="Texture2D" uid="uid://d4bv2haw4iv1n" path="res://Assets/background/Kitchen Countertop.PNG" id="2_slnmu"]
+[ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="2_i7i4q"]
 [ext_resource type="PackedScene" uid="uid://chaqv2o4rajlv" path="res://Scenes/Gameplay/BeverageStation.tscn" id="3_i7i4q"]
 [ext_resource type="Texture2D" uid="uid://cjob6rgsmt6fj" path="res://Assets/Pinggan/Pinggang Border.png" id="4_oxc20"]
 [ext_resource type="PackedScene" uid="uid://cumqgtoajakm4" path="res://Scenes/Food Plate/food_plate.tscn" id="5_nflrw"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://dieojik7tyah5" path="res://Scenes/Gameplay/RiceCooker.gd" id="9_t48f3"]
 [ext_resource type="Texture2D" uid="uid://dffr7v3tak7yw" path="res://Assets/UI/KitchenUI/OpenedRiceCooker.png" id="10_jgwiw"]
 [ext_resource type="Texture2D" uid="uid://cegi0241vcsfs" path="res://Assets/Resized/ricecup.png" id="11_n7sx4"]
+[ext_resource type="Texture2D" uid="uid://ds8j0igaeqayn" path="res://Assets/UI/KitchenUI/BrownRiceCooker1418.png" id="11_nflrw"]
+[ext_resource type="Texture2D" uid="uid://bft2sfok0uyja" path="res://Assets/UI/KitchenUI/BrownRiceCookerOpen1418.png" id="12_hkpja"]
 [ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="12_vfpnn"]
 [ext_resource type="Texture2D" uid="uid://ciovm45kr75ix" path="res://Assets/RiceCup/LowAmountRiceCup.png" id="13_pmqpb"]
 [ext_resource type="Texture2D" uid="uid://b7xxaf5ncnmy" path="res://Assets/RiceCup/MediumAmountRiceCup.png" id="14_u5w8p"]
@@ -19,8 +21,11 @@
 [ext_resource type="Resource" uid="uid://0swaooqdh4n5" path="res://Data/Food/Go/Rice.tres" id="17_b3ytg"]
 [ext_resource type="PackedScene" uid="uid://b3eqyuw2etp2" path="res://Scenes/FoodDispenser/FoodDispenser.tscn" id="18_orncx"]
 [ext_resource type="Texture2D" uid="uid://bod6x1pdec17a" path="res://Assets/Foods/Chickens.png" id="19_ntgi7"]
+[ext_resource type="Texture2D" uid="uid://c1ihv48yqhe4h" path="res://Assets/UI/RiceUI/BrownEmptyCup.png" id="20_hkpja"]
 [ext_resource type="Resource" uid="uid://b2oeopgun652k" path="res://Data/Food/Grow/Chicken.tres" id="20_x03y5"]
 [ext_resource type="Texture2D" uid="uid://b1b74g4ux5tok" path="res://Assets/Foods/Fish.png" id="21_7cwab"]
+[ext_resource type="Script" uid="uid://b63seyr0w6jto" path="res://rice_cup_brown.gd" id="21_kcelb"]
+[ext_resource type="Resource" uid="uid://cttvp1r0jqjpr" path="res://Data/Food/Go/BrownRice.tres" id="22_32cy7"]
 [ext_resource type="Resource" uid="uid://d2mntq5kbevox" path="res://Data/Food/Grow/FishFillet.tres" id="22_jgock"]
 [ext_resource type="Texture2D" uid="uid://1ecw6i3ykpw6" path="res://Assets/Foods/Corns.png" id="23_aa47t"]
 [ext_resource type="Resource" uid="uid://bvv4bih206vxi" path="res://Data/Food/Go/Corn.tres" id="24_k5enx"]
@@ -69,7 +74,7 @@ script = ExtResource("1_k5enx")
 [node name="ColorRect" type="TextureRect" parent="Background"]
 offset_right = 1280.0
 offset_bottom = 720.0
-texture = ExtResource("2_slnmu")
+texture = ExtResource("2_i7i4q")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
@@ -77,15 +82,15 @@ metadata/_edit_use_anchors_ = true
 offset_left = 1279.0
 offset_right = 2559.0
 offset_bottom = 720.0
-texture = ExtResource("2_slnmu")
+texture = ExtResource("2_i7i4q")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="BeveragesStation" parent="." instance=ExtResource("3_i7i4q")]
-position = Vector2(1279, 1)
+position = Vector2(1575, 1)
 
 [node name="Mat" type="Node2D" parent="."]
-position = Vector2(16, 0)
+position = Vector2(40, 0)
 
 [node name="PlateBorder" type="Sprite2D" parent="Mat"]
 position = Vector2(502.00003, 523.00006)
@@ -93,7 +98,7 @@ scale = Vector2(0.51, 0.51)
 texture = ExtResource("4_oxc20")
 
 [node name="Plate" type="Node2D" parent="."]
-position = Vector2(16, 0)
+position = Vector2(40, 0)
 
 [node name="FoodPlate" parent="Plate" instance=ExtResource("5_nflrw")]
 z_index = 1
@@ -118,6 +123,12 @@ position = Vector2(176, 552)
 scale = Vector2(0.21, 0.21)
 texture = ExtResource("7_kcelb")
 
+[node name="BrownRiceCupMat" type="Sprite2D" parent="Go Section"]
+visible = false
+position = Vector2(448, 552.00006)
+scale = Vector2(0.21, 0.21)
+texture = ExtResource("7_kcelb")
+
 [node name="RiceCooker" type="Sprite2D" parent="Go Section"]
 position = Vector2(167, 278)
 scale = Vector2(0.17482795, 0.16726397)
@@ -129,6 +140,20 @@ open_texture = ExtResource("10_jgwiw")
 [node name="Area2D" type="Area2D" parent="Go Section/RiceCooker"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Go Section/RiceCooker/Area2D"]
+polygon = PackedVector2Array(-465.81195, 550.45874, -534.188, 403.66968, -568.37604, 36.697266, -568.37604, -220.1836, -555.55554, -353.21106, -525.641, -463.3028, -491.45294, -545.87164, -448.71793, -619.2661, -376.06836, -669.72485, -290.59827, -701.83496, -123.93158, -733.94507, 149.5727, -733.94507, 260.68378, -711.0093, 341.88037, -688.0735, 397.4359, -660.55054, 452.99146, -614.67896, 517.094, -504.58722, 559.8291, -357.79822, 576.9231, -201.83496, 568.3761, 146.78894, 564.10254, 252.29358, 551.2821, 339.4496, 504.27356, 477.0642, 435.89746, 600.9175, 384.61536, 646.78906, 286.32483, 697.2477, 81.196594, 733.94495, -59.82904, 733.94495, -260.68372, 697.2477, -367.52133, 655.9634)
+
+[node name="BrownRiceCooker" type="Sprite2D" parent="Go Section"]
+visible = false
+position = Vector2(447, 278)
+scale = Vector2(0.17482795, 0.16726397)
+texture = ExtResource("11_nflrw")
+script = ExtResource("9_t48f3")
+closed_texture = ExtResource("11_nflrw")
+open_texture = ExtResource("12_hkpja")
+
+[node name="Area2D" type="Area2D" parent="Go Section/BrownRiceCooker"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Go Section/BrownRiceCooker/Area2D"]
 polygon = PackedVector2Array(-465.81195, 550.45874, -534.188, 403.66968, -568.37604, 36.697266, -568.37604, -220.1836, -555.55554, -353.21106, -525.641, -463.3028, -491.45294, -545.87164, -448.71793, -619.2661, -376.06836, -669.72485, -290.59827, -701.83496, -123.93158, -733.94507, 149.5727, -733.94507, 260.68378, -711.0093, 341.88037, -688.0735, 397.4359, -660.55054, 452.99146, -614.67896, 517.094, -504.58722, 559.8291, -357.79822, 576.9231, -201.83496, 568.3761, 146.78894, 564.10254, 252.29358, 551.2821, 339.4496, 504.27356, 477.0642, 435.89746, 600.9175, 384.61536, 646.78906, 286.32483, 697.2477, 81.196594, 733.94495, -59.82904, 733.94495, -260.68372, 697.2477, -367.52133, 655.9634)
 
 [node name="RiceCup" type="Sprite2D" parent="Go Section"]
@@ -149,15 +174,30 @@ food_data = ExtResource("17_b3ytg")
 shape = SubResource("CircleShape2D_rg35f")
 one_way_collision_margin = 0.0
 
+[node name="BrownRiceCup" type="Sprite2D" parent="Go Section"]
+visible = false
+position = Vector2(448, 544)
+scale = Vector2(0.5, 0.446)
+texture = ExtResource("20_hkpja")
+script = ExtResource("21_kcelb")
+empty_cup_texture = ExtResource("20_hkpja")
+food_data = ExtResource("22_32cy7")
+
+[node name="Area2D" type="Area2D" parent="Go Section/BrownRiceCup"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Go Section/BrownRiceCup/Area2D"]
+shape = SubResource("CircleShape2D_rg35f")
+one_way_collision_margin = 0.0
+
 [node name="Row1" type="Control" parent="."]
 custom_minimum_size = Vector2(1205, 266)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 292.0
+offset_left = 332.0
 offset_top = 77.0
-offset_right = 1497.0
+offset_right = 1537.0
 offset_bottom = 343.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -217,9 +257,9 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 733.0
+offset_left = 773.0
 offset_top = 288.0
-offset_right = 1544.0
+offset_right = 1584.0
 offset_bottom = 531.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -262,9 +302,9 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 726.0
+offset_left = 766.0
 offset_top = 494.0
-offset_right = 1535.0
+offset_right = 1575.0
 offset_bottom = 711.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -354,6 +394,7 @@ offset_bottom = 207.0
 visible = false
 
 [node name="OrderTicket" parent="." instance=ExtResource("54_i7i4q")]
+visible = false
 offset_left = -3.0
 offset_top = 1.0
 offset_right = 354.0
@@ -363,3 +404,5 @@ offset_bottom = 721.0
 [connection signal="area_exited" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_exited"]
 [connection signal="area_entered" from="Go Section/RiceCup/Area2D" to="Go Section/RiceCup" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Go Section/RiceCup/Area2D" to="Go Section/RiceCup" method="_on_area_2d_area_exited"]
+[connection signal="area_entered" from="Go Section/BrownRiceCup/Area2D" to="Go Section/BrownRiceCup" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Go Section/BrownRiceCup/Area2D" to="Go Section/BrownRiceCup" method="_on_area_2d_area_exited"]

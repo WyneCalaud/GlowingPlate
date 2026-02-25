@@ -38,6 +38,8 @@ class_name CustomItemData
 @export var veggie_cup_med: Texture2D
 @export var veggie_cup_high: Texture2D
 @export var veggie_cup_full: Texture2D
+@export var veggie_plated_low: Texture2D # WRONG SIZE
+@export var veggie_plated_med: Texture2D # WRONG SIZE
 @export var veggie_plated_high: Texture2D # AGE GROUP (6-9)
 @export var veggie_plated_full: Texture2D # AGE GROUP (10-12)
 

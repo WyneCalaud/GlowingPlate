@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://c5l8auaitpptq"]
+[gd_scene load_steps=46 format=3 uid="uid://c5l8auaitpptq"]
 
 [ext_resource type="Texture2D" uid="uid://brv6v260jforn" path="res://Assets/UI/GlowDesk/GlowDeskBackground.png" id="1_057f4"]
 [ext_resource type="Script" uid="uid://be185ofgy7lb5" path="res://Scripts/GlowDesk/GlowDeskManager.gd" id="1_sf6pf"]
@@ -38,8 +38,9 @@
 [ext_resource type="Texture2D" uid="uid://c0m4dr1454glm" path="res://Assets/UI/GlowDesk/CButton.png" id="20_m2bnn"]
 [ext_resource type="Texture2D" uid="uid://dex8lkp3t7cgl" path="res://Assets/UI/PauseLayer.png" id="21_g4848"]
 [ext_resource type="LabelSettings" uid="uid://cp5wh0w3mvxhv" path="res://Theme/Timer.tres" id="25_o01m3"]
-[ext_resource type="Texture2D" uid="uid://qptyjt1hqs6u" path="res://Assets/UI/Interface/Money.png" id="38_u0x3h"]
+[ext_resource type="Texture2D" uid="uid://c0ao7xl25f74g" path="res://Assets/UI/Interface/MoneyBar.png" id="38_uoomi"]
 [ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="39_bqq7l"]
+[ext_resource type="LabelSettings" uid="uid://daeaohujm4hnk" path="res://Theme/Avatar.tres" id="39_uoomi"]
 [ext_resource type="Texture2D" uid="uid://c7o7arewtutfj" path="res://Assets/UI/Interface/SettingsButton.png" id="40_uoomi"]
 [ext_resource type="Texture2D" uid="uid://dquyayxor6rta" path="res://Assets/UI/Interface/HomeButton.png" id="41_o38ri"]
 [ext_resource type="PackedScene" uid="uid://ccv4r1x8840d2" path="res://Scenes/GameHUD/SoundControl.tscn" id="42_qu1ft"]
@@ -740,7 +741,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-metadata/_edit_lock_ = true
 
 [node name="PauseLayer" type="TextureRect" parent="UI"]
 visible = false
@@ -758,57 +758,31 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -437.0
-offset_bottom = 78.0
+offset_left = -329.0
+offset_bottom = 99.0
 grow_horizontal = 0
-theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
+theme_override_constants/margin_right = 150
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/TopBarRight"]
-layout_mode = 2
-theme_override_constants/separation = 50
-alignment = 2
-
-[node name="MoneyGroup" type="HBoxContainer" parent="UI/TopBarRight/HBoxContainer"]
+[node name="MoneyGroup" type="HBoxContainer" parent="UI/TopBarRight"]
 layout_mode = 2
 
-[node name="Money" type="TextureRect" parent="UI/TopBarRight/HBoxContainer/MoneyGroup"]
+[node name="Money" type="TextureRect" parent="UI/TopBarRight/MoneyGroup"]
 layout_mode = 2
-texture = ExtResource("38_u0x3h")
-expand_mode = 3
+texture = ExtResource("38_uoomi")
+stretch_mode = 2
 
-[node name="Label" type="Label" parent="UI/TopBarRight/HBoxContainer/MoneyGroup/Money"]
+[node name="Label" type="Label" parent="UI/TopBarRight/MoneyGroup/Money"]
 layout_mode = 0
-offset_left = 57.0
-offset_top = 12.0
+offset_left = 70.0
+offset_top = 8.0
 offset_right = 128.0
-offset_bottom = 41.0
+offset_bottom = 63.0
 theme_override_fonts/font = ExtResource("4_mb5fr")
-text = "100.00"
+text = "100"
+label_settings = ExtResource("39_uoomi")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="MenuGroup" type="VBoxContainer" parent="UI/TopBarRight/HBoxContainer"]
-layout_mode = 2
-
-[node name="MenuButton" type="TextureButton" parent="UI/TopBarRight/HBoxContainer/MenuGroup"]
-layout_mode = 2
-texture_normal = ExtResource("39_bqq7l")
-
-[node name="SettingsButton" type="TextureButton" parent="UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton"]
-layout_mode = 0
-offset_top = 62.0
-offset_right = 62.0
-offset_bottom = 62.0
-texture_normal = ExtResource("40_uoomi")
-
-[node name="HomeButton" type="TextureButton" parent="UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton"]
-layout_mode = 0
-offset_top = 128.0
-offset_right = 62.0
-offset_bottom = 186.0
-texture_normal = ExtResource("41_o38ri")
 
 [node name="BackButtonImage" type="MarginContainer" parent="UI"]
 layout_mode = 0
@@ -824,9 +798,41 @@ z_index = 100
 layout_mode = 2
 texture_normal = ExtResource("2_ac1q2")
 
+[node name="TopBarRight2" type="MarginContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -105.0
+offset_bottom = 360.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 23
+theme_override_constants/margin_right = 23
+
+[node name="MenuGroup" type="VBoxContainer" parent="UI/TopBarRight2"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MenuButton" type="TextureButton" parent="UI/TopBarRight2/MenuGroup"]
+layout_mode = 2
+texture_normal = ExtResource("39_bqq7l")
+
+[node name="SettingsButton" type="TextureButton" parent="UI/TopBarRight2/MenuGroup/MenuButton"]
+layout_mode = 0
+offset_top = 73.0
+offset_right = 62.0
+offset_bottom = 131.0
+texture_normal = ExtResource("40_uoomi")
+
+[node name="HomeButton" type="TextureButton" parent="UI/TopBarRight2/MenuGroup/MenuButton"]
+layout_mode = 0
+offset_top = 146.0
+offset_right = 62.0
+offset_bottom = 204.0
+texture_normal = ExtResource("41_o38ri")
+
 [node name="SoundControl" parent="." instance=ExtResource("42_qu1ft")]
 layout_mode = 1
 script = null
-
-[connection signal="pressed" from="UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="UI/TopBarRight/HBoxContainer/MenuGroup/MenuButton/HomeButton" to="." method="_on_home_button_pressed"]

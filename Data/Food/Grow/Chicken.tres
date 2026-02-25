@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dsmda6g5mxqds" path="res://Assets/UI/KitchenUI/PortionSelector/ChickenHalfPiece.png" id="3_f3mwn"]
 [ext_resource type="Texture2D" uid="uid://nptg83742f1f" path="res://Assets/GrowSection/ChickenHalfPiece2.png" id="3_fmchx"]
 [ext_resource type="Texture2D" uid="uid://qw5k6q2fyc53" path="res://Assets/UI/KitchenUI/PortionSelector/ChickenOnePiece.png" id="3_n75qh"]
-[ext_resource type="Texture2D" uid="uid://mhpvh5u0lcif" path="res://Assets/UI/KitchenUI/TEST/ChickenWhole.png" id="3_shu1p"]
 [ext_resource type="Texture2D" uid="uid://ol7uyfx2pnr6" path="res://Assets/GrowSection/ChickenHalfPiece3.png" id="4_lj4ma"]
+[ext_resource type="Texture2D" uid="uid://cj7203n0komht" path="res://Assets/UI/RiceUI/ChickenOnePiece.png" id="5_fmchx"]
 [ext_resource type="Texture2D" uid="uid://drm6rukh32o8m" path="res://Assets/GrowSection/ChickenPlated2.png" id="6_13nwy"]
 [ext_resource type="Texture2D" uid="uid://bnsvjo5veij8u" path="res://Assets/GrowSection/ChickenPlated3.png" id="7_ral42"]
 
@@ -20,7 +20,7 @@ is_portionable = true
 plated_texture_half = ExtResource("2_104ik")
 plated_texture_half_2 = ExtResource("3_fmchx")
 plated_texture_half_3 = ExtResource("4_lj4ma")
-plated_texture_whole = ExtResource("3_shu1p")
+plated_texture_whole = ExtResource("5_fmchx")
 plated_texture_whole_2 = ExtResource("6_13nwy")
 plated_texture_whole_3 = ExtResource("7_ral42")
 selector_icon_half = ExtResource("3_f3mwn")
