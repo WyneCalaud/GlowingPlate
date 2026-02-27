@@ -1,22 +1,27 @@
 # rice_cup.gd
 extends "res://Scripts/Food Data/food_item_base.gd"
 
-# --- UNIQUE EXPORTS ---
-@export var empty_cup_texture: Texture2D
-@export var small_scoop_texture: Texture2D
-@export var medium_scoop_texture: Texture2D
-@export var full_cup_texture: Texture2D
-@export var too_high_texture: Texture2D
+# --- RICE TYPE SELECTION ---
+@export_enum("White", "Brown") var rice_type: String = "White"
 
-# --- SCALE FACTORS ---
-@export var empty_cup_texture_factor: float = 0.4
-@export var small_scoop_scale_factor: float = 0.2 
-@export var medium_scoop_scale_factor: float = 0.2 
-@export var full_cup_scale_factor: float = 0.15 
-@export var too_high_scale_factor: float = 0.2 
+# --- WHITE RICE TEXTURES ---
+@export_group("White Rice Textures")
+@export var wr_empty_cup: Texture2D
+@export var wr_small_scoop: Texture2D
+@export var wr_medium_scoop: Texture2D
+@export var wr_full_cup: Texture2D
+@export var wr_too_high: Texture2D
+
+# --- BROWN RICE TEXTURES ---
+@export_group("Brown Rice Textures")
+@export var br_empty_cup: Texture2D
+@export var br_small_scoop: Texture2D
+@export var br_medium_scoop: Texture2D
+@export var br_full_cup: Texture2D
+@export var br_too_high: Texture2D
 
 # --- CONFIG ---
-const RICE_COOKER_NAME = "RiceCooker" 
+@export var target_cooker_name: String = "RiceCooker" # Change this to "BrownRiceCooker" in the inspector for your brown rice cup
 const RICE_SCOOP_MECHANIC_SCRIPT = preload("res://Scripts/Gameplay Items/rice_scoop_mechanic.gd")
 
 # --- STATE ---
@@ -24,6 +29,13 @@ var is_empty := true
 var current_rice_amount := "Empty"
 var hovered_cooker: Node = null
 var mechanic_instance: Node = null 
+
+# Active textures cache
+var tex_empty: Texture2D
+var tex_small: Texture2D
+var tex_medium: Texture2D
+var tex_full: Texture2D
+var tex_too_high: Texture2D
 
 # --- NODES ---
 @onready var rice_cup_area: Area2D = $Area2D
@@ -33,13 +45,24 @@ signal score_change(deduction: int)
 signal rice_scoop_completed(rice_amount: String)
 
 func _ready():
-	texture = empty_cup_texture
-	scale = Vector2(empty_cup_texture_factor, empty_cup_texture_factor)
+	if rice_type == "White":
+		tex_empty = wr_empty_cup
+		tex_small = wr_small_scoop
+		tex_medium = wr_medium_scoop
+		tex_full = wr_full_cup
+		tex_too_high = wr_too_high
+	else:
+		tex_empty = br_empty_cup
+		tex_small = br_small_scoop
+		tex_medium = br_medium_scoop
+		tex_full = br_full_cup
+		tex_too_high = br_too_high
+
+	texture = tex_empty
 	super._ready()
 
 	if rice_cup_area:
 		rice_cup_area.input_pickable = true
-		_update_hitbox_scale(empty_cup_texture_factor)
 		# Connect to the area's input event to lock camera on click
 		rice_cup_area.input_event.connect(_on_rice_cup_input_event)
 
@@ -57,42 +80,81 @@ func _on_rice_cup_input_event(_viewport, event, _shape_idx):
 		if event.pressed:
 			set_camera_lock(true)
 
+# Flexible name checker to handle renamed nodes easily
+func _is_target_cooker(node: Node) -> bool:
+	if not is_instance_valid(node): return false
+	var target = target_cooker_name.to_lower().replace(" ", "")
+	var current = node.name.to_lower().replace(" ", "")
+	return current.contains(target) or target.contains(current)
+
+func _process(delta: float) -> void:
+	# Call parent process to retain base dragging behavior
+	super._process(delta)
+	
+	# --- CRASH FIX: Distance-based closing ---
+	# To prevent the infinite physics loop caused by the cooker's hitbox shrinking and shifting away,
+	# we manually keep the cooker open based on distance while you are dragging it.
+	# ADDED is_instance_valid to prevent crashes during scene closure
+	if is_dragging and is_instance_valid(hovered_cooker):
+		var dist = global_position.distance_to(hovered_cooker.global_position)
+		if dist > 250.0: # Safe pixel radius. Close if dragged completely away.
+			_close_current_cooker()
+			hovered_cooker = null
+			current_hovered_area = null
+
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	super._on_area_2d_area_entered(area)
+	if not is_instance_valid(area): return
+	
 	var parent = area.get_parent()
-	if parent and parent.name == RICE_COOKER_NAME:
-		hovered_cooker = parent
-		if hovered_cooker.has_method("open_cooker"):
-			hovered_cooker.open_cooker()
+	
+	# CRASH FIX 2: Only interact with the cooker when actively dragging.
+	if is_instance_valid(parent) and _is_target_cooker(parent):
+		if is_dragging:
+			hovered_cooker = parent
+			if hovered_cooker.has_method("open_cooker"):
+				hovered_cooker.open_cooker()
 
 func _on_area_2d_area_exited(area: Area2D) -> void:
-	var parent = area.get_parent()
-	if parent == hovered_cooker:
-		_close_current_cooker()
-		hovered_cooker = null
+	if is_instance_valid(area):
+		var parent = area.get_parent()
+		# ONLY close via the physics exit event if we dropped the cup. 
+		# If we are dragging, _process handles the distance checking to prevent the crash loop.
+		if is_instance_valid(hovered_cooker) and parent == hovered_cooker and not is_dragging:
+			_close_current_cooker()
+			hovered_cooker = null
 	super._on_area_2d_area_exited(area)
 
 func handle_drop():
 	# Unlock camera whenever the item is released
 	set_camera_lock(false)
 
-	var cooker_area_found := (
-		current_hovered_area
-		and current_hovered_area.get_parent()
-		and current_hovered_area.get_parent().name == RICE_COOKER_NAME
-	)
+	var cooker_area_found = false
+	
+	# Since we bypassed area_exited while dragging, check our persistent distance state first
+	if is_instance_valid(hovered_cooker):
+		var dist = global_position.distance_to(hovered_cooker.global_position)
+		if dist <= 250.0:
+			cooker_area_found = true
+	# Fallback if the physics engine found it at the exact moment of drop
+	elif is_instance_valid(current_hovered_area) and is_instance_valid(current_hovered_area.get_parent()):
+		if _is_target_cooker(current_hovered_area.get_parent()):
+			cooker_area_found = true
+			hovered_cooker = current_hovered_area.get_parent()
 
 	if cooker_area_found and is_empty:
-		if not mechanic_instance:
+		if not is_instance_valid(mechanic_instance):
 			start_hold_mechanic()
 			return
 
 	if is_empty and not cooker_area_found:
 		_close_current_cooker()
+		hovered_cooker = null # Ensure clean state
 		return_to_start()
 		return
 
 	_close_current_cooker()
+	hovered_cooker = null # Ensure clean state
 	super.handle_drop()
 
 func on_plate_placement_success():
@@ -101,9 +163,7 @@ func on_plate_placement_success():
 func reset_cup():
 	is_empty = true
 	current_rice_amount = "Empty"
-	texture = empty_cup_texture
-	scale = Vector2(empty_cup_texture_factor, empty_cup_texture_factor)
-	_update_hitbox_scale(empty_cup_texture_factor)
+	texture = tex_empty
 	return_to_start()
 
 func start_hold_mechanic():
@@ -118,55 +178,58 @@ func start_hold_mechanic():
 	mechanic_instance.connect("score_change", Callable(self, "_on_mechanic_score_change"))
 	mechanic_instance.connect("scoop_finished", Callable(self, "_on_mechanic_scoop_finished"))
 
-	mechanic_instance.start_scoop_hold(self, RICE_COOKER_NAME)
+	# Pass the node's name as a string since the mechanic script expects a String
+	if is_instance_valid(hovered_cooker):
+		mechanic_instance.start_scoop_hold(self, hovered_cooker.name)
 
 func _on_mechanic_score_change(deduction: int):
 	emit_signal("score_change", deduction)
 
 func _on_mechanic_scoop_finished(amount: String):
 	set_camera_lock(false)
-	if rice_cup_area:
+	if is_instance_valid(rice_cup_area):
 		rice_cup_area.input_pickable = true
 
-	current_rice_amount = amount
+	# --- MAPPING FIX ---
+	# Translate the strings coming from the UI into standard game variables
+	var mapped_amount = amount
+	if amount == "Right": 
+		mapped_amount = "RightAmount"
+	elif amount == "Low": 
+		mapped_amount = "Small"
 
-	var final_texture := empty_cup_texture
-	var target_scale := empty_cup_texture_factor
+	current_rice_amount = mapped_amount
+
+	var final_texture := tex_empty
 	var success := true
 
-	match amount:
+	match mapped_amount:
 		"RightAmount":
-			final_texture = full_cup_texture
-			target_scale = full_cup_scale_factor
+			final_texture = tex_full
 		"Small":
-			final_texture = small_scoop_texture
-			target_scale = small_scoop_scale_factor
+			final_texture = tex_small
 		"Medium":
-			final_texture = medium_scoop_texture
-			target_scale = medium_scoop_scale_factor
+			final_texture = tex_medium
 		"TooHigh":
-			final_texture = too_high_texture
-			target_scale = too_high_scale_factor
+			final_texture = tex_too_high
 		_:
 			success = false
 
 	texture = final_texture
-	scale = Vector2(target_scale, target_scale)
 	is_empty = !success
-	_update_hitbox_scale(target_scale)
 
 	_close_current_cooker()
+	
+	# CRITICAL FIX 3: Completely sever cooker reference BEFORE flying back to start.
+	# Prevents expanded cooker hitboxes from grabbing the cup again while tweening.
+	hovered_cooker = null 
 	return_to_start()
 
-	if amount == "RightAmount":
-		emit_signal("rice_scoop_completed", amount)
+	if mapped_amount == "RightAmount":
+		emit_signal("rice_scoop_completed", mapped_amount)
 
 	mechanic_instance = null
 
 func _close_current_cooker():
-	if hovered_cooker and hovered_cooker.has_method("close_cooker"):
+	if is_instance_valid(hovered_cooker) and hovered_cooker.has_method("close_cooker"):
 		hovered_cooker.close_cooker()
-
-func _update_hitbox_scale(current_scale: float):
-	if rice_cup_area:
-		rice_cup_area.scale = Vector2(0.5 / current_scale, 0.5 / current_scale)

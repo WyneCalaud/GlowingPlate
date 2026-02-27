@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://df77vetgec51q" path="res://Assets/UI/KitchenUI/TEST/FishWhole.png" id="4_2n2iw"]
 [ext_resource type="Texture2D" uid="uid://d08tub8xecgur" path="res://Assets/GrowSection/FishHalf3.png" id="4_3k5fd"]
 [ext_resource type="Texture2D" uid="uid://bwtdjv87tutc7" path="res://Assets/UI/KitchenUI/PortionSelector/Icons/FishHalfIcon.png" id="6_2n2iw"]
-[ext_resource type="Texture2D" uid="uid://dk27x5f57s0m3" path="res://Assets/GrowSection/FishWhole2.png" id="6_bh4mw"]
-[ext_resource type="Texture2D" uid="uid://s3jdtf3ym7nn" path="res://Assets/GrowSection/FishWhole3.png" id="7_3h1e7"]
+[ext_resource type="Texture2D" uid="uid://c6qu4a25jrui6" path="res://Assets/UI/PortionFoods/FishWhole2.png" id="6_216va"]
+[ext_resource type="Texture2D" uid="uid://3d65yjqh3bq0" path="res://Assets/UI/PortionFoods/FishWhole3.png" id="7_3k5fd"]
 [ext_resource type="Texture2D" uid="uid://qtqkqxwvhsnx" path="res://Assets/UI/KitchenUI/PortionSelector/Icons/FishWholeIcon.png" id="7_6i3b5"]
 
 [resource]
@@ -21,8 +21,8 @@ plated_texture_half = ExtResource("3_24vh5")
 plated_texture_half_2 = ExtResource("3_216va")
 plated_texture_half_3 = ExtResource("4_3k5fd")
 plated_texture_whole = ExtResource("4_2n2iw")
-plated_texture_whole_2 = ExtResource("6_bh4mw")
-plated_texture_whole_3 = ExtResource("7_3h1e7")
+plated_texture_whole_2 = ExtResource("6_216va")
+plated_texture_whole_3 = ExtResource("7_3k5fd")
 selector_icon_half = ExtResource("6_2n2iw")
 selector_icon_whole = ExtResource("7_6i3b5")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

@@ -24,16 +24,17 @@ func start_scoop_hold(cup_node: Node, cooker_name: String, _empty_texture: Textu
 	
 	ui_instance = RICE_SCOOP_UI_SCENE.instantiate()
 	
-	# Placement logic
+	# Placement logic - Find the targeted cooker
 	var cooker_node = get_tree().get_first_node_in_group(cooker_name)
-	if cooker_node:
-		cooker_node.add_child(ui_instance)
-		ui_instance.position = Vector2(0, 50) 
-		ui_instance.z_index = 100
-	else:
-		get_tree().root.add_child(ui_instance)
-		ui_instance.global_position = Vector2(20, 280)
-		ui_instance.z_index = 100
+	if not cooker_node:
+		cooker_node = get_tree().root.find_child(cooker_name, true, false)
+	
+	# Add to root to prevent inheriting scale issues
+	get_tree().root.add_child(ui_instance)
+	ui_instance.z_index = 100
+	
+	# Defer position calculation to ensure UI elements have their size calculated
+	call_deferred("_center_ui_on_cooker", cooker_node)
 
 	# Connect to the UI's signal (from hold_button.gd)
 	# This ensures we only have ONE source of truth for the result
@@ -45,6 +46,32 @@ func start_scoop_hold(cup_node: Node, cooker_name: String, _empty_texture: Textu
 			if child.has_signal("fill_finished"):
 				child.fill_finished.connect(_on_ui_fill_finished)
 				break
+
+func _center_ui_on_cooker(cooker_node: Node):
+	if not is_instance_valid(ui_instance): return
+	
+	if cooker_node:
+		var center_pos = cooker_node.global_position
+		
+		# Robust centering for Sprite2D
+		if cooker_node is Sprite2D:
+			if cooker_node.centered:
+				center_pos += (cooker_node.offset * cooker_node.global_scale)
+			else:
+				var tex_size = cooker_node.texture.get_size() * cooker_node.global_scale if cooker_node.texture else Vector2.ZERO
+				center_pos += (cooker_node.offset * cooker_node.global_scale) + (tex_size / 2)
+		elif cooker_node is Control:
+			center_pos = cooker_node.get_global_rect().get_center()
+			
+		var ui_size = ui_instance.size
+		if ui_size == Vector2.ZERO: 
+			ui_size = Vector2(100, 100) # Fallback if size calculation failed
+			
+		# Center it and bump it up slightly so it floats cleanly over the cooker
+		ui_instance.global_position = center_pos - (ui_size / 2) + Vector2(0, -60)
+	else:
+		# Fallback position if cooker isn't found
+		ui_instance.global_position = Vector2(20, 280)
 
 func _on_ui_fill_finished(amount_str: String, _amount_int: int):
 	# Delay the finish call slightly to ensure the UI signal finishes processing

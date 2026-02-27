@@ -13,18 +13,14 @@ extends Node
 # This is separate from QuizSystem (SM-2 scheduler).
 # ==========================================================
 
-
-# Structure:
-# {
-#   "Q_ID": {
-#       "unlocked": true,
-#       "attempts": 1,
-#       "correct_attempts": 1
-#   }
-# }
-
 var question_progress: Dictionary = {}
 
+func _ready():
+	# Load data from GameData if it exists
+	if not GameData.quiz_question_progress.is_empty():
+		question_progress = GameData.quiz_question_progress
+	else:
+		initialize_all_questions()
 
 # ==========================================================
 # INITIALIZATION
@@ -40,7 +36,9 @@ func initialize_all_questions():
 			question_progress[q_id] = {
 				"unlocked": false,
 				"attempts": 0,
-				"correct_attempts": 0
+				"correct_attempts": 0,
+				"streak": 0,
+				"next_review_day": 1
 			}
 
 
@@ -78,7 +76,7 @@ func get_unlocked_questions() -> Array:
 # ATTEMPT TRACKING
 # ==========================================================
 
-func record_attempt(question_id: String, is_correct: bool):
+func record_attempt(question_id: String, is_correct: bool, current_day: int = 1):
 	if not question_progress.has(question_id):
 		initialize_all_questions()
 	
@@ -88,6 +86,14 @@ func record_attempt(question_id: String, is_correct: bool):
 	
 	if is_correct:
 		data["correct_attempts"] += 1
+		# Streak tracking for GlowDesk SRS
+		data["streak"] = min(data.get("streak", 0) + 1, 3) 
+	else:
+		data["streak"] = 0
+		
+	# SRS Intervals calculation
+	var intervals = { 0: 1, 1: 3, 2: 7, 3: 14 }
+	data["next_review_day"] = current_day + intervals.get(data["streak"], 1)
 	
 	data["unlocked"] = true  # Auto-unlock on first attempt
 	

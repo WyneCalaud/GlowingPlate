@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=6 format=3 uid="uid://cttvp1r0jqjpr"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=7 format=3 uid="uid://cttvp1r0jqjpr"]
 
 [ext_resource type="Texture2D" uid="uid://c1ihv48yqhe4h" path="res://Assets/UI/RiceUI/BrownEmptyCup.png" id="1_rgc2v"]
 [ext_resource type="Texture2D" uid="uid://gna4k43jqicg" path="res://Assets/UI/RiceUI/PlatedBrownRiceRight.png" id="1_smdgc"]
 [ext_resource type="Texture2D" uid="uid://cb4b46man40rc" path="res://Assets/UI/RiceUI/PlatedBrownRiceMed.png" id="2_rgc2v"]
 [ext_resource type="Texture2D" uid="uid://bnpb3c7dygcxd" path="res://Assets/UI/RiceUI/PlatedBrownRiceLow.png" id="3_kgcpt"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_rgc2v"]
+[ext_resource type="Texture2D" uid="uid://by8rpuh8ao08n" path="res://Assets/UI/RiceUI/PlatedBrownRiceTooHigh.png" id="5_kgcpt"]
 
 [resource]
 script = ExtResource("3_rgc2v")
@@ -15,4 +16,5 @@ base_texture = ExtResource("1_rgc2v")
 default_plated_texture = ExtResource("1_smdgc")
 plated_texture_small = ExtResource("3_kgcpt")
 plated_texture_medium = ExtResource("2_rgc2v")
+plated_texture_too_high = ExtResource("5_kgcpt")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"

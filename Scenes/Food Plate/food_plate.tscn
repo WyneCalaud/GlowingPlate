@@ -25,6 +25,7 @@ position = Vector2(128, -102)
 position = Vector2(-133, 108)
 script = ExtResource("2_xwyst")
 linked_image = NodePath("../GoFood")
+rice_scale_factor = 0.3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotGo"]
 position = Vector2(48, -56)
@@ -35,6 +36,7 @@ position = Vector2(128, 108)
 script = ExtResource("2_xwyst")
 linked_image = NodePath("../GlowVegFood")
 slot_type = "GlowVeg"
+rice_scale_factor = 0.3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotVeg"]
 position = Vector2(-214, -56)
@@ -45,6 +47,9 @@ position = Vector2(-133, -102)
 script = ExtResource("2_xwyst")
 linked_image = NodePath("../GrowFood")
 slot_type = "Grow"
+rice_position_offset = Vector2(0, -20)
+rice_rotation_offset = 90.0
+rice_scale_factor = 0.3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotGrow"]
 position = Vector2(47, 153)
@@ -55,6 +60,9 @@ position = Vector2(128, -102)
 script = ExtResource("2_xwyst")
 linked_image = NodePath("../GlowFruFood")
 slot_type = "GlowFru"
+rice_position_offset = Vector2(0, -20)
+rice_rotation_offset = -180.0
+rice_scale_factor = 0.3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotGlowFru"]
 position = Vector2(-212, 154)

@@ -1,9 +1,6 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=14 format=3 uid="uid://bvv4bih206vxi"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://bvv4bih206vxi"]
 
 [ext_resource type="Texture2D" uid="uid://1ecw6i3ykpw6" path="res://Assets/Foods/Corns.png" id="1_u72oa"]
-[ext_resource type="Texture2D" uid="uid://bpvdnx7gw1wqv" path="res://Assets/GoSection/medrice512.png" id="3_skris"]
-[ext_resource type="Texture2D" uid="uid://dve0ig4h81rnp" path="res://Assets/GoSection/lowrice512.png" id="4_nfcvw"]
-[ext_resource type="Texture2D" uid="uid://ddjikhlq0jk20" path="res://Assets/GoSection/toohighrice 512.png" id="5_pfapb"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="6_8k7qh"]
 [ext_resource type="Texture2D" uid="uid://iweroapdj53n" path="res://Assets/UI/KitchenUI/VeggiesCup/Corn/CornFull.png" id="7_pfapb"]
 [ext_resource type="Texture2D" uid="uid://b8j6k5dnjsodk" path="res://Assets/UI/KitchenUI/VeggiesCup/Corn/CornHigh.png" id="8_8k7qh"]
@@ -29,7 +26,4 @@ veggie_plated_low = ExtResource("12_upcer")
 veggie_plated_med = ExtResource("13_d1na0")
 veggie_plated_high = ExtResource("11_8k7qh")
 veggie_plated_full = ExtResource("10_pfapb")
-plated_texture_small = ExtResource("4_nfcvw")
-plated_texture_medium = ExtResource("3_skris")
-plated_texture_too_high = ExtResource("5_pfapb")
 metadata/_custom_type_script = "uid://jdcig8g3adhl"
