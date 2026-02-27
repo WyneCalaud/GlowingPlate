@@ -91,7 +91,7 @@ const MENU_SCHEDULE: Dictionary = {
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	9: {
-		"Go": ["BROWN_RICE","PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE",  "PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS"],
 		"GlowFru": ["MANGO", "WATERMELON"],

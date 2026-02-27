@@ -1,25 +1,45 @@
-extends Sprite2D # or StaticBody2D/Area2D depending on your setup
+# rice_cooker.gd
+extends Sprite2D
 
-@export var closed_texture: Texture2D
-@export var open_texture: Texture2D
+@export_enum("White", "Brown") var rice_type: String = "White"
 
-@export var open_scale: Vector2 = Vector2(0.27, 0.27) 
-@export var closed_scale: Vector2 = Vector2(0.2, 0.2) 
+@export_group("White Rice Textures")
+@export var wr_closed_texture: Texture2D
+@export var wr_open_texture: Texture2D
 
-@export var open_offset: Vector2 = Vector2(0, -325)
-@export var closed_offset: Vector2 = Vector2(0, -50)
+@export_group("Brown Rice Textures")
+@export var br_closed_texture: Texture2D
+@export var br_open_texture: Texture2D
+
+# Scale settings
+@export_group("Transform Settings")
+@export var closed_scale: Vector2 = Vector2(1, 1)
+@export var open_scale: Vector2 = Vector2(0.8, 0.8) 
+@export var closed_offset: Vector2 = Vector2(0, 0)
+@export var open_offset: Vector2 = Vector2(0, -100) 
+
+# Active textures cache
+var active_closed: Texture2D
+var active_open: Texture2D
 
 func _ready():
-	texture = closed_texture
+	if rice_type == "White":
+		active_closed = wr_closed_texture
+		active_open = wr_open_texture
+	else:
+		active_closed = br_closed_texture
+		active_open = br_open_texture
+		
+	texture = active_closed
 	scale = closed_scale
 	offset = closed_offset
 
 func open_cooker():
-	texture = open_texture
+	texture = active_open
 	scale = open_scale
 	offset = open_offset
 
 func close_cooker():
-	texture = closed_texture
+	texture = active_closed
 	scale = closed_scale
 	offset = closed_offset

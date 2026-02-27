@@ -8,10 +8,21 @@ const FoodDispenserGlobals = preload("res://Scripts/Global/FoodDispenserGlobal.g
 @export var plated_scale_factor: float = 0.4
 @export var slot_type: String = "Go" 
 
+# --- Custom Transform Variables ---
+@export_group("Placement Tweaks")
+@export var rice_position_offset: Vector2 = Vector2.ZERO
+@export var rice_rotation_offset: float = 0.0
+@export var rice_scale_factor: float = 0.4 # <-- New control specifically for rice scale
+
 # --- Stacking & Portion Variables ---
 var current_quantity: int = 0
 var current_portion_type: String = "" # Stores "Half", "Whole", "VeggieFull" or ""
+var current_rice_amount: String = ""  # Tracked locally as well
 const MAX_QUANTITY: int = 3 
+
+# Stores the original Godot Editor position/rotation to prevent misalignment
+var base_image_position: Vector2
+var base_image_rotation: float
 
 signal slot_updated(resource, filled)
 
@@ -20,6 +31,9 @@ func _ready():
 	add_to_group(&"plate_slot")
 	
 	if linked_image:
+		# Capture the exact position/rotation you set in the 2D Editor
+		base_image_position = linked_image.position
+		base_image_rotation = linked_image.rotation_degrees
 		linked_image.visible = false
 
 func _input(event: InputEvent) -> void:
@@ -86,8 +100,8 @@ func try_place_food(incoming_data: Variant) -> bool:
 	var incoming_portion = placement_results.portion_type
 	var rice_amount = placement_results.get("rice_amount", "")
 	
-	# CRITICAL: Always duplicate to ensure metadata doesn't leak back to the dispenser
-	incoming_resource = incoming_resource.duplicate(true)
+	# Shallow copy safely creates a new data object but shares the textures.
+	incoming_resource = incoming_resource.duplicate()
 	
 	# Bake metadata into the resource so LobbyCanteen/OrderSystem can see it
 	if incoming_portion != "":
@@ -103,6 +117,7 @@ func try_place_food(incoming_data: Variant) -> bool:
 		is_filled = true
 		current_quantity = 1
 		current_portion_type = incoming_portion
+		current_rice_amount = rice_amount
 		_update_visuals(incoming_initial_texture)
 	else:
 		current_quantity += 1
@@ -137,7 +152,18 @@ func _update_stacking_visuals():
 
 func _update_visuals(tex: Texture2D):
 	linked_image.texture = tex
-	linked_image.scale = Vector2(plated_scale_factor, plated_scale_factor)
+	
+	# Apply specific rotation, position offset, AND scale if the item has rice metadata
+	if item_resource and item_resource.has_meta("RiceAmount"):
+		linked_image.position = base_image_position + rice_position_offset
+		linked_image.rotation_degrees = base_image_rotation + rice_rotation_offset
+		linked_image.scale = Vector2(rice_scale_factor, rice_scale_factor)
+	else:
+		# Revert to standard editor settings for other foods
+		linked_image.position = base_image_position
+		linked_image.rotation_degrees = base_image_rotation
+		linked_image.scale = Vector2(plated_scale_factor, plated_scale_factor)
+		
 	linked_image.visible = true
 
 func _get_placement_data(incoming_data: Variant) -> Dictionary:
@@ -192,6 +218,7 @@ func clear_slot():
 	item_resource = null
 	current_quantity = 0
 	current_portion_type = ""
+	current_rice_amount = ""
 	if linked_image:
 		linked_image.texture = null
 		linked_image.visible = false

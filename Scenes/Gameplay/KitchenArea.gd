@@ -66,48 +66,27 @@ var drop_zones_default_position: Vector2
 
 
 const FOOD_INTRO_TEXT := {
-	2: "We now have Pan de sal, in case a student wants something other than rice. 
-	Let’s try serving these cute kids some pan de sal, shall we?",
+	2: "We now have Pan de sal, in case a student wants something other than rice. \n\tLet’s try serving these cute kids some pan de sal, shall we?",
 	
-	3: "Turns out, there are kids who don’t like chicken, good thing we now have fish to serve them. 
-	This is a good way for them to eat variety of grow foods too!Let’s try serving these cute kids some fish now, shall we?",
+	3: "Turns out, there are kids who don’t like chicken, good thing we now have fish to serve them. \n\tThis is a good way for them to eat variety of grow foods too!Let’s try serving these cute kids some fish now, shall we?",
 	
-	4: "It’s time to introduce these kids to another vegetable.
-	Something that is high in vitamin A this time. I hope they  get used to eating vegetables soon!
-	Let’s try serving these cute kids some squash, shall we?",
+	4: "It’s time to introduce these kids to another vegetable.\n\tSomething that is high in vitamin A this time. I hope they  get used to eating vegetables soon!\n\tLet’s try serving these cute kids some squash, shall we?",
 	
-	5: "Fruits are so yummy, aren’t they? They’re yummy and also healthy!Good thing we have another 
-	fruit to serve now, and I hope the kids get to enjoy it very much.
-	Let’s try serving these cute kids some watermelon, shall we?",
+	5: "Fruits are so yummy, aren’t they? They’re yummy and also healthy!Good thing we have another \n\tfruit to serve now, and I hope the kids get to enjoy it very much.\n\tLet’s try serving these cute kids some watermelon, shall we?",
 	
-	6: "Rice isn’t the only Go food that gives us energy!Today, we’re introducing corn. It’s yummy, 
-	and helps kids stay active and energized. Some students might want to try corn instead of rice or bread.
-	Let’s try serving these cute kids some corn today, shall we?",
+	6: "Rice isn’t the only Go food that gives us energy!Today, we’re introducing corn. It’s yummy, \n\tand helps kids stay active and energized. Some students might want to try corn instead of rice or bread.\n\tLet’s try serving these cute kids some corn today, shall we?",
 	
-	7: "Not all Grow foods are meat or fish! Today, we’re introducing eggs. They help kids grow 
-	strong and are a great source of protein. This is perfect for students who want something soft 
-	or don’t feel like eating meat or fish today.Let’s try serving these cute kids some eggs, shall we?.",
+	7: "Not all Grow foods are meat or fish! Today, we’re introducing eggs. They help kids grow \n\tstrong and are a great source of protein. This is perfect for students who want something soft \n\tor don’t feel like eating meat or fish today.Let’s try serving these cute kids some eggs, shall we?.",
 	
-	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. 
-	They’re crunchy, colorful, and full of vitamin A.Some kids might be curious about how carrots 
-	taste, and that’s okay! Let’s try serving these cute kids some carrots today, shall we?",
+	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. \n\tThey’re crunchy, colorful, and full of vitamin A.Some kids might be curious about how carrots \n\ttaste, and that’s okay! Let’s try serving these cute kids some carrots today, shall we?",
 	
-	9: "Rice gives us energy, but did you know there are different kinds of rice too? Today, we’re 
-	introducing brown rice — it’s a Go food that helps keep our tummy healthy and gives long-lasting energy.
-	Some kids might want to try brown rice instead of white rice today.
-	Let’s try serving these cute kids some brown rice, shall we?",
+	9: "Rice gives us energy, but did you know there are different kinds of rice too? Today, we’re \n\tintroducing brown rice — it’s a Go food that helps keep our tummy healthy and gives long-lasting energy.\n\tSome kids might want to try brown rice instead of white rice today.\n\tLet’s try serving these cute kids some brown rice, shall we?",
 	
-	10: "Grow foods don’t always come from meat, fish, or eggs. Today, we’re introducing tokwa — 
-	it’s made from soybeans and helps our body grow strong too! This is a great option for kids 
-	who want a plant-based Grow food.Let’s try serving these cute kids some tokwa today, shall we?",
+	10: "Grow foods don’t always come from meat, fish, or eggs. Today, we’re introducing tokwa — \n\tit’s made from soybeans and helps our body grow strong too! This is a great option for kids \n\twho want a plant-based Grow food.Let’s try serving these cute kids some tokwa today, shall we?",
 	
-	11: "Vegetables come in many shapes, colors, and tastes! Today, we’re introducing eggplant — 
-	it’s a purple vegetable that helps keep our body healthy. Some kids might be curious or 
-	unsure about its taste, and that’s okay.Let’s try serving these cute kids some eggplant today, shall we?",
+	11: "Vegetables come in many shapes, colors, and tastes! Today, we’re introducing eggplant — \n\tit’s a purple vegetable that helps keep our body healthy. Some kids might be curious or \n\tunsure about its taste, and that’s okay.Let’s try serving these cute kids some eggplant today, shall we?",
 	
-	12: "Fruits help keep us healthy and give us vitamins! Today, we’re introducing banana — 
-	it’s sweet, soft, and gives quick energy. Many kids love bananas, so you might hear them ask for it today.
-	Let’s try serving these cute kids some bananas, shall we?"
+	12: "Fruits help keep us healthy and give us vitamins! Today, we’re introducing banana — \n\tit’s sweet, soft, and gives quick energy. Many kids love bananas, so you might hear them ask for it today.\n\tLet’s try serving these cute kids some bananas, shall we?"
 }
 
 func _ready():
@@ -246,6 +225,11 @@ func setup_kitchen_for_today():
 	if brown_rice_mat: brown_rice_mat.visible = has_brown_rice
 	if brown_rice_cooker: brown_rice_cooker.visible = has_brown_rice
 	if brown_rice_cup: brown_rice_cup.visible = has_brown_rice
+	
+	# Adjust Camera Scroller Max X
+	var cam = get_tree().get_first_node_in_group("MainCamera")
+	if cam and "max_x" in cam:
+		cam.max_x = 2216.0 if has_brown_rice else 1920.0
 
 	# Adjust Positions Safely (using set_deferred to prevent infinite layout loops)
 	if has_brown_rice:
