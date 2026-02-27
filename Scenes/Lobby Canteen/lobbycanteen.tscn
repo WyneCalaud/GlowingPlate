@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=45 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://dt5he77x83jrn" path="res://Assets/UI/LobbyUI/LobbyBackground/OutsideBackground.png" id="3_vtn67"]
@@ -37,7 +37,8 @@
 [ext_resource type="Texture2D" uid="uid://4ssy3iheafjj" path="res://Assets/UI/LobbyUI/Okay Button.png" id="28_q6g5s"]
 [ext_resource type="PackedScene" uid="uid://c5l8auaitpptq" path="res://Scenes/GlowDesk/GlowDesk.tscn" id="28_uu58y"]
 [ext_resource type="Texture2D" uid="uid://1ttof10olivl" path="res://Assets/UI/LobbyUI/Hint Button.png" id="29_7yiff"]
-[ext_resource type="Texture2D" uid="uid://bnof2a6ttm3fl" path="res://Assets/UI/LobbyUI/Dialogue Box Medium.png" id="32_uu58y"]
+[ext_resource type="Texture2D" uid="uid://1c15qhkuhbcg" path="res://Assets/UI/Interface/bigdialogue.png" id="32_uu58y"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="33_nk7xc"]
 [ext_resource type="Texture2D" uid="uid://ccx1a6h1n05n0" path="res://Assets/UI/Interface/ServeButton.png" id="39_uu58y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uu58y"]
@@ -48,6 +49,10 @@ region = Rect2(0, 578, 1280, 142)
 font = ExtResource("15_wdy5h")
 font_size = 30
 font_color = Color(0.9137255, 0.8352941, 0.6862745, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_uu58y"]
+base_font = ExtResource("33_nk7xc")
+spacing_glyph = 5
 
 [sub_resource type="Theme" id="Theme_myl55"]
 
@@ -388,12 +393,12 @@ icon = ExtResource("13_wdy5h")
 flat = true
 
 [node name="DialogueBox" type="TextureRect" parent="DayScene"]
-offset_left = 113.0
-offset_top = 91.0
-offset_right = 867.0
-offset_bottom = 356.0
+offset_left = 18.0
+offset_top = -32.0
+offset_right = 855.0
+offset_bottom = 502.91174
 texture = ExtResource("32_uu58y")
-expand_mode = 1
+expand_mode = 5
 
 [node name="CustomerName" type="Label" parent="DayScene/DialogueBox"]
 layout_mode = 0
@@ -402,29 +407,29 @@ offset_bottom = 23.0
 
 [node name="OrderText" type="RichTextLabel" parent="DayScene/DialogueBox"]
 layout_mode = 0
-offset_left = 41.0
-offset_top = 45.0
-offset_right = 705.0
-offset_bottom = 169.0
-theme_override_fonts/normal_font = ExtResource("15_wdy5h")
-theme_override_font_sizes/normal_font_size = 25
-horizontal_alignment = 1
+offset_left = 86.0
+offset_top = 147.0
+offset_right = 734.0
+offset_bottom = 365.0
+theme_override_colors/default_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
+theme_override_fonts/normal_font = SubResource("FontVariation_uu58y")
+theme_override_font_sizes/normal_font_size = 27
 
 [node name="BtnAccept" type="Button" parent="DayScene"]
-offset_left = 273.0
-offset_top = 316.0
-offset_right = 480.0
-offset_bottom = 409.0
+offset_left = 160.0
+offset_top = 408.0
+offset_right = 386.0
+offset_bottom = 520.0
 icon = ExtResource("28_q6g5s")
 flat = true
 icon_alignment = 1
 expand_icon = true
 
 [node name="BtnContinue" type="Button" parent="DayScene"]
-offset_left = 493.0
-offset_top = 317.0
-offset_right = 698.0
-offset_bottom = 411.0
+offset_left = 427.0
+offset_top = 411.0
+offset_right = 699.0
+offset_bottom = 522.0
 theme = SubResource("Theme_myl55")
 icon = ExtResource("29_7yiff")
 flat = true
@@ -432,10 +437,10 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="BtnPrincipalLeave" type="Button" parent="DayScene"]
-offset_left = 376.0
-offset_top = 304.0
-offset_right = 581.0
-offset_bottom = 398.0
+offset_left = 324.0
+offset_top = 401.0
+offset_right = 542.0
+offset_bottom = 506.0
 theme = SubResource("Theme_myl55")
 icon = ExtResource("28_q6g5s")
 flat = true

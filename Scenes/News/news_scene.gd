@@ -431,7 +431,7 @@ func _end_news():
 
 	await fade.finished
 
-	get_tree().change_scene_to_file("res://Scenes/MiniGame/matching_game.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 
 
 # =========================

@@ -16,6 +16,7 @@ var player_name := ""
 @onready var fade_overlay = $FadeOverlay
 @onready var principal = $PrincipalPortrait
 @onready var jenna = $JennaPortrait
+@onready var dim_background = $DimBackground
 
 var current_character := "principal"
 
@@ -29,6 +30,7 @@ func _ready():
 	jenna.hide()
 
 	fade_overlay.modulate.a = 0.0
+	dim_background.hide()
 
 
 func _on_video_stream_player_finished() -> void:
@@ -71,73 +73,88 @@ func _on_video_stream_player_finished() -> void:
 
 func show_step():
 
-	# RESET BUTTON STATE EVERY STEP
 	btn_next.show()
 	btn_choice1.hide()
 	btn_choice2.hide()
 	name_popup.hide()
 
-
 	match step:
 
-		# ===== PRINCIPAL =====
+		# ===== NEW INTRO DIALOGUES =====
 		0:
-			dialogue_text.text = "Ah, Hello! You must be the new canteen worker."
-			btn_next_label.text = "I am!"
+			dialogue_text.text = "Wow! The canteen looks so much better now."
+			btn_next_label.text = "Next"
 		1:
+			dialogue_text.text = "Our students will surely enjoy eating here."
+			btn_next_label.text = "Next"
+		2:
+			dialogue_text.text = "Well, hello there! I’m Principal Reyes."
+			btn_next_label.text = "Next"
+		3:
+			dialogue_text.text = "And you must be the new canteen cook..."
+			btn_next_label.text = "Yes?"
+
+		4:
 			show_name_input()
 
-		2:
-			dialogue_text.text = "Welcome, %s! our school is very excited to have you here." % player_name
+		5:
+			dialogue_text.text = "Welcome, %s! Our school is very excited to have you here." % player_name
 			btn_next_label.text = "Thank you!"
-		3:
+
+		6:
 			dialogue_text.text = "You know, our students are in need of meals that are tasty... and healthy too!"
 			btn_next_label.text = "Got it!"
-		4:
+
+		7:
 			dialogue_text.text = "Because we want them to grow strong and healthy so they can learn well."
 			btn_next_label.text = "Uh huh"
-		5:
+
+		8:
 			dialogue_text.text = "That’s why I’ve chosen you for this important job."
 			btn_next_label.text = "Alright"
-		6:
+
+		9:
 			dialogue_text.text = "Ready to start your first day?"
 			btn_next.hide()
 			btn_choice1.show()
 			btn_choice2.show()
-
 			btn_choice1_label.text = "I'm ready!"
 			btn_choice2_label.text = "I'm nervous..."
 
-		7:
+		10:
 			dialogue_text.text = "Don’t worry, I know you will do great, %s!" % player_name
 			btn_next_label.text = "Thanks!"
-		8:
+
+		11:
 			dialogue_text.text = "Ok! See you next time, %s. Have fun serving our students!" % player_name
 			btn_next_label.text = "See you!"
 
-
 		# ===== JENNA =====
-		9:
+		12:
 			dialogue_text.text = "Hello there! My name’s Jenna!"
 			btn_next.hide()
 			btn_choice1.show()
 			btn_choice2.show()
 			btn_choice1_label.text = "Hi Jenna!"
 			btn_choice2_label.text = "Hello!"
-		10:
+
+		13:
 			dialogue_text.text = "Anyway, my classroom is just across."
 			btn_next_label.text = "Okay"
-		11:
+
+		14:
 			dialogue_text.text = "Hehe, I saw the new look of the canteen, so I came here."
 			btn_next_label.text = "Nice"
-		12:
+
+		15:
 			dialogue_text.text = "I'd like to try the rice, chicken, sitaw, and mango combo please. Cold water is fine, and don't forget my milk too!"
 			btn_next.hide()
 			btn_choice1.show()
 			btn_choice2.show()
 			btn_choice1_label.text = "Okay"
 			btn_choice2_label.text = "What"
-		13:
+
+		16:
 			dialogue_text.text = "Give me rice, chicken, sitaw, and mango. My water is cold. And don’t forget my milk please."
 			btn_next.show()
 
@@ -148,8 +165,14 @@ func show_step():
 
 func _on_btn_next_pressed() -> void:
 
-	if step == 8 and current_character == "principal":
+	# --- PRINCIPAL END ---
+	if step == 11 and current_character == "principal":
 		principal_exit_and_spawn_jenna()
+		return
+
+	# --- JENNA FINAL STEP ---
+	if step == 16 and current_character == "jenna":
+		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 		return
 
 	step += 1
@@ -159,17 +182,15 @@ func _on_btn_next_pressed() -> void:
 func _on_btn_choice_1_pressed() -> void:
 
 	if current_character == "principal":
-		step = 8
+		step = 11
+		show_step()
+		return
 
 	elif current_character == "jenna":
-
-		# STEP 12 → tutorial debug
-		if step == 12:
-			print("DEBUG: Start tutorial here")
-			# put your tutorial scene change later
+		if step == 15:
+			get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 			return
-
-		step = 11
+		step = 14
 
 	show_step()
 
@@ -177,17 +198,14 @@ func _on_btn_choice_1_pressed() -> void:
 func _on_btn_choice_2_pressed() -> void:
 
 	if current_character == "principal":
-		step = 7
+		step = 10
 
 	elif current_character == "jenna":
-
-		# STEP 12 → show hint dialogue
-		if step == 12:
-			step = 13
+		if step == 15:
+			step = 16
 			show_step()
 			return
-
-		step = 10
+		step = 13
 
 	show_step()
 
@@ -198,6 +216,7 @@ func _on_btn_choice_2_pressed() -> void:
 
 func show_name_input():
 	btn_next.hide()
+	dim_background.show()
 	name_popup.show()
 	line_edit.text = ""
 	line_edit.grab_focus()
@@ -205,13 +224,14 @@ func show_name_input():
 
 func _on_confirmbutton_pressed() -> void:
 	player_name = line_edit.text
-
 	if player_name == "":
 		return
 
 	GameData.player_name = player_name
 	GameData.save_game()
 	get_tree().call_group("HUD", "update_all_labels")
+
+	dim_background.hide()
 
 	step += 1
 	show_step()
@@ -224,7 +244,6 @@ func _on_confirmbutton_pressed() -> void:
 func principal_exit_and_spawn_jenna():
 
 	var exit_tween = create_tween()
-
 	var exit_pos = principal.position
 	exit_pos.x += 700
 
@@ -232,15 +251,12 @@ func principal_exit_and_spawn_jenna():
 		principal,
 		"position",
 		exit_pos,
-		2.0
+		0.4
 	).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
 
 	exit_tween.finished.connect(func():
-
 		principal.hide()
-
 		await get_tree().create_timer(1.0).timeout
-
 		spawn_jenna()
 	)
 
@@ -248,7 +264,6 @@ func principal_exit_and_spawn_jenna():
 func spawn_jenna():
 
 	current_character = "jenna"
-
 	jenna.show()
 
 	var final_pos = jenna.position
@@ -264,6 +279,6 @@ func spawn_jenna():
 	).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 
 	enter_tween.finished.connect(func():
-		step = 9
+		step = 12
 		show_step()
 	)
