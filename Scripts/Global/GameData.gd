@@ -16,7 +16,10 @@ var matching_tutorial_completed: bool = false
 
 const SAVE_PATH := "user://save_data.json"
 var shown_food_intros := {}
-	
+
+# --- QUIZ PROGRESSION (Saved State) ---
+var quiz_question_progress: Dictionary = {}
+var quiz_concept_progress: Dictionary = {}
 
 # --- GLOW BOARD PROGRESSION ---
 var character_progress: Dictionary = {
@@ -77,7 +80,6 @@ func _ready():
 	_apply_saved_upgrades()
 
 func _apply_saved_upgrades():
-
 	if purchased_upgrades.has("PatientCustomers"):
 		customer_patience_multiplier = 1.5
 
@@ -248,6 +250,12 @@ func start_next_day_flow():
 
 
 func save_game():
+	# Ensure we pull the latest quiz data before saving
+	if has_node("/root/QuizProgress"):
+		quiz_question_progress = get_node("/root/QuizProgress").question_progress
+	if has_node("/root/QuizSystem"):
+		quiz_concept_progress = get_node("/root/QuizSystem").concept_progress
+		
 	var save_data = {
 		"kitchen_tutorial_completed": kitchen_tutorial_completed,
 		"current_day": current_day,
@@ -258,7 +266,9 @@ func save_game():
 		"character_progress": character_progress,
 		"character_stage": character_stage,
 		"purchased_upgrades": purchased_upgrades,
-		"shown_food_intros": shown_food_intros
+		"shown_food_intros": shown_food_intros,
+		"quiz_question_progress": quiz_question_progress,
+		"quiz_concept_progress": quiz_concept_progress
 	}
 
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -298,5 +308,9 @@ func load_game():
 	kitchen_tutorial_completed = data.get("kitchen_tutorial_completed", false)
 	shown_food_intros = data.get("shown_food_intros", {})
 	purchased_upgrades = data.get("purchased_upgrades", {})
+	
+	# --- Load Quiz Data ---
+	quiz_question_progress = data.get("quiz_question_progress", {})
+	quiz_concept_progress = data.get("quiz_concept_progress", {})
 
 	print("Game Loaded.")
