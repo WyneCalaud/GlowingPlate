@@ -202,7 +202,16 @@ func store_beverage_data(data: Dictionary):
 func transition_to_plate_prep(): get_tree().change_scene_to_file(KITCHEN_SCENE_PATH)
 func transition_to_beverage_prep(): get_tree().change_scene_to_file(BEVERAGE_SCENE_PATH)
 func transition_to_canteen_serve(): get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
-func transition_to_end_day(): get_tree().change_scene_to_file(END_DAY_SCENE_PATH)
+func transition_to_end_day():
+
+	# ✅ FULLY RESET GLOBAL PATIENCE
+	customer_patience = 100.0
+	patience_running = false
+
+	# Force HUD to reset & hide meter
+	get_tree().call_group("HUD", "reset_patience")
+
+	get_tree().change_scene_to_file(END_DAY_SCENE_PATH)
 
 var saved_customer_order: Resource = null
 var saved_customer_texture: Texture2D = null
@@ -240,7 +249,7 @@ func start_next_day_flow():
 
 	# Day 1 has no news, just go to lobby
 	if current_day == 1:
-		get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
+		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 		return
 
 	# ALWAYS go to MiniGame first
