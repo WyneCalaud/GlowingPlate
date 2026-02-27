@@ -36,14 +36,13 @@ const FOOD_DB: Dictionary = {
 
 const MENU_SCHEDULE: Dictionary = {
 	1: {
-		"Go": "BROWN_RICE",
 		"Grow": "CHICKEN_LEG",
 		"GlowVeg": "SITAW",
 		"GlowFru": "MANGO",
 		"Beverage": ["REGULAR_MILK", "WATER"]
 	},
 	2: {
-		"Go": ["RICE", "PANDESAL"],
+		"Go": ["PANDESAL"],
 		"Grow": "CHICKEN_LEG",
 		"GlowVeg": "SITAW",
 		"GlowFru": "MANGO",
@@ -57,77 +56,77 @@ const MENU_SCHEDULE: Dictionary = {
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	4: {
-		"Go": ["RICE", "PANDESAL"],
+		"Go": ["PANDESAL"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET"],
 		"GlowVeg": ["SITAW", "PUMPKIN"],
 		"GlowFru": "MANGO",
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	5: {
-		"Go": ["RICE", "PANDESAL"],
+		"Go": ["PANDESAL"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET"],
 		"GlowVeg": ["SITAW", "PUMPKIN"],
 		"GlowFru": ["MANGO", "WATERMELON"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	6: {
-		"Go": ["RICE", "PANDESAL", "CORN"],
+		"Go": ["PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET"],
 		"GlowVeg": ["SITAW", "PUMPKIN"],
 		"GlowFru": ["MANGO", "WATERMELON"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	7: {
-		"Go": ["RICE", "PANDESAL", "CORN"],
+		"Go": ["PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG"],
 		"GlowVeg": ["SITAW", "PUMPKIN"],
 		"GlowFru": ["MANGO", "WATERMELON"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	8: {
-		"Go": ["RICE", "PANDESAL", "CORN"],
+		"Go": ["PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS"],
 		"GlowFru": ["MANGO", "WATERMELON"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	9: {
-		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE","PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS"],
 		"GlowFru": ["MANGO", "WATERMELON"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	10: {
-		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE", "PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS"],
 		"GlowFru": ["MANGO", "WATERMELON"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	11: {
-		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE", "PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
 		"GlowFru": ["MANGO", "WATERMELON"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	12: {
-		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE", "PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
 		"GlowFru": ["MANGO", "WATERMELON", "BANANA"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	13: {
-		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE", "PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
 		"GlowFru": ["MANGO", "WATERMELON", "BANANA", "PAPAYA"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	14: {
-		"Go": ["BROWN_RICE", "RICE", "PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE", "PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
 		"GlowFru": ["MANGO", "WATERMELON", "BANANA", "PAPAYA"],

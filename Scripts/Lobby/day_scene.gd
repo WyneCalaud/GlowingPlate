@@ -5,91 +5,6 @@ var active_order: CustomerOrder = null
 var order_index := 0
 
 
-func _on_next_customer_pressed():
-	
-	get_tree().call_group("HUD", "_reset_happiness_ui")
-	
-	# ✅ New customer = reset patience
-	GameData.customer_patience = 100.0
-	GameData.patience_running = false
-	get_tree().call_group("HUD", "reset_patience")
-
-	$NextCustomer.hide()
-
-	print("Remaining customers:", GameData.remaining_customers.size()) 
-
-	if GameData.remaining_customers.is_empty():
-		return
-
-	$DialogueBox.hide()
-	$BtnAccept.hide()
-	$BtnContinue.hide()
-
-	var order: CustomerOrder = GameData.remaining_customers.pop_front()
-
-	var tex: Texture2D
-
-	# ⭐ SPECIAL CHARACTER STAGE HANDLING
-	var stage := GameData.get_character_stage(order.customer_name)
-
-	match order.customer_name:
-
-		# ================= NORMAL =================
-		"Cyril":
-			tex = preload("res://Assets/Customers/Cyril.png")
-		"Nestor":
-			tex = preload("res://Assets/Customers/Nestor.png")
-		"Milan":
-			tex = preload("res://Assets/Customers/Milan.png")
-		"Nina":
-			tex = preload("res://Assets/Customers/Nina.png")
-		"Pedro Pan":
-			tex = preload("res://Assets/Customers/Pedro Pan.png")
-		"Rimo":
-			tex = preload("res://Assets/Customers/Rimo.png")
-		"Tina":
-			tex = preload("res://Assets/Customers/Tina.png")
-		"Troy":
-			tex = preload("res://Assets/Customers/Troy.png")
-		"Yeeha":
-			tex = preload("res://Assets/Customers/Yeeha.png")
-		"Boba":
-			tex = preload("res://Assets/Customers/Boba.png")
-		"Bree":
-			tex = preload("res://Assets/Customers/Bree.png")
-		"Jenna":
-			tex = preload("res://Assets/Customers/Jenna.png")
-		"Miggy":
-			tex = preload("res://Assets/Customers/Miggy.png")
-		"Principal":
-			tex = preload("res://Assets/Customers/Principal_.png")
-
-		# ================= SPECIAL STORY =================
-
-		"Leo":
-			match stage:
-				1: tex = preload("res://Assets/Customers/Special Characters/Leo Current.png")
-				2: tex = preload("res://Assets/Customers/Special Characters/Leo Better.png")
-				3: tex = preload("res://Assets/Customers/Special Characters/Leo Glowing.png")
-
-		"Maya":
-			match stage:
-				1: tex = preload("res://Assets/Customers/Special Characters/Maya Current.png")
-				2: tex = preload("res://Assets/Customers/Special Characters/Maya Better.png")
-				3: tex = preload("res://Assets/Customers/Special Characters/Maya Glowing.png")
-
-		"Norma":
-			match stage:
-				1: tex = preload("res://Assets/Customers/Special Characters/Norma Current.png")
-				2: tex = preload("res://Assets/Customers/Special Characters/Norma Better.png")
-				3: tex = preload("res://Assets/Customers/Special Characters/Norma Glowing.png")
-
-	GameData.save_customer(order, tex)
-	GameData.service_state = GameData.ServiceState.CUSTOMER_PRESENT
-
-	$CustomerManager.spawn_customer(order, tex)
-
-
 
 func _ready():
 	$CustomerManager.customer_arrived.connect(_on_customer_arrived)
@@ -143,11 +58,6 @@ func _on_customer_left():
 	$BtnAccept.hide()
 	$BtnContinue.hide()
 
-	# Show Next Customer button only if customers remain
-	if not GameData.remaining_customers.is_empty():
-		$NextCustomer.show()
-	else:
-		$NextCustomer.hide()
 
 
 func _on_btn_accept_pressed() -> void:
