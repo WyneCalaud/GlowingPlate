@@ -1,15 +1,15 @@
 [gd_scene load_steps=12 format=3 uid="uid://cqlt61gaad8v8"]
 
 [ext_resource type="Script" uid="uid://bnklncubj3hih" path="res://Scenes/Introduction/IntroScene.gd" id="1_m2t0u"]
-[ext_resource type="VideoStream" uid="uid://c4nth8w838vxj" path="res://Assets/Videos/testvid.ogv" id="2_jpih7"]
 [ext_resource type="Texture2D" uid="uid://dy8drcukb4jik" path="res://Assets/UI/LobbyUI/buon.png" id="3_36ejc"]
 [ext_resource type="Texture2D" uid="uid://200h5enr2xy3" path="res://Assets/UI/Interface/Type Name Pop Up (1).png" id="3_ggi6h"]
 [ext_resource type="Texture2D" uid="uid://bidrperywufqq" path="res://Assets/background/introbg2.png" id="3_l4wtw"]
-[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="4_36ejc"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://Fonts/Comic_Neue/ComicNeue-Bold.ttf" id="4_36ejc"]
 [ext_resource type="Texture2D" uid="uid://n3btsm4oj1ty" path="res://Assets/Customers/Principal_.png" id="4_jpih7"]
 [ext_resource type="Texture2D" uid="uid://oud8lj264na3" path="res://Assets/Customers/Jenna.png" id="5_l4wtw"]
 [ext_resource type="Texture2D" uid="uid://sm0uucdl8jtg" path="res://Assets/UI/LobbyUI/Save Name Btn.png" id="5_q83fk"]
 [ext_resource type="Texture2D" uid="uid://1c15qhkuhbcg" path="res://Assets/UI/Interface/bigdialogue.png" id="6_l4wtw"]
+[ext_resource type="Texture2D" uid="uid://cua7565y16m42" path="res://Assets/UI/LobbyUI/LobbyBackground/TissueBox.png" id="10_l4wtw"]
 
 [sub_resource type="FontVariation" id="FontVariation_l4wtw"]
 base_font = ExtResource("4_36ejc")
@@ -22,12 +22,6 @@ offset_right = 1275.0
 offset_bottom = 710.0
 script = ExtResource("1_m2t0u")
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
-layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 720.0
-stream = ExtResource("2_jpih7")
-
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 1280.0
@@ -37,21 +31,21 @@ texture = ExtResource("3_l4wtw")
 [node name="PrincipalPortrait" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 785.0
-offset_top = 48.0
+offset_top = 44.0
 offset_right = 1233.0
-offset_bottom = 588.0
+offset_bottom = 587.0
 texture = ExtResource("4_jpih7")
-expand_mode = 1
-stretch_mode = 5
+stretch_mode = 2
 
 [node name="JennaPortrait" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
-offset_left = 870.0
-offset_top = 154.0
-offset_right = 1136.0
-offset_bottom = 590.0
+offset_left = 846.0
+offset_top = 110.0
+offset_right = 1149.0
+offset_bottom = 597.0
 texture = ExtResource("5_l4wtw")
-expand_mode = 1
+stretch_mode = 2
 
 [node name="DialogueBox" type="TextureRect" parent="."]
 layout_mode = 0
@@ -206,7 +200,21 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.18039216)
 
-[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
+[node name="CountertopDec" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1091.0
+offset_top = 527.0
+offset_right = 13.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_l4wtw")
+expand_mode = 1
+stretch_mode = 4
+
 [connection signal="pressed" from="DialogueBox/BtnNext" to="." method="_on_btn_next_pressed"]
 [connection signal="pressed" from="DialogueBox/BtnChoice1" to="." method="_on_btn_choice_1_pressed"]
 [connection signal="pressed" from="DialogueBox/BtnChoice2" to="." method="_on_btn_choice_2_pressed"]

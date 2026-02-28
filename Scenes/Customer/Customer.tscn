@@ -5,6 +5,6 @@
 [node name="Customer" type="Node2D"]
 
 [node name="CustomerSprite" type="Sprite2D" parent="."]
-position = Vector2(-117, 341.99997)
+position = Vector2(-117, 346.99997)
 scale = Vector2(0.82624114, 0.8625)
 texture = ExtResource("1_s5hrx")

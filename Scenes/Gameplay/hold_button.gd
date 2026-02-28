@@ -3,6 +3,7 @@ extends Control
 
 # --- SIGNALS ---
 signal fill_finished(amount_str, amount_int)
+signal popup_closed # NEW: Emitted when the player clicks outside to close
 
 # --- TIMING CONFIGURATION ---
 const TIME_TOO_FAST: float = 0.5
@@ -55,6 +56,25 @@ func _ready():
 		
 	if cup_display:
 		cup_display.texture = tex_empty
+
+# --- NEW: CLICK OUTSIDE TO CLOSE MECHANIC ---
+func _input(event: InputEvent) -> void:
+	# Check if the popup is visible and the user left-clicks
+	if visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var click_pos = event.global_position
+		
+		# If the click position is OUTSIDE the bounding box of this Control node
+		if not get_global_rect().has_point(click_pos):
+			# Consume the input so it doesn't accidentally click things behind the popup
+			get_viewport().set_input_as_handled()
+			close_scoop()
+
+func close_scoop() -> void:
+	if is_holding: return # Prevent closing if they dragged outside while holding the fill button
+	
+	hide() # Or you can use queue_free() if you spawn a new one every time
+	popup_closed.emit()
+# --------------------------------------------
 
 func set_rice_type(type: String):
 	if type == "Brown":

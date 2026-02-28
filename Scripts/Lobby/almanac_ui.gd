@@ -167,6 +167,15 @@ func _on_food_button_pressed(pressed_btn: BaseButton, index: int):
 func _on_portion_tab_toggled(toggled_on: bool):
 	if toggled_on:
 		tab_portion.modulate = Color(1.5, 1.5, 1.5)
+		
+		# --- NEW: Auto-select the first food item if none is selected ---
+		if current_food_index == -1 and active_buttons.size() > 0:
+			current_food_index = 0
+			var first_btn = active_buttons[0] as BaseButton
+			if first_btn:
+				# Manually set the pressed state to bypass _on_food_button_pressed
+				first_btn.set_pressed_no_signal(true)
+				first_btn.modulate = Color(1.5, 1.5, 1.5)
 	else:
 		tab_portion.modulate = Color.WHITE
 
