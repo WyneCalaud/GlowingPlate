@@ -36,7 +36,7 @@ const FOOD_DB: Dictionary = {
 
 const MENU_SCHEDULE: Dictionary = {
 	1: {
-		"Go": "CORN	",
+		"Go": ["CORN", "BROWN_RICE"],
 		"Grow": "CHICKEN_LEG",
 		"GlowVeg": "SITAW",
 		"GlowFru": "MANGO",
