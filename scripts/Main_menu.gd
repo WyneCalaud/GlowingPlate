@@ -1,5 +1,8 @@
 extends Control
 
+# --- NEW: Drag and drop your Intro Scene here in the Inspector! ---
+@export_file("*.tscn") var intro_scene_path: String = "res://Scenes/Intro/Intro.tscn"
+
 # UI Node References with safety checks
 @onready var btn_settings: BaseButton = get_node_or_null("Background/TopBarRight/SettingsButton")
 @onready var sound_control: Control = get_node_or_null("SoundControl")
@@ -109,7 +112,19 @@ func _on_exit_pressed() -> void:
 
 func _on_fade_timer_timeout() -> void:
 	if button_type == "start":
-		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+		# --- SAVE STATE DETECTION / ROUTING ---
+		if FileAccess.file_exists("user://save_data.json"):
+			# Player has played before, load right into the canteen!
+			print("Save found! Resuming game...")
+			get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+		else:
+			# Brand new player, play the Intro Scene!
+			print("No save found. Starting New Game / Intro...")
+			if intro_scene_path != "":
+				get_tree().change_scene_to_file(intro_scene_path)
+			else:
+				printerr("Intro scene path is empty! Please assign it in the inspector.")
+				get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn") # Fallback
 
 func _on_settings_button_pressed() -> void:
 	if sound_control:

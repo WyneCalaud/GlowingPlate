@@ -228,6 +228,7 @@ metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
 [node name="CountertopDec" type="TextureRect" parent="Background"]
+z_index = 99
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -256,6 +257,7 @@ metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
 [node name="BottomButtons" type="Control" parent="." node_paths=PackedStringArray("hide_show_btn", "buttons_to_toggle")]
+z_index = 99
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -444,6 +446,8 @@ expand_icon = true
 [node name="CustomerManager" type="Node" parent="DayScene"]
 script = ExtResource("20_k43ou")
 customer_scene = ExtResource("20_5fhlb")
+spawn_y = 1.0
+offscreen_x = 1400.0
 
 [node name="SpecialStar" type="TextureRect" parent="DayScene"]
 visible = false
