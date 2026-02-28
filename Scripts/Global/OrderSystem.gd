@@ -36,7 +36,6 @@ const FOOD_DB: Dictionary = {
 
 const MENU_SCHEDULE: Dictionary = {
 	1: {
-		"Go": ["CORN", "BROWN_RICE"],
 		"Grow": "CHICKEN_LEG",
 		"GlowVeg": "SITAW",
 		"GlowFru": "MANGO",
@@ -85,7 +84,7 @@ const MENU_SCHEDULE: Dictionary = {
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	8: {
-		"Go": [ "PANDESAL", "CORN"],
+		"Go": ["PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS"],
 		"GlowFru": ["MANGO", "WATERMELON"],
@@ -99,35 +98,35 @@ const MENU_SCHEDULE: Dictionary = {
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	10: {
-		"Go": ["BROWN_RICE",  "PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE", "PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS"],
 		"GlowFru": ["MANGO", "WATERMELON"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	11: {
-		"Go": ["BROWN_RICE",  "PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE", "PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
 		"GlowFru": ["MANGO", "WATERMELON"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	12: {
-		"Go": ["BROWN_RICE",  "PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE", "PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
 		"GlowFru": ["MANGO", "WATERMELON", "BANANA"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	13: {
-		"Go": ["BROWN_RICE",  "PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE", "PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
 		"GlowFru": ["MANGO", "WATERMELON", "BANANA", "PAPAYA"],
 		"Beverage": ["WATER", "REGULAR_MILK"]
 	},
 	14: {
-		"Go": ["BROWN_RICE",  "PANDESAL", "CORN"],
+		"Go": ["BROWN_RICE", "PANDESAL", "CORN"],
 		"Grow": ["CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU"],
 		"GlowVeg": ["SITAW", "PUMPKIN", "CARROTS", "EGGPLANT"],
 		"GlowFru": ["MANGO", "WATERMELON", "BANANA", "PAPAYA"],

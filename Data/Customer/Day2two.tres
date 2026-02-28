@@ -4,10 +4,10 @@
 
 [resource]
 script = ExtResource("1_s05es")
-customer_name = "Maya"
+customer_name = "Leo"
 order_text = "Uhhm… just surprise me with a healthy plate!I’m okay with any Go food, chicken, sitaw, and mango.Any water is fine, and milk is okay."
 expanded_text = "Any Go food Grow: Chicken Glow: Sitaw + Mango Drink: Any water, milk allowed"
-age = 9
+age = 7
 needs = {
 "GlowFru": "MANGO",
 "GlowVeg": "SITAW",

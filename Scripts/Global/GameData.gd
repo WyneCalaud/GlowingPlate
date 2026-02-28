@@ -38,6 +38,7 @@ var character_stage: Dictionary = {
 	"Norma": 1
 }
 
+var special_intro_shown := {}
 
 # --- UPGRADABLE / EXTENSION STATS ---
 var max_customers_today: int = 4  
@@ -73,6 +74,17 @@ const BEVERAGE_SCENE_PATH = "res://Scenes/Gameplay/BeveragesStation.tscn"
 const LOBBY_CANTEEN_PATH = "res://Scenes/Lobby Canteen/lobbycanteen.tscn"
 const END_DAY_SCENE_PATH = "res://Scenes/Results/EndDayResults.tscn" 
 const QUIZ_SCENE_PATH = "res://Scenes/Quiz/QuizScene.tscn"
+
+enum GamePhase {
+	LOBBY,
+	MATCHING,
+	NEWS,
+	QUIZ,
+	END_DAY
+}
+
+var current_phase: GamePhase = GamePhase.LOBBY
+
 
 func _ready():
 	add_to_group("GameData")
@@ -202,7 +214,15 @@ func store_beverage_data(data: Dictionary):
 func transition_to_plate_prep(): get_tree().change_scene_to_file(KITCHEN_SCENE_PATH)
 func transition_to_beverage_prep(): get_tree().change_scene_to_file(BEVERAGE_SCENE_PATH)
 func transition_to_canteen_serve(): get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
-func transition_to_end_day(): get_tree().change_scene_to_file(END_DAY_SCENE_PATH)
+func transition_to_end_day():
+	current_phase = GamePhase.END_DAY
+	save_game()
+
+	customer_patience = 100.0
+	patience_running = false
+	get_tree().call_group("HUD", "reset_patience")
+
+	get_tree().change_scene_to_file(END_DAY_SCENE_PATH)
 
 var saved_customer_order: Resource = null
 var saved_customer_texture: Texture2D = null
@@ -240,7 +260,7 @@ func start_next_day_flow():
 
 	# Day 1 has no news, just go to lobby
 	if current_day == 1:
-		get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
+		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 		return
 
 	# ALWAYS go to MiniGame first
@@ -266,7 +286,9 @@ func save_game():
 		"purchased_upgrades": purchased_upgrades,
 		"shown_food_intros": shown_food_intros,
 		"quiz_question_progress": quiz_question_progress,
-		"quiz_concept_progress": quiz_concept_progress
+		"quiz_concept_progress": quiz_concept_progress,
+		"current_phase": current_phase,
+		"special_intro_shown": special_intro_shown
 	}
 
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -306,6 +328,8 @@ func load_game():
 	kitchen_tutorial_completed = data.get("kitchen_tutorial_completed", false)
 	shown_food_intros = data.get("shown_food_intros", {})
 	purchased_upgrades = data.get("purchased_upgrades", {})
+	special_intro_shown = data.get("special_intro_shown", {})
+	current_phase = data.get("current_phase", GamePhase.LOBBY)
 	
 	# --- Load Quiz Data ---
 	quiz_question_progress = data.get("quiz_question_progress", {})

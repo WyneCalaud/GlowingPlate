@@ -4,91 +4,14 @@ var active_order: CustomerOrder = null
 
 var order_index := 0
 
+@onready var special_star = $SpecialStar
+@onready var special_dim = $SpecialDim
+@onready var cat_special_info = $CatSpecialInfo
+@onready var key_popup = $KeyPopup
+@onready var leo_special = $LeoSpecial
 
-func _on_next_customer_pressed():
-	
-	get_tree().call_group("HUD", "_reset_happiness_ui")
-	
-	# ✅ New customer = reset patience
-	GameData.customer_patience = 100.0
-	GameData.patience_running = false
-	get_tree().call_group("HUD", "reset_patience")
-
-	$NextCustomer.hide()
-
-	print("Remaining customers:", GameData.remaining_customers.size()) 
-
-	if GameData.remaining_customers.is_empty():
-		return
-
-	$DialogueBox.hide()
-	$BtnAccept.hide()
-	$BtnContinue.hide()
-
-	var order: CustomerOrder = GameData.remaining_customers.pop_front()
-
-	var tex: Texture2D
-
-	# ⭐ SPECIAL CHARACTER STAGE HANDLING
-	var stage := GameData.get_character_stage(order.customer_name)
-
-	match order.customer_name:
-
-		# ================= NORMAL =================
-		"Cyril":
-			tex = preload("res://Assets/Customers/Cyril.png")
-		"Nestor":
-			tex = preload("res://Assets/Customers/Nestor.png")
-		"Milan":
-			tex = preload("res://Assets/Customers/Milan.png")
-		"Nina":
-			tex = preload("res://Assets/Customers/Nina.png")
-		"Pedro Pan":
-			tex = preload("res://Assets/Customers/Pedro Pan.png")
-		"Rimo":
-			tex = preload("res://Assets/Customers/Rimo.png")
-		"Tina":
-			tex = preload("res://Assets/Customers/Tina.png")
-		"Troy":
-			tex = preload("res://Assets/Customers/Troy.png")
-		"Yeeha":
-			tex = preload("res://Assets/Customers/Yeeha.png")
-		"Boba":
-			tex = preload("res://Assets/Customers/Boba.png")
-		"Bree":
-			tex = preload("res://Assets/Customers/Bree.png")
-		"Jenna":
-			tex = preload("res://Assets/Customers/Jenna.png")
-		"Miggy":
-			tex = preload("res://Assets/Customers/Miggy.png")
-		"Principal":
-			tex = preload("res://Assets/Customers/Principal_.png")
-
-		# ================= SPECIAL STORY =================
-
-		"Leo":
-			match stage:
-				1: tex = preload("res://Assets/Customers/Special Characters/Leo Current.png")
-				2: tex = preload("res://Assets/Customers/Special Characters/Leo Better.png")
-				3: tex = preload("res://Assets/Customers/Special Characters/Leo Glowing.png")
-
-		"Maya":
-			match stage:
-				1: tex = preload("res://Assets/Customers/Special Characters/Maya Current.png")
-				2: tex = preload("res://Assets/Customers/Special Characters/Maya Better.png")
-				3: tex = preload("res://Assets/Customers/Special Characters/Maya Glowing.png")
-
-		"Norma":
-			match stage:
-				1: tex = preload("res://Assets/Customers/Special Characters/Norma Current.png")
-				2: tex = preload("res://Assets/Customers/Special Characters/Norma Better.png")
-				3: tex = preload("res://Assets/Customers/Special Characters/Norma Glowing.png")
-
-	GameData.save_customer(order, tex)
-	GameData.service_state = GameData.ServiceState.CUSTOMER_PRESENT
-
-	$CustomerManager.spawn_customer(order, tex)
-
+var special_intro_step := 0
+var special_intro_active := false
 
 
 func _ready():
@@ -115,8 +38,21 @@ func _ready():
 
 
 func _on_customer_arrived(order: CustomerOrder):
+
 	active_order = order
+
+	# 🔒 SAFETY CHECK (important)
+	if order == null:
+		special_star.hide()
+		return
+
 	OrderSystem.set_order_from_customer(order)
+
+	# --- Special Character Star ---
+	if order.customer_name in ["Leo", "Maya", "Norma"]:
+		special_star.show()
+	else:
+		special_star.hide()
 
 	var GD := get_node("/root/GameData")
 
@@ -135,6 +71,13 @@ func _on_customer_arrived(order: CustomerOrder):
 		$DialogueBox/OrderText.text = order.order_text
 		$BtnAccept.show()
 		$BtnContinue.show()
+		
+	# --- First Time Special Intro ---
+	if order.customer_name in ["Leo"]:
+		if not GameData.special_intro_shown.get(order.customer_name, false):
+			GameData.special_intro_shown[order.customer_name] = true
+			_start_special_intro(order.customer_name)
+			return
 
 
 
@@ -142,12 +85,8 @@ func _on_customer_left():
 	$DialogueBox.hide()
 	$BtnAccept.hide()
 	$BtnContinue.hide()
+	special_star.hide()
 
-	# Show Next Customer button only if customers remain
-	if not GameData.remaining_customers.is_empty():
-		$NextCustomer.show()
-	else:
-		$NextCustomer.hide()
 
 
 func _on_btn_accept_pressed() -> void:
@@ -184,3 +123,74 @@ func _end_day():
 	# We only reset state if we are manually ending the day logic without a transition
 	# But in your current flow, GameData handles it.
 	pass
+
+func _start_special_intro(name:String):
+
+	special_intro_active = true
+	special_intro_step = 0
+	
+	leo_special.show()
+	special_dim.show()
+	cat_special_info.show()
+	key_popup.hide()
+
+	$DialogueBox.hide()
+	$BtnAccept.hide()
+	$BtnContinue.hide()
+	$"../OverlayCanvas/GameHUD".hide()
+
+	_update_special_image(name)
+
+func _input(event):
+
+	if not special_intro_active:
+		return
+
+	if event is InputEventMouseButton and event.pressed:
+		_handle_special_tap()
+
+func _handle_special_tap():
+
+	special_intro_step += 1
+
+	if special_intro_step >= 5:
+		_end_special_intro()
+	else:
+		_update_special_image(active_order.customer_name)
+
+func _update_special_image(name:String):
+
+	var path = "res://Assets/UI/SpecialInfo/%s_%d.png" % [name, special_intro_step + 1]
+	cat_special_info.texture = load(path)
+
+	# Reveal key popup after 2nd image
+	if special_intro_step == 1:
+		key_popup.show()
+
+func _on_special_tapped(event):
+
+	if not (event is InputEventMouseButton and event.pressed):
+		return
+
+	special_intro_step += 1
+
+	if special_intro_step >= 5:
+		_end_special_intro()
+	else:
+		_update_special_image(active_order.customer_name)
+
+func _end_special_intro():
+
+	special_intro_active = false
+
+	special_dim.hide()
+	cat_special_info.hide()
+	key_popup.hide()
+	leo_special.hide()
+
+	# Resume normal dialogue
+	$DialogueBox.show()
+	$DialogueBox/OrderText.text = active_order.order_text
+	$BtnAccept.show()
+	$BtnContinue.show()
+	$"../OverlayCanvas/GameHUD".show()

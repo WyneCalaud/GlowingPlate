@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=44 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://dt5he77x83jrn" path="res://Assets/UI/LobbyUI/LobbyBackground/OutsideBackground.png" id="3_vtn67"]
@@ -38,11 +38,7 @@
 [ext_resource type="Texture2D" uid="uid://1ttof10olivl" path="res://Assets/UI/LobbyUI/Hint Button.png" id="29_7yiff"]
 [ext_resource type="Texture2D" uid="uid://1c15qhkuhbcg" path="res://Assets/UI/Interface/bigdialogue.png" id="32_uu58y"]
 [ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="33_nk7xc"]
-[ext_resource type="Texture2D" uid="uid://b5kbtjwle40uj" path="res://Assets/Characters/Star.png" id="37_nk7xc"]
-[ext_resource type="Texture2D" uid="uid://b65yf1oiq5a5" path="res://Assets/UI/SpecialInfo/keyforinfo.png" id="38_8rcq3"]
-[ext_resource type="Texture2D" uid="uid://c5ui0ks2ghgqs" path="res://Assets/UI/Interface/Niger.png" id="39_o8hjd"]
 [ext_resource type="Texture2D" uid="uid://ccx1a6h1n05n0" path="res://Assets/UI/Interface/ServeButton.png" id="39_uu58y"]
-[ext_resource type="Texture2D" uid="uid://xi2raya0es68" path="res://Assets/UI/SpecialInfo/leowithstarexample.png" id="40_o8hjd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uu58y"]
 atlas = ExtResource("9_uu58y")
@@ -240,7 +236,6 @@ grow_vertical = 2
 texture = ExtResource("13_uu58y")
 expand_mode = 1
 stretch_mode = 4
-metadata/_edit_lock_ = true
 
 [node name="Noise" type="TextureRect" parent="Background"]
 layout_mode = 1
@@ -268,7 +263,6 @@ grow_vertical = 0
 script = ExtResource("15_krqk6")
 hide_show_btn = NodePath("HBoxContainer/HideShowButton")
 buttons_to_toggle = [NodePath("HBoxContainer/Almanac"), NodePath("HBoxContainer/GlowBoard"), NodePath("HBoxContainer/GlowShop"), NodePath("HBoxContainer/GlowDesk")]
-metadata/_edit_lock_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BottomButtons"]
 layout_mode = 1
@@ -277,7 +271,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 20.0
 offset_right = -164.0
-offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
@@ -388,7 +381,7 @@ script = ExtResource("17_wdy5h")
 
 [node name="DialogueBox" type="TextureRect" parent="DayScene"]
 offset_left = 18.0
-offset_top = 32.335968
+offset_top = -32.0
 offset_right = 855.0
 offset_bottom = 502.91174
 texture = ExtResource("32_uu58y")
@@ -401,10 +394,10 @@ offset_bottom = 23.0
 
 [node name="OrderText" type="RichTextLabel" parent="DayScene/DialogueBox"]
 layout_mode = 0
-offset_left = 92.0
-offset_top = 140.66403
-offset_right = 740.0
-offset_bottom = 291.32806
+offset_left = 86.0
+offset_top = 147.0
+offset_right = 734.0
+offset_bottom = 365.0
 theme_override_colors/default_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
 theme_override_fonts/normal_font = SubResource("FontVariation_uu58y")
 theme_override_font_sizes/normal_font_size = 27
@@ -444,54 +437,6 @@ expand_icon = true
 [node name="CustomerManager" type="Node" parent="DayScene"]
 script = ExtResource("20_k43ou")
 customer_scene = ExtResource("20_5fhlb")
-
-[node name="SpecialStar" type="TextureRect" parent="DayScene"]
-visible = false
-offset_left = 923.0
-offset_top = 134.0
-offset_right = 1008.0
-offset_bottom = 219.0
-texture = ExtResource("37_nk7xc")
-stretch_mode = 2
-
-[node name="CatSpecialInfo" type="TextureRect" parent="DayScene"]
-visible = false
-z_index = 20
-offset_left = 184.0
-offset_top = 213.0
-offset_right = 224.0
-offset_bottom = 253.0
-mouse_filter = 0
-stretch_mode = 5
-
-[node name="KeyPopup" type="TextureRect" parent="DayScene"]
-visible = false
-z_index = 25
-offset_left = 962.0
-offset_top = 17.0
-offset_right = 1115.0
-offset_bottom = 96.0
-mouse_filter = 2
-texture = ExtResource("38_8rcq3")
-
-[node name="LeoSpecial" type="TextureRect" parent="DayScene"]
-visible = false
-z_index = 7
-offset_left = 702.0
-offset_top = 40.0
-offset_right = 1945.0
-offset_bottom = 709.0
-texture = ExtResource("40_o8hjd")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="SpecialDim" type="TextureRect" parent="DayScene"]
-visible = false
-z_index = 5
-offset_right = 1280.0
-offset_bottom = 720.0
-mouse_filter = 0
-texture = ExtResource("39_o8hjd")
 
 [node name="FinalPlateDisplay" type="Control" parent="."]
 visible = false

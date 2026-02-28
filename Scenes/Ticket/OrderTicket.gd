@@ -46,14 +46,14 @@ func toggle_ticket():
 
 func show_ticket():
 	is_open = true
-	$"../Go Section/RiceCup".hide()
+	$"../Go Section/WhiteRiceCup".hide()
 	$Content.show()
 	create_tween().tween_property(self, "position", shown_position, 0.3)
 
 
 func hide_ticket():
 	is_open = false
-	$"../Go Section/RiceCup".show()
+	$"../Go Section/WhiteRiceCup".show()
 	$Content.hide()
 	create_tween().tween_property(self, "position", hidden_position, 0.3)
 
@@ -135,5 +135,3 @@ func set_order_display(customer_order: CustomerOrder):
 		# --- MILK ---
 		elif bev_upper == "REGULAR_MILK":
 			milk_icon.visible = true
-	#water_icon.visible = order["required_beverage"].has("")
-	#milk_icon.visible = order["required_beverage"].has("")

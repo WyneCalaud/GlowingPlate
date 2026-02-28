@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://ctl6sxeshrxbu"]
+[gd_scene load_steps=35 format=3 uid="uid://ctl6sxeshrxbu"]
 
 [ext_resource type="Script" uid="uid://u3qhy5pns8k0" path="res://Scripts/MiniGame/matching_game.gd" id="1_pssnd"]
 [ext_resource type="Texture2D" uid="uid://cfvugwijhyu8x" path="res://Assets/MiniGame/Exercises/Refined/Exercise Card Back.png" id="2_xdroa"]
@@ -33,6 +33,10 @@
 [ext_resource type="Texture2D" uid="uid://dqr54b88e4gfc" path="res://Assets/MiniGame/UI/Progress Selection Screen.png" id="31_hu6c8"]
 [ext_resource type="Texture2D" uid="uid://dvigiggxesi1m" path="res://Assets/MiniGame/UI/Continue Button.png" id="32_5f0w2"]
 [ext_resource type="Texture2D" uid="uid://cjoo4tkb73fji" path="res://Assets/MiniGame/UI/ExerciseBoxName.png" id="32_gjhrx"]
+
+[sub_resource type="FontVariation" id="FontVariation_gjhrx"]
+base_font = ExtResource("21_x1b3m")
+spacing_glyph = 5
 
 [node name="MatchingGame" type="Control"]
 layout_mode = 3
@@ -345,7 +349,6 @@ layout_mode = 2
 texture = ExtResource("2_xdroa")
 
 [node name="ExerciseResultOverlay" type="Control" parent="."]
-visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -365,19 +368,19 @@ offset_bottom = 446.0
 
 [node name="NameBG" type="TextureRect" parent="ExerciseResultOverlay"]
 layout_mode = 0
-offset_left = 164.0
-offset_top = 377.0
-offset_right = 457.0
-offset_bottom = 449.0
+offset_left = 175.0
+offset_top = 374.0
+offset_right = 450.0
+offset_bottom = 441.0
 texture = ExtResource("32_gjhrx")
-stretch_mode = 5
+expand_mode = 1
 
 [node name="ExerciseNameLabel" type="Label" parent="ExerciseResultOverlay"]
 layout_mode = 0
 offset_left = 192.0
-offset_top = 388.0
+offset_top = 382.0
 offset_right = 427.0
-offset_bottom = 463.0
+offset_bottom = 457.0
 theme_override_colors/font_color = Color(1, 0.7921569, 0.5529412, 1)
 theme_override_fonts/font = ExtResource("21_x1b3m")
 theme_override_font_sizes/font_size = 40
@@ -389,8 +392,9 @@ offset_left = 128.0
 offset_top = 460.0
 offset_right = 502.0
 offset_bottom = 576.0
-theme_override_fonts/font = ExtResource("21_x1b3m")
-theme_override_font_sizes/font_size = 20
+theme_override_fonts/font = SubResource("FontVariation_gjhrx")
+theme_override_font_sizes/font_size = 24
+autowrap_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ExerciseResultOverlay"]
 layout_mode = 0
