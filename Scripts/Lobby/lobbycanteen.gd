@@ -99,52 +99,29 @@ func start_real_day():
 	bottom_buttons.hide()
 
 const FOOD_INTRO_TEXT := {
-	2: "We now have Pan de sal, in case a student wants something other than rice. 
-	Let’s try serving these cute kids some pan de sal, shall we?",
+	2: "We now have Pan de sal, in case a student wants something other than rice. Let’s try serving these cute kids some pan de sal, shall we?",
 	
-	3: "Turns out, there are kids who don’t like chicken, good thing we now have fish to serve them. 
-	This is a good way for them to eat variety of grow foods too!Let’s try serving these cute kids some fish now, shall we?",
+	3: "Turns out, there are kids who don’t like chicken, good thing we now have fish to serve them. This is a good way for them to eat variety of grow foods too!Let’s try serving these cute kids some fish now, shall we?",
 	
-	4: "It’s time to introduce these kids to another vegetable.
-	Something that is high in vitamin A this time. I hope they  get used to eating vegetables soon!
-	Let’s try serving these cute kids some squash, shall we?",
+	4: "It’s time to introduce these kids to another vegetable. Something that is high in vitamin A this time. I hope they  get used to eating vegetables soon! Let’s try serving these cute kids some squash, shall we?",
 	
-	5: "Fruits are so yummy, aren’t they? They’re yummy and also healthy!Good thing we have another 
-	fruit to serve now, and I hope the kids get to enjoy it very much.
-	Let’s try serving these cute kids some watermelon, shall we?",
+	5: "Fruits are so yummy, aren’t they? They’re yummy and also healthy!Good thing we have another  fruit to serve now, and I hope the kids get to enjoy it very much. Let’s try serving these cute kids some watermelon, shall we?",
 	
-	6: "Rice isn’t the only Go food that gives us energy!Today, we’re introducing corn. It’s yummy, 
-	and helps kids stay active and energized. Some students might want to try corn instead of rice or bread.
-	Let’s try serving these cute kids some corn today, shall we?",
+	6: "Rice isn’t the only Go food that gives us energy!Today, we’re introducing corn. It’s yummy, and helps kids stay active and energized. Some students might want to try corn instead of rice or bread. Let’s try serving these cute kids some corn today, shall we?",
 	
-	7: "Not all Grow foods are meat or fish! Today, we’re introducing eggs. They help kids grow 
-	strong and are a great source of protein. This is perfect for students who want something soft 
-	or don’t feel like eating meat or fish today.Let’s try serving these cute kids some eggs, shall we?.",
+	7: "Not all Grow foods are meat or fish! Today, we’re introducing eggs. They help kids grow strong and are a great source of protein. This is perfect for students who want something soft or don’t feel like eating meat or fish today.Let’s try serving these cute kids some eggs, shall we?.",
 	
-	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. 
-	They’re crunchy, colorful, and full of vitamin A.Some kids might be curious about how carrots 
-	taste, and that’s okay! Let’s try serving these cute kids some carrots today, shall we?",
+	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. They’re crunchy, colorful, and full of vitamin A.Some kids might be curious about how carrots taste, and that’s okay! Let’s try serving these cute kids some carrots today, shall we?",
 	
-	9: "Rice gives us energy, but did you know there are different kinds of rice too? Today, we’re 
-	introducing brown rice — it’s a Go food that helps keep our tummy healthy and gives long-lasting energy.
-	Some kids might want to try brown rice instead of white rice today.
-	Let’s try serving these cute kids some brown rice, shall we?",
+	9: "Rice gives us energy, but did you know there are different kinds of rice too? Today, we’re introducing brown rice — it’s a Go food that helps keep our tummy healthy and gives long-lasting energy. Some kids might want to try brown rice instead of white rice today. Let’s try serving these cute kids some brown rice, shall we?",
 	
-	10: "Grow foods don’t always come from meat, fish, or eggs. Today, we’re introducing tokwa — 
-	it’s made from soybeans and helps our body grow strong too! This is a great option for kids 
-	who want a plant-based Grow food.Let’s try serving these cute kids some tokwa today, shall we?",
+	10: "Grow foods don’t always come from meat, fish, or eggs. Today, we’re introducing tokwa — it’s made from soybeans and helps our body grow strong too! This is a great option for kids who want a plant-based Grow food.Let’s try serving these cute kids some tokwa today, shall we?",
 	
-	11: "Vegetables come in many shapes, colors, and tastes! Today, we’re introducing eggplant — 
-	it’s a purple vegetable that helps keep our body healthy. Some kids might be curious or 
-	unsure about its taste, and that’s okay.Let’s try serving these cute kids some eggplant today, shall we?",
+	11: "Vegetables come in many shapes, colors, and tastes! Today, we’re introducing eggplant — it’s a purple vegetable that helps keep our body healthy. Some kids might be curious or unsure about its taste, and that’s okay.Let’s try serving these cute kids some eggplant today, shall we?",
 	
-	12: "Fruits help keep us healthy and give us vitamins! Today, we’re introducing banana — 
-	it’s sweet, soft, and gives quick energy. Many kids love bananas, so you might hear them ask for it today.
-	Let’s try serving these cute kids some bananas, shall we?",
+	12: "Fruits help keep us healthy and give us vitamins! Today, we’re introducing banana — it’s sweet, soft, and gives quick energy. Many kids love bananas, so you might hear them ask for it today. Let’s try serving these cute kids some bananas, shall we?",
 	
-	13: "Today, we’re shining the spotlight on squash — a bright and cheerful veggie that helps keep our bodies 
-	healthy and strong. Squash can be yellow, green, or even orange, and it tastes a little sweet and soft when it’s cooked. 
-	It’s full of vitamins that help our eyes see clearly, our skin glow, and our bodies grow big and strong."
+	13: "Today, we’re shining the spotlight on squash — a bright and cheerful veggie that helps keep our bodies healthy and strong. Squash can be yellow, green, or even orange, and it tastes a little sweet and soft when it’s cooked. It’s full of vitamins that help our eyes see clearly, our skin glow, and our bodies grow big and strong."
 }
 
 func play_food_intro_if_needed():
@@ -502,15 +479,26 @@ func _on_btn_final_serve_pressed() -> void:
 	else:
 		$DayScene/DialogueBox/OrderText.text = _get_angry_feedback(mistakes)
 
+	# If this was the LAST customer, stop here.
+	if GD.remaining_customers.is_empty():
+		return
+
+# Otherwise continue normally
 	await get_tree().create_timer(3.5).timeout
 
 	customer_manager.next_customer()
 
 	await customer_manager.customer_left
+
+	# Safety check in case scene changed mid-await
+	if not is_inside_tree():
+		return
+
 	await get_tree().create_timer(0.15).timeout
 
 	if not GD.remaining_customers.is_empty():
 		spawn_next_customer()
+
 func _get_detailed_mistakes() -> Array:
 
 	var mistakes := []

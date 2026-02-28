@@ -284,6 +284,7 @@ func end_tutorial():
 
 	var GD = get_node("/root/GameData")
 	GD.matching_tutorial_completed = true   # 👈 ADD THIS
+	GD.save_game()
 
 	tutorial_overlay.visible = false
 	set_background_dim(1.0)
@@ -302,9 +303,13 @@ func _on_go_skip():
 	var GD = get_node("/root/GameData")
 
 	if GD.current_day >= 2 and GD.current_day <= 5:
+		GD.current_phase = GD.GamePhase.NEWS
 		get_tree().change_scene_to_file("res://Scenes/News/news_scene.tscn")
 	else:
+		GD.current_phase = GD.GamePhase.LOBBY
 		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+
+	GD.save_game()
 
 # =========================
 # GAMEPLAY
@@ -595,13 +600,18 @@ func show_exercise_result():
 func _on_continue_button_pressed() -> void:
 
 	var GD = get_node("/root/GameData")
+
+	# 👇 UPDATE PHASE PROPERLY
+	if GD.current_day >= 2 and GD.current_day <= 5:
+		GD.current_phase = GD.GamePhase.NEWS
+	else:
+		GD.current_phase = GD.GamePhase.LOBBY
+
 	GD.save_game()
 
-	# If day 2–5 → go to News
 	if GD.current_day >= 2 and GD.current_day <= 5:
 		get_tree().change_scene_to_file("res://Scenes/News/news_scene.tscn")
 	else:
-		# Day 6+ skip news
 		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 
 func _on_main_menu_button_pressed() -> void:
