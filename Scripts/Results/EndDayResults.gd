@@ -16,7 +16,8 @@ func _ready():
 	next_button.pressed.connect(_on_next_day_pressed)
 
 func _on_next_day_pressed():
-	# Transition to Quiz Scene
+	GameData.current_phase = GameData.GamePhase.QUIZ
+	GameData.save_game()
 	get_tree().change_scene_to_file("res://Scenes/Quiz/QuizScene.tscn")
 
 # --- OPTIONAL: simple counting animation ---

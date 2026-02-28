@@ -4,6 +4,14 @@ var active_order: CustomerOrder = null
 
 var order_index := 0
 
+@onready var special_star = $SpecialStar
+@onready var special_dim = $SpecialDim
+@onready var cat_special_info = $CatSpecialInfo
+@onready var key_popup = $KeyPopup
+@onready var leo_special = $LeoSpecial
+
+var special_intro_step := 0
+var special_intro_active := false
 
 
 func _ready():
@@ -30,8 +38,21 @@ func _ready():
 
 
 func _on_customer_arrived(order: CustomerOrder):
+
 	active_order = order
+
+	# 🔒 SAFETY CHECK (important)
+	if order == null:
+		special_star.hide()
+		return
+
 	OrderSystem.set_order_from_customer(order)
+
+	# --- Special Character Star ---
+	if order.customer_name in ["Leo", "Maya", "Norma"]:
+		special_star.show()
+	else:
+		special_star.hide()
 
 	var GD := get_node("/root/GameData")
 
@@ -50,6 +71,13 @@ func _on_customer_arrived(order: CustomerOrder):
 		$DialogueBox/OrderText.text = order.order_text
 		$BtnAccept.show()
 		$BtnContinue.show()
+		
+	# --- First Time Special Intro ---
+	if order.customer_name in ["Leo"]:
+		if not GameData.special_intro_shown.get(order.customer_name, false):
+			GameData.special_intro_shown[order.customer_name] = true
+			_start_special_intro(order.customer_name)
+			return
 
 
 
@@ -57,6 +85,7 @@ func _on_customer_left():
 	$DialogueBox.hide()
 	$BtnAccept.hide()
 	$BtnContinue.hide()
+	special_star.hide()
 
 
 
@@ -94,3 +123,74 @@ func _end_day():
 	# We only reset state if we are manually ending the day logic without a transition
 	# But in your current flow, GameData handles it.
 	pass
+
+func _start_special_intro(name:String):
+
+	special_intro_active = true
+	special_intro_step = 0
+	
+	leo_special.show()
+	special_dim.show()
+	cat_special_info.show()
+	key_popup.hide()
+
+	$DialogueBox.hide()
+	$BtnAccept.hide()
+	$BtnContinue.hide()
+	$"../OverlayCanvas/GameHUD".hide()
+
+	_update_special_image(name)
+
+func _input(event):
+
+	if not special_intro_active:
+		return
+
+	if event is InputEventMouseButton and event.pressed:
+		_handle_special_tap()
+
+func _handle_special_tap():
+
+	special_intro_step += 1
+
+	if special_intro_step >= 5:
+		_end_special_intro()
+	else:
+		_update_special_image(active_order.customer_name)
+
+func _update_special_image(name:String):
+
+	var path = "res://Assets/UI/SpecialInfo/%s_%d.png" % [name, special_intro_step + 1]
+	cat_special_info.texture = load(path)
+
+	# Reveal key popup after 2nd image
+	if special_intro_step == 1:
+		key_popup.show()
+
+func _on_special_tapped(event):
+
+	if not (event is InputEventMouseButton and event.pressed):
+		return
+
+	special_intro_step += 1
+
+	if special_intro_step >= 5:
+		_end_special_intro()
+	else:
+		_update_special_image(active_order.customer_name)
+
+func _end_special_intro():
+
+	special_intro_active = false
+
+	special_dim.hide()
+	cat_special_info.hide()
+	key_popup.hide()
+	leo_special.hide()
+
+	# Resume normal dialogue
+	$DialogueBox.show()
+	$DialogueBox/OrderText.text = active_order.order_text
+	$BtnAccept.show()
+	$BtnContinue.show()
+	$"../OverlayCanvas/GameHUD".show()
