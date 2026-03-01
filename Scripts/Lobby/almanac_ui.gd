@@ -3,6 +3,10 @@ signal closed
 
 var is_updating: bool = false # Guard against recursive layout loops
 
+# --- NEW: CURRENT PLAYER DAY (SET THIS WHEN OPENING ALMANAC) ---
+# Example: If player has finished Day 3, set this to 3 before showing the UI.
+@export var player_completed_day: int = 1 
+
 func _on_texture_button_pressed() -> void:
 	closed.emit()
 
@@ -29,18 +33,21 @@ func _on_texture_button_pressed() -> void:
 @export var sign_glow_texture: Texture2D
 
 @export_group("Go Data")
+@export var go_food_keys: Array[String] # NEW: Must match OrderSystem keys (e.g. "RICE", "PANDESAL")
 @export var go_default_info: Texture2D 
 @export var go_btn_icons: Array[Texture2D] 
 @export var go_info_pages: Array[Texture2D] 
 @export var go_portion_pages: Array[Texture2D] 
 
 @export_group("Grow Data")
+@export var grow_food_keys: Array[String] # NEW: Must match OrderSystem keys
 @export var grow_default_info: Texture2D
 @export var grow_btn_icons: Array[Texture2D]
 @export var grow_info_pages: Array[Texture2D]
 @export var grow_portion_pages: Array[Texture2D] 
 
 @export_group("Glow Data")
+@export var glow_food_keys: Array[String] # NEW: Must match OrderSystem keys
 @export var glow_default_info: Texture2D
 @export var glow_btn_icons: Array[Texture2D]
 @export var glow_info_pages: Array[Texture2D]
@@ -101,6 +108,9 @@ func _switch_category(category: String):
 		tab_portion.set_pressed_no_signal(false) 
 		tab_portion.modulate = Color.WHITE
 	
+	# Fetch the list of allowed foods up to the current completed day from OrderSystem
+	var unlocked_foods = OrderSystem.get_unlocked_foods(player_completed_day)
+	
 	# --- 1. SETUP UI BASED ON CATEGORY ---
 	# We use set_deferred for visibility to prevent UI layout loops that crash the GPU
 	if category == "Go":
@@ -111,7 +121,7 @@ func _switch_category(category: String):
 		grid_3x3.set_deferred("visible", false)
 		grid_2x2.set_deferred("visible", true)
 		active_buttons = grid_2x2.get_children()
-		_apply_button_textures(active_buttons, go_btn_icons)
+		_apply_button_textures(active_buttons, go_btn_icons, go_food_keys, unlocked_foods)
 
 	elif category == "Grow":
 		tab_grow.modulate = Color(1.5, 1.5, 1.5) 
@@ -121,7 +131,7 @@ func _switch_category(category: String):
 		grid_3x3.set_deferred("visible", false)
 		grid_2x2.set_deferred("visible", true)
 		active_buttons = grid_2x2.get_children()
-		_apply_button_textures(active_buttons, grow_btn_icons)
+		_apply_button_textures(active_buttons, grow_btn_icons, grow_food_keys, unlocked_foods)
 
 	elif category == "Glow":
 		tab_glow.modulate = Color(1.5, 1.5, 1.5) 
@@ -131,22 +141,38 @@ func _switch_category(category: String):
 		grid_2x2.set_deferred("visible", false)
 		grid_3x3.set_deferred("visible", true)
 		active_buttons = grid_3x3.get_children()
-		_apply_button_textures(active_buttons, glow_btn_icons)
+		_apply_button_textures(active_buttons, glow_btn_icons, glow_food_keys, unlocked_foods)
 		
 	is_updating = false
 
-func _apply_button_textures(buttons: Array, textures: Array):
+func _apply_button_textures(buttons: Array, textures: Array, category_keys: Array, unlocked_foods: Array):
 	var tex_index = 0
 	for btn in buttons:
 		if btn is BaseButton:
 			if tex_index < textures.size():
 				btn.texture_normal = textures[tex_index]
 				btn.set_deferred("visible", true)
+				
+				# --- NEW CHECK LOCK STATUS ---
+				var food_key = category_keys[tex_index] if tex_index < category_keys.size() else ""
+				
+				if food_key != "" and unlocked_foods.has(food_key):
+					btn.set_meta("is_locked", false)
+					btn.modulate = Color.WHITE # Normal, unlocked
+				else:
+					btn.set_meta("is_locked", true)
+					btn.modulate = Color(0.2, 0.2, 0.2, 1.0) # Dark grey overlay for locked items
 			else:
 				btn.set_deferred("visible", false)
 			tex_index += 1
 
 func _on_food_button_pressed(pressed_btn: BaseButton, index: int):
+	# --- NEW BLOCK CLICK IF LOCKED ---
+	if pressed_btn.get_meta("is_locked", true) == true:
+		_play_error_animation(pressed_btn)
+		pressed_btn.set_pressed_no_signal(false) # Force untoggle immediately
+		return
+
 	# NEW LOGIC: Untoggle portion tab when switching food
 	if tab_portion and tab_portion.button_pressed:
 		tab_portion.set_pressed_no_signal(false)
@@ -156,7 +182,8 @@ func _on_food_button_pressed(pressed_btn: BaseButton, index: int):
 	for btn in active_buttons:
 		if btn is BaseButton and btn != pressed_btn:
 			btn.set_pressed_no_signal(false)
-			btn.modulate = Color.WHITE
+			# Restore locked grey color if it was locked, else white
+			btn.modulate = Color(0.2, 0.2, 0.2, 1.0) if btn.get_meta("is_locked", false) else Color.WHITE
 	
 	pressed_btn.set_pressed_no_signal(true)
 	pressed_btn.modulate = Color(1.5, 1.5, 1.5) 
@@ -164,9 +191,38 @@ func _on_food_button_pressed(pressed_btn: BaseButton, index: int):
 	current_food_index = index
 	call_deferred("_update_info_page") # Call deferred to prevent layout freeze
 
+# --- NEW ERROR ANIMATION ---
+func _play_error_animation(btn: BaseButton):
+	# Set pivot so it rotates around the center, not the top-left
+	btn.pivot_offset = btn.size / 2.0
+	
+	var tween = create_tween()
+	# 1. Shake left and right
+	tween.tween_property(btn, "rotation_degrees", 15.0, 0.05)
+	tween.tween_property(btn, "rotation_degrees", -15.0, 0.05)
+	tween.tween_property(btn, "rotation_degrees", 10.0, 0.05)
+	tween.tween_property(btn, "rotation_degrees", -10.0, 0.05)
+	tween.tween_property(btn, "rotation_degrees", 0.0, 0.05)
+	
+	# 2. Briefly flash RED, then go back to dark grey (locked state)
+	btn.modulate = Color(1, 0, 0)
+	var color_tween = create_tween()
+	color_tween.tween_property(btn, "modulate", Color(0.2, 0.2, 0.2, 1.0), 0.25)
+
 func _on_portion_tab_toggled(toggled_on: bool):
 	if toggled_on:
 		tab_portion.modulate = Color(1.5, 1.5, 1.5)
+		
+		# --- NEW: Auto-select the first food item if none is selected ---
+		if current_food_index == -1 and active_buttons.size() > 0:
+			for i in range(active_buttons.size()):
+				var btn = active_buttons[i] as BaseButton
+				# Only auto-select if it is visible and NOT locked
+				if btn and btn.visible and btn.get_meta("is_locked", true) == false:
+					current_food_index = i
+					btn.set_pressed_no_signal(true)
+					btn.modulate = Color(1.5, 1.5, 1.5)
+					break
 	else:
 		tab_portion.modulate = Color.WHITE
 
@@ -211,9 +267,9 @@ func _deselect_all_buttons():
 		for btn in grid_2x2.get_children():
 			if btn is BaseButton:
 				btn.set_pressed_no_signal(false)
-				btn.modulate = Color.WHITE
+				btn.modulate = Color(0.2, 0.2, 0.2, 1.0) if btn.get_meta("is_locked", false) else Color.WHITE
 	if grid_3x3:
 		for btn in grid_3x3.get_children():
 			if btn is BaseButton:
 				btn.set_pressed_no_signal(false)
-				btn.modulate = Color.WHITE
+				btn.modulate = Color(0.2, 0.2, 0.2, 1.0) if btn.get_meta("is_locked", false) else Color.WHITE

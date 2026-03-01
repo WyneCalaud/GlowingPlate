@@ -361,8 +361,8 @@ static var group_c: Array = [
 		"id": "C2", 
 		"q": "How much carrot should a 10-12 year old in one meal?", 
 		"q_img": preload("res://Assets/UI/QuestionImages/P2.png"),
-		"ans": null, "ans_img": preload("res://Assets/UI/AnswerImages/ThreeFourthCarrot.png"),
-		"wrong1": null, "wrong1_img": preload("res://Assets/UI/AnswerImages/OneCupCarrot.png"),
+		"ans": null, "ans_img": preload("res://Assets/UI/AnswerImages/OneCupCarrot.png"),
+		"wrong1": null, "wrong1_img": preload("res://Assets/UI/AnswerImages/ThreeFourthCarrot.png"),
 		"wrong2": null, "wrong2_img": preload("res://Assets/UI/AnswerImages/OneFourthCarrot.png"),
 		"expl": "Portion sizes depend on age." 
 	},

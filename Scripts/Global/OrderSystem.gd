@@ -443,3 +443,32 @@ func is_beverage_correct() -> bool:
 
 	print("✅ Beverage is correct!")
 	return true
+
+# ---------------------------------------------------------
+# NEW: GET UNLOCKED FOODS FOR ALMANAC
+# ---------------------------------------------------------
+func get_unlocked_foods(max_day: int) -> Array[String]:
+	var unlocked: Array[String] = []
+	
+	# Loop from Day 1 up to the current completed day
+	for day in range(1, max_day + 1):
+		if MENU_SCHEDULE.has(day):
+			var daily_menu = MENU_SCHEDULE[day]
+			
+			# Check all food categories (ignoring Beverage for the food almanac)
+			var categories = ["Go", "Grow", "GlowVeg", "GlowFru"]
+			for cat in categories:
+				if daily_menu.has(cat):
+					var items = daily_menu[cat]
+					
+					# Some days have Arrays of food (e.g. Day 9 has ["BROWN_RICE", "PANDESAL", "CORN"])
+					if items is Array:
+						for item in items:
+							if not unlocked.has(item):
+								unlocked.append(item)
+					# Some days have Strings (e.g. Day 1 has "CHICKEN_LEG")
+					elif items is String:
+						if not unlocked.has(items):
+							unlocked.append(items)
+							
+	return unlocked
