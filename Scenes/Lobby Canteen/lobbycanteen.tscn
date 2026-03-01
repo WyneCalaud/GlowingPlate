@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=47 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://dt5he77x83jrn" path="res://Assets/UI/LobbyUI/LobbyBackground/OutsideBackground.png" id="3_vtn67"]
@@ -56,8 +56,6 @@ font_color = Color(0.9137255, 0.8352941, 0.6862745, 1)
 [sub_resource type="FontVariation" id="FontVariation_uu58y"]
 base_font = ExtResource("33_nk7xc")
 spacing_glyph = 5
-
-[sub_resource type="Theme" id="Theme_myl55"]
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -387,10 +385,10 @@ tex_count_1 = null
 script = ExtResource("17_wdy5h")
 
 [node name="DialogueBox" type="TextureRect" parent="DayScene"]
-offset_left = 18.0
-offset_top = 32.335968
-offset_right = 855.0
-offset_bottom = 502.91174
+offset_left = 35.0
+offset_top = 7.0
+offset_right = 872.0
+offset_bottom = 501.57578
 texture = ExtResource("32_uu58y")
 expand_mode = 5
 
@@ -401,45 +399,37 @@ offset_bottom = 23.0
 
 [node name="OrderText" type="RichTextLabel" parent="DayScene/DialogueBox"]
 layout_mode = 0
-offset_left = 92.0
-offset_top = 140.66403
+offset_left = 81.0
+offset_top = 130.0
 offset_right = 740.0
-offset_bottom = 291.32806
+offset_bottom = 352.0
 theme_override_colors/default_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
 theme_override_fonts/normal_font = SubResource("FontVariation_uu58y")
-theme_override_font_sizes/normal_font_size = 27
+theme_override_font_sizes/normal_font_size = 26
 
-[node name="BtnAccept" type="Button" parent="DayScene"]
-offset_left = 160.0
-offset_top = 408.0
-offset_right = 386.0
-offset_bottom = 520.0
-icon = ExtResource("28_q6g5s")
-flat = true
-icon_alignment = 1
-expand_icon = true
+[node name="BtnAccept" type="TextureButton" parent="DayScene"]
+offset_left = 199.0
+offset_top = 379.0
+offset_right = 403.0
+offset_bottom = 487.0
+texture_normal = ExtResource("28_q6g5s")
+stretch_mode = 5
 
-[node name="BtnContinue" type="Button" parent="DayScene"]
-offset_left = 427.0
-offset_top = 411.0
-offset_right = 699.0
-offset_bottom = 522.0
-theme = SubResource("Theme_myl55")
-icon = ExtResource("29_7yiff")
-flat = true
-icon_alignment = 1
-expand_icon = true
+[node name="BtnContinue" type="TextureButton" parent="DayScene"]
+offset_left = 474.0
+offset_top = 379.0
+offset_right = 678.0
+offset_bottom = 487.0
+texture_normal = ExtResource("29_7yiff")
+stretch_mode = 5
 
-[node name="BtnPrincipalLeave" type="Button" parent="DayScene"]
-offset_left = 324.0
-offset_top = 401.0
-offset_right = 542.0
-offset_bottom = 506.0
-theme = SubResource("Theme_myl55")
-icon = ExtResource("28_q6g5s")
-flat = true
-icon_alignment = 1
-expand_icon = true
+[node name="BtnPrincipalLeave" type="TextureButton" parent="DayScene"]
+offset_left = 336.0
+offset_top = 381.0
+offset_right = 540.0
+offset_bottom = 489.0
+texture_normal = ExtResource("28_q6g5s")
+stretch_mode = 5
 
 [node name="CustomerManager" type="Node" parent="DayScene"]
 script = ExtResource("20_k43ou")
@@ -558,5 +548,5 @@ position = Vector2(78, 71)
 [connection signal="closed" from="OverlayCanvas/GlowDesk" to="." method="_on_glow_desk_closed"]
 [connection signal="pressed" from="DayScene/BtnAccept" to="DayScene" method="_on_btn_accept_pressed"]
 [connection signal="pressed" from="DayScene/BtnContinue" to="DayScene" method="_on_btn_continue_pressed"]
-[connection signal="pressed" from="DayScene/BtnPrincipalLeave" to="." method="_on_btn_principal_leave_pressed"]
+[connection signal="pressed" from="DayScene/BtnPrincipalLeave" to="." method="_on_principal_leave_pressed"]
 [connection signal="pressed" from="FinalPlateDisplay/BtnFinalServe" to="." method="_on_btn_final_serve_pressed"]

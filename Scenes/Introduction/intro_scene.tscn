@@ -1,17 +1,29 @@
-[gd_scene load_steps=12 format=3 uid="uid://cqlt61gaad8v8"]
+[gd_scene load_steps=15 format=3 uid="uid://cqlt61gaad8v8"]
 
 [ext_resource type="Script" uid="uid://bnklncubj3hih" path="res://Scenes/Introduction/IntroScene.gd" id="1_m2t0u"]
-[ext_resource type="VideoStream" uid="uid://c4nth8w838vxj" path="res://Assets/Videos/testvid.ogv" id="2_jpih7"]
+[ext_resource type="VideoStream" uid="uid://b40wdejkdy754" path="res://Assets/Videos/Final Cutscene.ogv" id="2_l4wtw"]
 [ext_resource type="Texture2D" uid="uid://dy8drcukb4jik" path="res://Assets/UI/LobbyUI/buon.png" id="3_36ejc"]
 [ext_resource type="Texture2D" uid="uid://200h5enr2xy3" path="res://Assets/UI/Interface/Type Name Pop Up (1).png" id="3_ggi6h"]
 [ext_resource type="Texture2D" uid="uid://bidrperywufqq" path="res://Assets/background/introbg2.png" id="3_l4wtw"]
 [ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="4_36ejc"]
-[ext_resource type="Texture2D" uid="uid://n3btsm4oj1ty" path="res://Assets/Customers/Principal_.png" id="4_jpih7"]
+[ext_resource type="Texture2D" uid="uid://c6xfnd4h7mwg4" path="res://Assets/Customers/cutprincipal.png" id="4_l4wtw"]
 [ext_resource type="Texture2D" uid="uid://oud8lj264na3" path="res://Assets/Customers/Jenna.png" id="5_l4wtw"]
 [ext_resource type="Texture2D" uid="uid://sm0uucdl8jtg" path="res://Assets/UI/LobbyUI/Save Name Btn.png" id="5_q83fk"]
 [ext_resource type="Texture2D" uid="uid://1c15qhkuhbcg" path="res://Assets/UI/Interface/bigdialogue.png" id="6_l4wtw"]
 
 [sub_resource type="FontVariation" id="FontVariation_l4wtw"]
+base_font = ExtResource("4_36ejc")
+spacing_glyph = 5
+
+[sub_resource type="FontVariation" id="FontVariation_pc13s"]
+base_font = ExtResource("4_36ejc")
+spacing_glyph = 5
+
+[sub_resource type="FontVariation" id="FontVariation_187ro"]
+base_font = ExtResource("4_36ejc")
+spacing_glyph = 5
+
+[sub_resource type="FontVariation" id="FontVariation_fysj7"]
 base_font = ExtResource("4_36ejc")
 spacing_glyph = 5
 
@@ -26,7 +38,7 @@ script = ExtResource("1_m2t0u")
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
-stream = ExtResource("2_jpih7")
+stream = ExtResource("2_l4wtw")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
@@ -36,107 +48,107 @@ texture = ExtResource("3_l4wtw")
 
 [node name="PrincipalPortrait" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 785.0
-offset_top = 48.0
-offset_right = 1233.0
-offset_bottom = 588.0
-texture = ExtResource("4_jpih7")
+offset_left = 819.0
+offset_top = 102.0
+offset_right = 1267.0
+offset_bottom = 642.0
+texture = ExtResource("4_l4wtw")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="JennaPortrait" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 870.0
+offset_left = 878.0
 offset_top = 154.0
-offset_right = 1136.0
+offset_right = 1144.0
 offset_bottom = 590.0
 texture = ExtResource("5_l4wtw")
 expand_mode = 1
 
 [node name="DialogueBox" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -6.0
-offset_top = -73.0
-offset_right = 878.0
-offset_bottom = 481.0
+offset_left = 80.0
+offset_top = 19.0
+offset_right = 964.0
+offset_bottom = 412.0
 texture = ExtResource("6_l4wtw")
+expand_mode = 3
 
 [node name="DialogueText" type="RichTextLabel" parent="DialogueBox"]
 layout_mode = 0
-offset_left = 98.0
-offset_top = 152.0
-offset_right = 770.0
-offset_bottom = 373.0
+offset_left = 87.0
+offset_top = 100.0
+offset_right = 775.0
+offset_bottom = 276.0
 theme_override_colors/default_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
 theme_override_fonts/normal_font = SubResource("FontVariation_l4wtw")
 theme_override_font_sizes/normal_font_size = 36
 horizontal_alignment = 3
 
-[node name="BtnNext" type="Button" parent="DialogueBox"]
+[node name="BtnNext" type="TextureButton" parent="DialogueBox"]
 layout_mode = 0
-offset_left = 312.0
-offset_top = 418.0
-offset_right = 544.0
-offset_bottom = 541.0
-theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
-theme_override_fonts/font = ExtResource("4_36ejc")
-icon = ExtResource("3_36ejc")
-flat = true
-icon_alignment = 1
-expand_icon = true
+offset_left = 319.0
+offset_top = 291.0
+offset_right = 562.0
+offset_bottom = 395.0
+texture_normal = ExtResource("3_36ejc")
+stretch_mode = 0
 
 [node name="Label" type="Label" parent="DialogueBox/BtnNext"]
 layout_mode = 0
-offset_left = 36.0
-offset_top = 40.0
-offset_right = 199.0
-offset_bottom = 84.0
+offset_left = 25.0
+offset_top = 28.0
+offset_right = 223.0
+offset_bottom = 74.0
 theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
-theme_override_fonts/font = ExtResource("4_36ejc")
+theme_override_fonts/font = SubResource("FontVariation_pc13s")
 theme_override_font_sizes/font_size = 30
 horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
-[node name="BtnChoice1" type="Button" parent="DialogueBox"]
+[node name="BtnChoice1" type="TextureButton" parent="DialogueBox"]
 layout_mode = 0
-offset_left = 169.0
-offset_top = 416.0
-offset_right = 406.0
-offset_bottom = 545.0
-icon = ExtResource("3_36ejc")
-flat = true
-expand_icon = true
+offset_left = 174.0
+offset_top = 290.0
+offset_right = 392.0
+offset_bottom = 394.0
+texture_normal = ExtResource("3_36ejc")
+stretch_mode = 0
 
 [node name="Label" type="Label" parent="DialogueBox/BtnChoice1"]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 42.0
-offset_right = 209.0
-offset_bottom = 85.0
+offset_left = 23.0
+offset_top = 30.0
+offset_right = 200.0
+offset_bottom = 73.0
 theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
-theme_override_fonts/font = ExtResource("4_36ejc")
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = SubResource("FontVariation_187ro")
+theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
-[node name="BtnChoice2" type="Button" parent="DialogueBox"]
+[node name="BtnChoice2" type="TextureButton" parent="DialogueBox"]
 layout_mode = 0
-offset_left = 456.0
-offset_top = 417.0
-offset_right = 697.0
-offset_bottom = 542.0
-icon = ExtResource("3_36ejc")
-flat = true
-expand_icon = true
+offset_left = 477.0
+offset_top = 291.0
+offset_right = 708.0
+offset_bottom = 395.0
+texture_normal = ExtResource("3_36ejc")
+stretch_mode = 0
 
 [node name="Label" type="Label" parent="DialogueBox/BtnChoice2"]
 layout_mode = 0
-offset_left = 33.0
-offset_top = 40.0
-offset_right = 204.0
-offset_bottom = 84.0
+offset_left = 24.0
+offset_top = 30.0
+offset_right = 213.0
+offset_bottom = 71.0
 theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
-theme_override_fonts/font = ExtResource("4_36ejc")
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = SubResource("FontVariation_fysj7")
+theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="DimBackground" type="ColorRect" parent="."]
 visible = false
