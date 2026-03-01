@@ -17,9 +17,7 @@
 layout_mode = 3
 anchor_right = 0.275
 anchor_bottom = 0.32200003
-offset_right = -352.0
-offset_bottom = -231.84003
-grow_horizontal = 2
+offset_bottom = 0.15997314
 grow_vertical = 2
 script = ExtResource("1_tyl08")
 wr_empty = ExtResource("2_34kpu")
@@ -51,9 +49,9 @@ stretch_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 71.0
-offset_top = 176.00002
-offset_right = 424.3333
+offset_left = 120.0
+offset_top = 176.0
+offset_right = 316.0
 offset_bottom = 276.0
 scale = Vector2(0.6, 0.6)
 theme_override_constants/separation = -70

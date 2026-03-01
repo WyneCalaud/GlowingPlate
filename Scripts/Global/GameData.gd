@@ -27,7 +27,7 @@ var quiz_concept_progress: Dictionary = {}
 var character_progress: Dictionary = {
 	"Leo": 0.0,
 	"Maya": 0.0,
-	"Arman": 0.0
+	"Norma": 0.0
 }
 
 # --- CHARACTER VISUAL STAGES ---
@@ -119,13 +119,17 @@ func calculate_tip(happiness_percent: float) -> int:
 
 # --- TIME & VISUAL LOGIC ---
 func get_current_time_string() -> String:
-	var progress = float(total_customers_served_today) / float(max_customers_today)
+	# ⚠️ SAFETY GUARD: Prevent Divide by Zero freeze
+	var safe_max = max(1, max_customers_today)
+	var progress = float(total_customers_served_today) / float(safe_max)
 	var hour = 12 + int(progress * 4) 
 	if hour > 12: hour -= 12
 	return str(hour) + ":00 PM"
 
 func get_sun_stage_index() -> int:
-	var progress = float(total_customers_served_today) / float(max_customers_today)
+	# ⚠️ SAFETY GUARD: Prevent Divide by Zero freeze
+	var safe_max = max(1, max_customers_today)
+	var progress = float(total_customers_served_today) / float(safe_max)
 	return clampi(int(progress * 4), 0, 3)
 
 # --- CORE METHODS ---
@@ -141,7 +145,8 @@ func start_new_day():
 
 func start_day_with_orders(orders: Array):
 	remaining_customers = orders.duplicate()
-	max_customers_today = remaining_customers.size() 
+	# ⚠️ SAFETY GUARD: Never let max_customers hit 0
+	max_customers_today = max(1, remaining_customers.size()) 
 	service_state = ServiceState.IDLE
 	day_started = true
 

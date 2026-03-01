@@ -88,13 +88,14 @@ func _is_target_cooker(node: Node) -> bool:
 	return current.contains(target) or target.contains(current)
 
 func _process(delta: float) -> void:
+	if not is_inside_tree() or is_queued_for_deletion(): return
+	
 	# Call parent process to retain base dragging behavior
 	super._process(delta)
 	
 	# --- CRASH FIX: Distance-based closing ---
 	# To prevent the infinite physics loop caused by the cooker's hitbox shrinking and shifting away,
 	# we manually keep the cooker open based on distance while you are dragging it.
-	# ADDED is_instance_valid to prevent crashes during scene closure
 	if is_dragging and is_instance_valid(hovered_cooker):
 		var dist = global_position.distance_to(hovered_cooker.global_position)
 		if dist > 250.0: # Safe pixel radius. Close if dragged completely away.
@@ -103,7 +104,9 @@ func _process(delta: float) -> void:
 			current_hovered_area = null
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
+	if not is_inside_tree() or is_queued_for_deletion(): return
 	super._on_area_2d_area_entered(area)
+	
 	if not is_instance_valid(area): return
 	
 	var parent = area.get_parent()
@@ -116,6 +119,8 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 				hovered_cooker.open_cooker()
 
 func _on_area_2d_area_exited(area: Area2D) -> void:
+	if not is_inside_tree() or is_queued_for_deletion(): return
+	
 	if is_instance_valid(area):
 		var parent = area.get_parent()
 		# ONLY close via the physics exit event if we dropped the cup. 
@@ -126,6 +131,8 @@ func _on_area_2d_area_exited(area: Area2D) -> void:
 	super._on_area_2d_area_exited(area)
 
 func handle_drop():
+	if not is_inside_tree() or is_queued_for_deletion(): return
+	
 	# Unlock camera whenever the item is released
 	set_camera_lock(false)
 
@@ -155,6 +162,10 @@ func handle_drop():
 
 	_close_current_cooker()
 	hovered_cooker = null # Ensure clean state
+	
+	# CRITICAL FIX: Manually check for plate slots to ensure 100% responsive drops!
+	_perform_manual_overlap_check()
+	
 	super.handle_drop()
 
 func on_plate_placement_success():
@@ -167,6 +178,7 @@ func reset_cup():
 	return_to_start()
 
 func start_hold_mechanic():
+	print("DEBUG [RiceCup]: Starting hold mechanic.")
 	is_dragging = false
 	z_index = 0 
 	current_hovered_area = null
@@ -186,6 +198,8 @@ func _on_mechanic_score_change(deduction: int):
 	emit_signal("score_change", deduction)
 
 func _on_mechanic_scoop_finished(amount: String):
+	if not is_inside_tree() or is_queued_for_deletion(): return
+	
 	set_camera_lock(false)
 	if is_instance_valid(rice_cup_area):
 		rice_cup_area.input_pickable = true
@@ -199,6 +213,7 @@ func _on_mechanic_scoop_finished(amount: String):
 		mapped_amount = "Small"
 
 	current_rice_amount = mapped_amount
+	print("DEBUG [RiceCup]: Mechanic scoop finished, amount -> ", mapped_amount)
 
 	var final_texture := tex_empty
 	var success := true
@@ -233,3 +248,20 @@ func _on_mechanic_scoop_finished(amount: String):
 func _close_current_cooker():
 	if is_instance_valid(hovered_cooker) and hovered_cooker.has_method("close_cooker"):
 		hovered_cooker.close_cooker()
+
+# --- RECOVERY: MANUAL OVERLAP CHECK ---
+func _perform_manual_overlap_check():
+	var area_node = get_node_or_null("Area2D")
+	if not area_node: return
+
+	var overlapping = area_node.get_overlapping_areas()
+	for area in overlapping:
+		# Ignore self
+		if area == area_node or area.owner == self or area.get_parent() == self: 
+			continue
+		
+		# Check if the area is a plate slot
+		if area.is_in_group("plate_slot") or (area.get_parent() and area.get_parent().is_in_group("plate_slot")):
+			current_hovered_area = area
+			print("RECOVERY [RiceCup]: Plate Slot detected manually.")
+			return

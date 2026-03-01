@@ -69,8 +69,8 @@ func update_concept_progress(concept: String, quality: int, current_day: int) ->
 	concept_progress[concept] = data
 	return next_day
 
+# ⚠️ FIX: Removed GameData economy/scene changes from here. 
+# QuizSystem should only track data. QuizManager handles the rewards.
 func apply_quiz_results(results: Dictionary):
-	var bonus_money = results.get("bonus_money", 0)
-	GameData.money += bonus_money
-	GameData.daily_money_earned += bonus_money
-	GameData.start_new_day()
+	# Save the updated concept progress directly to GameData so it persists
+	GameData.quiz_concept_progress = concept_progress

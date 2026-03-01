@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://bvv4bih206vxi"]
 
-[ext_resource type="Texture2D" uid="uid://1ecw6i3ykpw6" path="res://Assets/Foods/Corns.png" id="1_u72oa"]
+[ext_resource type="Texture2D" uid="uid://dny8dryaah4m6" path="res://Assets/UI/GlowBoard/CharacterCards/Corn 1.png" id="1_pfapb"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="6_8k7qh"]
 [ext_resource type="Texture2D" uid="uid://iweroapdj53n" path="res://Assets/UI/KitchenUI/VeggiesCup/Corn/CornFull.png" id="7_pfapb"]
 [ext_resource type="Texture2D" uid="uid://b8j6k5dnjsodk" path="res://Assets/UI/KitchenUI/VeggiesCup/Corn/CornHigh.png" id="8_8k7qh"]
@@ -16,7 +16,7 @@ script = ExtResource("6_8k7qh")
 item_name = "Corn"
 internal_key = "CORN"
 food_category = "Go"
-base_texture = ExtResource("1_u72oa")
+base_texture = ExtResource("1_pfapb")
 is_veggie_cup = true
 veggie_cup_low = ExtResource("9_t3567")
 veggie_cup_med = ExtResource("10_upcer")

@@ -77,6 +77,7 @@ var is_game_active: bool = false
 var correct_answer_text: String = "" 
 var current_question_obj: Dictionary = {} 
 var game_questions_pool: Array = []
+var original_unlocked_pool: Array = [] # ⚠️ NEW: Used to refill Endless mode
 
 func _ready():
 	question_data = QuestionDatabase.data
@@ -158,6 +159,11 @@ func _change_screen(target_screen: Control):
 
 func _on_back_pressed():
 	if is_transitioning: return
+	
+	# If backing out during a game, cancel the game
+	if is_game_active:
+		is_game_active = false
+		
 	if navigation_stack.is_empty():
 		closed.emit()
 	else:
@@ -201,8 +207,8 @@ func _start_gameplay(mode: String):
 	game_time_left = 60.0
 	is_game_active = false 
 	game_questions_pool.clear()
+	original_unlocked_pool.clear()
 
-	# Fetch unlocked questions using the global QuizProgress
 	var all_qs = QuestionDatabase.get_all_questions()
 	var unlocked_qs = []
 	for q in all_qs:
@@ -216,6 +222,7 @@ func _start_gameplay(mode: String):
 			_shake_locked_btn(target_btn, Color.WHITE)
 		return
 
+	original_unlocked_pool = unlocked_qs.duplicate()
 	game_questions_pool.append_array(unlocked_qs)
 	game_questions_pool.shuffle()
 
@@ -234,6 +241,10 @@ func _start_gameplay(mode: String):
 	else:
 		await get_tree().create_timer(3.0).timeout
 	
+	# Only start if player didn't hit back during countdown
+	if not is_inside_tree() or _get_current_screen() != screen_countdown:
+		return
+		
 	if not navigation_stack.is_empty() and navigation_stack.back() == screen_countdown:
 		navigation_stack.pop_back()
 		
@@ -243,8 +254,13 @@ func _start_gameplay(mode: String):
 
 func _load_next_question():
 	if game_questions_pool.is_empty():
-		_game_over()
-		return
+		# ⚠️ FIX: Make Endless Mode truly infinite!
+		if current_game_mode == "Endless" and not original_unlocked_pool.is_empty():
+			game_questions_pool.append_array(original_unlocked_pool)
+			game_questions_pool.shuffle()
+		else:
+			_game_over()
+			return
 
 	var q_data = game_questions_pool.pop_front()
 	current_question_obj = q_data 
@@ -290,14 +306,13 @@ func _load_next_question():
 			set.tex.visible = (opt.img != null)
 
 func _check_answer(selected_text: String, btn_node: BaseButton):
-	if is_transitioning or is_answering: return
+	if is_transitioning or is_answering or not is_game_active: return
 	is_answering = true 
 	
 	var is_correct = (selected_text == correct_answer_text)
 	var q_id = current_question_obj.get("id")
 	
 	if current_game_mode == "Quick" and q_id and QuizProgress.is_unlocked(q_id):
-		# Send the progress safely back to the global Quiz Progress file and save!
 		QuizProgress.record_attempt(q_id, is_correct, GameData.current_day)
 		GameData.save_game()
 
@@ -311,6 +326,10 @@ func _check_answer(selected_text: String, btn_node: BaseButton):
 		tween.tween_property(btn_node, "scale", Vector2.ONE, 0.2)
 		
 		await get_tree().create_timer(0.5).timeout
+		
+		# ⚠️ CRITICAL FIX: Prevent crash if player exits mid-timer
+		if not is_inside_tree() or not is_game_active: return 
+		
 		btn_node.modulate = Color.WHITE
 		is_answering = false
 		_load_next_question()
@@ -323,6 +342,10 @@ func _check_answer(selected_text: String, btn_node: BaseButton):
 		tween.tween_property(btn_node, "rotation_degrees", 0.0, 0.05)
 		
 		await get_tree().create_timer(0.5).timeout
+		
+		# ⚠️ CRITICAL FIX: Prevent crash if player exits mid-timer
+		if not is_inside_tree() or not is_game_active: return
+		
 		btn_node.modulate = Color.WHITE
 		is_answering = false
 		_load_next_question()
@@ -356,7 +379,6 @@ func _open_question_list(group_id: String):
 		var data = questions[i]
 		var new_btn = template_btn.duplicate()
 		
-		# Now accurately checking the global system for unlocks!
 		var is_unlocked = QuizProgress.is_unlocked(data.get("id", ""))
 		
 		new_btn.visible = true

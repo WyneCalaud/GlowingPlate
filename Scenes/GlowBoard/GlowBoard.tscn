@@ -10,14 +10,13 @@
 [ext_resource type="Texture2D" uid="uid://de6tyysekcw3h" path="res://Assets/UI/GlowBoard/KeysUI.png" id="5_lh86r"]
 [ext_resource type="Texture2D" uid="uid://ba7worswg5dfs" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P4.png" id="5_phni6"]
 [ext_resource type="Texture2D" uid="uid://dkwg7ksxwm30f" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P5.png" id="6_20fw6"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="6_k3bx0"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="6_k3bx0"]
 [ext_resource type="Texture2D" uid="uid://ryu6th5fud2h" path="res://Assets/UI/GlowBoard/LeoCard.png" id="7_bwta1"]
 [ext_resource type="Texture2D" uid="uid://mjqgeuhws7iy" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P6.png" id="7_itx7g"]
 [ext_resource type="Texture2D" uid="uid://gvqouldsggx8" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P7.png" id="8_5pkxf"]
 [ext_resource type="Texture2D" uid="uid://5w5goee02mmo" path="res://Assets/UI/GlowBoard/InProgressButton.png" id="8_8ph0k"]
 [ext_resource type="Texture2D" uid="uid://d1eebnqnpg85m" path="res://Assets/UI/GlowBoard/MayaCard.png" id="9_q5kgl"]
 [ext_resource type="Texture2D" uid="uid://0psna4qlrj1k" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P8.png" id="9_qla0u"]
-[ext_resource type="Texture2D" uid="uid://5tveh22b30fa" path="res://Assets/UI/GlowBoard/AvailableButton.png" id="10_g0w47"]
 [ext_resource type="Texture2D" uid="uid://5fmdvmsxag0b" path="res://Assets/UI/GlowBoard/Leo/ACT2/LeoAct2P1.png" id="10_yxexw"]
 [ext_resource type="Texture2D" uid="uid://vurakskff3n2" path="res://Assets/UI/GlowBoard/NormaCard.png" id="11_m030s"]
 [ext_resource type="Texture2D" uid="uid://bs52pxln0o4mu" path="res://Assets/UI/GlowBoard/Leo/ACT2/LeoAct2P2.png" id="11_vs2j5"]
@@ -60,6 +59,7 @@
 [ext_resource type="Texture2D" uid="uid://df8lwrd3gqmb8" path="res://Assets/UI/GlowBoard/CharacterCards/GlowingMaya.png" id="41_y36uu"]
 [ext_resource type="Texture2D" uid="uid://2i5j3rd6k5d3" path="res://Assets/UI/GlowBoard/CharacterCards/BetterNorma.png" id="43_g6m08"]
 [ext_resource type="Texture2D" uid="uid://clby3ge8x5rjo" path="res://Assets/UI/GlowBoard/CharacterCards/GlowingNorma.png" id="44_h613u"]
+[ext_resource type="Texture2D" uid="uid://b4nrk6wg2cd2o" path="res://Assets/UI/GlowBoard/CompletedButton.png" id="46_qo4xq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u5tat"]
 font_size = 27
@@ -91,6 +91,9 @@ maya_glowing = ExtResource("41_y36uu")
 norma_dim = ExtResource("11_m030s")
 norma_better = ExtResource("43_g6m08")
 norma_glowing = ExtResource("44_h613u")
+progress_act1_tex = ExtResource("8_8ph0k")
+progress_act2_tex = ExtResource("8_8ph0k")
+progress_act3_tex = ExtResource("46_qo4xq")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 1
@@ -205,12 +208,11 @@ theme_override_constants/separation = 20
 layout_mode = 2
 texture_normal = ExtResource("7_bwta1")
 
-[node name="ProgressButton" type="TextureRect" parent="Layout1/CharacterCards/LeoCard"]
+[node name="ProgressButton" type="TextureButton" parent="Layout1/CharacterCards/LeoCard"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("8_8ph0k")
-stretch_mode = 2
+texture_normal = ExtResource("8_8ph0k")
 
 [node name="MayaCard" type="VBoxContainer" parent="Layout1/CharacterCards"]
 layout_mode = 2
@@ -220,11 +222,11 @@ theme_override_constants/separation = 20
 layout_mode = 2
 texture_normal = ExtResource("9_q5kgl")
 
-[node name="ProgressButton" type="TextureRect" parent="Layout1/CharacterCards/MayaCard"]
+[node name="ProgressButton" type="TextureButton" parent="Layout1/CharacterCards/MayaCard"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("10_g0w47")
+texture_normal = ExtResource("8_8ph0k")
 
 [node name="NormaCard" type="VBoxContainer" parent="Layout1/CharacterCards"]
 layout_mode = 2
@@ -234,11 +236,11 @@ theme_override_constants/separation = 20
 layout_mode = 2
 texture_normal = ExtResource("11_m030s")
 
-[node name="ProgressButton" type="TextureRect" parent="Layout1/CharacterCards/NormaCard"]
+[node name="ProgressButton" type="TextureButton" parent="Layout1/CharacterCards/NormaCard"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("10_g0w47")
+texture_normal = ExtResource("8_8ph0k")
 
 [node name="Layout2" type="Control" parent="."]
 visible = false

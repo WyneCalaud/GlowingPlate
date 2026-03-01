@@ -80,8 +80,7 @@ func _ready():
 	if current_quiz_set.is_empty():
 		question_label.text = "No questions due today!"
 		await get_tree().create_timer(2.0).timeout
-		QuizSystem.apply_quiz_results({"correct_count": 0, "bonus_money": 0})
-		queue_free()
+		finish_quiz() # Safe finish
 		return
 
 	MAX_QUESTIONS = min(current_quiz_set.size(), 3)
@@ -105,7 +104,7 @@ func _setup_menu_buttons():
 		
 	if settings_button:
 		settings_button.top_level = false
-		settings_button.show_behind_parent = true # FIX: Renders behind MenuButton without clipping behind the whole UI
+		settings_button.show_behind_parent = true
 		settings_button.z_index = 0
 		settings_button.position = Vector2.ZERO
 		settings_button.visible = false
@@ -114,7 +113,7 @@ func _setup_menu_buttons():
 		
 	if home_button:
 		home_button.top_level = false
-		home_button.show_behind_parent = true # FIX
+		home_button.show_behind_parent = true
 		home_button.z_index = 0
 		home_button.position = Vector2.ZERO
 		home_button.visible = false
@@ -151,18 +150,15 @@ func update_age_group_display():
 func _get_due_concept_questions():
 	current_quiz_set.clear()
 
-	# 1. Always fetch the base daily questions so the game progresses
 	var daily_questions = QuestionDatabase.get_questions_for_day(current_day)
 	current_quiz_set.append_array(daily_questions)
 
-	# 2. Add due SM-2 concepts
 	var due_concepts = QuizSystem.get_due_concepts(current_day, 2)
 	for concept in due_concepts:
 		var questions = QuestionDatabase.get_questions_by_concept(concept)
 		if questions.size() > 0:
 			questions.shuffle()
 			var q = questions[0]
-			# Prevent duplicates
 			var is_dup = false
 			for existing in current_quiz_set:
 				if existing["id"] == q["id"]: is_dup = true
@@ -196,25 +192,9 @@ func load_question():
 	image_display.visible = (image_display.texture != null)
 
 	var options = []
-
-	options.append({
-		"text": q_data.get("ans") if q_data.get("ans") != null else "",
-		"img": q_data.get("ans_img"),
-		"is_correct": true
-	})
-
-	options.append({
-		"text": q_data.get("wrong1") if q_data.get("wrong1") != null else "",
-		"img": q_data.get("wrong1_img"),
-		"is_correct": false
-	})
-
-	options.append({
-		"text": q_data.get("wrong2") if q_data.get("wrong2") != null else "",
-		"img": q_data.get("wrong2_img"),
-		"is_correct": false
-	})
-
+	options.append({"text": q_data.get("ans") if q_data.get("ans") != null else "", "img": q_data.get("ans_img"), "is_correct": true})
+	options.append({"text": q_data.get("wrong1") if q_data.get("wrong1") != null else "", "img": q_data.get("wrong1_img"), "is_correct": false})
+	options.append({"text": q_data.get("wrong2") if q_data.get("wrong2") != null else "", "img": q_data.get("wrong2_img"), "is_correct": false})
 	options.shuffle()
 
 	for i in range(answer_nodes.size()):
@@ -222,8 +202,7 @@ func load_question():
 		var btn = nodes.button
 		var opt = options[i]
 		
-		if opt.is_correct:
-			correct_button_index = i
+		if opt.is_correct: correct_button_index = i
 
 		btn.visible = true
 		btn.disabled = false
@@ -285,6 +264,9 @@ func _on_answer_button_pressed(button_index: int):
 		_animate_incorrect_feedback(button_index)
 
 	await get_tree().create_timer(1.8).timeout
+	
+	# ⚠️ CRITICAL FIX: Prevent crash if player exits mid-timer
+	if not is_inside_tree(): return 
 
 	result_label.visible = false
 	result_label.modulate.a = 1.0
@@ -299,66 +281,53 @@ func _on_answer_button_pressed(button_index: int):
 func _animate_correct_feedback(idx: int):
 	var btn = answer_nodes[idx].button
 	if not is_instance_valid(btn): return
-	
 	btn.pivot_offset = btn.size / 2
 	var tween = create_tween()
-	
 	tween.tween_property(btn, "scale", Vector2(1.15, 1.15), 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_property(btn, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 
 func _animate_incorrect_feedback(idx: int):
 	var btn = answer_nodes[idx].button
 	if not is_instance_valid(btn): return
-	
 	btn.pivot_offset = btn.size / 2
 	var shake_tween = create_tween()
-	
 	for i in range(4):
 		shake_tween.tween_property(btn, "rotation_degrees", 4.0, 0.04)
 		shake_tween.tween_property(btn, "rotation_degrees", -4.0, 0.04)
 	shake_tween.tween_property(btn, "rotation_degrees", 0.0, 0.04)
-	
 	var color_tween = create_tween()
 	btn.modulate = Color(2.5, 0.5, 0.5)
 	color_tween.tween_property(btn, "modulate", Color.RED, 0.3)
 
 # ==========================================================
-# MENU, ALMANAC & PAUSE LOGIC
+# MENU LOGIC
 # ==========================================================
 
 func _on_menu_button_pressed():
 	if not settings_button or not home_button: return
 	
 	is_menu_open = !is_menu_open
-	
-	if menu_tween and menu_tween.is_valid():
-		menu_tween.kill()
-		
+	if menu_tween and menu_tween.is_valid(): menu_tween.kill()
 	menu_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	
 	if is_menu_open:
 		if pause_layer: pause_layer.visible = true
-		
 		if settings_button:
 			settings_button.visible = true
 			settings_button.mouse_filter = Control.MOUSE_FILTER_STOP
 			menu_tween.tween_property(settings_button, "position:y", BUTTON_SPACING, ANIM_DURATION)
 			menu_tween.tween_property(settings_button, "modulate:a", 1.0, ANIM_DURATION)
-		
 		if home_button:
 			home_button.visible = true
 			home_button.mouse_filter = Control.MOUSE_FILTER_STOP
 			menu_tween.tween_property(home_button, "position:y", BUTTON_SPACING * 2, ANIM_DURATION).set_delay(0.05)
 			menu_tween.tween_property(home_button, "modulate:a", 1.0, ANIM_DURATION).set_delay(0.05)
-			
 	else:
 		if pause_layer: pause_layer.visible = false
-		
 		if settings_button:
 			settings_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			menu_tween.tween_property(settings_button, "position:y", 0.0, ANIM_DURATION)
 			menu_tween.tween_property(settings_button, "modulate:a", 0.0, ANIM_DURATION)
-		
 		if home_button:
 			home_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			menu_tween.tween_property(home_button, "position:y", 0.0, ANIM_DURATION)
@@ -374,23 +343,16 @@ func _on_menu_button_pressed():
 # ==========================================================
 
 func finish_quiz():
-
 	var reward_money = total_correct_answers * 50
 
-	var quiz_results = {
-		"correct_count": total_correct_answers,
-		"bonus_money": reward_money
-	}
-
 	if has_node("/root/QuizSystem"):
-		QuizSystem.apply_quiz_results(quiz_results)
+		QuizSystem.apply_quiz_results({}) # Update concepts in system
 
 	if game_data:
 		game_data.add_money(reward_money)
+		game_data.daily_money_earned += reward_money # Manually update daily tracker
 		game_data.save_game()
 
-	# ✅ VERY IMPORTANT
-	# Change scene using deferred call
 	call_deferred("_continue_after_quiz")
 
 func _continue_after_quiz():
