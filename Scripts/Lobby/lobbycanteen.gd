@@ -167,7 +167,6 @@ func _on_principal_confirm():
 	start_real_day()
 
 func _on_principal_leave_pressed() -> void:
-	
 	principal_leave_btn.hide()
 	dialogue_box.hide()
 
@@ -284,13 +283,24 @@ func _get_item_texture(entry: Dictionary) -> Texture2D:
 
 	var count: int = int(entry.get("count", 1))
 
-	# --- Veggie Cup Handling ---
-	if portion == "VeggieFull":
-		var veg_tex = res.get("veggie_plated_full")
+	# --- Veggie Cup Handling (FIXED FOR LOW/MED/HIGH/FULL) ---
+	if portion == "VeggieLow":
+		var veg_tex = res.get("veggie_plated_low")
 		if veg_tex:
 			return veg_tex
+
+	elif portion == "VeggieMed":
+		var veg_tex = res.get("veggie_plated_med")
+		if veg_tex:
+			return veg_tex
+
 	elif portion == "VeggieHigh":
 		var veg_tex = res.get("veggie_plated_high")
+		if veg_tex:
+			return veg_tex
+
+	elif portion == "VeggieFull":
+		var veg_tex = res.get("veggie_plated_full")
 		if veg_tex:
 			return veg_tex
 
@@ -936,3 +946,9 @@ func spawn_next_customer():
 	GD.service_state = GameData.ServiceState.CUSTOMER_PRESENT
 
 	customer_manager.spawn_customer(order, tex)
+
+func _on_btn_accept_pressed() -> void:
+	pass # Replace with function body.
+
+func _on_btn_continue_pressed() -> void:
+	pass # Replace with function body.

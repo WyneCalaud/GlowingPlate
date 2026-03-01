@@ -7,11 +7,11 @@ extends Control
 @onready var go_icon = $Content/GoRow/GoIcon1
 @onready var go_icon_2 = $Content/GoRow/GoIcon2
 @onready var grow_icon = $Content/GrowRow/GrowIcon1
-@onready var grow_icon_2 = $Content/GoRow/GoIcon2
+@onready var grow_icon_2 = $Content/GrowRow/GrowIcon1
 @onready var veg_icon = $Content/GlowVegRow/GlowVegIcon1
 @onready var veg_icon_2 = $Content/GlowVegRow/GlowVegIcon2
 @onready var fru_icon = $Content/GlowFruRow/GlowFruIcon1
-@onready var fru_icon_2 = $Content/GlowVegRow/GlowVegIcon2
+@onready var fru_icon_2 = $Content/GlowFruRow/GlowFruIcon2
 @onready var water_icon = $Content/BeverageRow/WaterIcon
 @onready var milk_icon = $Content/BeverageRow/MilkIcon
 
@@ -82,7 +82,25 @@ func set_order_display(customer_order: CustomerOrder):
 	if plate["Go"] == "ANY":
 		go_icon.texture = preload("res://Assets/Ticket/ANY GO FOOD.png")
 	else:
-		go_icon.texture = db[plate["Go"]].default_plated_texture
+		var go_key = plate["Go"]
+
+		match go_key:
+
+			# Rice types use default plated texture
+			"RICE", "BROWN_RICE":
+				go_icon.texture = db[go_key].default_plated_texture
+
+			# Pandesal uses count texture
+			"PANDESAL":
+				go_icon.texture = db[go_key].texture_count_1
+
+		# Corn uses veggie plated high
+			"CORN":
+				go_icon.texture = db[go_key].veggie_plated_high
+
+			_:
+				# fallback safety
+				go_icon.texture = db[go_key].default_plated_texture
 
 	# GROW
 	if plate["Grow"] == "ANY":

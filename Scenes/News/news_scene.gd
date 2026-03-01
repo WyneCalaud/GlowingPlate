@@ -405,13 +405,10 @@ func _end_news():
 	plate.show()
 	gns.show()
 
-	# Play news outro sting
 	news_intro_sfx.play()
 
-	# Small dramatic pause
 	await get_tree().create_timer(1.0).timeout
 
-	# Optional: small bounce in place for plate & logo
 	var bounce_tween = create_tween().set_parallel(true)
 
 	bounce_tween.tween_property(plate, "scale", Vector2(1.1, 1.1), 0.15)
@@ -422,7 +419,6 @@ func _end_news():
 
 	await bounce_tween.finished
 
-	# Fade everything to black
 	var fade = create_tween()
 
 	fade.tween_property($Background, "modulate:a", 0.0, 0.6)
@@ -430,6 +426,11 @@ func _end_news():
 	fade.tween_property(gns, "modulate:a", 0.0, 0.6)
 
 	await fade.finished
+
+	# 🔥 IMPORTANT FIX
+	var GD = get_node("/root/GameData")
+	GD.current_phase = GD.GamePhase.LOBBY
+	GD.save_game()
 
 	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 	

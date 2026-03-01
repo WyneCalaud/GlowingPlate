@@ -13,6 +13,8 @@ var money: int = 900
 var keys: int = 60  
 
 var matching_tutorial_completed: bool = false
+var intro_completed: bool = false
+
 
 const SAVE_PATH := "user://save_data.json"
 var shown_food_intros := {}
@@ -183,7 +185,7 @@ func finalize_service(day_result: Dictionary):
 
 	# ⭐ Only give special bonus if order was correct
 	if is_correct and special_char in ["Leo","Maya","Norma"]:
-		keys_won += 5
+		keys_won += 10
 
 	keys += keys_won
 	daily_keys_earned += keys_won
@@ -203,7 +205,6 @@ func finalize_service(day_result: Dictionary):
 		current_day += 1
 		transition_to_end_day()
 	
-	save_game()
 
 # --- WRAPPERS & TRANSITIONS ---
 func store_plate_contents(contents: Array): OrderSystem.prepared_plate_contents = contents
@@ -269,6 +270,8 @@ func start_next_day_flow():
 		return
 
 	# ALWAYS go to MiniGame first
+	current_phase = GamePhase.MATCHING
+	save_game()
 	get_tree().change_scene_to_file("res://Scenes/MiniGame/matching_game.tscn")
 
 
@@ -293,7 +296,8 @@ func save_game():
 		"quiz_question_progress": quiz_question_progress,
 		"quiz_concept_progress": quiz_concept_progress,
 		"current_phase": current_phase,
-		"special_intro_shown": special_intro_shown
+		"special_intro_shown": special_intro_shown,
+		"intro_completed": intro_completed
 	}
 
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -335,9 +339,33 @@ func load_game():
 	purchased_upgrades = data.get("purchased_upgrades", {})
 	special_intro_shown = data.get("special_intro_shown", {})
 	current_phase = data.get("current_phase", GamePhase.LOBBY)
+	intro_completed = data.get("intro_completed", false)
 	
 	# --- Load Quiz Data ---
 	quiz_question_progress = data.get("quiz_question_progress", {})
 	quiz_concept_progress = data.get("quiz_concept_progress", {})
 
 	print("Game Loaded.")
+
+func reset_day_state():
+	
+	# Reset day service flow
+	day_started = false
+	service_state = ServiceState.IDLE
+	remaining_customers.clear()
+
+	# Clear active customer
+	clear_customer()
+
+	# Reset patience
+	customer_patience = 100.0
+	patience_running = false
+	
+	# Clear prepared items
+	OrderSystem.clear_prepared_data()
+
+	# Save clean state
+	current_phase = GamePhase.LOBBY
+	save_game()
+
+	print("Day state reset complete.")

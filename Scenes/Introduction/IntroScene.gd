@@ -124,7 +124,12 @@ func show_step():
 			_set_next_btn("Alright")
 		9:
 			dialogue_text.text = "Ready to start your first day?"
-			_setup_choices("I'm ready!", "I'm nervous...")
+			btn_next.hide()
+			btn_choice1.show()
+			btn_choice2.show()
+			btn_choice1_label.text = "I'm ready!"
+			btn_choice2_label.text = "I'm nervous."
+
 		10:
 			dialogue_text.text = "Don’t worry, I know you will do great, %s!" % player_name
 			_set_next_btn("Thanks!")
@@ -171,7 +176,10 @@ func _on_btn_next_pressed() -> void:
 		return
 
 	if step == 16 and current_character == "jenna":
-		_finish_intro_and_load_canteen()
+		GameData.intro_completed = true
+		GameData.current_phase = GameData.GamePhase.LOBBY
+		GameData.save_game()
+		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 		return
 
 	step += 1
@@ -186,10 +194,12 @@ func _on_btn_choice_1_pressed() -> void:
 		return
 	elif current_character == "jenna":
 		if step == 15:
-			_finish_intro_and_load_canteen()
+			GameData.intro_completed = true
+			GameData.current_phase = GameData.GamePhase.LOBBY
+			GameData.save_game()
+			get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 			return
 		step = 14
-
 	show_step()
 
 func _on_btn_choice_2_pressed() -> void:
