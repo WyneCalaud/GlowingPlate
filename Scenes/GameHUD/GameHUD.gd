@@ -39,6 +39,13 @@ extends CanvasLayer
 @onready var sixtonine: TextureRect = $"HUDControl/TopBarLeft/HBoxContainer/AgeGroup/6-9"
 @onready var tentotwelve: TextureRect = $"HUDControl/TopBarLeft/HBoxContainer/AgeGroup/10-12"
 
+#Confirm
+@onready var home_dim: TextureRect = $HomeDim
+@onready var home_popup: TextureRect = $HomePopup
+@onready var home_confirm: TextureButton = $HomePopup/HomeConfirm
+@onready var home_cancel: TextureButton = $HomePopup/HomeCancel
+
+
 const WEEK_DAYS := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
 # --- ANIMATION SETTINGS ---
@@ -141,7 +148,8 @@ func _connect_signals():
 
 	safe_connect.call(menu_button, "pressed", _on_menu_button_pressed)
 	safe_connect.call(settings_button, "pressed", _on_settings_pressed)
-	safe_connect.call(home_button, "pressed", _on_home_pressed)
+	safe_connect.call(home_confirm, "pressed", _on_home_confirm_pressed)
+	safe_connect.call(home_cancel, "pressed", _on_home_cancel_pressed)
 	
 	if finish_button: safe_connect.call(finish_button, "pressed", _on_finish_button_pressed)
 	
@@ -154,6 +162,7 @@ func _connect_signals():
 		safe_connect.call(sfx_mute_button, "toggled", _on_sfx_mute_toggled)
 	if music_slider: safe_connect.call(music_slider, "value_changed", _on_music_volume_changed)
 	if sfx_slider: safe_connect.call(sfx_slider, "value_changed", _on_sfx_volume_changed)
+	
 
 
 # --- REFRESH LOGIC ---
@@ -243,8 +252,16 @@ func _on_sfx_volume_changed(value: float):
 	if bus_idx != -1: AudioServer.set_bus_volume_db(bus_idx, linear_to_db(value))
 
 func _on_home_pressed():
-	get_tree().paused = false 
-	get_tree().call_deferred("change_scene_to_file", MAIN_MENU_PATH)
+	# Close dropdown menu
+	if is_menu_open:
+		_on_menu_button_pressed()
+
+	# Show confirmation popup
+	home_dim.visible = true
+	home_popup.visible = true
+
+	home_dim.mouse_filter = Control.MOUSE_FILTER_STOP
+	home_popup.mouse_filter = Control.MOUSE_FILTER_STOP
 
 func _on_finish_button_pressed():
 	progress_label.show()
@@ -415,3 +432,25 @@ func _update_face():
 		sad_face.show()
 	else:
 		angry_face.show()
+
+
+func _on_home_cancel_pressed():
+	home_dim.visible = false
+	home_popup.visible = false
+
+func _on_home_confirm_pressed():
+
+	var GD = get_node("/root/GameData")
+
+	# Reset everything properly
+	GD.reset_day_state()
+
+	# Hide popup
+	home_dim.visible = false
+	home_popup.visible = false
+
+	# Make sure game isn't paused
+	get_tree().paused = false
+
+	# Go to main menu
+	get_tree().change_scene_to_file(MAIN_MENU_PATH)

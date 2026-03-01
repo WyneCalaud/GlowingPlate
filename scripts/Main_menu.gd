@@ -112,19 +112,30 @@ func _on_exit_pressed() -> void:
 
 func _on_fade_timer_timeout() -> void:
 	if button_type == "start":
-		# --- SAVE STATE DETECTION / ROUTING ---
-		if FileAccess.file_exists("user://save_data.json"):
-			# Player has played before, load right into the canteen!
-			print("Save found! Resuming game...")
-			get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
-		else:
-			# Brand new player, play the Intro Scene!
-			print("No save found. Starting New Game / Intro...")
-			if intro_scene_path != "":
-				get_tree().change_scene_to_file(intro_scene_path)
-			else:
-				printerr("Intro scene path is empty! Please assign it in the inspector.")
-				get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn") # Fallback
+
+		var GD = get_node("/root/GameData")
+
+		# 👇 NEW GAME → SHOW INTRO ONLY ONCE
+		if not GD.intro_completed and GD.current_day == 1:
+			get_tree().change_scene_to_file("res://Scenes/Introduction/intro_scene.tscn")
+			return
+
+		match GD.current_phase:
+
+			GD.GamePhase.END_DAY:
+				get_tree().change_scene_to_file(GD.END_DAY_SCENE_PATH)
+
+			GD.GamePhase.QUIZ:
+				get_tree().change_scene_to_file(GD.QUIZ_SCENE_PATH)
+
+			GD.GamePhase.MATCHING:
+				get_tree().change_scene_to_file("res://Scenes/MiniGame/matching_game.tscn")
+
+			GD.GamePhase.NEWS:
+				get_tree().change_scene_to_file("res://Scenes/News/news_scene.tscn")
+
+			_:
+				get_tree().change_scene_to_file(GD.LOBBY_CANTEEN_PATH)
 
 func _on_settings_button_pressed() -> void:
 	if sound_control:
