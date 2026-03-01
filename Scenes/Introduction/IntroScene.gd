@@ -1,7 +1,14 @@
 extends Control
 
+@export_group("Animation Speeds")
+@export var principal_enter_speed: float = 2.0  # (Was 3.5) Time for Principal to slide in
+@export var principal_exit_speed: float = 0.3   # (Was 0.4) Time for Principal to slide out
+@export var jenna_enter_speed: float = 1.2      # (Was 2.0) Time for Jenna to slide in
+@export var transition_delay: float = 0.5       # (Was 1.0) Wait time between Principal leaving and Jenna spawning
+
 var step := 0
 var player_name := ""
+var is_transitioning := false # NEW: Prevents spam-clicking from breaking the intro
 
 # --- SAFELY FETCH NODES ---
 @onready var dialogue_box = get_node_or_null("DialogueBox")
@@ -21,9 +28,16 @@ var player_name := ""
 @onready var background = get_node_or_null("Background")
 
 var current_character := "principal"
-var active_tween: Tween # Keeps track of running animations to prevent crash on scene exit
+var active_tween: Tween 
 
 func _ready() -> void:
+	# ⭐ TDR MONITOR FREEZE PROTECTION
+	# If these are TextureRects with Keep Aspect Centered, a 0x0 size will crash the GPU!
+	if is_instance_valid(principal) and principal is Control:
+		if principal.size.x <= 1 or principal.size.y <= 1: principal.size = Vector2(300, 500)
+	if is_instance_valid(jenna) and jenna is Control:
+		if jenna.size.x <= 1 or jenna.size.y <= 1: jenna.size = Vector2(300, 500)
+
 	# Safely hide elements to start
 	if is_instance_valid(dialogue_box): dialogue_box.hide()
 	if is_instance_valid(background): background.hide()
@@ -31,12 +45,10 @@ func _ready() -> void:
 	if is_instance_valid(jenna): jenna.hide()
 	if is_instance_valid(dim_background): dim_background.hide()
 
-	# Set overlay to pure black so the transition from the Main Menu is completely seamless
 	if is_instance_valid(fade_overlay):
 		fade_overlay.show()
 		fade_overlay.modulate.a = 1.0
 
-	# Delay the intro start slightly to ensure the engine has rendered the black screen
 	call_deferred("_start_intro_sequence")
 
 func _start_intro_sequence() -> void:
@@ -46,28 +58,26 @@ func _start_intro_sequence() -> void:
 	var final_pos = Vector2.ZERO
 	if is_instance_valid(principal):
 		final_pos = principal.position
-		principal.position.x += 700 # Move off-screen to the right
+		principal.position.x += 700 
 
 	_kill_active_tween()
-	active_tween = create_tween()
-	# Run fading and sliding at the same time
+	# ⭐ CRASH FIX: bind_node(self) ensures the tween dies INSTANTLY if the scene changes
+	active_tween = create_tween().bind_node(self)
 	active_tween.set_parallel(true)
 
-	# 1. Fade the black overlay away
 	if is_instance_valid(fade_overlay):
 		active_tween.tween_property(fade_overlay, "modulate:a", 0.0, 0.6)
 
-	# 2. Slide the principal in
 	if is_instance_valid(principal):
 		active_tween.tween_property(
 			principal,
 			"position",
 			final_pos,
-			3.5
+			principal_enter_speed # <--- Changed to Export Variable
 		).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 
-	# Run this when ALL parallel animations are completely done
 	active_tween.chain().tween_callback(func():
+		if not is_inside_tree(): return # Safey check
 		if is_instance_valid(fade_overlay): fade_overlay.hide()
 		if is_instance_valid(dialogue_box): dialogue_box.show()
 		show_step()
@@ -78,7 +88,7 @@ func _start_intro_sequence() -> void:
 # ===================================================
 
 func show_step():
-	if not is_instance_valid(dialogue_text): return # Safety abort
+	if not is_instance_valid(dialogue_text): return 
 	
 	if is_instance_valid(btn_next): btn_next.show()
 	if is_instance_valid(btn_choice1): btn_choice1.hide()
@@ -86,7 +96,6 @@ func show_step():
 	if is_instance_valid(name_popup): name_popup.hide()
 
 	match step:
-		# ===== NEW INTRO DIALOGUES =====
 		0:
 			dialogue_text.text = "Wow! The canteen looks so much better now."
 			_set_next_btn("Next")
@@ -145,7 +154,6 @@ func show_step():
 			dialogue_text.text = "Give me rice, chicken, sitaw, and mango. My water is cold. And don’t forget my milk please."
 			_set_next_btn("Next")
 
-# Helpers for cleaner dialogue code
 func _set_next_btn(txt: String):
 	if is_instance_valid(btn_next_label): btn_next_label.text = txt
 
@@ -161,12 +169,12 @@ func _setup_choices(txt1: String, txt2: String):
 # ===================================================
 
 func _on_btn_next_pressed() -> void:
-	# --- PRINCIPAL END ---
+	if is_transitioning: return # Prevent spam click issues
+
 	if step == 11 and current_character == "principal":
 		principal_exit_and_spawn_jenna()
 		return
 
-	# --- JENNA FINAL STEP ---
 	if step == 16 and current_character == "jenna":
 		GameData.intro_completed = true
 		GameData.current_phase = GameData.GamePhase.LOBBY
@@ -178,6 +186,8 @@ func _on_btn_next_pressed() -> void:
 	show_step()
 
 func _on_btn_choice_1_pressed() -> void:
+	if is_transitioning: return
+	
 	if current_character == "principal":
 		step = 11
 		show_step()
@@ -193,6 +203,8 @@ func _on_btn_choice_1_pressed() -> void:
 	show_step()
 
 func _on_btn_choice_2_pressed() -> void:
+	if is_transitioning: return
+	
 	if current_character == "principal":
 		step = 10
 	elif current_character == "jenna":
@@ -205,7 +217,9 @@ func _on_btn_choice_2_pressed() -> void:
 	show_step()
 
 func _finish_intro_and_load_canteen():
-	_kill_active_tween() # Prevent animations from running on a deleted scene
+	is_transitioning = true
+	_kill_active_tween() 
+	
 	var err = get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 	if err != OK:
 		printerr("Failed to load Canteen scene from Intro! Error Code: ", err)
@@ -226,11 +240,10 @@ func show_name_input():
 func _on_confirmbutton_pressed() -> void:
 	if not is_instance_valid(line_edit): return
 	
-	player_name = line_edit.text.strip_edges() # Prevents names that are just empty spaces
+	player_name = line_edit.text.strip_edges() 
 	if player_name == "":
 		return
 
-	# Safety check to ensure GameData AutoLoad exists
 	if has_node("/root/GameData"):
 		GameData.player_name = player_name
 		GameData.save_game()
@@ -249,36 +262,38 @@ func _on_confirmbutton_pressed() -> void:
 # ===================================================
 
 func principal_exit_and_spawn_jenna():
+	is_transitioning = true # Lock inputs
+	
 	if not is_instance_valid(principal): 
 		spawn_jenna()
 		return
 
 	_kill_active_tween()
-	active_tween = create_tween()
+	active_tween = create_tween().bind_node(self)
 	
 	var exit_pos = principal.position
 	exit_pos.x += 700
 
-	active_tween.tween_property(
-		principal,
-		"position",
-		exit_pos,
-		0.9
-	).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
-
-	active_tween.finished.connect(func():
+	# ⭐ CRASH FIX: Using tween_callback instead of .finished.connect guarantees 
+	# that the tween safely unloads without dangling signal calls.
+	active_tween.tween_property(principal, "position", exit_pos, principal_exit_speed).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
+	
+	active_tween.tween_callback(func():
 		if is_instance_valid(principal): principal.hide()
-		
-		# Safe wait timer
-		var wait_tween = create_tween()
-		wait_tween.tween_interval(1.0)
-		wait_tween.finished.connect(spawn_jenna)
+	)
+	
+	# Incorporating the "wait_tween" directly into the active tween chain
+	active_tween.tween_interval(transition_delay) # <--- Changed to Export Variable
+	
+	active_tween.tween_callback(func():
+		if is_inside_tree(): spawn_jenna()
 	)
 
 func spawn_jenna():
 	current_character = "jenna"
 	
 	if not is_instance_valid(jenna):
+		is_transitioning = false
 		step = 12
 		show_step()
 		return
@@ -288,29 +303,23 @@ func spawn_jenna():
 	jenna.position.x += 700
 
 	_kill_active_tween()
-	active_tween = create_tween()
+	active_tween = create_tween().bind_node(self)
 
-	active_tween.tween_property(
-		jenna,
-		"position",
-		final_pos,
-		2.0
-	).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	active_tween.tween_property(jenna, "position", final_pos, jenna_enter_speed).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT) # <--- Changed to Export Variable
 
-	active_tween.finished.connect(func():
-		step = 12
-		show_step()
+	active_tween.tween_callback(func():
+		if is_inside_tree():
+			is_transitioning = false # Unlock inputs
+			step = 12
+			show_step()
 	)
 
 # ===================================================
 # UTILITIES
 # ===================================================
 func _kill_active_tween():
-	# Safely destroys the active animation if there is one. 
-	# This prevents Godot from crashing if a scene is changed mid-animation.
 	if active_tween and active_tween.is_valid():
 		active_tween.kill()
 
 func _exit_tree() -> void:
-	# Last safety net: If the scene is destroyed, kill animations
 	_kill_active_tween()

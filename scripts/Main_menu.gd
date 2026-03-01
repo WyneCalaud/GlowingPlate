@@ -54,7 +54,7 @@ func _ready():
 
 func _safe_fade_reveal(delay: float):
 	if active_tween: active_tween.kill()
-	active_tween = create_tween()
+	active_tween = create_tween().bind_node(self)
 	active_tween.tween_interval(delay)
 	active_tween.tween_property(anti_flash_overlay, "modulate:a", 0.0, 0.4)
 	active_tween.tween_callback(func():
@@ -82,10 +82,27 @@ func _on_video_finished() -> void:
 func _hide_menu_ui():
 	if background: background.hide()
 	if start_button: start_button.hide()
+	if btn_settings: btn_settings.hide()
 
 func _show_menu_ui():
 	if background: background.show()
-	if start_button: start_button.show()
+
+	# --- 🟢 NEW: BOUNCY POP-OUT ANIMATION ---
+	var pop_tween = create_tween().bind_node(self).set_parallel(true).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	
+	if is_instance_valid(start_button):
+		start_button.show()
+		# Center the pivot so it scales out from the middle instead of the top-left
+		start_button.pivot_offset = start_button.size / 2
+		start_button.scale = Vector2.ZERO
+		pop_tween.tween_property(start_button, "scale", Vector2.ONE, 0.8)
+		
+	if is_instance_valid(btn_settings):
+		btn_settings.show()
+		btn_settings.pivot_offset = btn_settings.size / 2
+		btn_settings.scale = Vector2.ZERO
+		# Delay the settings button by 0.15s for a nice cascading 1-2 sequence
+		pop_tween.tween_property(btn_settings, "scale", Vector2.ONE, 0.8).set_delay(0.15)
 
 # --- Transition Logic ---
 func _on_start_pressed() -> void:
@@ -94,50 +111,59 @@ func _on_start_pressed() -> void:
 	_play_transition_animation()
 
 func _on_settings_pressed() -> void:
-	if button_type != null: return
-	button_type = "options"
-	_play_transition_animation()
-
-func _play_transition_animation():
-	var trans = get_node_or_null("fade_transition")
-	if trans:
-		trans.show()
-		var anim = trans.get_node_or_null("AnimationPlayer")
-		var timer = trans.get_node_or_null("Fade_timer")
-		if anim: anim.play("Fade_In")
-		if timer: timer.start()
-
-func _on_exit_pressed() -> void:
-	get_tree().quit()
-
-func _on_fade_timer_timeout() -> void:
-	if button_type == "start":
-
-		var GD = get_node("/root/GameData")
-
-		# 👇 NEW GAME → SHOW INTRO ONLY ONCE
-		if not GD.intro_completed and GD.current_day == 1:
-			get_tree().change_scene_to_file("res://Scenes/Introduction/intro_scene.tscn")
-			return
-
-		match GD.current_phase:
-
-			GD.GamePhase.END_DAY:
-				get_tree().change_scene_to_file(GD.END_DAY_SCENE_PATH)
-
-			GD.GamePhase.QUIZ:
-				get_tree().change_scene_to_file(GD.QUIZ_SCENE_PATH)
-
-			GD.GamePhase.MATCHING:
-				get_tree().change_scene_to_file("res://Scenes/MiniGame/matching_game.tscn")
-
-			GD.GamePhase.NEWS:
-				get_tree().change_scene_to_file("res://Scenes/News/news_scene.tscn")
-
-			_:
-				get_tree().change_scene_to_file(GD.LOBBY_CANTEEN_PATH)
+	# Fixed bug where clicking settings caused a black screen
+	_on_settings_button_pressed()
 
 func _on_settings_button_pressed() -> void:
 	if sound_control:
 		sound_control.visible = true
 		sound_control.move_to_front()
+		
+		# Optional: Give the settings panel a tiny pop animation too!
+		sound_control.scale = Vector2(0.8, 0.8)
+		sound_control.pivot_offset = sound_control.size / 2
+		var panel_tween = create_tween().bind_node(self).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		panel_tween.tween_property(sound_control, "scale", Vector2.ONE, 0.3)
+
+func _play_transition_animation():
+	# --- 🟢 NEW: SMOOTH PROGRAMMATIC LONG FADE ---
+	# This generates a pure-code fade out that guarantees a smooth 1.5-second 
+	# transition without relying on AnimationPlayer nodes.
+	var fade_canvas = CanvasLayer.new()
+	fade_canvas.layer = 150 # Absolute topmost layer
+	add_child(fade_canvas)
+	
+	var fade_rect = ColorRect.new()
+	fade_rect.color = Color(0, 0, 0, 0) # Start fully transparent
+	fade_rect.set_anchors_preset(PRESET_FULL_RECT)
+	fade_rect.mouse_filter = Control.MOUSE_FILTER_STOP # Blocks all clicking while fading
+	fade_canvas.add_child(fade_rect)
+	
+	# Tween the screen to pure black over 1.5 seconds (slower & smoother)
+	var fade_tween = create_tween().bind_node(self)
+	fade_tween.tween_property(fade_rect, "color:a", 1.0, 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+	# Once it goes black, load the next scene!
+	fade_tween.tween_callback(_execute_scene_change)
+
+func _execute_scene_change() -> void:
+	if button_type == "start":
+		# --- SAVE STATE DETECTION / ROUTING ---
+		if FileAccess.file_exists("user://save_data.json"):
+			print("Save found! Resuming game...")
+			get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+		else:
+			print("No save found. Starting New Game / Intro...")
+			if intro_scene_path != "":
+				get_tree().change_scene_to_file(intro_scene_path)
+			else:
+				printerr("Intro scene path is empty! Please assign it in the inspector.")
+				get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+
+func _on_exit_pressed() -> void:
+	get_tree().quit()
+
+# Note: We leave this function here just in case the Timer node in the Editor 
+# is still connected to it, preventing Godot from throwing a missing function error.
+func _on_fade_timer_timeout() -> void:
+	pass
