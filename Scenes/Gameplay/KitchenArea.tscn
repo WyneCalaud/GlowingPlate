@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene load_steps=66 format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/KitchenArea.gd" id="1_k5enx"]
 [ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="2_i7i4q"]
@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bbq0o6jx72x3g" path="res://Assets/UI/RiceUI/OpenedWhiteRiceCooker.png" id="10_hkpja"]
 [ext_resource type="Texture2D" uid="uid://b33i1545pes2b" path="res://Assets/UI/RiceUI/WhiteRiceCooker.png" id="10_kcelb"]
 [ext_resource type="Texture2D" uid="uid://cctxefwqjikcf" path="res://Assets/UI/RiceUI/BrownRiceCooker.png" id="10_nflrw"]
-[ext_resource type="Texture2D" uid="uid://che6ynbuf2ps" path="res://Assets/UI/RiceUI/OpenBrownRiceCooker.png" id="11_hkpja"]
+[ext_resource type="Texture2D" uid="uid://oi7gamnoolue" path="res://Assets/UI/KitchenUI/OpenBrownRiceCooker.png" id="12_n7sx4"]
 [ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="12_vfpnn"]
 [ext_resource type="Texture2D" uid="uid://cecdbgmapkd34" path="res://Assets/UI/RiceUI/WhiteRiceScoopLow.png" id="15_n7sx4"]
 [ext_resource type="Texture2D" uid="uid://wdsw0bcd4j3m" path="res://Assets/UI/RiceUI/WhiteRiceRightSizeCup.png" id="16_i7i4q"]
@@ -27,7 +27,6 @@
 [ext_resource type="Texture2D" uid="uid://b1b74g4ux5tok" path="res://Assets/Foods/Fish.png" id="21_7cwab"]
 [ext_resource type="Texture2D" uid="uid://5a1hi55th8wc" path="res://Assets/UI/RiceUI/BrownRiceScoopMed.png" id="21_s6luy"]
 [ext_resource type="Resource" uid="uid://d2mntq5kbevox" path="res://Data/Food/Grow/FishFillet.tres" id="22_jgock"]
-[ext_resource type="Texture2D" uid="uid://1ecw6i3ykpw6" path="res://Assets/Foods/Corns.png" id="23_aa47t"]
 [ext_resource type="Texture2D" uid="uid://bk61mm7lwlarj" path="res://Assets/UI/RiceUI/RiceScoopTooHigh.png" id="23_yao3w"]
 [ext_resource type="Resource" uid="uid://bvv4bih206vxi" path="res://Data/Food/Go/Corn.tres" id="24_k5enx"]
 [ext_resource type="Resource" uid="uid://cttvp1r0jqjpr" path="res://Data/Food/Go/BrownRice.tres" id="24_u5w8p"]
@@ -37,6 +36,7 @@
 [ext_resource type="Texture2D" uid="uid://buv78pvmno0i" path="res://Assets/Foods/Tofu.png" id="27_mk63l"]
 [ext_resource type="Resource" uid="uid://5e2miiomgtir" path="res://Data/Food/Go/Eggs.tres" id="28_qtmfp"]
 [ext_resource type="Texture2D" uid="uid://bhh7nh2jclxoe" path="res://Assets/Foods/Eggs.png" id="29_to81c"]
+[ext_resource type="Texture2D" uid="uid://dny8dryaah4m6" path="res://Assets/UI/GlowBoard/CharacterCards/Corn 1.png" id="30_n7sx4"]
 [ext_resource type="Texture2D" uid="uid://comko1qjr5kgl" path="res://Assets/Foods/Sitaw.png" id="31_sno60"]
 [ext_resource type="Resource" uid="uid://b620n7sw6261m" path="res://Data/Food/GlowVeg/Sitaw.tres" id="32_i7i4q"]
 [ext_resource type="Texture2D" uid="uid://cbwbsxmrxvjft" path="res://Assets/Foods/Pumpkins.png" id="33_618ji"]
@@ -63,11 +63,15 @@
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="54_nf282"]
 [ext_resource type="PackedScene" uid="uid://b0kfb415lxkpn" path="res://Scenes/Tutorial/FoodIntroOverlay.tscn" id="55_oxc20"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_n7sx4"]
+atlas = ExtResource("4_oxc20")
+region = Rect2(167, 178, 691, 665)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhl0g"]
-radius = 151.08276
+radius = 146.03082
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nflrw"]
-radius = 42.047592
+radius = 51.0392
 
 [node name="KitchenArea" type="Node2D"]
 script = ExtResource("1_k5enx")
@@ -92,13 +96,21 @@ metadata/_edit_use_anchors_ = true
 [node name="BeveragesStation" parent="." instance=ExtResource("3_i7i4q")]
 position = Vector2(1279, 1)
 
-[node name="Mat" type="Node2D" parent="."]
-position = Vector2(40, 0)
+[node name="Mat" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 40.0
+offset_right = 40.0
 
-[node name="PlateBorder" type="Sprite2D" parent="Mat"]
-position = Vector2(502.00003, 523.00006)
-scale = Vector2(0.51, 0.51)
-texture = ExtResource("4_oxc20")
+[node name="PlateBorder" type="TextureRect" parent="Mat"]
+layout_mode = 0
+offset_left = 325.0
+offset_top = 349.00003
+offset_right = 1016.0
+offset_bottom = 1014.0
+scale = Vector2(0.51, 0.49035153)
+texture = SubResource("AtlasTexture_n7sx4")
+stretch_mode = 2
 
 [node name="Plate" type="Node2D" parent="."]
 position = Vector2(40, 0)
@@ -116,7 +128,7 @@ collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plate/FoodPlate/Area2D"]
-position = Vector2(0, 10)
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_hhl0g")
 
 [node name="Go Section" type="Node2D" parent="."]
@@ -151,7 +163,7 @@ texture = ExtResource("10_nflrw")
 script = ExtResource("9_t48f3")
 rice_type = "Brown"
 br_closed_texture = ExtResource("10_nflrw")
-br_open_texture = ExtResource("11_hkpja")
+br_open_texture = ExtResource("12_n7sx4")
 
 [node name="Area2D" type="Area2D" parent="Go Section/BrownRiceCooker"]
 
@@ -177,6 +189,7 @@ shape = SubResource("CircleShape2D_nflrw")
 one_way_collision_margin = 0.0
 
 [node name="BrownRiceCup" type="Sprite2D" parent="Go Section"]
+visible = false
 position = Vector2(448, 544)
 texture = ExtResource("20_hkpja")
 script = ExtResource("12_vfpnn")
@@ -237,7 +250,11 @@ food_data = ExtResource("22_jgock")
 [node name="Slot3" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
-texture = ExtResource("23_aa47t")
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("30_n7sx4")
+expand_mode = 0
+stretch_mode = 2
 food_data = ExtResource("24_k5enx")
 
 [node name="Slot4" parent="Row1/HBoxContainter" instance=ExtResource("18_orncx")]
@@ -362,7 +379,6 @@ script = ExtResource("52_aa5gg")
 visible = false
 
 [node name="ServeOrTrash" type="Node2D" parent="."]
-visible = false
 position = Vector2(8, 0)
 
 [node name="Serve" type="Sprite2D" parent="ServeOrTrash"]
@@ -389,7 +405,7 @@ monitoring = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Trash/GlobalTrashZone"]
 position = Vector2(-7.589736, -38.700317)
-polygon = PackedVector2Array(13.2821045, -1.6125488, -11.384644, -4.8375244, -36.05127, -9.675049, -62.615356, -19.35022, -108.15381, -27.41272, -142.30774, -24.187744, -165.0769, -19.35022, -195.43591, -6.4500732, -216.30774, 8.062622, -242.87177, 30.637695, -263.7436, 59.662964, -282.71796, 104.813354, 299.7948, 104.813354, 286.51282, 62.88806, 258.05127, 24.187744, 237.17944, 4.8375244, 203.02563, -14.512573, 166.97437, -25.80017, 127.128174, -29.025269, 92.974365, -22.575195, 66.41028, -12.9001465, 39.84619, -4.8375244)
+polygon = PackedVector2Array(13.2821045, -1.6125488, -26.289673, 31.684204, -127.92822, 35.968872, -215.30176, 44.537964, -263.7436, 59.662964, -282.71796, 104.813354, 299.7948, 104.813354, 286.51282, 62.88806, 258.05127, 24.187744, 237.17944, 4.8375244, 203.02563, -14.512573, 166.97437, -25.80017, 127.128174, -29.025269, 92.974365, -22.575195, 66.41028, -12.9001465, 39.84619, -4.8375244)
 
 [node name="PortionSelector" parent="." instance=ExtResource("52_k5enx")]
 visible = false
@@ -400,6 +416,7 @@ offset_bottom = 207.0
 visible = false
 
 [node name="OrderTicket" parent="." instance=ExtResource("54_i7i4q")]
+visible = false
 offset_left = -3.0
 offset_top = 1.0
 offset_right = 354.0

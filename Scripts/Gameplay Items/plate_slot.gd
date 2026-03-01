@@ -12,15 +12,14 @@ const FoodDispenserGlobals = preload("res://Scripts/Global/FoodDispenserGlobal.g
 @export_group("Placement Tweaks")
 @export var rice_position_offset: Vector2 = Vector2.ZERO
 @export var rice_rotation_offset: float = 0.0
-@export var rice_scale_factor: float = 0.4 # <-- New control specifically for rice scale
+@export var rice_scale_factor: float = 0.4
 
 # --- Stacking & Portion Variables ---
 var current_quantity: int = 0
-var current_portion_type: String = "" # Stores "Half", "Whole", "VeggieFull" or ""
-var current_rice_amount: String = ""  # Tracked locally as well
+var current_portion_type: String = "" 
+var current_rice_amount: String = ""  
 const MAX_QUANTITY: int = 3 
 
-# Stores the original Godot Editor position/rotation to prevent misalignment
 var base_image_position: Vector2
 var base_image_rotation: float
 
@@ -31,10 +30,11 @@ func _ready():
 	add_to_group(&"plate_slot")
 	
 	if linked_image:
-		# Capture the exact position/rotation you set in the 2D Editor
 		base_image_position = linked_image.position
 		base_image_rotation = linked_image.rotation_degrees
 		linked_image.visible = false
+	else:
+		print("[PlateSlot DEBUG] WARNING: No linked_image assigned to ", self.name)
 
 func _input(event: InputEvent) -> void:
 	var is_click = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed
@@ -42,6 +42,7 @@ func _input(event: InputEvent) -> void:
 	
 	if is_click or is_touch:
 		if _is_pos_inside(get_global_mouse_position()):
+			print("\n[PlateSlot DEBUG] --- 1. SLOT CLICKED: ", self.name, " ---")
 			_process_placement_attempt()
 
 func _is_pos_inside(global_pos: Vector2) -> bool:
@@ -63,20 +64,25 @@ func _is_pos_inside(global_pos: Vector2) -> bool:
 
 func _process_placement_attempt():
 	if FoodDispenserGlobals.CURRENTLY_SELECTED_DISPENSER == null:
+		print("[PlateSlot DEBUG] 2. No dispenser selected, aborting.")
 		return
 
 	var selected = FoodDispenserGlobals.CURRENTLY_SELECTED_DISPENSER
+	print("[PlateSlot DEBUG] 3. Dispenser found: ", selected.name)
 	
 	if is_filled:
+		print("[PlateSlot DEBUG] 3a. Slot already filled, checking if we can stack...")
 		var data_to_check = selected.get("food_data") if "food_data" in selected else selected.get("item_resource")
 		var current_name = item_resource.get("item_name") if item_resource else ""
 		var incoming_name = data_to_check.get("item_name") if data_to_check else ""
 		
 		if current_name != incoming_name:
+			print("[PlateSlot DEBUG] 3b. Names don't match, aborting.")
 			return 
 		
 		var incoming_portion = selected.get("portion_type") if "portion_type" in selected else ""
 		if incoming_portion != "" and incoming_portion != current_portion_type:
+			print("[PlateSlot DEBUG] 3c. Portions don't match, aborting.")
 			return
 
 		if current_quantity >= MAX_QUANTITY:
@@ -120,6 +126,11 @@ func try_place_food(incoming_data: Variant) -> bool:
 		current_rice_amount = rice_amount
 		_update_visuals(incoming_initial_texture)
 	else:
+		# FIX: Prevent rice from stacking to avoid disappearing textures and bugs
+		if rice_amount != "":
+			print("⚠️ Cannot stack rice!")
+			return false
+			
 		current_quantity += 1
 		_update_stacking_visuals()
 
@@ -127,6 +138,7 @@ func try_place_food(incoming_data: Variant) -> bool:
 	return true
 
 func _update_stacking_visuals():
+	print("[PlateSlot DEBUG] 8a. Determining next stacked texture...")
 	if not item_resource: return
 	if item_resource.get("is_veggie_cup"): return
 
@@ -149,17 +161,24 @@ func _update_stacking_visuals():
 	
 	if next_texture:
 		_update_visuals(next_texture)
+	else:
+		print("[PlateSlot DEBUG] 8b. WARNING: Stacked texture is null!")
 
 func _update_visuals(tex: Texture2D):
+	if not linked_image:
+		print("[PlateSlot DEBUG] 9. ERROR: linked_image is missing!")
+		return
+		
+	print("[PlateSlot DEBUG] 9. Applying texture: ", tex)
 	linked_image.texture = tex
 	
-	# Apply specific rotation, position offset, AND scale if the item has rice metadata
 	if item_resource and item_resource.has_meta("RiceAmount"):
+		print("[PlateSlot DEBUG] 9a. Applying Rice transforms...")
 		linked_image.position = base_image_position + rice_position_offset
 		linked_image.rotation_degrees = base_image_rotation + rice_rotation_offset
 		linked_image.scale = Vector2(rice_scale_factor, rice_scale_factor)
 	else:
-		# Revert to standard editor settings for other foods
+		print("[PlateSlot DEBUG] 9b. Applying Standard transforms...")
 		linked_image.position = base_image_position
 		linked_image.rotation_degrees = base_image_rotation
 		linked_image.scale = Vector2(plated_scale_factor, plated_scale_factor)
@@ -180,6 +199,11 @@ func _get_placement_data(incoming_data: Variant) -> Dictionary:
 		rice_amt = incoming_data.get("current_rice_amount") if "current_rice_amount" in incoming_data else ""
 	
 	if not food_resource: return {}
+	
+	# FIX: Explicitly reject an empty rice cup so it doesn't place a blank texture
+	if rice_amt == "Empty":
+		print("[PlateSlot] Rejected empty rice cup.")
+		return {}
 
 	if food_resource.get("is_veggie_cup"):
 		if portion == "VeggieFull":
@@ -204,7 +228,9 @@ func _get_placement_data(incoming_data: Variant) -> Dictionary:
 	if not final_texture:
 		final_texture = food_resource.texture_count_1 if food_resource.get("texture_count_1") else food_resource.default_plated_texture
 
-	if not final_texture: return {}
+	if not final_texture: 
+		print("[PlateSlot DEBUG] 5b. ERROR: Could not resolve a final texture.")
+		return {}
 		
 	return { 
 		"food_resource": food_resource, 
@@ -214,6 +240,7 @@ func _get_placement_data(incoming_data: Variant) -> Dictionary:
 	}
 
 func clear_slot():
+	print("[PlateSlot DEBUG] Clearing slot...")
 	is_filled = false
 	item_resource = null
 	current_quantity = 0

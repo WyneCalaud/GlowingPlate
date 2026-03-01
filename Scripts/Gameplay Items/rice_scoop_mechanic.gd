@@ -36,16 +36,17 @@ func start_scoop_hold(cup_node: Node, cooker_name: String, _empty_texture: Textu
 	# Defer position calculation to ensure UI elements have their size calculated
 	call_deferred("_center_ui_on_cooker", cooker_node)
 
-	# Connect to the UI's signal (from hold_button.gd)
-	# This ensures we only have ONE source of truth for the result
+	# Connect to the UI's signals (from hold_button.gd)
 	if ui_instance.has_signal("fill_finished"):
 		ui_instance.fill_finished.connect(_on_ui_fill_finished)
+		ui_instance.popup_closed.connect(_on_popup_closed) # ⚠️ FIX: Listen for cancellation!
 	else:
 		# Search children if the script is not on the root of the UI scene
 		for child in ui_instance.get_children():
 			if child.has_signal("fill_finished"):
 				child.fill_finished.connect(_on_ui_fill_finished)
-				break
+			if child.has_signal("popup_closed"):
+				child.popup_closed.connect(_on_popup_closed) # ⚠️ FIX: Listen for cancellation!
 
 func _center_ui_on_cooker(cooker_node: Node):
 	if not is_instance_valid(ui_instance): return
@@ -73,9 +74,15 @@ func _center_ui_on_cooker(cooker_node: Node):
 		# Fallback position if cooker isn't found
 		ui_instance.global_position = Vector2(20, 280)
 
+# ⚠️ NEW FIX: Called when the player clicks outside to close
+func _on_popup_closed():
+	# Sending "Empty" triggers a cancellation in rice_cup.gd
+	finish_scoop("Empty")
+
 func _on_ui_fill_finished(amount_str: String, _amount_int: int):
-	# Delay the finish call slightly to ensure the UI signal finishes processing
-	finish_scoop(amount_str)
+	# FIX: Actually delay the finish call using call_deferred to ensure 
+	# the UI signal finishes processing without interrupting the execution!
+	call_deferred("finish_scoop", amount_str)
 
 func finish_scoop(amount: String):
 	if not is_mechanic_active:
@@ -92,10 +99,10 @@ func finish_scoop(amount: String):
 	# Emit to rice_cup.gd
 	emit_signal("scoop_finished", amount)
 	
-	# Cleanup UI
-	if is_instance_valid(ui_instance):
+	# Cleanup UI safely (avoiding double-free errors)
+	if is_instance_valid(ui_instance) and not ui_instance.is_queued_for_deletion():
 		ui_instance.queue_free()
-		ui_instance = null
+	ui_instance = null
 		
 	# Use deferred queue_free to prevent the "Signal/Memory Crash"
 	call_deferred("queue_free")
