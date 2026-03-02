@@ -630,3 +630,16 @@ func game_over():
 func update_ui():
 	score_label.text = "%d" % score
 	turns_label.text = "Turns: %d" % turns_taken
+
+
+func _on_in_game_skip_pressed() -> void:
+	var GD = get_node("/root/GameData")
+
+	if GD.current_day >= 2 and GD.current_day <= 5:
+		GD.current_phase = GD.GamePhase.NEWS
+		get_tree().change_scene_to_file("res://Scenes/News/news_scene.tscn")
+	else:
+		GD.current_phase = GD.GamePhase.LOBBY
+		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+
+	GD.save_game()
