@@ -13,6 +13,9 @@ var order_index := 0
 var special_intro_step := 0
 var special_intro_active := false
 
+var is_typing: bool = false
+var full_dialogue_text: String = ""
+var typing_speed: float = 0.06
 
 func _ready():
 	$CustomerManager.customer_arrived.connect(_on_customer_arrived)
@@ -68,7 +71,7 @@ func _on_customer_arrived(order: CustomerOrder):
 	# ✅ FIRST ARRIVAL ONLY
 	if GD.service_state == GameData.ServiceState.CUSTOMER_PRESENT:
 		$DialogueBox.show()
-		$DialogueBox/OrderText.text = order.order_text
+		await typewriter_words(order.order_text)
 		$BtnAccept.show()
 		$BtnContinue.show()
 		
@@ -107,7 +110,7 @@ func _on_btn_continue_pressed() -> void:
 	if active_order == null:
 		return
 	# Replace the dialogue text with the expanded clarification
-	$DialogueBox/OrderText.text = active_order.expanded_text
+	await typewriter_words(active_order.expanded_text)
 
 func _end_day():
 	# CRITICAL FIX:
@@ -158,6 +161,12 @@ func _handle_special_tap():
 	else:
 		_update_special_image(active_order.customer_name)
 
+func _unhandled_input(event):
+
+	if event.is_action_pressed("ui_accept") and is_typing:
+		$DialogueBox/OrderText.text = full_dialogue_text
+		is_typing = false
+
 func _update_special_image(name:String):
 
 	var path = "res://Assets/UI/SpecialInfo/%s_%d.png" % [name, special_intro_step + 1]
@@ -194,3 +203,25 @@ func _end_special_intro():
 	$BtnAccept.show()
 	$BtnContinue.show()
 	$"../OverlayCanvas/GameHUD".show()
+
+func typewriter_words(text: String) -> void:
+
+	is_typing = true
+	full_dialogue_text = text
+	$DialogueBox/OrderText.text = ""
+
+	var words: PackedStringArray = text.split(" ")
+	var built_text: String = ""
+
+	for i in words.size():
+
+		built_text += words[i]
+
+		if i < words.size() - 1:
+			built_text += " "
+
+		$DialogueBox/OrderText.text = built_text
+
+		await get_tree().create_timer(typing_speed).timeout
+
+	is_typing = false
