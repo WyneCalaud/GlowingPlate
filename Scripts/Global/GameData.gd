@@ -1,8 +1,12 @@
 # GameData.gd
 extends Node
 
+# --- Tutorial & Intro Flags ---
 var kitchen_tutorial_completed: bool = true
+var matching_tutorial_completed: bool = false
+var intro_completed: bool = false
 
+# --- Player & Customer Context ---
 var current_customer_age_group: String = ""
 var player_name : String = ""
 
@@ -12,16 +16,15 @@ const TOTAL_DAYS: int = 14
 var money: int = 900                
 var keys: int = 60  
 
-var matching_tutorial_completed: bool = false
-var intro_completed: bool = false
-
-
+# --- Save Logic ---
 const SAVE_PATH := "user://save_data.json"
 var shown_food_intros := {}
 
-# --- QUIZ PROGRESSION (Saved State) ---
-var quiz_question_progress: Dictionary = {}
+# --- QUIZ PROGRESSION (Persistence) ---
+# Holds the SM-2 data (intervals, repetitions, ease factors)
 var quiz_concept_progress: Dictionary = {}
+# Holds the specific history of questions answered
+var quiz_question_progress: Dictionary = {}
 
 # --- GLOW BOARD PROGRESSION ---
 var character_progress: Dictionary = {
@@ -31,9 +34,7 @@ var character_progress: Dictionary = {
 }
 
 # --- CHARACTER VISUAL STAGES ---
-# 1 = Current
-# 2 = Better
-# 3 = Glowing
+# 1 = Base, 2 = Improved, 3 = Glowing
 var character_stage: Dictionary = {
 	"Leo": 1,
 	"Maya": 1,
@@ -47,9 +48,9 @@ var max_customers_today: int = 4
 var customer_patience_multiplier: float = 1.0 
 
 var purchased_upgrades: Dictionary = {}
-var unlocked_upgrades: Array = [] # ADDED: Array to store unlocked upgrades (like ReturnFood)
+var unlocked_upgrades: Array = []
 
-# ADDED: Permanent storage for Shop Items!
+# --- SHOP REGISTRY ---
 var shop_unlocked_registry: Dictionary = {}
 var shop_equipped_registry: Dictionary = {}
 
@@ -68,12 +69,9 @@ var service_state: ServiceState = ServiceState.IDLE
 var remaining_customers: Array = []
 var day_started: bool = false
 
-# -----------------------------
-# GLOBAL PATIENCE SYSTEM
-# -----------------------------
+# --- GLOBAL PATIENCE SYSTEM ---
 var customer_patience := 100.0
 var patience_running := false
-
 
 # --- SCENE PATHS ---
 const KITCHEN_SCENE_PATH = "res://Scenes/Gameplay/fullgameplay.tscn"
@@ -92,6 +90,9 @@ enum GamePhase {
 
 var current_phase: GamePhase = GamePhase.LOBBY
 
+# ==========================================================
+# INITIALIZATION
+# ==========================================================
 
 func _ready():
 	add_to_group("GameData")
@@ -99,33 +100,31 @@ func _ready():
 	_apply_saved_upgrades()
 
 func _apply_saved_upgrades():
-	# Make sure it checks BOTH the old and new upgrade variables
 	if purchased_upgrades.has("PatientCustomers") or unlocked_upgrades.has("PatientCustomers"):
 		customer_patience_multiplier = 1.5
 
-# --- ECONOMY HELPER (FIX FOR CRASH) ---
+# ==========================================================
+# ECONOMY & REWARDS
+# ==========================================================
+
 func add_money(amount: int) -> void:
 	money += amount
-	# Update any UI listening for changes
+	# Notify any UI elements (like HUD labels) to refresh
 	get_tree().call_group("HUD", "update_all_labels")
-	print("Money updated: ", money)
+	print("Economy Update: Money is now ", money)
 
-# --- NEW: HAPPINESS & TIP LOGIC ---
 func calculate_tip(happiness_percent: float) -> int:
-	if happiness_percent >= 90.0:
-		return 25 # Max tip
-	elif happiness_percent >= 70.0:
-		return 15
-	elif happiness_percent >= 40.0:
-		return 8
-	elif happiness_percent >= 20.0:
-		return 4
-	else:
-		return 1 # Minimal tip
+	if happiness_percent >= 90.0: return 25
+	elif happiness_percent >= 70.0: return 15
+	elif happiness_percent >= 40.0: return 8
+	elif happiness_percent >= 20.0: return 4
+	else: return 1
 
-# --- TIME & VISUAL LOGIC ---
+# ==========================================================
+# TIME & VISUAL STAGING
+# ==========================================================
+
 func get_current_time_string() -> String:
-	# ⚠️ SAFETY GUARD: Prevent Divide by Zero freeze
 	var safe_max = max(1, max_customers_today)
 	var progress = float(total_customers_served_today) / float(safe_max)
 	var hour = 12 + int(progress * 4) 
@@ -133,25 +132,28 @@ func get_current_time_string() -> String:
 	return str(hour) + ":00 PM"
 
 func get_sun_stage_index() -> int:
-	# ⚠️ SAFETY GUARD: Prevent Divide by Zero freeze
 	var safe_max = max(1, max_customers_today)
 	var progress = float(total_customers_served_today) / float(safe_max)
 	return clampi(int(progress * 4), 0, 3)
 
-# --- CORE METHODS ---
+# ==========================================================
+# CORE GAMEPLAY FLOW
+# ==========================================================
+
 func start_new_day():
 	daily_money_earned = 0
 	daily_keys_earned = 0
 	total_customers_served_today = 0
+	# Increase difficulty based on day
 	max_customers_today = clampi(4 + (current_day - 1), 4, 10) 
+	
 	if current_day <= TOTAL_DAYS:
 		get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
 	else:
-		print("Game finished!")
+		print("End of game content reached.")
 
 func start_day_with_orders(orders: Array):
 	remaining_customers = orders.duplicate()
-	# ⚠️ SAFETY GUARD: Never let max_customers hit 0
 	max_customers_today = max(1, remaining_customers.size()) 
 	service_state = ServiceState.IDLE
 	day_started = true
@@ -160,44 +162,34 @@ func finalize_service(day_result: Dictionary):
 	total_customers_served_today += 1
 	customer_history.append(day_result)
 	
-	# Extract happiness and calculate payout
 	var base_earned = day_result.get("earned_money", 0)
 	var happiness = day_result.get("happiness", 100.0)
-
 	var performance_multiplier := 1.0
 
-	if happiness >= 75:
-		performance_multiplier = 1.0        # full pay
-	elif happiness >= 50:
-		performance_multiplier = 0.8
-	elif happiness >= 25:
-		performance_multiplier = 0.6
-	else:
-		performance_multiplier = 0.4
+	if happiness >= 75: performance_multiplier = 1.0
+	elif happiness >= 50: performance_multiplier = 0.8
+	elif happiness >= 25: performance_multiplier = 0.6
+	else: performance_multiplier = 0.4
 
 	var adjusted_base = int(base_earned * performance_multiplier)
-
 	var tip = calculate_tip(happiness)
 	var total_earned = adjusted_base + tip
 	
 	money += total_earned
 	daily_money_earned += total_earned
 	
-	# Handle Keys
+	# Handle Key Rewards
 	var keys_won = day_result.get("earned_keys", 0)
-
 	var special_char: String = day_result.get("character_id", "") as String
 	var is_correct: bool = day_result.get("is_correct", false)
 
-	# ⭐ Only give special bonus if order was correct
 	if is_correct and special_char in ["Leo","Maya","Norma"]:
-		keys_won += 10
+		keys_won += 10 # Bonus for special characters
 
 	keys += keys_won
 	daily_keys_earned += keys_won
-
 	
-	# Handle Glow Board
+	# Handle Glow Board Progress
 	var char_id = day_result.get("character_id", "")
 	if character_progress.has(char_id):
 		var gain = day_result.get("prog_gain", 0.0)
@@ -210,22 +202,15 @@ func finalize_service(day_result: Dictionary):
 		day_started = false
 		current_day += 1
 		transition_to_end_day()
-	
 
-# --- WRAPPERS & TRANSITIONS ---
-func store_plate_contents(contents: Array): OrderSystem.prepared_plate_contents = contents
-
-func add_prepared_beverage(beverage_res: Resource):
-	OrderSystem.add_prepared_beverage(beverage_res)
-
-func store_beverage_data(data: Dictionary):
-	OrderSystem.prepared_beverage_data = data
-	returning_from_beverage = true
-	transition_to_canteen_serve() 
+# ==========================================================
+# SCENE TRANSITIONS
+# ==========================================================
 
 func transition_to_plate_prep(): get_tree().change_scene_to_file(KITCHEN_SCENE_PATH)
 func transition_to_beverage_prep(): get_tree().change_scene_to_file(BEVERAGE_SCENE_PATH)
 func transition_to_canteen_serve(): get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
+
 func transition_to_end_day():
 	current_phase = GamePhase.END_DAY
 	save_game()
@@ -236,53 +221,47 @@ func transition_to_end_day():
 
 	get_tree().change_scene_to_file(END_DAY_SCENE_PATH)
 
+func start_next_day_flow():
+	save_game()
+
+	# Skip mini-games on Day 1 start
+	if current_day == 1:
+		get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
+		return
+
+	# Transition to Mini-Game Phase
+	current_phase = GamePhase.MATCHING
+	save_game()
+	get_tree().change_scene_to_file("res://Scenes/MiniGame/matching_game.tscn")
+
+# ==========================================================
+# CUSTOMER DATA CACHING
+# ==========================================================
+
 var saved_customer_order: Resource = null
 var saved_customer_texture: Texture2D = null
+
 func save_customer(order: Resource, tex: Texture2D):
 	saved_customer_order = order
 	saved_customer_texture = tex
 
-	# ⭐ NEW
-	if order and order.has_method("get"):
+	if order and order.has_method("get_age_group"):
 		current_customer_age_group = order.get_age_group()
 
-	# Tell HUD to refresh
 	get_tree().call_group("HUD", "update_age_group_display")
 
 func clear_customer():
 	saved_customer_order = null
 	saved_customer_texture = null
 	current_customer_age_group = ""
-
 	get_tree().call_group("HUD", "update_age_group_display")
 
-
-# =========================
-# SPECIAL CHARACTER HELPERS
-# =========================
-
-func get_character_stage(char_name: String) -> int:
-	if character_stage.has(char_name):
-		return character_stage[char_name]
-	return 1
-
-
-func start_next_day_flow():
-	save_game()
-
-	# Day 1 has no news, just go to lobby
-	if current_day == 1:
-		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
-		return
-
-	# ALWAYS go to MiniGame first
-	current_phase = GamePhase.MATCHING
-	save_game()
-	get_tree().change_scene_to_file("res://Scenes/MiniGame/matching_game.tscn")
-
+# ==========================================================
+# PERSISTENCE (SAVE/LOAD)
+# ==========================================================
 
 func save_game():
-	# Ensure we pull the latest quiz data before saving
+	# Sync the latest quiz data from the Autoload/Singleton nodes before writing
 	if has_node("/root/QuizProgress"):
 		quiz_question_progress = get_node("/root/QuizProgress").question_progress
 	if has_node("/root/QuizSystem"):
@@ -299,8 +278,8 @@ func save_game():
 		"character_stage": character_stage,
 		"purchased_upgrades": purchased_upgrades,
 		"unlocked_upgrades": unlocked_upgrades,
-		"shop_unlocked_registry": shop_unlocked_registry, # ADDED SAVING
-		"shop_equipped_registry": shop_equipped_registry, # ADDED SAVING
+		"shop_unlocked_registry": shop_unlocked_registry,
+		"shop_equipped_registry": shop_equipped_registry,
 		"shown_food_intros": shown_food_intros,
 		"quiz_question_progress": quiz_question_progress,
 		"quiz_concept_progress": quiz_concept_progress,
@@ -313,73 +292,64 @@ func save_game():
 	if file:
 		file.store_string(JSON.stringify(save_data))
 		file.close()
-		print("Game Saved.")
+		print("Persistence: Game Saved.")
 	else:
-		print("Save Failed.")
-
+		print("Persistence Error: Save Failed.")
 
 func load_game():
 	if not FileAccess.file_exists(SAVE_PATH):
-		print("No save file found.")
+		print("Persistence: No save file found.")
 		return
 
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
-	if not file:
-		print("Failed to open save file.")
-		return
+	if not file: return
 
 	var content = file.get_as_text()
 	file.close()
 
 	var data = JSON.parse_string(content)
 	if typeof(data) != TYPE_DICTIONARY:
-		print("Corrupted save file.")
+		print("Persistence Error: Corrupted save file.")
 		return
 
+	# Progression
 	current_day = data.get("current_day", 1)
 	money = data.get("money", 900)
 	keys = data.get("keys", 60)
 	player_name = data.get("player_name", "")
+	
+	# Tutorials & Flags
 	matching_tutorial_completed = data.get("matching_tutorial_completed", false)
-	character_progress = data.get("character_progress", character_progress)
-	character_stage = data.get("character_stage", character_stage)
 	kitchen_tutorial_completed = data.get("kitchen_tutorial_completed", false)
-	shown_food_intros = data.get("shown_food_intros", {})
-	purchased_upgrades = data.get("purchased_upgrades", {})
-	unlocked_upgrades = data.get("unlocked_upgrades", []) 
-	
-	shop_unlocked_registry = data.get("shop_unlocked_registry", {}) # ADDED LOADING
-	shop_equipped_registry = data.get("shop_equipped_registry", {}) # ADDED LOADING
-	
-	special_intro_shown = data.get("special_intro_shown", {})
-	current_phase = data.get("current_phase", GamePhase.LOBBY)
 	intro_completed = data.get("intro_completed", false)
 	
-	# --- Load Quiz Data ---
+	# Characters & Upgrades
+	character_progress = data.get("character_progress", character_progress)
+	character_stage = data.get("character_stage", character_stage)
+	purchased_upgrades = data.get("purchased_upgrades", {})
+	unlocked_upgrades = data.get("unlocked_upgrades", []) 
+	shop_unlocked_registry = data.get("shop_unlocked_registry", {})
+	shop_equipped_registry = data.get("shop_equipped_registry", {})
+	
+	# Intros & Phases
+	shown_food_intros = data.get("shown_food_intros", {})
+	special_intro_shown = data.get("special_intro_shown", {})
+	current_phase = data.get("current_phase", GamePhase.LOBBY)
+	
+	# --- Load Quiz Data (Critical for SM-2) ---
 	quiz_question_progress = data.get("quiz_question_progress", {})
 	quiz_concept_progress = data.get("quiz_concept_progress", {})
 
-	print("Game Loaded.")
+	print("Persistence: Game Loaded.")
 
 func reset_day_state():
-	
-	# Reset day service flow
 	day_started = false
 	service_state = ServiceState.IDLE
 	remaining_customers.clear()
-
-	# Clear active customer
 	clear_customer()
-
-	# Reset patience
 	customer_patience = 100.0
 	patience_running = false
-	
-	# Clear prepared items
 	OrderSystem.clear_prepared_data()
-
-	# Save clean state
 	current_phase = GamePhase.LOBBY
 	save_game()
-
-	print("Day state reset complete.")
+	print("Service state reset complete.")

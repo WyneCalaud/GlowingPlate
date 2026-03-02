@@ -18,7 +18,7 @@ const FoodDispenserGlobals = preload("res://Scripts/Global/FoodDispenserGlobal.g
 var current_quantity: int = 0
 var current_portion_type: String = "" 
 var current_rice_amount: String = ""  
-const MAX_QUANTITY: int = 3 
+const MAX_QUANTITY: int = 4 # UPDATED: Increased to 4
 
 var base_image_position: Vector2
 var base_image_rotation: float
@@ -64,25 +64,20 @@ func _is_pos_inside(global_pos: Vector2) -> bool:
 
 func _process_placement_attempt():
 	if FoodDispenserGlobals.CURRENTLY_SELECTED_DISPENSER == null:
-		print("[PlateSlot DEBUG] 2. No dispenser selected, aborting.")
 		return
 
 	var selected = FoodDispenserGlobals.CURRENTLY_SELECTED_DISPENSER
-	print("[PlateSlot DEBUG] 3. Dispenser found: ", selected.name)
 	
 	if is_filled:
-		print("[PlateSlot DEBUG] 3a. Slot already filled, checking if we can stack...")
 		var data_to_check = selected.get("food_data") if "food_data" in selected else selected.get("item_resource")
 		var current_name = item_resource.get("item_name") if item_resource else ""
 		var incoming_name = data_to_check.get("item_name") if data_to_check else ""
 		
 		if current_name != incoming_name:
-			print("[PlateSlot DEBUG] 3b. Names don't match, aborting.")
 			return 
 		
 		var incoming_portion = selected.get("portion_type") if "portion_type" in selected else ""
 		if incoming_portion != "" and incoming_portion != current_portion_type:
-			print("[PlateSlot DEBUG] 3c. Portions don't match, aborting.")
 			return
 
 		if current_quantity >= MAX_QUANTITY:
@@ -106,19 +101,14 @@ func try_place_food(incoming_data: Variant) -> bool:
 	var incoming_portion = placement_results.portion_type
 	var rice_amount = placement_results.get("rice_amount", "")
 	
-	# Shallow copy safely creates a new data object but shares the textures.
 	incoming_resource = incoming_resource.duplicate()
 	
-	# Bake metadata into the resource so LobbyCanteen/OrderSystem can see it
 	if incoming_portion != "":
 		incoming_resource.set_meta("Portion", incoming_portion)
 	if rice_amount != "":
 		incoming_resource.set_meta("RiceAmount", rice_amount)
 	
 	if not is_filled:
-		if incoming_resource.get("food_category") != slot_type:
-			print("⚠️ Misplaced item category")
-
 		item_resource = incoming_resource
 		is_filled = true
 		current_quantity = 1
@@ -126,23 +116,18 @@ func try_place_food(incoming_data: Variant) -> bool:
 		current_rice_amount = rice_amount
 		_update_visuals(incoming_initial_texture)
 	else:
-		# FIX: Prevent rice from stacking to avoid disappearing textures and bugs
 		if rice_amount != "":
-			print("⚠️ Cannot stack rice!")
 			return false
 			
 		current_quantity += 1
 		_update_stacking_visuals()
 
 	emit_signal("slot_updated", item_resource, is_filled)
-	
-	# Tell the parent plate to remember this placement in history
 	get_parent().record_placement(self)
 	
 	return true
 
 func _update_stacking_visuals():
-	print("[PlateSlot DEBUG] 8a. Determining next stacked texture...")
 	if not item_resource: return
 	if item_resource.get("is_veggie_cup"): return
 
@@ -152,11 +137,13 @@ func _update_stacking_visuals():
 			1: next_texture = item_resource.get("plated_texture_half")
 			2: next_texture = item_resource.get("plated_texture_half_2")
 			3: next_texture = item_resource.get("plated_texture_half_3")
+			4: next_texture = item_resource.get("plated_texture_half_4") # Added Half 4 support
 	elif current_portion_type == "Whole":
 		match current_quantity:
 			1: next_texture = item_resource.get("plated_texture_whole")
 			2: next_texture = item_resource.get("plated_texture_whole_2")
 			3: next_texture = item_resource.get("plated_texture_whole_3")
+			4: next_texture = item_resource.get("plated_texture_whole_4") # FIXED: Corrected index from 3 to 4
 	else:
 		match current_quantity:
 			1: next_texture = item_resource.get("texture_count_1")
@@ -166,24 +153,18 @@ func _update_stacking_visuals():
 	
 	if next_texture:
 		_update_visuals(next_texture)
-	else:
-		print("[PlateSlot DEBUG] 8b. WARNING: Stacked texture is null!")
 
 func _update_visuals(tex: Texture2D):
 	if not linked_image:
-		print("[PlateSlot DEBUG] 9. ERROR: linked_image is missing!")
 		return
 		
-	print("[PlateSlot DEBUG] 9. Applying texture: ", tex)
 	linked_image.texture = tex
 	
 	if item_resource and item_resource.has_meta("RiceAmount"):
-		print("[PlateSlot DEBUG] 9a. Applying Rice transforms...")
 		linked_image.position = base_image_position + rice_position_offset
 		linked_image.rotation_degrees = base_image_rotation + rice_rotation_offset
 		linked_image.scale = Vector2(rice_scale_factor, rice_scale_factor)
 	else:
-		print("[PlateSlot DEBUG] 9b. Applying Standard transforms...")
 		linked_image.position = base_image_position
 		linked_image.rotation_degrees = base_image_rotation
 		linked_image.scale = Vector2(plated_scale_factor, plated_scale_factor)
@@ -204,21 +185,13 @@ func _get_placement_data(incoming_data: Variant) -> Dictionary:
 		rice_amt = incoming_data.get("current_rice_amount") if "current_rice_amount" in incoming_data else ""
 	
 	if not food_resource: return {}
-	
-	# FIX: Explicitly reject an empty rice cup so it doesn't place a blank texture
-	if rice_amt == "Empty":
-		print("[PlateSlot] Rejected empty rice cup.")
-		return {}
+	if rice_amt == "Empty": return {}
 
 	if food_resource.get("is_veggie_cup"):
-		if portion == "VeggieFull":
-			final_texture = food_resource.veggie_plated_full
-		elif portion == "VeggieHigh":
-			final_texture = food_resource.veggie_plated_high
-		elif portion == "VeggieMed":
-			final_texture = food_resource.veggie_plated_med
-		elif portion == "VeggieLow":
-			final_texture = food_resource.veggie_plated_low
+		if portion == "VeggieFull": final_texture = food_resource.veggie_plated_full
+		elif portion == "VeggieHigh": final_texture = food_resource.veggie_plated_high
+		elif portion == "VeggieMed": final_texture = food_resource.veggie_plated_med
+		elif portion == "VeggieLow": final_texture = food_resource.veggie_plated_low
 	elif portion == "Half":
 		final_texture = food_resource.plated_texture_half
 	elif portion == "Whole":
@@ -233,10 +206,6 @@ func _get_placement_data(incoming_data: Variant) -> Dictionary:
 	if not final_texture:
 		final_texture = food_resource.texture_count_1 if food_resource.get("texture_count_1") else food_resource.default_plated_texture
 
-	if not final_texture: 
-		print("[PlateSlot DEBUG] 5b. ERROR: Could not resolve a final texture.")
-		return {}
-		
 	return { 
 		"food_resource": food_resource, 
 		"final_texture": final_texture,
@@ -245,7 +214,6 @@ func _get_placement_data(incoming_data: Variant) -> Dictionary:
 	}
 
 func clear_slot():
-	print("[PlateSlot DEBUG] Clearing slot...")
 	is_filled = false
 	item_resource = null
 	current_quantity = 0

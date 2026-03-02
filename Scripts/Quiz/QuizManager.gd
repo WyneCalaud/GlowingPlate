@@ -46,7 +46,7 @@ extends Control
 var current_quiz_set: Array = []
 var current_question_index: int = 0
 var total_correct_answers: int = 0
-var MAX_QUESTIONS: int = 3
+var MAX_QUESTIONS: int = 0 # Now dynamically set based on content
 var is_mechanic_active: bool = true
 var current_day: int = 1
 var original_panel_pos: Vector2
@@ -74,16 +74,16 @@ func _ready():
 	# Initialize concept scheduler
 	QuizSystem.initialize_concepts(current_day)
 
-	# Get questions safely
+	# Get questions (New + Reviews)
 	_get_due_concept_questions()
 
 	if current_quiz_set.is_empty():
 		question_label.text = "No questions due today!"
 		await get_tree().create_timer(2.0).timeout
-		finish_quiz() # Safe finish
+		finish_quiz()
 		return
 
-	MAX_QUESTIONS = min(current_quiz_set.size(), 3)
+	# Start quiz with the dynamically calculated MAX_QUESTIONS
 	start_quiz()
 
 	result_label.visible = false
@@ -144,27 +144,38 @@ func update_age_group_display():
 			if tentotwelve: tentotwelve.visible = true
 
 # ==========================================================
-# CONCEPT-BASED QUESTION SELECTION
+# DYNAMIC QUESTION SELECTION (SM-2 + NEW CONTENT)
 # ==========================================================
 
 func _get_due_concept_questions():
 	current_quiz_set.clear()
 
+	# 1. ADD NEW QUESTIONS FOR THE DAY (e.g., the 3 new ones)
 	var daily_questions = QuestionDatabase.get_questions_for_day(current_day)
 	current_quiz_set.append_array(daily_questions)
 
-	var due_concepts = QuizSystem.get_due_concepts(current_day, 2)
+	# 2. ADD DUE REVIEWS (Spaced Repetition/Incorrect from previous days)
+	var due_concepts = QuizSystem.get_due_concepts(current_day, 5) # Check up to 5 review concepts
 	for concept in due_concepts:
 		var questions = QuestionDatabase.get_questions_by_concept(concept)
 		if questions.size() > 0:
 			questions.shuffle()
-			var q = questions[0]
+			var review_q = questions[0]
+			
+			# Check for duplicates so we don't ask the same question twice in one session
 			var is_dup = false
 			for existing in current_quiz_set:
-				if existing["id"] == q["id"]: is_dup = true
+				if existing["id"] == review_q["id"]: 
+					is_dup = true
+					break
 			if not is_dup:
-				current_quiz_set.append(q)
+				current_quiz_set.append(review_q)
 
+	# 3. SET THE LIMIT BASED ON CONTENT
+	# We no longer cap it at 3. It will be 3 + whatever reviews are due.
+	MAX_QUESTIONS = current_quiz_set.size()
+
+	# Shuffle so the player doesn't know which ones are reviews vs new ones
 	current_quiz_set.shuffle()
 
 # ==========================================================
@@ -230,9 +241,10 @@ func _on_answer_button_pressed(button_index: int):
 	var is_correct = (button_index == correct_button_index)
 
 	if has_node("/root/QuizProgress"):
-		QuizProgress.record_attempt(q_data["id"], is_correct)
+		QuizProgress.record_attempt(q_data["id"], is_correct, current_day)
 
 	if has_node("/root/QuizSystem"):
+		# SM-2 Quality: 4 for correct, 0 for incorrect
 		var quality = 4 if is_correct else 0
 		QuizSystem.update_concept_progress(current_concept, quality, current_day)
 
@@ -265,7 +277,6 @@ func _on_answer_button_pressed(button_index: int):
 
 	await get_tree().create_timer(1.8).timeout
 	
-	# ⚠️ CRITICAL FIX: Prevent crash if player exits mid-timer
 	if not is_inside_tree(): return 
 
 	result_label.visible = false
@@ -275,7 +286,7 @@ func _on_answer_button_pressed(button_index: int):
 	load_question()
 
 # ==========================================================
-# ANIMATIONS (CONTAINER-SAFE)
+# ANIMATIONS
 # ==========================================================
 
 func _animate_correct_feedback(idx: int):
@@ -343,14 +354,15 @@ func _on_menu_button_pressed():
 # ==========================================================
 
 func finish_quiz():
+	# Pay the player based on performance
 	var reward_money = total_correct_answers * 50
 
 	if has_node("/root/QuizSystem"):
-		QuizSystem.apply_quiz_results({}) # Update concepts in system
+		QuizSystem.apply_quiz_results({}) 
 
 	if game_data:
 		game_data.add_money(reward_money)
-		game_data.daily_money_earned += reward_money # Manually update daily tracker
+		game_data.daily_money_earned += reward_money
 		game_data.save_game()
 
 	call_deferred("_continue_after_quiz")
