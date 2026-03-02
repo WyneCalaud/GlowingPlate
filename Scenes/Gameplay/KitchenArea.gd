@@ -49,7 +49,7 @@ var drop_zones_default_position: Vector2
 @onready var food_plate: Node2D = $Plate/FoodPlate 
 @onready var camera: Camera2D = get_viewport().get_camera_2d()
 
-@onready var order_ticket = $OrderTicket
+@onready var order_ticket = $CanvasLayer/OrderTicket
 
 # --- DYNAMIC LAYOUT NODES (BROWN RICE) ---
 @onready var brown_rice_mat = get_node_or_null("Go Section/BrownRiceCupMat")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://li2x2jgpg6rt"]
+[gd_scene load_steps=10 format=3 uid="uid://li2x2jgpg6rt"]
 
 [ext_resource type="Script" uid="uid://orehkdtj7p5h" path="res://Scenes/News/news_scene.gd" id="1_m8lmo"]
 [ext_resource type="Texture2D" uid="uid://dhe4dn4a6by3t" path="res://Assets/News/introbg.png" id="2_r0bxa"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://k2i8s01ngniw" path="res://Assets/News/newsblank.png" id="5_y4pkj"]
 [ext_resource type="Texture2D" uid="uid://b6mxi0dqes67u" path="res://Assets/News/Glow News Station.png" id="6_k2jpj"]
 [ext_resource type="AudioStream" uid="uid://df6weh8ca6anl" path="res://Assets/News/newsintro.mp3" id="8_foeoc"]
+[ext_resource type="Texture2D" uid="uid://bahaomefrd15i" path="res://Assets/MiniGame/UI/Skip News.png" id="9_d4u2h"]
 
 [node name="NewsScene" type="Control"]
 layout_mode = 3
@@ -93,4 +94,16 @@ flat = true
 stream = ExtResource("8_foeoc")
 volume_db = -14.182
 
+[node name="SkipButton" type="TextureButton" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.5019608)
+layout_mode = 0
+offset_left = 9.0
+offset_top = 650.0
+offset_right = 293.0
+offset_bottom = 714.0
+texture_normal = ExtResource("9_d4u2h")
+stretch_mode = 0
+
 [connection signal="pressed" from="DialogueBox/BtnNext" to="." method="_on_btn_next_pressed"]
+[connection signal="pressed" from="SkipButton" to="." method="_on_skip_button_pressed"]

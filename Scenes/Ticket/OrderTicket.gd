@@ -46,14 +46,14 @@ func toggle_ticket():
 
 func show_ticket():
 	is_open = true
-	$"../Go Section/WhiteRiceCup".hide()
+	$"../../Go Section/WhiteRiceCup".hide()
 	$Content.show()
 	create_tween().tween_property(self, "position", shown_position, 0.3)
 
 
 func hide_ticket():
 	is_open = false
-	$"../Go Section/WhiteRiceCup".show()
+	$"../../Go Section/WhiteRiceCup".show()
 	$Content.hide()
 	create_tween().tween_property(self, "position", hidden_position, 0.3)
 

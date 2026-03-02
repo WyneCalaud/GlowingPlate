@@ -16,9 +16,17 @@ func _ready():
 	next_button.pressed.connect(_on_next_day_pressed)
 
 func _on_next_day_pressed():
+	# If we just finished Day 1, go straight to Lobby
+	if GameData.current_day <= 1:
+		GameData.current_phase = GameData.GamePhase.LOBBY
+		GameData.save_game()
+		SceneTransition.fade_to(GameData.LOBBY_CANTEEN_PATH)
+		return
+	
+	# Day 2 onwards → go to Quiz first
 	GameData.current_phase = GameData.GamePhase.QUIZ
 	GameData.save_game()
-	get_tree().change_scene_to_file("res://Scenes/Quiz/QuizScene.tscn")
+	SceneTransition.fade_to(GameData.QUIZ_SCENE_PATH)
 
 # --- OPTIONAL: simple counting animation ---
 func animate_number(label: Label, target_value: int, prefix: String):
