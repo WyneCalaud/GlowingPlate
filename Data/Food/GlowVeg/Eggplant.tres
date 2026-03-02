@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://omstc0n2h6vh"]
 
-[ext_resource type="Texture2D" uid="uid://cbkoagx0jde1o" path="res://Assets/Foods/Eggplant.png" id="1_asc4f"]
+[ext_resource type="Texture2D" uid="uid://b3lk1f2vsanni" path="res://Assets/Food Containers/Eggplant.png" id="1_mmf0u"]
 [ext_resource type="Texture2D" uid="uid://47dyocjm84i8" path="res://Assets/UI/KitchenUI/VeggiesCup/Eggplant/EggplantFull.png" id="3_l75a3"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_tp5th"]
 [ext_resource type="Texture2D" uid="uid://coksjcwgcqoxn" path="res://Assets/UI/KitchenUI/VeggiesCup/Eggplant/EggplantHigh.png" id="4_ql6fr"]
@@ -16,7 +16,7 @@ script = ExtResource("3_tp5th")
 item_name = "Eggplant"
 internal_key = "EGGPLANT"
 food_category = "GlowVeg"
-base_texture = ExtResource("1_asc4f")
+base_texture = ExtResource("1_mmf0u")
 is_veggie_cup = true
 veggie_cup_low = ExtResource("5_bsc5x")
 veggie_cup_med = ExtResource("6_mmf0u")

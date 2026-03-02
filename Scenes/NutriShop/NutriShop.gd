@@ -107,24 +107,47 @@ func _ready():
 	# 1. Build the Data Map (Links Data -> Buttons -> Scene Nodes)
 	_build_category_data()
 	
-	# 2. Initialize Defaults
+	# 2. Sync with GameData to load previous session's state
+	_sync_with_gamedata()
+	
+	# 3. Initialize Defaults
 	_initialize_defaults()
 	
-	# 3. Apply Skins to Scene immediately
+	# 4. Apply Skins to Scene immediately
 	call_deferred("_apply_all_equipped_skins")
 
-	# 4. Setup UI Layouts
+	# 5. Setup UI Layouts
 	_setup_layouts()
 	_setup_scrollbar_style(canteen_submenu_scroll)
 	_setup_scrollbar_style(scroll_container)
 
-	# 5. Connect Signals
+	# 6. Connect Signals
 	_connect_signals()
 	
 	call_deferred("_on_main_tab_pressed", "Upgrades")
 
 func close_shop():
 	closed.emit()
+
+# --- SYNC DATA ---
+func _sync_with_gamedata():
+	var gd = get_tree().get_first_node_in_group("GameData")
+	if not gd: return
+	
+	# Load unlocked decor
+	if "shop_unlocked_registry" in gd:
+		for key in gd.shop_unlocked_registry:
+			unlocked_registry[key] = gd.shop_unlocked_registry[key]
+			
+	# Load equipped decor
+	if "shop_equipped_registry" in gd:
+		for key in gd.shop_equipped_registry:
+			equipped_registry[key] = gd.shop_equipped_registry[key]
+			
+	# Sync Upgrades
+	if "unlocked_upgrades" in gd:
+		for upgrade in gd.unlocked_upgrades:
+			unlocked_registry[upgrade] = true
 
 # --- CONFIGURATION: MAP CATEGORIES TO SCENE NODES ---
 func _build_category_data():
@@ -171,6 +194,7 @@ func _connect_signals():
 
 # --- DEFAULTS ---
 func _initialize_defaults():
+	var gd = get_tree().get_first_node_in_group("GameData")
 	for category in category_map:
 		var data = category_map[category]
 		var names = data.names
@@ -180,10 +204,7 @@ func _initialize_defaults():
 		
 		# 1. Search for a FREE item (Price == 0) to be the default
 		for i in range(names.size()):
-			var p = 0
-			if i < prices.size():
-				p = prices[i]
-			
+			var p = prices[i] if i < prices.size() else 0
 			if p == 0:
 				default_item = names[i]
 				break
@@ -192,12 +213,16 @@ func _initialize_defaults():
 		if default_item == "" and names.size() > 0:
 			default_item = names[0]
 			
-		# 3. Unlock and Equip
+		# 3. Unlock and Equip default if empty
 		if default_item != "":
 			if not unlocked_registry.has(default_item):
 				unlocked_registry[default_item] = true
+				if gd and "shop_unlocked_registry" in gd:
+					gd.shop_unlocked_registry[default_item] = true
 			if not equipped_registry.has(category):
 				equipped_registry[category] = default_item
+				if gd and "shop_equipped_registry" in gd:
+					gd.shop_equipped_registry[category] = default_item
 
 # --- TAB LOGIC ---
 func _on_main_tab_pressed(category: String):
@@ -255,8 +280,8 @@ func _populate_items(icons: Array, prices: Array, names: Array, category: String
 		
 		var state = "LOCKED"
 		if unlocked_registry.has(item_name):
-			if category == "Upgrades":
-				# Upgrades: Always active once unlocked (Simultaneous)
+			if category == "Upgrades" or category == "Kitchen":
+				# Upgrades & Kitchen are always active once unlocked
 				state = "EQUIPPED"
 			else:
 				# Decor: Only one active per category (Exclusive)
@@ -286,15 +311,18 @@ func _on_card_action(card_node):
 			gd.add_money(-cost)
 			print("Purchased: ", item_name)
 			unlocked_registry[item_name] = true
-			gd.save_game()
 			
-			if category == "Upgrades":
-				# Upgrades equip immediately and stay equipped
+			# SAVE THE UNLOCK TO GAMEDATA
+			if "shop_unlocked_registry" in gd:
+				gd.shop_unlocked_registry[item_name] = true
+			
+			if category == "Upgrades" or category == "Kitchen":
 				card_node.update_state("EQUIPPED")
 				_apply_upgrade_effect(item_name)
 			else:
-				# Decor just unlocks
 				card_node.update_state("UNLOCKED")
+			
+			gd.save_game() 
 		else:
 			# Not enough money shake
 			var tween = create_tween()
@@ -305,6 +333,11 @@ func _on_card_action(card_node):
 		# === EQUIP (Decor Only) ===
 		print("Equipping: ", item_name, " in category: ", category)
 		equipped_registry[category] = item_name
+		
+		# SAVE THE EQUIPMENT TO GAMEDATA
+		if gd and "shop_equipped_registry" in gd:
+			gd.shop_equipped_registry[category] = item_name
+			gd.save_game()
 		
 		# 1. Update the actual scene texture
 		if category_map.has(category):
@@ -458,22 +491,29 @@ func _setup_scrollbar_style(scroll: ScrollContainer):
 	if h_bar: apply_style.call(h_bar)
 	if v_bar: apply_style.call(v_bar)
 
-
-
+# --- NEW: APPLY UPGRADE EFFECT ---
 func _apply_upgrade_effect(upgrade_name:String):
-
 	var GD = get_tree().get_first_node_in_group("GameData")
-	if not GD:
-		return
+	if not GD: return
 
+	# 1. Add the upgrade to GameData so it persists and the Kitchen can read it
+	if "unlocked_upgrades" in GD:
+		if not GD.unlocked_upgrades.has(upgrade_name):
+			GD.unlocked_upgrades.append(upgrade_name)
+	else:
+		# If GameData doesn't have the array yet, create it!
+		GD.set("unlocked_upgrades", [upgrade_name])
+		print("NutriShop created 'unlocked_upgrades' array in GameData.")
+
+	# 2. Check which upgrade was bought and trigger any instant effects
 	match upgrade_name:
-
-		# ⭐ PATIENT CUSTOMERS UPGRADE
 		"PatientCustomers":
 			GD.customer_patience_multiplier = 1.5
-
-		# future upgrades go here
-		# "FastServing":
-		# "MoreCustomers":
-
-	print("Upgrade applied:", upgrade_name)
+			print("Upgrade applied: Patient Customers")
+		
+		# MAKE SURE THIS STRING MATCHES YOUR INSPECTOR EXACTLY (E.g. "Return Food")
+		"ReturnFood", "Return Food", "Undo Button": 
+			print("Upgrade applied: Return Food (Undo Button now active!)")
+			
+		"Meal Bonus", "MealBonus":
+			print("Upgrade applied: Meal Bonus (+15 money per meal!)")

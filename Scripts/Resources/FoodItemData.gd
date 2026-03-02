@@ -16,6 +16,7 @@ class_name CustomItemData
 @export var texture_count_1: Texture2D
 @export var texture_count_2: Texture2D
 @export var texture_count_3: Texture2D
+@export var texture_count_4: Texture2D
 
 # --- Portion Mechanics (New) ---
 @export_group("Portion Mechanics")

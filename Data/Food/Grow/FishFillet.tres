@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://d2mntq5kbevox"]
 
-[ext_resource type="Texture2D" uid="uid://b1b74g4ux5tok" path="res://Assets/Foods/Fish.png" id="1_pgbmo"]
+[ext_resource type="Texture2D" uid="uid://dsfhes0jopsnj" path="res://Assets/Food Containers/Fish.png" id="1_216va"]
 [ext_resource type="Texture2D" uid="uid://88jb7ra0pbl" path="res://Assets/UI/KitchenUI/TEST/FishHalf.png" id="3_24vh5"]
 [ext_resource type="Texture2D" uid="uid://c274ck7n454tm" path="res://Assets/GrowSection/FishHalf2.png" id="3_216va"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_qaar2"]
@@ -15,7 +15,7 @@
 script = ExtResource("3_qaar2")
 item_name = "Fish Fillet"
 internal_key = "FISH_FILLET"
-base_texture = ExtResource("1_pgbmo")
+base_texture = ExtResource("1_216va")
 is_portionable = true
 plated_texture_half = ExtResource("3_24vh5")
 plated_texture_half_2 = ExtResource("3_216va")

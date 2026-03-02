@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://b620n7sw6261m"]
 
-[ext_resource type="Texture2D" uid="uid://comko1qjr5kgl" path="res://Assets/Foods/Sitaw.png" id="1_nr06r"]
+[ext_resource type="Texture2D" uid="uid://bg3mtq3br20n1" path="res://Assets/Food Containers/Sitaw.png" id="1_jyfbu"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_gmk55"]
 [ext_resource type="Texture2D" uid="uid://divhlnb66dowy" path="res://Assets/UI/KitchenUI/VeggiesCup/Sitaw/SitawFull.png" id="3_vqxq5"]
 [ext_resource type="Texture2D" uid="uid://cwyd5x2ukkuex" path="res://Assets/UI/KitchenUI/VeggiesCup/Sitaw/SitawHigh.png" id="4_4afm4"]
@@ -16,7 +16,7 @@ script = ExtResource("3_gmk55")
 item_name = "Sitaw"
 internal_key = "SITAW"
 food_category = "GlowVeg"
-base_texture = ExtResource("1_nr06r")
+base_texture = ExtResource("1_jyfbu")
 is_veggie_cup = true
 veggie_cup_low = ExtResource("5_aet2i")
 veggie_cup_med = ExtResource("6_jyfbu")

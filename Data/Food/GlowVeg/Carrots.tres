@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://h68n0p1prwgj"]
 
-[ext_resource type="Texture2D" uid="uid://d0ve4dwh1ogbf" path="res://Assets/Foods/Carrots.png" id="1_en7m4"]
+[ext_resource type="Texture2D" uid="uid://d4hnr0udp1dsu" path="res://Assets/Food Containers/Carrots.png" id="1_xo627"]
 [ext_resource type="Texture2D" uid="uid://dcynk4jl4osoj" path="res://Assets/UI/KitchenUI/VeggiesCup/Carrots/CarrotsFull.png" id="3_80xfw"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_a3cib"]
 [ext_resource type="Texture2D" uid="uid://duix5777ykl2k" path="res://Assets/UI/KitchenUI/VeggiesCup/Carrots/CarrotHigh.png" id="4_hsoh8"]
@@ -16,7 +16,7 @@ script = ExtResource("3_a3cib")
 item_name = "Carrots"
 internal_key = "CARROTS"
 food_category = "GlowVeg"
-base_texture = ExtResource("1_en7m4")
+base_texture = ExtResource("1_xo627")
 is_veggie_cup = true
 veggie_cup_low = ExtResource("5_iqp3o")
 veggie_cup_med = ExtResource("6_xo627")

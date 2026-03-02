@@ -3,7 +3,7 @@ extends Camera2D
 @export var smoothing: float = 15.0
 @export var drag_speed: float = 1.0
 @export var min_x: float = 640.0
-@export var max_x: float = 1920.0
+@export var max_x: float = 1992.0
 
 var target_x: float = 640.0
 var is_dragging: bool = false

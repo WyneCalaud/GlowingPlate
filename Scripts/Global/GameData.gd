@@ -47,6 +47,11 @@ var max_customers_today: int = 4
 var customer_patience_multiplier: float = 1.0 
 
 var purchased_upgrades: Dictionary = {}
+var unlocked_upgrades: Array = [] # ADDED: Array to store unlocked upgrades (like ReturnFood)
+
+# ADDED: Permanent storage for Shop Items!
+var shop_unlocked_registry: Dictionary = {}
+var shop_equipped_registry: Dictionary = {}
 
 # --- DAILY TRACKING ---
 var daily_money_earned: int = 0
@@ -94,7 +99,8 @@ func _ready():
 	_apply_saved_upgrades()
 
 func _apply_saved_upgrades():
-	if purchased_upgrades.has("PatientCustomers"):
+	# Make sure it checks BOTH the old and new upgrade variables
+	if purchased_upgrades.has("PatientCustomers") or unlocked_upgrades.has("PatientCustomers"):
 		customer_patience_multiplier = 1.5
 
 # --- ECONOMY HELPER (FIX FOR CRASH) ---
@@ -292,6 +298,9 @@ func save_game():
 		"character_progress": character_progress,
 		"character_stage": character_stage,
 		"purchased_upgrades": purchased_upgrades,
+		"unlocked_upgrades": unlocked_upgrades,
+		"shop_unlocked_registry": shop_unlocked_registry, # ADDED SAVING
+		"shop_equipped_registry": shop_equipped_registry, # ADDED SAVING
 		"shown_food_intros": shown_food_intros,
 		"quiz_question_progress": quiz_question_progress,
 		"quiz_concept_progress": quiz_concept_progress,
@@ -337,6 +346,11 @@ func load_game():
 	kitchen_tutorial_completed = data.get("kitchen_tutorial_completed", false)
 	shown_food_intros = data.get("shown_food_intros", {})
 	purchased_upgrades = data.get("purchased_upgrades", {})
+	unlocked_upgrades = data.get("unlocked_upgrades", []) 
+	
+	shop_unlocked_registry = data.get("shop_unlocked_registry", {}) # ADDED LOADING
+	shop_equipped_registry = data.get("shop_equipped_registry", {}) # ADDED LOADING
+	
 	special_intro_shown = data.get("special_intro_shown", {})
 	current_phase = data.get("current_phase", GamePhase.LOBBY)
 	intro_completed = data.get("intro_completed", false)

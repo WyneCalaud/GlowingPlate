@@ -135,6 +135,10 @@ func try_place_food(incoming_data: Variant) -> bool:
 		_update_stacking_visuals()
 
 	emit_signal("slot_updated", item_resource, is_filled)
+	
+	# Tell the parent plate to remember this placement in history
+	get_parent().record_placement(self)
+	
 	return true
 
 func _update_stacking_visuals():
@@ -158,6 +162,7 @@ func _update_stacking_visuals():
 			1: next_texture = item_resource.get("texture_count_1")
 			2: next_texture = item_resource.get("texture_count_2")
 			3: next_texture = item_resource.get("texture_count_3")
+			4: next_texture = item_resource.get("texture_count_4")
 	
 	if next_texture:
 		_update_visuals(next_texture)
