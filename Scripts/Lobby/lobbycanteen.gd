@@ -587,19 +587,22 @@ func _on_btn_final_serve_pressed() -> void:
 	if GD.remaining_customers.is_empty():
 		return
 
-	# Otherwise continue normally
 	await get_tree().create_timer(3.5).timeout
+
+	# Wait for leave signal BEFORE triggering next
+	var leave_signal = customer_manager.customer_left
 
 	customer_manager.next_customer()
 
-	await customer_manager.customer_left
+	await leave_signal
 
-	# Safety check in case scene changed mid-await
+	# Safety check
 	if not is_inside_tree():
 		return
 
 	await get_tree().create_timer(0.15).timeout
 
+	# Spawn next customer if available
 	if not GD.remaining_customers.is_empty():
 		spawn_next_customer()
 
@@ -1002,7 +1005,8 @@ func spawn_next_customer():
 	GD.patience_running = false
 	get_tree().call_group("HUD", "reset_patience")
 
-	var order: CustomerOrder = GD.remaining_customers.pop_front()
+	# 🔥 DO NOT POP YET — just peek
+	var order: CustomerOrder = GD.remaining_customers[0]
 
 	var tex: Texture2D
 	var stage : int = GD.get_character_stage(order.customer_name)
@@ -1060,6 +1064,9 @@ func spawn_next_customer():
 	GD.service_state = GameData.ServiceState.CUSTOMER_PRESENT
 
 	customer_manager.spawn_customer(order, tex)
+
+	# 🔥 NOW remove from queue AFTER spawning
+	GD.remaining_customers.pop_front()
 
 func _on_btn_accept_pressed() -> void:
 	pass # Replace with function body.

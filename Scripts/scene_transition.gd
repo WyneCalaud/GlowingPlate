@@ -2,7 +2,7 @@ extends Node
 
 var is_transitioning := false
 
-func fade_to(scene_path: String, fade_time: float = 1.5):
+func fade_to(scene_path: String, fade_time: float = 0.7):
 
 	if is_transitioning:
 		return
