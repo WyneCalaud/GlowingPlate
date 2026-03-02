@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ctl6sxeshrxbu"]
+[gd_scene load_steps=36 format=3 uid="uid://ctl6sxeshrxbu"]
 
 [ext_resource type="Script" uid="uid://u3qhy5pns8k0" path="res://Scripts/MiniGame/matching_game.gd" id="1_pssnd"]
 [ext_resource type="Texture2D" uid="uid://cfvugwijhyu8x" path="res://Assets/MiniGame/Exercises/Refined/Exercise Card Back.png" id="2_xdroa"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://bflbyf0gc5tqr" path="res://Assets/MiniGame/UI/rectangle.png" id="21_xtgos"]
 [ext_resource type="Texture2D" uid="uid://c3ky53w3wknny" path="res://Assets/MiniGame/UI/Heart Container.png" id="22_bt5ei"]
 [ext_resource type="Texture2D" uid="uid://5cn0rgiic4rd" path="res://Assets/MiniGame/UI/Heart Icon.png" id="22_m345l"]
+[ext_resource type="Texture2D" uid="uid://c8sibk7ujitfn" path="res://Assets/MiniGame/UI/ingameskip.png" id="23_8jjub"]
 [ext_resource type="Texture2D" uid="uid://bxkwyajrnvkti" path="res://Assets/MiniGame/UI/Not Passed Screen.png" id="25_b4at2"]
 [ext_resource type="Texture2D" uid="uid://b8tsvp4ifauyb" path="res://Assets/MiniGame/UI/Try Again Button.png" id="26_54qja"]
 [ext_resource type="Texture2D" uid="uid://boql3fcpe0atu" path="res://Assets/MiniGame/UI/Main Menu Button.png" id="27_lpk1w"]
@@ -187,6 +188,13 @@ theme_override_font_sizes/font_size = 31
 text = "Score"
 horizontal_alignment = 1
 
+[node name="InGameSkip" type="TextureButton" parent="CanvasLayer"]
+offset_left = 800.0
+offset_top = 621.0
+offset_right = 994.0
+offset_bottom = 661.0
+texture_normal = ExtResource("23_8jjub")
+
 [node name="Heartbg" type="HBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 820.0
@@ -349,6 +357,7 @@ layout_mode = 2
 texture = ExtResource("2_xdroa")
 
 [node name="ExerciseResultOverlay" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -436,8 +445,10 @@ stretch_mode = 3
 
 [node name="TutorialOverlay" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 1276.0
-offset_bottom = 724.0
+offset_left = 6.0
+offset_top = -1.0
+offset_right = 1282.0
+offset_bottom = 723.0
 
 [node name="bg" type="TextureRect" parent="TutorialOverlay"]
 visible = false
@@ -469,5 +480,6 @@ offset_right = 1007.0
 offset_bottom = 562.0
 stretch_mode = 5
 
+[connection signal="pressed" from="CanvasLayer/InGameSkip" to="." method="_on_in_game_skip_pressed"]
 [connection signal="pressed" from="ExerciseResultOverlay/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="ExerciseResultOverlay/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene load_steps=46 format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://dt5he77x83jrn" path="res://Assets/UI/LobbyUI/LobbyBackground/OutsideBackground.png" id="3_vtn67"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://cinteuxw081s6" path="res://Assets/UI/LobbyUI/LobbyBackground/WallFrame.png" id="5_vtn67"]
 [ext_resource type="Texture2D" uid="uid://dnwqtxeef5vht" path="res://Assets/UI/NutriShop/WallDecVariants/BasicPlantEntranceDecor.png" id="6_8rcq3"]
 [ext_resource type="Texture2D" uid="uid://txxp2gpu2d4b" path="res://Assets/UI/NutriShop/HighTableVariants/CozyYellowHighTable.png" id="7_o8hjd"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="8_606uc"]
 [ext_resource type="Texture2D" uid="uid://5mmlehht8t7v" path="res://Assets/UI/NutriShop/HighChairVariants/CozyOrangeHighChair.png" id="8_rxbhd"]
 [ext_resource type="Texture2D" uid="uid://c5rbf0dq0amus" path="res://Assets/UI/LobbyUI/LobbyBackground/Tables.png" id="9_t3xjw"]
 [ext_resource type="Texture2D" uid="uid://ct2c2f1h62j07" path="res://Assets/UI/LobbyUI/Counter1.png" id="9_uu58y"]
@@ -21,7 +20,6 @@
 [ext_resource type="Texture2D" uid="uid://bgei1qmoc4kpv" path="res://Assets/UI/LobbyUI/ArrowLeftToRight.png" id="15_fw8iq"]
 [ext_resource type="Script" uid="uid://i7nkla44iwvl" path="res://Scenes/Lobby Canteen/BottomButtons.gd" id="15_krqk6"]
 [ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="15_sgopm"]
-[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/Fonts/Rowdies-Regular.ttf" id="15_wdy5h"]
 [ext_resource type="Texture2D" uid="uid://buu5n0np3bere" path="res://Assets/UI/LobbyUI/GlowBoard.png" id="16_fw8iq"]
 [ext_resource type="PackedScene" uid="uid://bs42us5samyyd" path="res://Scenes/GlowBoard/GlowBoard.tscn" id="16_vrvqj"]
 [ext_resource type="Texture2D" uid="uid://dxhvnf11tiqij" path="res://Assets/UI/LobbyUI/GlowShop.png" id="17_krqk6"]
@@ -29,7 +27,8 @@
 [ext_resource type="Texture2D" uid="uid://cj8itr27fqoh7" path="res://Assets/UI/LobbyUI/GlowDesk.png" id="18_uu58y"]
 [ext_resource type="PackedScene" uid="uid://cjn07fdlbx2nm" path="res://Scenes/Customer/Customer.tscn" id="20_5fhlb"]
 [ext_resource type="Script" uid="uid://fti83bbe01wh" path="res://Scripts/Customer/customer_manager.gd" id="20_k43ou"]
-[ext_resource type="Texture2D" uid="uid://7yli73eiygfa" path="res://Assets/UI/Play Button.png" id="21_uu58y"]
+[ext_resource type="Texture2D" uid="uid://dvq5104sygti1" path="res://Assets/MiniGame/UI/blankbutton.png" id="21_8rcq3"]
+[ext_resource type="Texture2D" uid="uid://ck6gnrc0yy703" path="res://Assets/MiniGame/UI/button clicked.png" id="22_8rcq3"]
 [ext_resource type="PackedScene" uid="uid://chcm4mgm880ef" path="res://Scenes/NutriShop/NutriShop.tscn" id="25_7yiff"]
 [ext_resource type="Texture2D" uid="uid://dtw8x64eetmao" path="res://Items/Plates/Plate Final.png" id="27_cmvyw"]
 [ext_resource type="Texture2D" uid="uid://daqtdvdiuidiq" path="res://Assets/Serving Tray/Serving Tray.png" id="27_hcpvu"]
@@ -37,7 +36,7 @@
 [ext_resource type="PackedScene" uid="uid://c5l8auaitpptq" path="res://Scenes/GlowDesk/GlowDesk.tscn" id="28_uu58y"]
 [ext_resource type="Texture2D" uid="uid://1ttof10olivl" path="res://Assets/UI/LobbyUI/Hint Button.png" id="29_7yiff"]
 [ext_resource type="Texture2D" uid="uid://1c15qhkuhbcg" path="res://Assets/UI/Interface/bigdialogue.png" id="32_uu58y"]
-[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://Fonts/Comic_Neue/ComicNeue-Bold.ttf" id="33_nk7xc"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="33_nk7xc"]
 [ext_resource type="Texture2D" uid="uid://b5kbtjwle40uj" path="res://Assets/Characters/Star.png" id="37_nk7xc"]
 [ext_resource type="Texture2D" uid="uid://b65yf1oiq5a5" path="res://Assets/UI/SpecialInfo/keyforinfo.png" id="38_8rcq3"]
 [ext_resource type="Texture2D" uid="uid://c5ui0ks2ghgqs" path="res://Assets/UI/Interface/Niger.png" id="39_o8hjd"]
@@ -48,12 +47,11 @@
 atlas = ExtResource("9_uu58y")
 region = Rect2(0, 578, 1280, 142)
 
-[sub_resource type="LabelSettings" id="LabelSettings_606uc"]
-font = ExtResource("15_wdy5h")
-font_size = 30
-font_color = Color(0.9137255, 0.8352941, 0.6862745, 1)
+[sub_resource type="FontVariation" id="FontVariation_8rcq3"]
+base_font = ExtResource("33_nk7xc")
+spacing_glyph = 5
 
-[sub_resource type="FontVariation" id="FontVariation_uu58y"]
+[sub_resource type="FontVariation" id="FontVariation_o8hjd"]
 base_font = ExtResource("33_nk7xc")
 spacing_glyph = 5
 
@@ -226,7 +224,7 @@ metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
 [node name="CountertopDec" type="TextureRect" parent="Background"]
-z_index = 99
+z_index = 4
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -324,19 +322,17 @@ offset_top = 70.0
 offset_right = 1214.0
 offset_bottom = 222.0
 size_flags_horizontal = 3
-texture_normal = ExtResource("21_uu58y")
+texture_normal = ExtResource("21_8rcq3")
+texture_pressed = ExtResource("22_8rcq3")
 
 [node name="Label" type="Label" parent="BottomButtons/StartDayButton"]
-visible = false
 layout_mode = 0
-offset_left = 112.0
-offset_top = 32.0
-offset_right = 152.0
-offset_bottom = 78.0
-theme_override_fonts/font = ExtResource("8_606uc")
-theme_override_font_sizes/font_size = 30
-text = "1"
-label_settings = SubResource("LabelSettings_606uc")
+offset_left = 54.0
+offset_top = 27.0
+offset_right = 227.0
+offset_bottom = 85.0
+theme_override_fonts/font = SubResource("FontVariation_8rcq3")
+theme_override_font_sizes/font_size = 28
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -387,49 +383,51 @@ tex_count_1 = null
 script = ExtResource("17_wdy5h")
 
 [node name="DialogueBox" type="TextureRect" parent="DayScene"]
-offset_left = 35.0
-offset_top = 7.0
-offset_right = 872.0
-offset_bottom = 501.57578
+offset_left = -28.0
+offset_top = 5.0
+offset_right = 923.0
+offset_bottom = 539.0
 texture = ExtResource("32_uu58y")
-expand_mode = 5
+expand_mode = 1
 
 [node name="CustomerName" type="Label" parent="DayScene/DialogueBox"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="OrderText" type="RichTextLabel" parent="DayScene/DialogueBox"]
+[node name="OrderText" type="Label" parent="DayScene/DialogueBox"]
 layout_mode = 0
-offset_left = 81.0
-offset_top = 130.0
-offset_right = 740.0
-offset_bottom = 352.0
-theme_override_colors/default_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
-theme_override_fonts/normal_font = SubResource("FontVariation_uu58y")
-theme_override_font_sizes/normal_font_size = 26
+offset_left = 102.0
+offset_top = 145.0
+offset_right = 837.0
+offset_bottom = 362.0
+theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
+theme_override_fonts/font = SubResource("FontVariation_o8hjd")
+theme_override_font_sizes/font_size = 32
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="BtnAccept" type="TextureButton" parent="DayScene"]
-offset_left = 199.0
-offset_top = 379.0
-offset_right = 403.0
-offset_bottom = 487.0
+offset_left = 206.0
+offset_top = 406.0
+offset_right = 410.0
+offset_bottom = 514.0
 texture_normal = ExtResource("28_q6g5s")
 stretch_mode = 5
 
 [node name="BtnContinue" type="TextureButton" parent="DayScene"]
-offset_left = 474.0
-offset_top = 379.0
-offset_right = 678.0
-offset_bottom = 487.0
+offset_left = 481.0
+offset_top = 406.0
+offset_right = 685.0
+offset_bottom = 514.0
 texture_normal = ExtResource("29_7yiff")
 stretch_mode = 5
 
 [node name="BtnPrincipalLeave" type="TextureButton" parent="DayScene"]
-offset_left = 336.0
-offset_top = 381.0
-offset_right = 540.0
-offset_bottom = 489.0
+offset_left = 343.0
+offset_top = 408.0
+offset_right = 547.0
+offset_bottom = 516.0
 texture_normal = ExtResource("28_q6g5s")
 stretch_mode = 5
 
@@ -441,9 +439,9 @@ offscreen_x = 1400.0
 
 [node name="SpecialStar" type="TextureRect" parent="DayScene"]
 visible = false
-offset_left = 923.0
+offset_left = 949.0
 offset_top = 134.0
-offset_right = 1008.0
+offset_right = 1034.0
 offset_bottom = 219.0
 texture = ExtResource("37_nk7xc")
 stretch_mode = 2
@@ -471,9 +469,9 @@ texture = ExtResource("38_8rcq3")
 [node name="LeoSpecial" type="TextureRect" parent="DayScene"]
 visible = false
 z_index = 7
-offset_left = 702.0
+offset_left = 728.0
 offset_top = 40.0
-offset_right = 1945.0
+offset_right = 1971.0
 offset_bottom = 709.0
 texture = ExtResource("40_o8hjd")
 expand_mode = 1

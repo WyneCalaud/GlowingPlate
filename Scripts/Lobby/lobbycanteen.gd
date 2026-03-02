@@ -10,6 +10,9 @@ extends Control
 @onready var day_scene = $DayScene
 @onready var dialogue_box = $DayScene/DialogueBox
 @onready var customer_manager = $DayScene/CustomerManager
+@onready var dialogue_text: Label = $DayScene/DialogueBox/OrderText
+
+@onready var day_number: Label = $BottomButtons/StartDayButton/Label
 
 @onready var bottom_buttons = $BottomButtons
 @onready var hideshowbutton = $BottomButtons/HBoxContainer/HideShowButton
@@ -33,6 +36,11 @@ var happiness_decay_rate: float = 2.0
 var is_waiting_for_serve: bool = false
 
 var is_food_intro_active := false
+
+var is_typing: bool = false
+var full_dialogue_text: String = ""
+var typing_speed: float = 0.08   # seconds between words
+
 # ---------------------------------------------------------
 # LIFECYCLE
 # ---------------------------------------------------------
@@ -70,6 +78,9 @@ func _ready() -> void:
 		principal_leave_btn.pressed.connect(_on_principal_leave_pressed)
 	
 	_restore_patience_ui()
+	
+	var GD = get_node("/root/GameData")
+	day_number.text = "Day %02d" % GD.current_day
 
 func _process(delta: float) -> void:
 	if is_waiting_for_serve:
@@ -80,16 +91,43 @@ func _process(delta: float) -> void:
 # FOOD INTRO STUFF
 # ---------------------------------------------------------
 
+func typewriter_words(text: String) -> void:
+
+	is_typing = true
+	full_dialogue_text = text
+	dialogue_text.text = ""
+
+	var words: PackedStringArray = text.split(" ")
+	var built_text: String = ""
+
+	for i in words.size():
+		built_text += words[i]
+
+		if i < words.size() - 1:
+			built_text += " "
+
+		dialogue_text.text = built_text
+
+		await get_tree().create_timer(typing_speed).timeout
+
+	is_typing = false
+
+func _input(event):
+	if event.is_action_pressed("ui_accept") and is_typing:
+		dialogue_text.text = full_dialogue_text
+		is_typing = false
+
 func start_real_day():
 	var GD = get_node("/root/GameData")
+
+	# 🔼 Restore normal font size for customers
+	dialogue_text.add_theme_font_size_override("font_size", 32)
 
 	# Day officially begins
 	GD.service_state = GameData.ServiceState.IDLE
 
-	# Show next customer button then now its spawn
 	spawn_next_customer()
 
-	# Make sure lobby UI stays hidden during service
 	almanac_btn.hide()
 	bulletin_btn.hide()
 	start_day_btn.hide()
@@ -109,11 +147,11 @@ const FOOD_INTRO_TEXT := {
 	
 	6: "Rice isn’t the only Go food that gives us energy!Today, we’re introducing corn. It’s yummy, and helps kids stay active and energized. Some students might want to try corn instead of rice or bread. Let’s try serving these cute kids some corn today, shall we?",
 	
-	7: "Not all Grow foods are meat or fish! Today, we’re introducing eggs. They help kids grow strong and are a great source of protein. This is perfect for students who want something soft or don’t feel like eating meat or fish today.Let’s try serving these cute kids some eggs, shall we?.",
+	7: "Not all Grow foods are meat or fish! Today, we’re introducing eggs. They help kids grow strong and are a great source of protein. A great alternative for students that don't want fish or chicken.Let’s try serving these cute kids some eggs, shall we?.",
 	
-	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. They’re crunchy, colorful, and full of vitamin A.Some kids might be curious about how carrots taste, and that’s okay! Let’s try serving these cute kids some carrots today, shall we?",
+	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. They’re crunchy, colorful, and full of vitamin A.Some kids might be curious about how carrots taste so let’s try serving these cute kids some carrots today, shall we?",
 	
-	9: "Rice gives us energy, but did you know there are different kinds of rice too? Today, we’re introducing brown rice — it’s a Go food that helps keep our tummy healthy and gives long-lasting energy. Some kids might want to try brown rice instead of white rice today. Let’s try serving these cute kids some brown rice, shall we?",
+	9: "Rice gives us energy, and there are different kinds to try! Today we’re introducin brown rice — a healthy choice that keeps our tummies healthy and gives lasting energy. Some kids might want to try brown rice instead of white rice. Let’s serve them some and give it a try!",
 	
 	10: "Grow foods don’t always come from meat, fish, or eggs. Today, we’re introducing tokwa — it’s made from soybeans and helps our body grow strong too! This is a great option for kids who want a plant-based Grow food.Let’s try serving these cute kids some tokwa today, shall we?",
 	
@@ -121,8 +159,24 @@ const FOOD_INTRO_TEXT := {
 	
 	12: "Fruits help keep us healthy and give us vitamins! Today, we’re introducing banana — it’s sweet, soft, and gives quick energy. Many kids love bananas, so you might hear them ask for it today. Let’s try serving these cute kids some bananas, shall we?",
 	
-	13: "Today, we’re shining the spotlight on squash — a bright and cheerful veggie that helps keep our bodies healthy and strong. Squash can be yellow, green, or even orange, and it tastes a little sweet and soft when it’s cooked. It’s full of vitamins that help our eyes see clearly, our skin glow, and our bodies grow big and strong."
+	13: "Today, we’re shining the spotlight on squash, Squash can be yellow, green, or even orange, and it tastes a little sweet and soft when it’s cooked. It’s full of vitamins that help our eyes see clearly, our skin glow, and our bodies grow big and strong."
 }
+
+const FOOD_INTRO_FONT_SIZE := {
+	2: 32,
+	3: 30,
+	4: 30,
+	5: 30,
+	6: 26,
+	7: 26,
+	8: 28,
+	9: 26,
+	10: 26,
+	11: 26,
+	12: 26,
+	13: 26
+}
+
 
 func play_food_intro_if_needed():
 	var GD = get_node("/root/GameData")
@@ -139,9 +193,9 @@ func play_food_intro_if_needed():
 	GD.shown_food_intros[day] = true
 	GD.save_game()
 
-	spawn_principal_intro(FOOD_INTRO_TEXT[day])
+	spawn_principal_intro(day, FOOD_INTRO_TEXT[day])
 
-func spawn_principal_intro(text:String):
+func spawn_principal_intro(day:int, text:String):
 
 	is_food_intro_active = true
 
@@ -152,9 +206,16 @@ func spawn_principal_intro(text:String):
 	await customer_manager.customer_arrived
 
 	dialogue_box.show()
-	dialogue_box.get_node("OrderText").text = text
+
+	# 🎯 Get custom font size for this day
+	var font_size : int = FOOD_INTRO_FONT_SIZE.get(day, 28)
+
+	dialogue_text.add_theme_font_size_override("font_size", font_size)
+
+	await typewriter_words(text)
 
 	principal_leave_btn.show()
+
 
 func _on_principal_confirm():
 
@@ -494,9 +555,9 @@ func _on_btn_final_serve_pressed() -> void:
 	$DayScene/BtnContinue.hide()
 
 	if correct:
-		$DayScene/DialogueBox/OrderText.text = _get_happy_feedback()
+		await typewriter_words(_get_happy_feedback())
 	else:
-		$DayScene/DialogueBox/OrderText.text = _get_angry_feedback(mistakes)
+		await typewriter_words(_get_angry_feedback(mistakes))
 
 	# If this was the LAST customer, stop here.
 	if GD.remaining_customers.is_empty():
