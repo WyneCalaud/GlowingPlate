@@ -33,6 +33,9 @@ var original_local_pos: Vector2
 var is_returning: bool = false
 var _service_complete_triggered: bool = false 
 
+# --- UNDO HISTORY ---
+var placement_history: Array[Node] = []
+
 # --- DROP ZONE STATE ---
 var is_over_serve_zone: bool = false
 var is_over_trash_zone: bool = false
@@ -177,6 +180,7 @@ func get_plate_contents() -> Array:
 	return contents
 
 func reset_plate_visuals():
+	placement_history.clear() # Clear undo history on reset
 	for child in get_children():
 		if child.is_in_group("plate_slot") and child.has_method("clear_slot"):
 			child.clear_slot()
@@ -202,3 +206,17 @@ func is_point_inside_area(point: Vector2) -> bool:
 		for hit in result:
 			if hit.collider == plate_area: return true
 	return false
+
+# --- UNDO MECHANIC ---
+func record_placement(slot_node: Node):
+	placement_history.append(slot_node)
+
+func undo_last_placement():
+	if placement_history.size() > 0:
+		var last_slot = placement_history.pop_back()
+		if is_instance_valid(last_slot) and last_slot.has_method("clear_slot"):
+			last_slot.clear_slot()
+			
+		# Reset the service complete trigger so the Finish button hides if the plate is no longer full
+		_service_complete_triggered = false
+		get_tree().call_group("HUD", "show_finish_button", false)

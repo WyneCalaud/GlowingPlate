@@ -194,6 +194,15 @@ func start_hold_mechanic():
 	if is_instance_valid(hovered_cooker):
 		mechanic_instance.start_scoop_hold(self, hovered_cooker.name)
 
+	# --- Tell the UI what rice type we are ---
+	call_deferred("_update_scoop_ui_type")
+
+func _update_scoop_ui_type():
+	var uis = get_tree().get_nodes_in_group("rice_scoop_ui")
+	for ui in uis:
+		if ui.has_method("set_rice_type"):
+			ui.set_rice_type(rice_type)
+
 func _on_mechanic_score_change(deduction: int):
 	emit_signal("score_change", deduction)
 

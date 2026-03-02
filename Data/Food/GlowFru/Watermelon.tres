@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CustomItemData" load_steps=6 format=3 uid="uid://dw3v4m5y7nbwm"]
 
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="1_emn42"]
-[ext_resource type="Texture2D" uid="uid://deq768bcdta8y" path="res://Assets/Foods/Melon.png" id="1_idpfw"]
+[ext_resource type="Texture2D" uid="uid://b2781c8lberpg" path="res://Assets/Food Containers/Watermelon.png" id="1_jfupy"]
 [ext_resource type="Texture2D" uid="uid://bxy3204yge1ev" path="res://Assets/IndividualFoods/Watermelon455.png" id="4_nbuaq"]
 [ext_resource type="Texture2D" uid="uid://cvb64746i0w6f" path="res://Assets/FruitSection/WatermelonPlated2.png" id="5_e2rf2"]
 [ext_resource type="Texture2D" uid="uid://utemj5blbvsf" path="res://Assets/FruitSection/WatermelonPlated3.png" id="6_yigv5"]
@@ -11,7 +11,7 @@ script = ExtResource("1_emn42")
 item_name = "Watermelon"
 internal_key = "WATERMELON"
 food_category = "GlowFru"
-base_texture = ExtResource("1_idpfw")
+base_texture = ExtResource("1_jfupy")
 texture_count_1 = ExtResource("4_nbuaq")
 texture_count_2 = ExtResource("5_e2rf2")
 texture_count_3 = ExtResource("6_yigv5")

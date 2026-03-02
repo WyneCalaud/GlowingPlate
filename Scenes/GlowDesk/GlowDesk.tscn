@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://c5l8auaitpptq"]
+[gd_scene load_steps=47 format=3 uid="uid://c5l8auaitpptq"]
 
 [ext_resource type="Texture2D" uid="uid://brv6v260jforn" path="res://Assets/UI/GlowDesk/GlowDeskBackground.png" id="1_057f4"]
 [ext_resource type="Script" uid="uid://be185ofgy7lb5" path="res://Scripts/GlowDesk/GlowDeskManager.gd" id="1_sf6pf"]
@@ -27,17 +27,18 @@
 [ext_resource type="Texture2D" uid="uid://cwsu0pfwojnuw" path="res://Assets/UI/GlowDesk/GroupBButton.png" id="15_60x4y"]
 [ext_resource type="Texture2D" uid="uid://be82hf27jrm6q" path="res://Assets/UI/GlowDesk/ImageExample.png" id="16_ksixq"]
 [ext_resource type="Texture2D" uid="uid://yfnuet5lump1" path="res://Assets/UI/GlowDesk/GroupCButton.png" id="16_u0x3h"]
-[ext_resource type="Texture2D" uid="uid://fut7jd36inur" path="res://Assets/UI/GlowDesk/AButton.png" id="17_a6lix"]
 [ext_resource type="Texture2D" uid="uid://dhsgba3xox0rc" path="res://Assets/UI/GlowDesk/QuestionBox.png" id="18_bqq7l"]
 [ext_resource type="LabelSettings" uid="uid://c7ptqt68bqpsk" path="res://Theme/QuizText.tres" id="18_gaam1"]
 [ext_resource type="Texture2D" uid="uid://d04qdkpoehsk2" path="res://Assets/UI/GlowDesk/QuickSign.png" id="18_iljl6"]
-[ext_resource type="Texture2D" uid="uid://bos5vd8rdrsu2" path="res://Assets/UI/GlowDesk/BButton.png" id="19_2jg6t"]
 [ext_resource type="LabelSettings" uid="uid://dj1ni41u74d4g" path="res://Theme/ExplanationText.tres" id="19_eibyc"]
 [ext_resource type="LabelSettings" uid="uid://c2okc58miplvq" path="res://Theme/QuestionTextMode.tres" id="19_sf6pf"]
 [ext_resource type="LabelSettings" uid="uid://bnw1c7xl5etu4" path="res://Theme/QuestionText.tres" id="19_uoomi"]
-[ext_resource type="Texture2D" uid="uid://c0m4dr1454glm" path="res://Assets/UI/GlowDesk/CButton.png" id="20_m2bnn"]
 [ext_resource type="Texture2D" uid="uid://dex8lkp3t7cgl" path="res://Assets/UI/PauseLayer.png" id="21_g4848"]
 [ext_resource type="LabelSettings" uid="uid://cp5wh0w3mvxhv" path="res://Theme/Timer.tres" id="25_o01m3"]
+[ext_resource type="Texture2D" uid="uid://bynbvdnghdwax" path="res://Assets/UI/GlowDesk/RightAnswer.png" id="30_o38ri"]
+[ext_resource type="Texture2D" uid="uid://dqjjqqhrm1up0" path="res://Assets/UI/GlowDesk/AChoice.png" id="35_o38ri"]
+[ext_resource type="Texture2D" uid="uid://cq3ah0b7dcaar" path="res://Assets/UI/GlowDesk/BChoice.png" id="36_qu1ft"]
+[ext_resource type="Texture2D" uid="uid://yue64ka8ictw" path="res://Assets/UI/GlowDesk/CChoice.png" id="37_r7cl4"]
 [ext_resource type="Texture2D" uid="uid://c0ao7xl25f74g" path="res://Assets/UI/Interface/MoneyBar.png" id="38_uoomi"]
 [ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="39_bqq7l"]
 [ext_resource type="LabelSettings" uid="uid://daeaohujm4hnk" path="res://Theme/Avatar.tres" id="39_uoomi"]
@@ -476,8 +477,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -12.0
-offset_top = -104.0
+offset_top = -98.0
 offset_right = 13.0
+offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 20
@@ -491,14 +493,13 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_6q71q")
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("17_a6lix")
+texture_normal = ExtResource("30_o38ri")
 
 [node name="RightAnswerText" type="Label" parent="BrowseQuestionBox/AnswersContainer/RightAnswerButton"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 218.0
-offset_bottom = 79.0
+offset_left = 15.0
+offset_right = 236.0
+offset_bottom = 111.0
 text = "GO FOOD, GROW FOOD, GLOW FOOD"
 label_settings = ExtResource("18_gaam1")
 horizontal_alignment = 1
@@ -507,10 +508,11 @@ autowrap_mode = 3
 
 [node name="RightAnswerImage" type="TextureRect" parent="BrowseQuestionBox/AnswersContainer/RightAnswerButton"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 217.0
-offset_bottom = 79.0
+offset_left = 19.0
+offset_top = 2.0
+offset_right = 236.0
+offset_bottom = 106.0
+stretch_mode = 3
 
 [node name="ExplanationText" type="Label" parent="BrowseQuestionBox/AnswersContainer"]
 custom_minimum_size = Vector2(350, 50)
@@ -662,14 +664,14 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("17_a6lix")
+texture_normal = ExtResource("35_o38ri")
 
 [node name="AText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/A"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 217.0
-offset_bottom = 79.0
+offset_left = 53.0
+offset_top = 19.0
+offset_right = 250.0
+offset_bottom = 124.0
 text = "GO FOOD"
 label_settings = ExtResource("18_gaam1")
 horizontal_alignment = 1
@@ -678,24 +680,25 @@ autowrap_mode = 2
 
 [node name="AImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/A"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 217.0
-offset_bottom = 79.0
+offset_left = 55.0
+offset_top = 19.0
+offset_right = 250.0
+offset_bottom = 124.0
+stretch_mode = 3
 
 [node name="B" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("19_2jg6t")
+texture_normal = ExtResource("36_qu1ft")
 
 [node name="BText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/B"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 215.0
-offset_bottom = 79.0
-text = "Grow Food"
+offset_left = 53.0
+offset_top = 19.0
+offset_right = 250.0
+offset_bottom = 124.0
+text = "GO FOOD"
 label_settings = ExtResource("18_gaam1")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -703,24 +706,25 @@ autowrap_mode = 2
 
 [node name="BImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/B"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 215.0
-offset_bottom = 79.0
+offset_left = 55.0
+offset_top = 19.0
+offset_right = 250.0
+offset_bottom = 124.0
+stretch_mode = 3
 
 [node name="C" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("20_m2bnn")
+texture_normal = ExtResource("37_r7cl4")
 
 [node name="CText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/C"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 214.0
-offset_bottom = 79.0
-text = "Glow Food"
+offset_left = 53.0
+offset_top = 19.0
+offset_right = 250.0
+offset_bottom = 124.0
+text = "GO FOOD"
 label_settings = ExtResource("18_gaam1")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -728,10 +732,11 @@ autowrap_mode = 2
 
 [node name="CImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/C"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 3.0
-offset_right = 216.0
-offset_bottom = 79.0
+offset_left = 55.0
+offset_top = 19.0
+offset_right = 250.0
+offset_bottom = 124.0
+stretch_mode = 3
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 1

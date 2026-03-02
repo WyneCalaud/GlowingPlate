@@ -524,9 +524,17 @@ func _on_btn_final_serve_pressed() -> void:
 	var character_id := ""
 	if GD.saved_customer_order:
 		character_id = GD.saved_customer_order.customer_name
+		
+	# --- UPGRADE LOGIC: MEAL BONUS ---
+	var money_earned = 0
+	if correct:
+		money_earned = 10
+		if "unlocked_upgrades" in GD and GD.unlocked_upgrades.has("Meal Bonus"):
+			money_earned += 15 # Gives 25 instead of 10!
+			print("Meal Bonus Applied! Earned: ", money_earned)
 
 	GD.finalize_service({
-		"earned_money": 10 if correct else 0,
+		"earned_money": money_earned,
 		"reputation_change": 1.0 if correct else -0.5,
 		"happiness": get_hud_patience(),
 		"character_id": character_id,
@@ -555,7 +563,7 @@ func _on_btn_final_serve_pressed() -> void:
 	if GD.remaining_customers.is_empty():
 		return
 
-# Otherwise continue normally
+	# Otherwise continue normally
 	await get_tree().create_timer(3.5).timeout
 
 	customer_manager.next_customer()

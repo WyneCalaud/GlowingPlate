@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=9 format=3 uid="uid://cy0uw31wdvh0e"]
+[gd_resource type="Resource" script_class="CustomItemData" load_steps=10 format=3 uid="uid://cy0uw31wdvh0e"]
 
-[ext_resource type="Texture2D" uid="uid://djkqp3ncps3t8" path="res://Assets/Foods/Pandesal.png" id="1_lk2sa"]
+[ext_resource type="Texture2D" uid="uid://61ion7ipfqoc" path="res://Assets/Food Containers/Pan de sal.png" id="1_xwdqa"]
 [ext_resource type="Texture2D" uid="uid://bpvdnx7gw1wqv" path="res://Assets/GoSection/medrice512.png" id="3_xwdqa"]
 [ext_resource type="Texture2D" uid="uid://dve0ig4h81rnp" path="res://Assets/GoSection/lowrice512.png" id="4_xsfut"]
 [ext_resource type="Texture2D" uid="uid://ddjikhlq0jk20" path="res://Assets/GoSection/toohighrice 512.png" id="5_gbali"]
@@ -8,16 +8,18 @@
 [ext_resource type="Texture2D" uid="uid://d2hgi1gpy82l3" path="res://Assets/IndividualFoods/Pandesal397.png" id="6_xwdqa"]
 [ext_resource type="Texture2D" uid="uid://cdnoptwhwke30" path="res://Assets/GoSection/PandesalPlated2.png" id="7_xsfut"]
 [ext_resource type="Texture2D" uid="uid://bs5j50cadgvv7" path="res://Assets/GoSection/PandesalPlated3.png" id="8_gbali"]
+[ext_resource type="Texture2D" uid="uid://dk74jvbygtgs4" path="res://Assets/UI/PortionFoods/PandesalPlated4.png" id="9_xsfut"]
 
 [resource]
 script = ExtResource("6_tmtia")
 item_name = "Pandesal"
 internal_key = "PANDESAL"
 food_category = "Go"
-base_texture = ExtResource("1_lk2sa")
+base_texture = ExtResource("1_xwdqa")
 texture_count_1 = ExtResource("6_xwdqa")
 texture_count_2 = ExtResource("7_xsfut")
 texture_count_3 = ExtResource("8_gbali")
+texture_count_4 = ExtResource("9_xsfut")
 plated_texture_small = ExtResource("4_xsfut")
 plated_texture_medium = ExtResource("3_xwdqa")
 plated_texture_too_high = ExtResource("5_gbali")

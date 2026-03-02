@@ -3,7 +3,7 @@ extends Control
 
 # --- SIGNALS ---
 signal fill_finished(amount_str, amount_int)
-signal popup_closed # NEW: Emitted when the player clicks outside to close
+signal popup_closed # Emitted when the player clicks outside to close
 
 # --- TIMING CONFIGURATION ---
 const TIME_TOO_FAST: float = 0.5
@@ -48,6 +48,7 @@ var tex_too_high: Texture2D
 @onready var cup_display: TextureRect = $CupProgress 
 
 func _ready():
+	add_to_group("rice_scoop_ui")
 	set_rice_type(default_rice_type)
 	
 	if button:
@@ -57,22 +58,31 @@ func _ready():
 	if cup_display:
 		cup_display.texture = tex_empty
 
-# --- NEW: CLICK OUTSIDE TO CLOSE MECHANIC ---
+# --- CLICK OUTSIDE TO CLOSE MECHANIC (FIXED) ---
 func _input(event: InputEvent) -> void:
-	# Check if the popup is visible and the user left-clicks
 	if visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var click_pos = event.global_position
 		
-		# If the click position is OUTSIDE the bounding box of this Control node
-		if not get_global_rect().has_point(click_pos):
-			# Consume the input so it doesn't accidentally click things behind the popup
-			get_viewport().set_input_as_handled()
-			close_scoop()
+		# 1. Check if they are clicking the Fill Button. If yes, DO NOT CLOSE.
+		if is_instance_valid(button) and button.get_global_rect().has_point(click_pos):
+			return
+			
+		# 2. Check if they are clicking the Cup Image. If yes, DO NOT CLOSE.
+		if is_instance_valid(cup_display) and cup_display.get_global_rect().has_point(click_pos):
+			return
+		
+		# 3. Check the root control box just in case
+		if get_global_rect().has_point(click_pos):
+			return
+			
+		# If none of the above are true, they clicked completely outside!
+		get_viewport().set_input_as_handled()
+		close_scoop()
 
 func close_scoop() -> void:
 	if is_holding: return # Prevent closing if they dragged outside while holding the fill button
 	
-	hide() # Or you can use queue_free() if you spawn a new one every time
+	hide() 
 	popup_closed.emit()
 # --------------------------------------------
 

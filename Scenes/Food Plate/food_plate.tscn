@@ -30,7 +30,7 @@ rice_scale_factor = 0.3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotGo"]
 position = Vector2(69, -76)
-polygon = PackedVector2Array(-173, -28, -164, -36, 16, -48, 40, -32, 56, 8, 56, 176, 48, 208, 8, 216, -48, 192, -89, 158, -106, 142, -124, 122, -135, 108, -154, 77, -168, 48, -172, 12, -174, -9)
+polygon = PackedVector2Array(-168, -32, -144, -48, 16, -48, 40, -32, 56, 8, 56, 176, 48, 208, 8, 216, -48, 192, -89, 158, -106, 142, -124, 122, -135, 108, -154, 77, -168, 48, -176, 32, -176, -8)
 
 [node name="SlotVeg" type="Area2D" parent="." node_paths=PackedStringArray("linked_image") groups=["plate_slots"]]
 position = Vector2(128, 108)
@@ -49,7 +49,7 @@ position = Vector2(-133, -102)
 script = ExtResource("2_xwyst")
 linked_image = NodePath("../GrowFood")
 slot_type = "Grow"
-rice_position_offset = Vector2(0, -20)
+rice_position_offset = Vector2(20, -30)
 rice_rotation_offset = 90.0
 rice_scale_factor = 0.3
 

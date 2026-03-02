@@ -8,34 +8,41 @@ var default_positions: Dictionary = {}
 var kitchen_locked := false
 const DISABLE_KITCHEN_TUTORIAL := true
 
+# --- EMPTY CONTAINER TEXTURES ---
+@export_group("Empty Container Textures")
+@export var empty_go_tex: Texture2D
+@export var empty_grow_tex: Texture2D
+@export var empty_fru_tex: Texture2D
+@export var empty_veg_tex: Texture2D
+
 # --- STORE ORIGINAL DROP ZONE POSITION ---
 var drop_zones_default_position: Vector2
 
 # --- REFERENCES TO FOOD DISPENSER ARRAYS ---
 @onready var go_stations = [
-	$Row1/HBoxContainter/Slot3,
-	$Row3/HBoxContainter/Slot2,
-	$Row1/HBoxContainter/Slot6
+	$Row1/GoFoodRow/Slot1,
+	$Row1/GoFoodRow/Slot2
 ]
 
 @onready var grow_stations = [
-	$Row1/HBoxContainter/Slot1,
-	$Row1/HBoxContainter/Slot2,
-	$Row1/HBoxContainter/Slot5,
-]
-
-@onready var veg_stations = [
-	$Row2/HBoxContainter/Slot1,
-	$Row2/HBoxContainter/Slot2,
-	$Row2/HBoxContainter/Slot3,
-	$Row1/HBoxContainter/Slot4,
+	$Row2/GrowFoodRow/Slot1,
+	$Row2/GrowFoodRow/Slot2,
+	$Row2/GrowFoodRow/Slot3,
+	$Row2/GrowFoodRow/Slot4
 ]
 
 @onready var fru_stations = [
-	$Row3/HBoxContainter/Slot1,
-	$Row3/HBoxContainter/Slot3,
-	$Row3/HBoxContainter/Slot4,
-	$Row2/HBoxContainter/Slot4
+	$Row3/GlowFruitRow/Slot1,
+	$Row3/GlowFruitRow/Slot2,
+	$Row3/GlowFruitRow/Slot3,
+	$Row3/GlowFruitRow/Slot4
+]
+
+@onready var veg_stations = [
+	$Row4/GlowVeggieRow/Slot1,
+	$Row4/GlowVeggieRow/Slot2,
+	$Row4/GlowVeggieRow/Slot3,
+	$Row4/GlowVeggieRow/Slot4
 ]
 
 # --- Node References ---
@@ -52,6 +59,7 @@ var drop_zones_default_position: Vector2
 @onready var row1 = get_node_or_null("Row1")
 @onready var row2 = get_node_or_null("Row2")
 @onready var row3 = get_node_or_null("Row3")
+@onready var row4 = get_node_or_null("Row4") # Added Row 4
 @onready var mat_node = get_node_or_null("Mat")
 @onready var plate_parent = get_node_or_null("Plate")
 @onready var beverages_station = get_node_or_null("BeveragesStation")
@@ -67,25 +75,15 @@ var drop_zones_default_position: Vector2
 
 const FOOD_INTRO_TEXT := {
 	2: "We now have Pan de sal, in case a student wants something other than rice. \n\tLet’s try serving these cute kids some pan de sal, shall we?",
-	
 	3: "Turns out, there are kids who don’t like chicken, good thing we now have fish to serve them. \n\tThis is a good way for them to eat variety of grow foods too!Let’s try serving these cute kids some fish now, shall we?",
-	
 	4: "It’s time to introduce these kids to another vegetable.\n\tSomething that is high in vitamin A this time. I hope they  get used to eating vegetables soon!\n\tLet’s try serving these cute kids some squash, shall we?",
-	
 	5: "Fruits are so yummy, aren’t they? They’re yummy and also healthy!Good thing we have another \n\tfruit to serve now, and I hope the kids get to enjoy it very much.\n\tLet’s try serving these cute kids some watermelon, shall we?",
-	
 	6: "Rice isn’t the only Go food that gives us energy!Today, we’re introducing corn. It’s yummy, \n\tand helps kids stay active and energized. Some students might want to try corn instead of rice or bread.\n\tLet’s try serving these cute kids some corn today, shall we?",
-	
 	7: "Not all Grow foods are meat or fish! Today, we’re introducing eggs. They help kids grow \n\tstrong and are a great source of protein. This is perfect for students who want something soft \n\tor don’t feel like eating meat or fish today.Let’s try serving these cute kids some eggs, shall we?.",
-	
 	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. \n\tThey’re crunchy, colorful, and full of vitamin A.Some kids might be curious about how carrots \n\ttaste, and that’s okay! Let’s try serving these cute kids some carrots today, shall we?",
-	
 	9: "Rice gives us energy, but did you know there are different kinds of rice too? Today, we’re \n\tintroducing brown rice — it’s a Go food that helps keep our tummy healthy and gives long-lasting energy.\n\tSome kids might want to try brown rice instead of white rice today.\n\tLet’s try serving these cute kids some brown rice, shall we?",
-	
 	10: "Grow foods don’t always come from meat, fish, or eggs. Today, we’re introducing tokwa — \n\tit’s made from soybeans and helps our body grow strong too! This is a great option for kids \n\twho want a plant-based Grow food.Let’s try serving these cute kids some tokwa today, shall we?",
-	
 	11: "Vegetables come in many shapes, colors, and tastes! Today, we’re introducing eggplant — \n\tit’s a purple vegetable that helps keep our body healthy. Some kids might be curious or \n\tunsure about its taste, and that’s okay.Let’s try serving these cute kids some eggplant today, shall we?",
-	
 	12: "Fruits help keep us healthy and give us vitamins! Today, we’re introducing banana — \n\tit’s sweet, soft, and gives quick energy. Many kids love bananas, so you might hear them ask for it today.\n\tLet’s try serving these cute kids some bananas, shall we?"
 }
 
@@ -94,6 +92,7 @@ func _ready():
 	if row1: default_positions["row1"] = row1.position
 	if row2: default_positions["row2"] = row2.position
 	if row3: default_positions["row3"] = row3.position
+	if row4: default_positions["row4"] = row4.position
 	if mat_node: default_positions["mat_node"] = mat_node.position
 	if plate_parent: default_positions["plate_parent"] = plate_parent.position
 	if beverages_station: default_positions["beverages_station"] = beverages_station.position
@@ -206,11 +205,27 @@ func setup_kitchen_for_today():
 	var day = GD.current_day
 	var menu_key = day if OS.MENU_SCHEDULE.has(day) else 1
 	var menu = OS.MENU_SCHEDULE[menu_key]
+	
+	# --- FILTER OUT BROWN RICE FROM REGULAR DISPENSERS ---
+	# Because Brown Rice has its own dedicated physical cooker, 
+	# we don't want it stealing an empty container slot in the Go row!
+	var filtered_menu = menu.duplicate(true)
+	if filtered_menu.has("Go"):
+		var go_items = filtered_menu["Go"]
+		if go_items is String and go_items == "BROWN_RICE":
+			filtered_menu["Go"] = []
+		elif go_items is Array:
+			var new_go = []
+			for item in go_items:
+				if item != "BROWN_RICE":
+					new_go.append(item)
+			filtered_menu["Go"] = new_go
 
-	update_station_list(go_stations, menu, "Go")
-	update_station_list(grow_stations, menu, "Grow")
-	update_station_list(veg_stations, menu, "GlowVeg")
-	update_station_list(fru_stations, menu, "GlowFru")
+	# Apply new station lists with their respective empty container textures
+	update_station_list(go_stations, filtered_menu, "Go", empty_go_tex)
+	update_station_list(grow_stations, filtered_menu, "Grow", empty_grow_tex)
+	update_station_list(veg_stations, filtered_menu, "GlowVeg", empty_veg_tex)
+	update_station_list(fru_stations, filtered_menu, "GlowFru", empty_fru_tex)
 
 	# --- BROWN RICE DYNAMIC LAYOUT ---
 	var has_brown_rice = false
@@ -229,25 +244,27 @@ func setup_kitchen_for_today():
 	# Adjust Camera Scroller Max X
 	var cam = get_tree().get_first_node_in_group("MainCamera")
 	if cam and "max_x" in cam:
-		cam.max_x = 2216.0 if has_brown_rice else 1920.0
+		cam.max_x = 2276.0 if has_brown_rice else 1992.0
 
-	# Adjust Positions Safely (using set_deferred to prevent infinite layout loops)
+	# Adjust Positions Safely
 	if has_brown_rice:
-		if beverages_station: beverages_station.set_deferred("position", Vector2(1575.0, 1.0))
-		if row1: row1.set_deferred("position", Vector2(564.0, 77.0))
-		if row2: row2.set_deferred("position", Vector2(1005.0, 288.0))
-		if row3: row3.set_deferred("position", Vector2(998.0, 494.0))
-		if mat_node: mat_node.set_deferred("position", Vector2(272.0, 0.0))
-		if plate_parent: plate_parent.set_deferred("position", Vector2(272.0, 0.0))
+		if beverages_station: beverages_station.set_deferred("position", Vector2(1639.0, 1.0))
+		if row1: row1.set_deferred("position", Vector2(604.0, 110.0))
+		if row2: row2.set_deferred("position", Vector2(1022.0, 107.0))
+		if row3: row3.set_deferred("position", Vector2(1037.0, 301.0))
+		if row4: row4.set_deferred("position", Vector2(1030.0, 494.0)) 
+		if mat_node: mat_node.set_deferred("position", Vector2(312.0, 0.0))
+		if plate_parent: plate_parent.set_deferred("position", Vector2(312.0, 0.0))
 	else:
 		if beverages_station and default_positions.has("beverages_station"): beverages_station.set_deferred("position", default_positions["beverages_station"])
 		if row1 and default_positions.has("row1"): row1.set_deferred("position", default_positions["row1"])
 		if row2 and default_positions.has("row2"): row2.set_deferred("position", default_positions["row2"])
 		if row3 and default_positions.has("row3"): row3.set_deferred("position", default_positions["row3"])
+		if row4 and default_positions.has("row4"): row4.set_deferred("position", default_positions["row4"])
 		if mat_node and default_positions.has("mat_node"): mat_node.set_deferred("position", default_positions["mat_node"])
 		if plate_parent and default_positions.has("plate_parent"): plate_parent.set_deferred("position", default_positions["plate_parent"])
 
-func update_station_list(station_nodes: Array, menu_data: Dictionary, category_key: String):
+func update_station_list(station_nodes: Array, menu_data: Dictionary, category_key: String, empty_texture: Texture2D):
 	var food_data = menu_data.get(category_key, [])
 	var food_keys = []
 
@@ -256,26 +273,31 @@ func update_station_list(station_nodes: Array, menu_data: Dictionary, category_k
 	elif food_data is Array:
 		food_keys = food_data
 
+	var db = get_node("/root/OrderSystem").FOOD_DB
+
 	for i in range(station_nodes.size()):
 		var dispenser = station_nodes[i]
 		if !dispenser: continue
 
-		if !dispenser:
-			continue
+		# ALWAYS ensure it is visible now so empty containers show up
+		dispenser.show()
+		dispenser.food_data = null # Clear it out first
 
-		# 🔹 ALWAYS reset first
-		dispenser.food_data = null
-		dispenser.texture = null
-		dispenser.hide()
-
-		# 🔹 Only enable if allowed today
-		if i < food_keys.size():
+		# 🔹 If this slot is assigned food today:
+		if i < food_keys.size() and db.has(food_keys[i]):
 			var item_key = food_keys[i]
-			var db = get_node("/root/OrderSystem").FOOD_DB
-
-			if db.has(item_key):
-				dispenser.food_data = db[item_key]
-				dispenser.show()
+			dispenser.food_data = db[item_key]
+			
+			# Ensure it's clickable
+			if "mouse_filter" in dispenser:
+				dispenser.mouse_filter = Control.MOUSE_FILTER_PASS 
+		else:
+			# 🔹 If slot is empty today: Show empty container
+			dispenser.texture = empty_texture
+			
+			# Make it unclickable so player can't interact with empty pans
+			if "mouse_filter" in dispenser:
+				dispenser.mouse_filter = Control.MOUSE_FILTER_IGNORE 
 
 func update_dispenser_visuals(dispenser_node, food_res: Resource):
 	if "food_data" in dispenser_node:

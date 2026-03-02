@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CustomItemData" load_steps=11 format=3 uid="uid://biwqdd17xlrmg"]
 
-[ext_resource type="Texture2D" uid="uid://buv78pvmno0i" path="res://Assets/Foods/Tofu.png" id="1_xnvlc"]
+[ext_resource type="Texture2D" uid="uid://jpot715i0xt7" path="res://Assets/Food Containers/Tokwa.png" id="1_lmr13"]
 [ext_resource type="Texture2D" uid="uid://bxia2v5cx6jhb" path="res://Assets/UI/KitchenUI/TEST/TokwaHalf.png" id="3_27f0w"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="3_ffc7r"]
 [ext_resource type="Texture2D" uid="uid://bfm3g6gg6mc3r" path="res://Assets/GrowSection/TokwaHalf2.png" id="3_lmr13"]
@@ -15,7 +15,7 @@
 script = ExtResource("3_ffc7r")
 item_name = "Tofu"
 internal_key = "TOFU"
-base_texture = ExtResource("1_xnvlc")
+base_texture = ExtResource("1_lmr13")
 is_portionable = true
 plated_texture_half = ExtResource("3_27f0w")
 plated_texture_half_2 = ExtResource("3_lmr13")

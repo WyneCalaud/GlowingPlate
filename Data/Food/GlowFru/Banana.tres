@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CustomItemData" load_steps=6 format=3 uid="uid://7wd86iqmmc06"]
 
-[ext_resource type="Texture2D" uid="uid://dci3jfrravicy" path="res://Assets/Foods/Bananas.png" id="1_rbggl"]
+[ext_resource type="Texture2D" uid="uid://h6go3jrhpqyx" path="res://Assets/Food Containers/Banana.png" id="1_3ocih"]
 [ext_resource type="Texture2D" uid="uid://cajfudufe06kw" path="res://Assets/IndividualFoods/Banana620.png" id="2_i3usa"]
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="2_pmuc2"]
 [ext_resource type="Texture2D" uid="uid://dny4bk7c37082" path="res://Assets/FruitSection/BananaPlated2.png" id="4_3ocih"]
@@ -11,7 +11,7 @@ script = ExtResource("2_pmuc2")
 item_name = "Banana"
 internal_key = "BANANA"
 food_category = "GlowFru"
-base_texture = ExtResource("1_rbggl")
+base_texture = ExtResource("1_3ocih")
 texture_count_1 = ExtResource("2_i3usa")
 texture_count_2 = ExtResource("4_3ocih")
 texture_count_3 = ExtResource("5_kafa2")
