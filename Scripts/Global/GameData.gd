@@ -160,7 +160,8 @@ func start_day_with_orders(orders: Array):
 	service_state = ServiceState.IDLE
 	day_started = true
 
-func finalize_service(day_result: Dictionary):
+func finalize_service(day_result: Dictionary) -> void:
+
 	total_customers_served_today += 1
 	customer_history.append(day_result)
 	
@@ -180,18 +181,18 @@ func finalize_service(day_result: Dictionary):
 	money += total_earned
 	daily_money_earned += total_earned
 	
-	# Handle Key Rewards
+	# --- Key Rewards ---
 	var keys_won = day_result.get("earned_keys", 0)
 	var special_char: String = day_result.get("character_id", "") as String
 	var is_correct: bool = day_result.get("is_correct", false)
 
 	if is_correct and special_char in ["Leo","Maya","Norma"]:
-		keys_won += 10 # Bonus for special characters
+		keys_won += 10
 
 	keys += keys_won
 	daily_keys_earned += keys_won
 	
-	# Handle Glow Board Progress
+	# --- Glow Board Progress ---
 	var char_id = day_result.get("character_id", "")
 	if character_progress.has(char_id):
 		var gain = day_result.get("prog_gain", 0.0)
@@ -200,8 +201,16 @@ func finalize_service(day_result: Dictionary):
 	OrderSystem.clear_prepared_data()
 	get_tree().call_group("HUD", "update_all_labels")
 
+	# ======================================================
+	# 🔥 LAST CUSTOMER DELAY FIX
+	# ======================================================
+
 	if remaining_customers.is_empty():
 		day_started = false
+
+		# ⏳ Wait 3 seconds before ending day
+		await get_tree().create_timer(3.0).timeout
+
 		current_day += 1
 		transition_to_end_day()
 

@@ -105,6 +105,11 @@ func _ready():
 
 	if not GD.matching_tutorial_completed:
 		is_tutorial = true
+		
+		# 🔥 Mark as completed immediately
+		GD.matching_tutorial_completed = true
+		GD.save_game()
+		
 		start_tutorial()
 	else:
 		is_tutorial = false

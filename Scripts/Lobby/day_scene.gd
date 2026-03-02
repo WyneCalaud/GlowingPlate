@@ -59,12 +59,30 @@ func _on_customer_arrived(order: CustomerOrder):
 
 	OrderSystem.set_order_from_customer(order)
 
+	var GD := get_node("/root/GameData")
+
+	# --------------------------------------------------
+	# ⭐ SPECIAL CHARACTER INTRO CHECK (FIXED)
+	# --------------------------------------------------
 	if order.customer_name in ["Leo", "Maya", "Norma"]:
+
 		special_star.show()
+
+		# If intro was NEVER shown before
+		if not GD.special_intro_shown.get(order.customer_name, false):
+
+			GD.special_intro_shown[order.customer_name] = true
+			GD.save_game()
+
+			_start_special_intro(order.customer_name)
+			return  # 🚨 STOP normal dialogue flow
+
 	else:
 		special_star.hide()
 
-	var GD := get_node("/root/GameData")
+	# --------------------------------------------------
+	# Normal Flow
+	# --------------------------------------------------
 
 	# 🔥 HARD BLOCK if coming back from kitchen
 	if GD.returning_from_kitchen:
@@ -79,6 +97,7 @@ func _on_customer_arrived(order: CustomerOrder):
 		await typewriter_words(order.order_text)
 		$BtnAccept.show()
 		$BtnContinue.show()
+
 
 func _on_customer_left():
 	$DialogueBox.hide()
