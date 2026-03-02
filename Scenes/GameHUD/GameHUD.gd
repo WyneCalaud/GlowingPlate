@@ -65,7 +65,7 @@ var patience := 100.0
 var patience_active := false
 
 # ~70 seconds to empty
-var patience_decay_rate := 1.0
+var patience_decay_rate := 0.8
 
 
 # --- INITIALIZATION ---

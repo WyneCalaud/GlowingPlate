@@ -45,7 +45,7 @@ var special_intro_shown := {}
 
 # --- UPGRADABLE / EXTENSION STATS ---
 var max_customers_today: int = 4  
-var customer_patience_multiplier: float = 1.0 
+var customer_patience_multiplier: float = 1.5 
 
 var purchased_upgrades: Dictionary = {}
 var unlocked_upgrades: Array = []
@@ -89,6 +89,8 @@ enum GamePhase {
 }
 
 var current_phase: GamePhase = GamePhase.LOBBY
+
+var returning_from_kitchen := false
 
 # ==========================================================
 # INITIALIZATION
@@ -223,16 +225,7 @@ func transition_to_end_day():
 
 func start_next_day_flow():
 	save_game()
-
-	# Skip mini-games on Day 1 start
-	if current_day == 1:
-		get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
-		return
-
-	# Transition to Mini-Game Phase
-	current_phase = GamePhase.MATCHING
-	save_game()
-	get_tree().change_scene_to_file("res://Scenes/MiniGame/matching_game.tscn")
+	get_tree().change_scene_to_file(LOBBY_CANTEEN_PATH)
 
 # ==========================================================
 # CUSTOMER DATA CACHING
@@ -353,3 +346,19 @@ func reset_day_state():
 	current_phase = GamePhase.LOBBY
 	save_game()
 	print("Service state reset complete.")
+
+func get_character_stage(name: String) -> int:
+	if character_stage.has(name):
+		return character_stage[name]
+	return 1
+
+# --- WRAPPERS & TRANSITIONS ---
+func store_plate_contents(contents: Array): OrderSystem.prepared_plate_contents = contents
+
+func add_prepared_beverage(beverage_res: Resource):
+	OrderSystem.add_prepared_beverage(beverage_res)
+
+func store_beverage_data(data: Dictionary):
+	OrderSystem.prepared_beverage_data = data
+	returning_from_beverage = true
+	transition_to_canteen_serve() 

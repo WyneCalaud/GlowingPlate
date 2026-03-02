@@ -36,22 +36,29 @@ func _ready():
 			GameData.saved_customer_order,
 			GameData.saved_customer_texture
 		)
-		
-		GameData.returning_from_beverage = false
+
+		# 🔒 IMPORTANT: If we are returning from kitchen,
+		# do NOT treat this as a fresh arrival
+		if GameData.service_state == GameData.ServiceState.IN_KITCHEN:
+			$DialogueBox.hide()
+			$BtnAccept.hide()
+			$BtnContinue.hide()
 
 
 func _on_customer_arrived(order: CustomerOrder):
 
+	# 🚫 Block during food intro
+	if get_parent().is_food_intro_active:
+		return
+
 	active_order = order
 
-	# 🔒 SAFETY CHECK (important)
 	if order == null:
 		special_star.hide()
 		return
 
 	OrderSystem.set_order_from_customer(order)
 
-	# --- Special Character Star ---
 	if order.customer_name in ["Leo", "Maya", "Norma"]:
 		special_star.show()
 	else:
@@ -59,30 +66,19 @@ func _on_customer_arrived(order: CustomerOrder):
 
 	var GD := get_node("/root/GameData")
 
-	# 🚫 If returning from kitchen/beverage, DO NOT show dialogue/buttons
-	if GD.service_state == GameData.ServiceState.IN_KITCHEN \
-	or GD.returning_from_beverage \
-	or GD.service_state == GameData.ServiceState.SERVED:
+	# 🔥 HARD BLOCK if coming back from kitchen
+	if GD.returning_from_kitchen:
 		$DialogueBox.hide()
 		$BtnAccept.hide()
 		$BtnContinue.hide()
 		return
 
-	# ✅ FIRST ARRIVAL ONLY
+	# 🔥 Only show for fresh arrival
 	if GD.service_state == GameData.ServiceState.CUSTOMER_PRESENT:
 		$DialogueBox.show()
 		await typewriter_words(order.order_text)
 		$BtnAccept.show()
 		$BtnContinue.show()
-		
-	# --- First Time Special Intro ---
-	if order.customer_name in ["Leo"]:
-		if not GameData.special_intro_shown.get(order.customer_name, false):
-			GameData.special_intro_shown[order.customer_name] = true
-			_start_special_intro(order.customer_name)
-			return
-
-
 
 func _on_customer_left():
 	$DialogueBox.hide()
@@ -94,8 +90,8 @@ func _on_customer_left():
 
 func _on_btn_accept_pressed() -> void:
 	GameData.service_state = GameData.ServiceState.IN_KITCHEN
+	GameData.returning_from_kitchen = true   # 🔥 ADD THIS
 
-	# START GLOBAL PATIENCE
 	GameData.customer_patience = 100.0
 	GameData.patience_running = true
 
@@ -104,7 +100,7 @@ func _on_btn_accept_pressed() -> void:
 	$BtnAccept.hide()
 	$BtnContinue.hide()
 
-	get_tree().change_scene_to_file("res://Scenes/Gameplay/KitchenArea.tscn")
+	SceneTransition.fade_to("res://Scenes/Gameplay/KitchenArea.tscn")
 
 func _on_btn_continue_pressed() -> void:
 	if active_order == null:

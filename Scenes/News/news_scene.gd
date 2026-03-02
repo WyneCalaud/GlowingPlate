@@ -255,7 +255,7 @@ var all_news = {
 func _ready():
 	# 🚫 If Day 1 → skip news completely
 	if GameData.current_day < 2:
-		get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+		SceneTransition.fade_to("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 		return
 
 	# 🔥 LOAD NEWS BASED ON CURRENT DAY
@@ -353,6 +353,7 @@ func start_intro_animation():
 
 			news_fade.finished.connect(func():
 				show_slide()
+				$SkipButton.show()
 			)
 		)
 	)
@@ -393,14 +394,14 @@ func _on_btn_next_pressed():
 
 func _end_news():
 
-	# Hide slide UI first
 	slide_image.hide()
 	$DialogueBox.hide()
 
-	# Reset intro elements alpha & show them again
 	plate.modulate.a = 1.0
 	gns.modulate.a = 1.0
 	$Background.modulate.a = 1.0
+	
+	$SkipButton.hide()
 
 	plate.show()
 	gns.show()
@@ -410,29 +411,27 @@ func _end_news():
 	await get_tree().create_timer(1.0).timeout
 
 	var bounce_tween = create_tween().set_parallel(true)
-
 	bounce_tween.tween_property(plate, "scale", Vector2(1.1, 1.1), 0.15)
 	bounce_tween.tween_property(gns, "scale", Vector2(1.1, 1.1), 0.15)
-
 	bounce_tween.tween_property(plate, "scale", Vector2.ONE, 0.25).set_delay(0.15)
 	bounce_tween.tween_property(gns, "scale", Vector2.ONE, 0.25).set_delay(0.15)
 
 	await bounce_tween.finished
 
 	var fade = create_tween()
-
 	fade.tween_property($Background, "modulate:a", 0.0, 0.6)
 	fade.tween_property(plate, "modulate:a", 0.0, 0.6)
 	fade.tween_property(gns, "modulate:a", 0.0, 0.6)
 
 	await fade.finished
 
-	# 🔥 IMPORTANT FIX
 	var GD = get_node("/root/GameData")
-	GD.current_phase = GD.GamePhase.LOBBY
+
+	GD.day_started = true   # 🔥 THIS IS THE FIX
+	GD.current_phase = GD.GamePhase.NEWS
 	GD.save_game()
 
-	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+	SceneTransition.fade_to("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 	
 
 
@@ -457,3 +456,44 @@ func start_typewriter():
 	typing_tween.finished.connect(func():
 		is_typing = false
 	)
+
+
+func _on_skip_button_pressed() -> void:
+	slide_image.hide()
+	$DialogueBox.hide()
+
+	plate.modulate.a = 1.0
+	gns.modulate.a = 1.0
+	$Background.modulate.a = 1.0
+
+	$SkipButton.hide()
+
+	plate.show()
+	gns.show()
+
+	news_intro_sfx.play()
+
+	await get_tree().create_timer(1.0).timeout
+
+	var bounce_tween = create_tween().set_parallel(true)
+	bounce_tween.tween_property(plate, "scale", Vector2(1.1, 1.1), 0.15)
+	bounce_tween.tween_property(gns, "scale", Vector2(1.1, 1.1), 0.15)
+	bounce_tween.tween_property(plate, "scale", Vector2.ONE, 0.25).set_delay(0.15)
+	bounce_tween.tween_property(gns, "scale", Vector2.ONE, 0.25).set_delay(0.15)
+
+	await bounce_tween.finished
+
+	var fade = create_tween()
+	fade.tween_property($Background, "modulate:a", 0.0, 0.6)
+	fade.tween_property(plate, "modulate:a", 0.0, 0.6)
+	fade.tween_property(gns, "modulate:a", 0.0, 0.6)
+
+	await fade.finished
+
+	var GD = get_node("/root/GameData")
+
+	GD.day_started = true   # 🔥 THIS IS THE FIX
+	GD.current_phase = GD.GamePhase.NEWS
+	GD.save_game()
+
+	SceneTransition.fade_to("res://Scenes/Lobby Canteen/lobbycanteen.tscn")

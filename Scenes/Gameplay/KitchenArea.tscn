@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bbq0o6jx72x3g" path="res://Assets/UI/RiceUI/OpenedWhiteRiceCooker.png" id="10_hkpja"]
 [ext_resource type="Texture2D" uid="uid://b33i1545pes2b" path="res://Assets/UI/RiceUI/WhiteRiceCooker.png" id="10_kcelb"]
 [ext_resource type="Texture2D" uid="uid://cctxefwqjikcf" path="res://Assets/UI/RiceUI/BrownRiceCooker.png" id="10_nflrw"]
-[ext_resource type="Script" uid="uid://dab8sxkkrxb1r" path="res://Scenes/Gameplay/UndoButton.gd" id="10_orncx"]
+[ext_resource type="Script" path="res://Scenes/Gameplay/UndoButton.gd" id="10_orncx"]
 [ext_resource type="Texture2D" uid="uid://oi7gamnoolue" path="res://Assets/UI/KitchenUI/OpenBrownRiceCooker.png" id="12_n7sx4"]
 [ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="12_vfpnn"]
 [ext_resource type="Texture2D" uid="uid://cecdbgmapkd34" path="res://Assets/UI/RiceUI/WhiteRiceScoopLow.png" id="15_n7sx4"]
@@ -477,14 +477,18 @@ offset_bottom = 207.0
 [node name="VeggieScoop" parent="." instance=ExtResource("53_slnmu")]
 visible = false
 
-[node name="OrderTicket" parent="." instance=ExtResource("54_i7i4q")]
-offset_left = -3.0
-offset_top = 1.0
-offset_right = 354.0
-offset_bottom = 721.0
-
 [node name="FoodIntroOverlay" parent="." instance=ExtResource("55_oxc20")]
 visible = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="OrderTicket" parent="CanvasLayer" instance=ExtResource("54_i7i4q")]
+z_index = 10
+offset_left = -3.0
+offset_top = -353.0
+offset_right = 354.0
+offset_bottom = 367.0
 
 [connection signal="area_entered" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Plate/FoodPlate/Area2D" to="Plate/FoodPlate" method="_on_area_2d_area_exited"]

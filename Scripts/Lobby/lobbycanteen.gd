@@ -46,6 +46,7 @@ var typing_speed: float = 0.08   # seconds between words
 # ---------------------------------------------------------
 
 func _ready() -> void:
+	add_to_group("LobbyAutoStart")
 	dialogue_box.hide()
 	$DayScene/BtnAccept.hide()
 	$DayScene/BtnContinue.hide()
@@ -82,9 +83,23 @@ func _ready() -> void:
 	var GD = get_node("/root/GameData")
 	day_number.text = "Day %02d" % GD.current_day
 
+	if GD.current_phase == GD.GamePhase.NEWS and GD.day_started:
+		# Small delay so scene fully loads
+		await get_tree().process_frame
+		play_food_intro_if_needed()
+
 func _process(delta: float) -> void:
 	if is_waiting_for_serve:
 		current_happiness = max(0.0, current_happiness - (happiness_decay_rate * delta))
+
+func auto_start_after_news():
+	var GD = get_node("/root/GameData")
+
+	# Prevent double starting
+	if GD.day_started:
+		return
+
+	_on_day_button_pressed()
 
 
 # ---------------------------------------------------------
@@ -196,6 +211,8 @@ func play_food_intro_if_needed():
 	spawn_principal_intro(day, FOOD_INTRO_TEXT[day])
 
 func spawn_principal_intro(day:int, text:String):
+	var GD = get_node("/root/GameData")
+	GD.service_state = GameData.ServiceState.IDLE
 
 	is_food_intro_active = true
 
@@ -533,6 +550,16 @@ func _on_btn_final_serve_pressed() -> void:
 			money_earned += 15 # Gives 25 instead of 10!
 			print("Meal Bonus Applied! Earned: ", money_earned)
 
+	# Show dialogue box BEFORE typing
+	dialogue_box.show()
+	dialogue_text.text = ""
+
+	if correct:
+		await typewriter_words(_get_happy_feedback())
+	else:
+		await typewriter_words(_get_angry_feedback(mistakes))
+
+	# NOW finalize service
 	GD.finalize_service({
 		"earned_money": money_earned,
 		"reputation_change": 1.0 if correct else -0.5,
@@ -544,6 +571,8 @@ func _on_btn_final_serve_pressed() -> void:
 
 	GD.clear_customer()
 	GD.service_state = GameData.ServiceState.SERVED
+	
+	GD.returning_from_kitchen = false
 
 	current_happiness = 100.0
 
@@ -553,11 +582,6 @@ func _on_btn_final_serve_pressed() -> void:
 	dialogue_box.show()
 	$DayScene/BtnAccept.hide()
 	$DayScene/BtnContinue.hide()
-
-	if correct:
-		await typewriter_words(_get_happy_feedback())
-	else:
-		await typewriter_words(_get_angry_feedback(mistakes))
 
 	# If this was the LAST customer, stop here.
 	if GD.remaining_customers.is_empty():
@@ -827,10 +851,30 @@ func _on_day_button_pressed() -> void:
 			]
 
 	GD.start_day_with_orders(day_orders)
-	play_food_intro_if_needed()
-	_restore_day_ui_state()
 
+	# -------------------------
+	# DAY 1 → No mini game
+	# -------------------------
+	if GD.current_day == 1:
+		play_food_intro_if_needed()
+		_restore_day_ui_state()
+		return
 
+	# -------------------------
+	# If returning from NEWS
+	# -------------------------
+	if GD.current_phase == GD.GamePhase.NEWS:
+		GD.current_phase = GD.GamePhase.LOBBY
+		play_food_intro_if_needed()
+		_restore_day_ui_state()
+		return
+
+	# -------------------------
+	# Otherwise → Start MATCHING
+	# -------------------------
+	GD.current_phase = GD.GamePhase.MATCHING
+	GD.save_game()
+	SceneTransition.fade_to("res://Scenes/MiniGame/matching_game.tscn")
 
 func _emit_customer_exit():
 	var manager = get_tree().get_first_node_in_group("CustomerManager")
@@ -847,7 +891,7 @@ func _start_transition(type: String):
 
 func _on_fade_timer_timeout() -> void:
 	if button_type == "menu":
-		get_tree().change_scene_to_file("res://Scenes/Main Menu/Main_menu.tscn")
+		SceneTransition.fade_to("res://Scenes/Main Menu/Main_menu.tscn")
 
 func _on_settings_button_pressed() -> void:
 	_start_transition("menu")
