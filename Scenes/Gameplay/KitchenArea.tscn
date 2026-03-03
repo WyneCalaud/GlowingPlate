@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bbq0o6jx72x3g" path="res://Assets/UI/RiceUI/OpenedWhiteRiceCooker.png" id="10_hkpja"]
 [ext_resource type="Texture2D" uid="uid://b33i1545pes2b" path="res://Assets/UI/RiceUI/WhiteRiceCooker.png" id="10_kcelb"]
 [ext_resource type="Texture2D" uid="uid://cctxefwqjikcf" path="res://Assets/UI/RiceUI/BrownRiceCooker.png" id="10_nflrw"]
-[ext_resource type="Script" path="res://Scenes/Gameplay/UndoButton.gd" id="10_orncx"]
+[ext_resource type="Script" uid="uid://dab8sxkkrxb1r" path="res://Scenes/Gameplay/UndoButton.gd" id="10_orncx"]
 [ext_resource type="Texture2D" uid="uid://oi7gamnoolue" path="res://Assets/UI/KitchenUI/OpenBrownRiceCooker.png" id="12_n7sx4"]
 [ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="12_vfpnn"]
 [ext_resource type="Texture2D" uid="uid://cecdbgmapkd34" path="res://Assets/UI/RiceUI/WhiteRiceScoopLow.png" id="15_n7sx4"]
@@ -67,7 +67,7 @@
 [ext_resource type="PackedScene" uid="uid://jjcnedpqlb6a" path="res://Scenes/FoodDispenser/VeggieCup.tscn" id="53_slnmu"]
 [ext_resource type="PackedScene" uid="uid://chdn7q1q0s44g" path="res://Scenes/Ticket/order_ticket.tscn" id="54_i7i4q"]
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="54_nf282"]
-[ext_resource type="PackedScene" uid="uid://b0kfb415lxkpn" path="res://Scenes/Tutorial/FoodIntroOverlay.tscn" id="55_oxc20"]
+[ext_resource type="PackedScene" uid="uid://gk1x0mn06ngk" path="res://Scenes/Tutorial/KitchenTutorial.tscn" id="55_oxc20"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n7sx4"]
 atlas = ExtResource("4_oxc20")
@@ -85,6 +85,7 @@ empty_go_tex = ExtResource("2_pmqpb")
 empty_grow_tex = ExtResource("3_u5w8p")
 empty_fru_tex = ExtResource("4_s6luy")
 empty_veg_tex = ExtResource("5_yao3w")
+metadata/_edit_lock_ = true
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -111,6 +112,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_left = 48.0
 offset_right = 48.0
+metadata/_edit_use_anchors_ = true
 
 [node name="PlateBorder" type="TextureRect" parent="Mat"]
 layout_mode = 0
@@ -240,6 +242,7 @@ offset_right = 783.0
 offset_bottom = 310.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="GoFoodRow" type="HBoxContainer" parent="Row1"]
 layout_mode = 1
@@ -275,6 +278,7 @@ offset_left = 758.0
 offset_top = 107.0
 offset_right = 1596.0
 offset_bottom = 313.0
+metadata/_edit_use_anchors_ = true
 
 [node name="GrowFoodRow" type="HBoxContainer" parent="Row2"]
 layout_mode = 1
@@ -328,6 +332,7 @@ offset_right = 1584.0
 offset_bottom = 545.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="GlowFruitRow" type="HBoxContainer" parent="Row3"]
 layout_mode = 1
@@ -384,6 +389,7 @@ offset_right = 1594.0
 offset_bottom = 694.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="GlowVeggieRow" type="HBoxContainer" parent="Row4"]
 layout_mode = 1
@@ -482,6 +488,7 @@ visible = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 5
+visible = false
 
 [node name="OrderTicket" parent="CanvasLayer" instance=ExtResource("54_i7i4q")]
 z_index = 10

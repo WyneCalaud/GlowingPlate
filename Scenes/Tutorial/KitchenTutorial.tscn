@@ -1,0 +1,220 @@
+[gd_scene load_steps=81 format=3 uid="uid://duqcd4sv1178i"]
+
+[ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="1_ypd3x"]
+[ext_resource type="Script" uid="uid://csyv3olrsv2kw" path="res://Scenes/Tutorial/KitchenTutorial.gd" id="1_yv6l3"]
+[ext_resource type="Texture2D" uid="uid://b5w82xbjtywl2" path="res://Assets/UI/TutorialSlide/TutorialOne.png" id="2_5em0d"]
+[ext_resource type="Texture2D" uid="uid://5llv4qe00rl3" path="res://Assets/UI/TutorialSlide/TutorialTwo.png" id="3_2mta6"]
+[ext_resource type="Texture2D" uid="uid://bc4iheorctgef" path="res://Assets/UI/TutorialSlide/HUDLayout1.png" id="3_bwkao"]
+[ext_resource type="Texture2D" uid="uid://cjob6rgsmt6fj" path="res://Assets/Pinggan/Pinggang Border.png" id="3_tslig"]
+[ext_resource type="Texture2D" uid="uid://bs56oji1hy07u" path="res://Assets/UI/KitchenUI/PlateFinal.png" id="4_58tlo"]
+[ext_resource type="Texture2D" uid="uid://dkcigpbu6mlew" path="res://Assets/UI/TutorialSlide/TutorialThree.png" id="4_b0wic"]
+[ext_resource type="Texture2D" uid="uid://c64ow672xtgn3" path="res://Assets/UI/TutorialSlide/TutorialFour.png" id="5_xiiq4"]
+[ext_resource type="Texture2D" uid="uid://cqx3y85rfb2ua" path="res://Assets/UI/TutorialSlide/TutorialFive.png" id="6_mjuus"]
+[ext_resource type="Texture2D" uid="uid://bqt1eq6g5d1jw" path="res://Assets/UI/TutorialSlide/TutorialSix.png" id="7_qrxhq"]
+[ext_resource type="Texture2D" uid="uid://g7l67ujgpygm" path="res://Assets/UI/TutorialSlide/TutorialSeven.png" id="8_nsk6k"]
+[ext_resource type="Texture2D" uid="uid://cbp2ncq0mib8b" path="res://Assets/RiceCup/RiceCupTray.png" id="8_xa1mc"]
+[ext_resource type="Texture2D" uid="uid://b33i1545pes2b" path="res://Assets/UI/RiceUI/WhiteRiceCooker.png" id="9_jajir"]
+[ext_resource type="Texture2D" uid="uid://cd7n1kqye7u2s" path="res://Assets/UI/TutorialSlide/TutorialEight.png" id="9_s1b0y"]
+[ext_resource type="Texture2D" uid="uid://btorl7kwasi13" path="res://Assets/UI/TutorialSlide/TutorialNine.png" id="10_k1j77"]
+[ext_resource type="Texture2D" uid="uid://i2gd1xas1qkf" path="res://Assets/UI/TutorialSlide/TutorialEleven.png" id="11_osfnl"]
+[ext_resource type="Texture2D" uid="uid://db5fw4nkrn4ig" path="res://Assets/UI/TutorialSlide/TutorialTwelve.png" id="12_o76kb"]
+[ext_resource type="Texture2D" uid="uid://dytwauc1mn3pe" path="res://Assets/UI/TutorialSlide/TutorialThirteen.png" id="13_j0b2r"]
+[ext_resource type="Texture2D" uid="uid://cdyxp3q16rpjk" path="res://Assets/UI/TutorialSlide/SecondLayout.png" id="14_7jmio"]
+[ext_resource type="Texture2D" uid="uid://c1ihv48yqhe4h" path="res://Assets/UI/RiceUI/BrownEmptyCup.png" id="14_f72cl"]
+[ext_resource type="Texture2D" uid="uid://clgaumxlfx3av" path="res://Assets/UI/TutorialSlide/TutorialFourteen.png" id="14_ftbcc"]
+[ext_resource type="Texture2D" uid="uid://dj2r2inrvnbkr" path="res://Assets/UI/TutorialSlide/TutorialFifthteen.png" id="15_csq7h"]
+[ext_resource type="Texture2D" uid="uid://b5xfh2vn4f0ea" path="res://Assets/UI/TutorialSlide/TutorialSixteen.png" id="16_7278c"]
+[ext_resource type="Texture2D" uid="uid://bgpebc7pcpxfd" path="res://Assets/UI/TutorialSlide/TutorialSeventeen.png" id="17_i7qup"]
+[ext_resource type="Texture2D" uid="uid://blge5nc8svkt1" path="res://Assets/UI/TutorialSlide/TutorialEighteen.png" id="18_d8vw7"]
+[ext_resource type="Texture2D" uid="uid://c6opup0kjw8ky" path="res://Assets/UI/TutorialSlide/TutorialNineteen.png" id="19_8sljm"]
+[ext_resource type="Texture2D" uid="uid://df57mbli6cwfp" path="res://Assets/UI/TutorialSlide/TutorialTwenty.png" id="20_h42xr"]
+[ext_resource type="Texture2D" uid="uid://b666thselfgka" path="res://Assets/UI/TutorialSlide/TutorialTwentyOne.png" id="21_015l7"]
+[ext_resource type="Texture2D" uid="uid://bf0ae08veu1xy" path="res://Assets/UI/TutorialSlide/Tutorial22.png" id="22_c7h8c"]
+[ext_resource type="Texture2D" uid="uid://l8jrvhfq7drr" path="res://Assets/UI/TutorialSlide/Tutorial23.png" id="23_jwcp8"]
+[ext_resource type="Texture2D" uid="uid://l34b1c204c36" path="res://Assets/UI/TutorialSlide/Tutorial24.png" id="24_6vkmh"]
+[ext_resource type="Texture2D" uid="uid://b5dx3vd5kb56d" path="res://Assets/UI/TutorialSlide/Tutorial25.png" id="25_s4cxm"]
+[ext_resource type="Texture2D" uid="uid://byby730hokjvi" path="res://Assets/UI/TutorialSlide/Tutorial26.png" id="26_dtql2"]
+[ext_resource type="PackedScene" uid="uid://b3eqyuw2etp2" path="res://Scenes/FoodDispenser/FoodDispenser.tscn" id="26_pn72f"]
+[ext_resource type="Texture2D" uid="uid://7htsl27chqwk" path="res://Assets/Food Containers/Chicken.png" id="27_3mycb"]
+[ext_resource type="Texture2D" uid="uid://dusysn4ltopte" path="res://Assets/UI/TutorialSlide/Tutorial27.png" id="27_qt6j4"]
+[ext_resource type="Texture2D" uid="uid://c48lt0y54kdhc" path="res://Assets/UI/TutorialSlide/Tutorial28.png" id="28_8kcf3"]
+[ext_resource type="Texture2D" uid="uid://cixtycpwhj3bc" path="res://Assets/UI/TutorialSlide/Tutorial29.png" id="29_1jql7"]
+[ext_resource type="Texture2D" uid="uid://bg3mtq3br20n1" path="res://Assets/Food Containers/Sitaw.png" id="29_2mta6"]
+[ext_resource type="Texture2D" uid="uid://cut3j4r6gokci" path="res://Assets/UI/TutorialSlide/Tutorial30.png" id="30_hr8h3"]
+[ext_resource type="Texture2D" uid="uid://b0p2fn1xw8l4a" path="res://Assets/UI/TutorialSlide/Tutorial31.png" id="31_jdmtk"]
+[ext_resource type="Texture2D" uid="uid://bi6qox307tm6e" path="res://Assets/Food Containers/Mango.png" id="31_xiiq4"]
+[ext_resource type="Texture2D" uid="uid://bagkvj7woqdex" path="res://Assets/UI/TutorialSlide/Tutorial32.png" id="32_32h2q"]
+[ext_resource type="Texture2D" uid="uid://b4386cqptc1ax" path="res://Assets/UI/TutorialSlide/Tutorial33.png" id="33_kuhtm"]
+[ext_resource type="PackedScene" uid="uid://chdn7q1q0s44g" path="res://Scenes/Ticket/order_ticket.tscn" id="33_qrxhq"]
+[ext_resource type="Texture2D" uid="uid://dgnulcv5kkjmn" path="res://Assets/UI/TutorialSlide/Tutorial34.png" id="34_wfoxc"]
+[ext_resource type="Texture2D" uid="uid://33ccbuyukdfc" path="res://Assets/UI/TutorialSlide/Tutorial35.png" id="35_phrc8"]
+[ext_resource type="Texture2D" uid="uid://c7c4kh3j3yl0h" path="res://Assets/UI/TutorialSlide/Tutorial36.png" id="36_ddc2k"]
+[ext_resource type="Texture2D" uid="uid://csmkykgo7hjh7" path="res://Assets/UI/TutorialSlide/Tutorial37.png" id="37_5orvo"]
+[ext_resource type="Texture2D" uid="uid://dedlpigggh65k" path="res://Assets/UI/TutorialSlide/Tutorial38.png" id="38_2r8kp"]
+[ext_resource type="Texture2D" uid="uid://cmlgxh4hqq6ce" path="res://Assets/UI/TutorialSlide/Tutorial39.png" id="39_bfu6l"]
+[ext_resource type="Texture2D" uid="uid://2l2e4454lk0" path="res://Assets/UI/TutorialSlide/Tutorial40.png" id="40_bx531"]
+[ext_resource type="Texture2D" uid="uid://e1t1ijog6ymk" path="res://Assets/UI/TutorialSlide/Tutorial41.png" id="41_8e8km"]
+[ext_resource type="Texture2D" uid="uid://miuvxsdvgjhn" path="res://Assets/UI/TutorialSlide/Tutorial42.png" id="42_3cao1"]
+[ext_resource type="Texture2D" uid="uid://l2t7fuvo0ys7" path="res://Assets/UI/TutorialSlide/Tutorial43.png" id="43_voirv"]
+[ext_resource type="Texture2D" uid="uid://cqhemtspqqv8g" path="res://Assets/UI/TutorialSlide/Tutorial44.png" id="44_5s1kg"]
+[ext_resource type="Texture2D" uid="uid://dxsnen8j62oaq" path="res://Assets/UI/TutorialSlide/Tutorial45.png" id="45_kri7j"]
+[ext_resource type="Texture2D" uid="uid://od502m85hwi5" path="res://Assets/UI/TutorialSlide/Tutorial46.png" id="46_kaunp"]
+[ext_resource type="Texture2D" uid="uid://bn4pka61s8oq7" path="res://Assets/UI/TutorialSlide/Tutorial47.png" id="47_x08tx"]
+[ext_resource type="Texture2D" uid="uid://cy7qig0cbfrnc" path="res://Assets/UI/TutorialSlide/Tutorial48.png" id="48_d8wpx"]
+[ext_resource type="Texture2D" uid="uid://blsk08ohe0i2w" path="res://Assets/UI/TutorialSlide/Tutorial49.png" id="49_k0jyp"]
+[ext_resource type="Texture2D" uid="uid://bjeaxo6ypmjyx" path="res://Assets/UI/TutorialSlide/Tutorial50.png" id="50_nw4cm"]
+[ext_resource type="Texture2D" uid="uid://crvae3ilavo10" path="res://Assets/UI/TutorialSlide/Tutorial51.png" id="51_jleeu"]
+[ext_resource type="Texture2D" uid="uid://jvnwad7qlljb" path="res://Assets/UI/TutorialSlide/Tutorial52.png" id="52_c0a1p"]
+[ext_resource type="Texture2D" uid="uid://i8d5uvcit4qs" path="res://Assets/UI/TutorialSlide/Tutorial53.png" id="53_76g3m"]
+[ext_resource type="Texture2D" uid="uid://c0eb4084o7s1q" path="res://Assets/UI/TutorialSlide/Tutorial54.png" id="54_8gwfq"]
+[ext_resource type="Texture2D" uid="uid://dx5g5yuy18mkr" path="res://Assets/UI/TutorialSlide/Tutorial55.png" id="55_0mp4l"]
+[ext_resource type="Texture2D" uid="uid://b3f33ehqvlatq" path="res://Assets/UI/TutorialSlide/Tutorial56.png" id="56_vptnh"]
+[ext_resource type="Texture2D" uid="uid://drq51qrpajsav" path="res://Assets/UI/TutorialSlide/Tutorial57.png" id="57_1yigm"]
+[ext_resource type="Texture2D" uid="uid://b2onc4h1g44a0" path="res://Assets/UI/TutorialSlide/Tutorial58.png" id="58_5s1ln"]
+[ext_resource type="Texture2D" uid="uid://c6t448ros4lpn" path="res://Assets/UI/TutorialSlide/Tutorial59.png" id="59_xtk23"]
+[ext_resource type="Texture2D" uid="uid://5cjhb6dpyb70" path="res://Assets/UI/TutorialSlide/Tutorial60.png" id="60_hxj8e"]
+[ext_resource type="Texture2D" uid="uid://drnvce5bx5ww" path="res://Assets/UI/TutorialSlide/Tutorial61.png" id="61_dygju"]
+[ext_resource type="Texture2D" uid="uid://xavdlx5n1jb" path="res://Assets/UI/TutorialSlide/Tutorial62.png" id="62_qk6sp"]
+[ext_resource type="Texture2D" uid="uid://b2gn7uhb4pncr" path="res://Assets/UI/TutorialSlide/Tutorial63.png" id="63_hnto1"]
+[ext_resource type="Texture2D" uid="uid://q2e3ivycneao" path="res://Assets/UI/TutorialSlide/Tutorial64.png" id="64_i051n"]
+[ext_resource type="Texture2D" uid="uid://3elykcd683uf" path="res://Assets/UI/TutorialSlide/Tutorial65.png" id="65_kyra0"]
+[ext_resource type="Texture2D" uid="uid://hjeh2kp73l4l" path="res://Assets/UI/TutorialSlide/Tutorial66.png" id="66_5kbfa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nsk6k"]
+atlas = ExtResource("3_tslig")
+region = Rect2(167, 178, 691, 665)
+
+[node name="KitchenTutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yv6l3")
+tutorial_frames = Array[Texture2D]([ExtResource("2_5em0d"), ExtResource("3_2mta6"), ExtResource("4_b0wic"), ExtResource("5_xiiq4"), ExtResource("6_mjuus"), ExtResource("7_qrxhq"), ExtResource("8_nsk6k"), ExtResource("9_s1b0y"), ExtResource("10_k1j77"), ExtResource("11_osfnl"), ExtResource("12_o76kb"), ExtResource("13_j0b2r"), ExtResource("14_ftbcc"), ExtResource("15_csq7h"), ExtResource("16_7278c"), ExtResource("17_i7qup"), ExtResource("18_d8vw7"), ExtResource("19_8sljm"), ExtResource("20_h42xr"), ExtResource("21_015l7"), ExtResource("22_c7h8c"), ExtResource("23_jwcp8"), ExtResource("24_6vkmh"), ExtResource("25_s4cxm"), ExtResource("26_dtql2"), ExtResource("27_qt6j4"), ExtResource("28_8kcf3"), ExtResource("29_1jql7"), ExtResource("30_hr8h3"), ExtResource("31_jdmtk"), ExtResource("32_32h2q"), ExtResource("33_kuhtm"), ExtResource("34_wfoxc"), ExtResource("35_phrc8"), ExtResource("36_ddc2k"), ExtResource("37_5orvo"), ExtResource("38_2r8kp"), ExtResource("39_bfu6l"), ExtResource("40_bx531"), ExtResource("41_8e8km"), ExtResource("42_3cao1"), ExtResource("43_voirv"), ExtResource("44_5s1kg"), ExtResource("45_kri7j"), ExtResource("46_kaunp"), ExtResource("47_x08tx"), ExtResource("48_d8wpx"), ExtResource("49_k0jyp"), ExtResource("50_nw4cm"), ExtResource("51_jleeu"), ExtResource("52_c0a1p"), ExtResource("53_76g3m"), ExtResource("54_8gwfq"), ExtResource("55_0mp4l"), ExtResource("56_vptnh"), ExtResource("57_1yigm"), ExtResource("58_5s1ln"), ExtResource("59_xtk23"), ExtResource("60_hxj8e"), ExtResource("61_dygju"), ExtResource("62_qk6sp"), ExtResource("63_hnto1"), ExtResource("64_i051n"), ExtResource("65_kyra0"), ExtResource("66_5kbfa")])
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("1_ypd3x")
+stretch_mode = 2
+
+[node name="GameHUD" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -640.0
+offset_right = 640.0
+offset_bottom = 720.0
+grow_horizontal = 2
+texture = ExtResource("3_bwkao")
+stretch_mode = 2
+
+[node name="Layout1" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlateBorder" type="TextureRect" parent="Layout1"]
+layout_mode = 0
+offset_left = 429.0
+offset_top = 349.00003
+offset_right = 1120.0
+offset_bottom = 1014.0
+scale = Vector2(0.51, 0.49035153)
+texture = SubResource("AtlasTexture_nsk6k")
+stretch_mode = 2
+
+[node name="Plate" type="TextureRect" parent="Layout1/PlateBorder"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 37.2549
+offset_top = 38.74759
+offset_right = 545.7936
+offset_bottom = 571.52893
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.51, 0.49035153)
+texture = ExtResource("4_58tlo")
+
+[node name="RiceCupMat" type="Sprite2D" parent="Layout1"]
+position = Vector2(240, 528)
+scale = Vector2(0.17687504, 0.1826758)
+texture = ExtResource("8_xa1mc")
+
+[node name="WhiteRiceCooker" type="Sprite2D" parent="Layout1"]
+position = Vector2(232, 288.00003)
+scale = Vector2(0.9999639, 0.93949896)
+texture = ExtResource("9_jajir")
+
+[node name="WhiteRiceCup" type="Sprite2D" parent="Layout1"]
+position = Vector2(240, 520.00006)
+scale = Vector2(1.0092043, 0.94434494)
+texture = ExtResource("14_f72cl")
+
+[node name="FoodDispenser" type="HBoxContainer" parent="Layout1"]
+layout_mode = 0
+offset_left = 613.0
+offset_top = 123.0
+offset_right = 1281.0
+offset_bottom = 323.0
+
+[node name="ChickenLeg" parent="Layout1/FoodDispenser" instance=ExtResource("26_pn72f")]
+custom_minimum_size = Vector2(220, 200)
+layout_mode = 2
+texture = ExtResource("27_3mycb")
+expand_mode = 0
+stretch_mode = 2
+script = null
+
+[node name="Sitaw" parent="Layout1/FoodDispenser" instance=ExtResource("26_pn72f")]
+custom_minimum_size = Vector2(220, 200)
+layout_mode = 2
+texture = ExtResource("29_2mta6")
+expand_mode = 0
+stretch_mode = 2
+script = null
+
+[node name="Mango" parent="Layout1/FoodDispenser" instance=ExtResource("26_pn72f")]
+custom_minimum_size = Vector2(220, 200)
+layout_mode = 2
+texture = ExtResource("31_xiiq4")
+expand_mode = 0
+stretch_mode = 2
+script = null
+
+[node name="OrderTicket" parent="Layout1" instance=ExtResource("33_qrxhq")]
+layout_mode = 1
+offset_left = -301.0
+offset_right = 56.0
+script = null
+metadata/_edit_lock_ = true
+
+[node name="Layout2" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SecondLayout" type="TextureRect" parent="Layout2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("14_7jmio")
+stretch_mode = 2
+
+[node name="TutorialOverlay" type="TextureButton" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

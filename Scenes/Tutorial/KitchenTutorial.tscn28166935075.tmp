@@ -1,0 +1,432 @@
+[gd_scene load_steps=37 format=3 uid="uid://gk1x0mn06ngk"]
+
+[ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="1_ypd3x"]
+[ext_resource type="Script" uid="uid://csyv3olrsv2kw" path="res://Scenes/Tutorial/KitchenTutorial.gd" id="1_yv6l3"]
+[ext_resource type="Texture2D" uid="uid://b1cqjv8liqajn" path="res://Assets/UI/Interface/DayCycle.png" id="2_osvjw"]
+[ext_resource type="Texture2D" uid="uid://cjob6rgsmt6fj" path="res://Assets/Pinggan/Pinggang Border.png" id="3_tslig"]
+[ext_resource type="Script" uid="uid://uaj3dfuenee4" path="res://Scenes/GameHUD/TimeManager.gd" id="3_yv6l3"]
+[ext_resource type="Texture2D" uid="uid://bs56oji1hy07u" path="res://Assets/UI/KitchenUI/PlateFinal.png" id="4_58tlo"]
+[ext_resource type="Texture2D" uid="uid://qww3uhouf8av" path="res://Assets/UI/Interface/SecondCycle.png" id="4_vsu85"]
+[ext_resource type="Texture2D" uid="uid://ceeg78xwticdj" path="res://Assets/UI/Interface/ThirdCycle.png" id="5_0t74r"]
+[ext_resource type="Texture2D" uid="uid://dy0fhsrovhlgv" path="res://Assets/UI/Interface/FourthCycle.png" id="6_vyyq5"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://Fonts/Comic_Neue/ComicNeue-Bold.ttf" id="7_77abv"]
+[ext_resource type="Texture2D" uid="uid://cbp2ncq0mib8b" path="res://Assets/RiceCup/RiceCupTray.png" id="8_xa1mc"]
+[ext_resource type="LabelSettings" uid="uid://daeaohujm4hnk" path="res://Theme/Avatar.tres" id="8_xxbt2"]
+[ext_resource type="Texture2D" uid="uid://b33i1545pes2b" path="res://Assets/UI/RiceUI/WhiteRiceCooker.png" id="9_jajir"]
+[ext_resource type="Texture2D" uid="uid://dvmuy8wvmsysj" path="res://Assets/UI/Interface/hapinessbg.png" id="9_uxjje"]
+[ext_resource type="Texture2D" uid="uid://bvpt4iq7kni2d" path="res://Assets/UI/Interface/HappyFace.png" id="10_rwrlx"]
+[ext_resource type="Texture2D" uid="uid://crnbadthib023" path="res://Assets/UI/Interface/NeutralFace.png" id="11_ek1u2"]
+[ext_resource type="Texture2D" uid="uid://c4sxtc4364rxp" path="res://Assets/UI/Interface/SadFace.png" id="12_fwn2a"]
+[ext_resource type="Texture2D" uid="uid://q4tsyv5lxofc" path="res://Assets/UI/Interface/AngryFace.png" id="13_58tlo"]
+[ext_resource type="Texture2D" uid="uid://r3v4o7y1w2up" path="res://Assets/UI/Interface/10-12.png" id="14_8vlm0"]
+[ext_resource type="Texture2D" uid="uid://c1ihv48yqhe4h" path="res://Assets/UI/RiceUI/BrownEmptyCup.png" id="14_f72cl"]
+[ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="15_uhfqk"]
+[ext_resource type="Texture2D" uid="uid://c7o7arewtutfj" path="res://Assets/UI/Interface/SettingsButton.png" id="16_4wf7r"]
+[ext_resource type="Texture2D" uid="uid://dquyayxor6rta" path="res://Assets/UI/Interface/HomeButton.png" id="17_51oba"]
+[ext_resource type="Texture2D" uid="uid://bx8ne7k621gyf" path="res://Assets/UI/Interface/MenuAlmanac.png" id="18_gjdh4"]
+[ext_resource type="Texture2D" uid="uid://c0ao7xl25f74g" path="res://Assets/UI/Interface/MoneyBar.png" id="19_8wm7p"]
+[ext_resource type="Texture2D" uid="uid://cgrtxjbkvl3iv" path="res://Assets/UI/Interface/KeyBar.png" id="20_laigq"]
+[ext_resource type="Texture2D" uid="uid://cp07tbyxft2d2" path="res://Assets/UI/Interface/FinishButton.png" id="21_kiv48"]
+[ext_resource type="Texture2D" uid="uid://c364h4j3e0aq2" path="res://Assets/UI/DarkenLayer.png" id="23_vsu85"]
+[ext_resource type="PackedScene" uid="uid://b3eqyuw2etp2" path="res://Scenes/FoodDispenser/FoodDispenser.tscn" id="26_pn72f"]
+[ext_resource type="Texture2D" uid="uid://7htsl27chqwk" path="res://Assets/Food Containers/Chicken.png" id="27_3mycb"]
+[ext_resource type="Texture2D" uid="uid://bg3mtq3br20n1" path="res://Assets/Food Containers/Sitaw.png" id="29_2mta6"]
+[ext_resource type="Texture2D" uid="uid://bi6qox307tm6e" path="res://Assets/Food Containers/Mango.png" id="31_xiiq4"]
+[ext_resource type="PackedScene" uid="uid://chdn7q1q0s44g" path="res://Scenes/Ticket/order_ticket.tscn" id="33_qrxhq"]
+[ext_resource type="Texture2D" uid="uid://b84mo0en3npkx" path="res://Assets/UI/Tutorial/WayPointer.png" id="34_uhfqk"]
+[ext_resource type="Texture2D" uid="uid://dnf1yrncxrvme" path="res://Assets/Tutorial/Click Icon.png" id="35_4wf7r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nsk6k"]
+atlas = ExtResource("3_tslig")
+region = Rect2(167, 178, 691, 665)
+
+[node name="KitchenTutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yv6l3")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("1_ypd3x")
+stretch_mode = 2
+
+[node name="KitchenItems" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlateBorder" type="TextureRect" parent="KitchenItems"]
+layout_mode = 0
+offset_left = 429.0
+offset_top = 349.00003
+offset_right = 1120.0
+offset_bottom = 1014.0
+scale = Vector2(0.51, 0.49035153)
+texture = SubResource("AtlasTexture_nsk6k")
+stretch_mode = 2
+
+[node name="Plate" type="TextureRect" parent="KitchenItems/PlateBorder"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 37.2549
+offset_top = 38.74759
+offset_right = 545.7936
+offset_bottom = 571.52893
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.51, 0.49035153)
+texture = ExtResource("4_58tlo")
+
+[node name="RiceCupMat" type="Sprite2D" parent="KitchenItems"]
+position = Vector2(240, 528)
+scale = Vector2(0.17687504, 0.1826758)
+texture = ExtResource("8_xa1mc")
+
+[node name="WhiteRiceCooker" type="Sprite2D" parent="KitchenItems"]
+position = Vector2(232, 288.00003)
+scale = Vector2(0.9999639, 0.93949896)
+texture = ExtResource("9_jajir")
+
+[node name="WhiteRiceCup" type="Sprite2D" parent="KitchenItems"]
+position = Vector2(240, 520.00006)
+scale = Vector2(1.0092043, 0.94434494)
+texture = ExtResource("14_f72cl")
+
+[node name="FoodDispenser" type="Control" parent="KitchenItems"]
+anchors_preset = 0
+offset_left = 56.0
+offset_right = 96.0
+offset_bottom = 40.0
+
+[node name="ChickenLeg" parent="KitchenItems/FoodDispenser" instance=ExtResource("26_pn72f")]
+custom_minimum_size = Vector2(220, 200)
+layout_mode = 0
+offset_left = 536.0
+offset_top = 96.0
+offset_right = 756.0
+offset_bottom = 296.0
+texture = ExtResource("27_3mycb")
+expand_mode = 0
+stretch_mode = 2
+script = null
+
+[node name="Sitaw" parent="KitchenItems/FoodDispenser" instance=ExtResource("26_pn72f")]
+custom_minimum_size = Vector2(220, 200)
+layout_mode = 0
+offset_left = 760.0
+offset_top = 496.0
+offset_right = 980.0
+offset_bottom = 696.0
+texture = ExtResource("29_2mta6")
+expand_mode = 0
+stretch_mode = 2
+script = null
+
+[node name="Mango" parent="KitchenItems/FoodDispenser" instance=ExtResource("26_pn72f")]
+custom_minimum_size = Vector2(220, 200)
+layout_mode = 0
+offset_left = 760.0
+offset_top = 296.0
+offset_right = 980.0
+offset_bottom = 496.0
+texture = ExtResource("31_xiiq4")
+expand_mode = 0
+stretch_mode = 2
+script = null
+
+[node name="OrderTicket" parent="KitchenItems" instance=ExtResource("33_qrxhq")]
+layout_mode = 1
+offset_left = -301.0
+offset_right = 56.0
+script = null
+metadata/_edit_lock_ = true
+
+[node name="HUDControl" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopBarLeft" type="MarginContainer" parent="HUDControl"]
+layout_mode = 1
+offset_right = 618.0
+offset_bottom = 120.0
+theme_override_constants/margin_left = 23
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarLeft"]
+layout_mode = 2
+theme_override_constants/separation = 11
+
+[node name="DayCycle" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_osvjw")
+stretch_mode = 2
+script = ExtResource("3_yv6l3")
+first_cycle = ExtResource("2_osvjw")
+second_cycle = ExtResource("4_vsu85")
+third_cycle = ExtResource("5_0t74r")
+fourth_cycle = ExtResource("6_vyyq5")
+
+[node name="Time" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/DayCycle"]
+layout_mode = 0
+offset_left = 71.0
+offset_top = 34.0
+offset_right = 151.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("7_77abv")
+text = "12:00 AM"
+label_settings = ExtResource("8_xxbt2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Day" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/DayCycle"]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 9.0
+offset_right = 149.0
+offset_bottom = 38.0
+theme_override_fonts/font = ExtResource("7_77abv")
+text = "Day: 1"
+label_settings = ExtResource("8_xxbt2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Happinessbg" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("9_uxjje")
+stretch_mode = 2
+
+[node name="Happy" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/Happinessbg"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 15.0
+offset_right = 62.0
+offset_bottom = 57.0
+texture = ExtResource("10_rwrlx")
+stretch_mode = 5
+
+[node name="Neutral" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/Happinessbg"]
+visible = false
+layout_mode = 0
+offset_left = 2.0
+offset_right = 71.0
+offset_bottom = 71.0
+texture = ExtResource("11_ek1u2")
+expand_mode = 1
+
+[node name="Sad" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/Happinessbg"]
+visible = false
+layout_mode = 0
+offset_left = 2.0
+offset_right = 71.0
+offset_bottom = 71.0
+texture = ExtResource("12_fwn2a")
+expand_mode = 1
+
+[node name="Angry" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/Happinessbg"]
+visible = false
+layout_mode = 0
+offset_left = 2.0
+offset_right = 71.0
+offset_bottom = 71.0
+texture = ExtResource("13_58tlo")
+expand_mode = 1
+
+[node name="PatiencePercent" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/Happinessbg"]
+layout_mode = 0
+offset_left = 77.0
+offset_top = 8.0
+offset_right = 122.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("7_77abv")
+text = "100%"
+label_settings = ExtResource("8_xxbt2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="10-12" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("14_8vlm0")
+stretch_mode = 2
+
+[node name="TopBarRight" type="MarginContainer" parent="HUDControl"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -105.0
+offset_bottom = 360.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 23
+theme_override_constants/margin_right = 23
+
+[node name="MenuGroup" type="VBoxContainer" parent="HUDControl/TopBarRight"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MenuButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup"]
+layout_mode = 2
+texture_normal = ExtResource("15_uhfqk")
+
+[node name="SettingsButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton"]
+layout_mode = 0
+offset_top = 73.0
+offset_right = 62.0
+offset_bottom = 131.0
+texture_normal = ExtResource("16_4wf7r")
+
+[node name="HomeButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton"]
+layout_mode = 0
+offset_top = 146.0
+offset_right = 62.0
+offset_bottom = 204.0
+texture_normal = ExtResource("17_51oba")
+
+[node name="AlmanacButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 221.0
+offset_right = 61.0
+offset_bottom = 279.0
+texture_normal = ExtResource("18_gjdh4")
+
+[node name="TopBarRight2" type="MarginContainer" parent="HUDControl"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -480.0
+offset_bottom = 95.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 165
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarRight2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Money" type="TextureRect" parent="HUDControl/TopBarRight2/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("19_8wm7p")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="HUDControl/TopBarRight2/HBoxContainer/Money"]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 8.0
+offset_right = 128.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("7_77abv")
+text = "100"
+label_settings = ExtResource("8_xxbt2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Key" type="TextureRect" parent="HUDControl/TopBarRight2/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("20_laigq")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="HUDControl/TopBarRight2/HBoxContainer/Key"]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 8.0
+offset_right = 128.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("7_77abv")
+text = "100"
+label_settings = ExtResource("8_xxbt2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BottomRight" type="MarginContainer" parent="HUDControl"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -236.0
+offset_top = -120.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="FinishButton" type="TextureButton" parent="HUDControl/BottomRight"]
+layout_mode = 2
+texture_normal = ExtResource("21_kiv48")
+
+[node name="DarkenBackground" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("23_vsu85")
+stretch_mode = 2
+
+[node name="TutorialSystem" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="SignPosition" type="Control" parent="TutorialSystem"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IntroPos" type="Marker2D" parent="TutorialSystem/SignPosition"]
+position = Vector2(640, 384)
+
+[node name="WhiteRiceCooker" type="Marker2D" parent="TutorialSystem/SignPosition"]
+
+[node name="PlatePos" type="Marker2D" parent="TutorialSystem/SignPosition"]
+
+[node name="PinggangPinoyPos" type="Marker2D" parent="TutorialSystem/SignPosition"]
+
+[node name="GuideSign" type="TextureButton" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Arrow" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 744.0
+offset_right = 608.0
+offset_bottom = 800.0
+texture = ExtResource("34_uhfqk")
+stretch_mode = 2
+
+[node name="PointerHand" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 296.0
+offset_top = 720.0
+offset_right = 443.0
+offset_bottom = 874.0
+texture = ExtResource("35_4wf7r")
+stretch_mode = 2

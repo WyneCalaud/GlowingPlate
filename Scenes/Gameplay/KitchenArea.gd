@@ -6,7 +6,7 @@ var plate_served: bool = false
 var beverage_served: bool = false
 var default_positions: Dictionary = {}
 var kitchen_locked := false
-const DISABLE_KITCHEN_TUTORIAL := true
+const DISABLE_KITCHEN_TUTORIAL := false
 
 # --- EMPTY CONTAINER TEXTURES ---
 @export_group("Empty Container Textures")
@@ -131,7 +131,7 @@ func _ready():
 #-----------------------------
 
 func start_kitchen_tutorial():
-	var tutorial_scene = preload("res://Scenes/Tutorial/KitchenTutorialOverlay.tscn")
+	var tutorial_scene = preload("res://Scenes/Tutorial/KitchenTutorial.tscn")
 	var tutorial_instance = tutorial_scene.instantiate()
 	add_child(tutorial_instance)
 
