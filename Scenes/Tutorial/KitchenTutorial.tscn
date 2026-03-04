@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://duqcd4sv1178i"]
+[gd_scene format=3 uid="uid://duqcd4sv1178i"]
 
 [ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="1_ypd3x"]
 [ext_resource type="Script" uid="uid://csyv3olrsv2kw" path="res://Scenes/Tutorial/KitchenTutorial.gd" id="1_yv6l3"]
@@ -84,7 +84,7 @@
 atlas = ExtResource("3_tslig")
 region = Rect2(167, 178, 691, 665)
 
-[node name="KitchenTutorial" type="Control"]
+[node name="KitchenTutorial" type="Control" unique_id=419831177]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,14 +94,14 @@ grow_vertical = 2
 script = ExtResource("1_yv6l3")
 tutorial_frames = Array[Texture2D]([ExtResource("2_5em0d"), ExtResource("3_2mta6"), ExtResource("4_b0wic"), ExtResource("5_xiiq4"), ExtResource("6_mjuus"), ExtResource("7_qrxhq"), ExtResource("8_nsk6k"), ExtResource("9_s1b0y"), ExtResource("10_k1j77"), ExtResource("11_osfnl"), ExtResource("12_o76kb"), ExtResource("13_j0b2r"), ExtResource("14_ftbcc"), ExtResource("15_csq7h"), ExtResource("16_7278c"), ExtResource("17_i7qup"), ExtResource("18_d8vw7"), ExtResource("19_8sljm"), ExtResource("20_h42xr"), ExtResource("21_015l7"), ExtResource("22_c7h8c"), ExtResource("23_jwcp8"), ExtResource("24_6vkmh"), ExtResource("25_s4cxm"), ExtResource("26_dtql2"), ExtResource("27_qt6j4"), ExtResource("28_8kcf3"), ExtResource("29_1jql7"), ExtResource("30_hr8h3"), ExtResource("31_jdmtk"), ExtResource("32_32h2q"), ExtResource("33_kuhtm"), ExtResource("34_wfoxc"), ExtResource("35_phrc8"), ExtResource("36_ddc2k"), ExtResource("37_5orvo"), ExtResource("38_2r8kp"), ExtResource("39_bfu6l"), ExtResource("40_bx531"), ExtResource("41_8e8km"), ExtResource("42_3cao1"), ExtResource("43_voirv"), ExtResource("44_5s1kg"), ExtResource("45_kri7j"), ExtResource("46_kaunp"), ExtResource("47_x08tx"), ExtResource("48_d8wpx"), ExtResource("49_k0jyp"), ExtResource("50_nw4cm"), ExtResource("51_jleeu"), ExtResource("52_c0a1p"), ExtResource("53_76g3m"), ExtResource("54_8gwfq"), ExtResource("55_0mp4l"), ExtResource("56_vptnh"), ExtResource("57_1yigm"), ExtResource("58_5s1ln"), ExtResource("59_xtk23"), ExtResource("60_hxj8e"), ExtResource("61_dygju"), ExtResource("62_qk6sp"), ExtResource("63_hnto1"), ExtResource("64_i051n"), ExtResource("65_kyra0"), ExtResource("66_5kbfa")])
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1413623797]
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("1_ypd3x")
 stretch_mode = 2
 
-[node name="GameHUD" type="TextureRect" parent="."]
+[node name="GameHUD" type="TextureRect" parent="." unique_id=753774144]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -113,7 +113,7 @@ grow_horizontal = 2
 texture = ExtResource("3_bwkao")
 stretch_mode = 2
 
-[node name="Layout1" type="Control" parent="."]
+[node name="Layout1" type="Control" parent="." unique_id=2134530184]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -121,7 +121,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlateBorder" type="TextureRect" parent="Layout1"]
+[node name="PlateBorder" type="TextureRect" parent="Layout1" unique_id=1025187911]
 layout_mode = 0
 offset_left = 429.0
 offset_top = 349.00003
@@ -131,7 +131,7 @@ scale = Vector2(0.51, 0.49035153)
 texture = SubResource("AtlasTexture_nsk6k")
 stretch_mode = 2
 
-[node name="Plate" type="TextureRect" parent="Layout1/PlateBorder"]
+[node name="Plate" type="TextureRect" parent="Layout1/PlateBorder" unique_id=579240735]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -145,29 +145,29 @@ grow_vertical = 2
 scale = Vector2(0.51, 0.49035153)
 texture = ExtResource("4_58tlo")
 
-[node name="RiceCupMat" type="Sprite2D" parent="Layout1"]
+[node name="RiceCupMat" type="Sprite2D" parent="Layout1" unique_id=787541759]
 position = Vector2(240, 528)
 scale = Vector2(0.17687504, 0.1826758)
 texture = ExtResource("8_xa1mc")
 
-[node name="WhiteRiceCooker" type="Sprite2D" parent="Layout1"]
+[node name="WhiteRiceCooker" type="Sprite2D" parent="Layout1" unique_id=1869003246]
 position = Vector2(232, 288.00003)
 scale = Vector2(0.9999639, 0.93949896)
 texture = ExtResource("9_jajir")
 
-[node name="WhiteRiceCup" type="Sprite2D" parent="Layout1"]
+[node name="WhiteRiceCup" type="Sprite2D" parent="Layout1" unique_id=54955813]
 position = Vector2(240, 520.00006)
 scale = Vector2(1.0092043, 0.94434494)
 texture = ExtResource("14_f72cl")
 
-[node name="FoodDispenser" type="HBoxContainer" parent="Layout1"]
+[node name="FoodDispenser" type="HBoxContainer" parent="Layout1" unique_id=1587771138]
 layout_mode = 0
 offset_left = 613.0
 offset_top = 123.0
 offset_right = 1281.0
 offset_bottom = 323.0
 
-[node name="ChickenLeg" parent="Layout1/FoodDispenser" instance=ExtResource("26_pn72f")]
+[node name="ChickenLeg" parent="Layout1/FoodDispenser" unique_id=2103689925 instance=ExtResource("26_pn72f")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("27_3mycb")
@@ -175,7 +175,7 @@ expand_mode = 0
 stretch_mode = 2
 script = null
 
-[node name="Sitaw" parent="Layout1/FoodDispenser" instance=ExtResource("26_pn72f")]
+[node name="Sitaw" parent="Layout1/FoodDispenser" unique_id=343823899 instance=ExtResource("26_pn72f")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("29_2mta6")
@@ -183,7 +183,7 @@ expand_mode = 0
 stretch_mode = 2
 script = null
 
-[node name="Mango" parent="Layout1/FoodDispenser" instance=ExtResource("26_pn72f")]
+[node name="Mango" parent="Layout1/FoodDispenser" unique_id=1970494885 instance=ExtResource("26_pn72f")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("31_xiiq4")
@@ -191,14 +191,14 @@ expand_mode = 0
 stretch_mode = 2
 script = null
 
-[node name="OrderTicket" parent="Layout1" instance=ExtResource("33_qrxhq")]
+[node name="OrderTicket" parent="Layout1" unique_id=1832526419 instance=ExtResource("33_qrxhq")]
 layout_mode = 1
 offset_left = -301.0
 offset_right = 56.0
 script = null
 metadata/_edit_lock_ = true
 
-[node name="Layout2" type="Control" parent="."]
+[node name="Layout2" type="Control" parent="." unique_id=827764850]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -207,14 +207,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SecondLayout" type="TextureRect" parent="Layout2"]
+[node name="SecondLayout" type="TextureRect" parent="Layout2" unique_id=473019862]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("14_7jmio")
 stretch_mode = 2
 
-[node name="TutorialOverlay" type="TextureButton" parent="."]
+[node name="TutorialOverlay" type="TextureButton" parent="." unique_id=1977024885]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0

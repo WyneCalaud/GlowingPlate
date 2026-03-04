@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://k701y0pnbadu"]
+[gd_scene format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
 [ext_resource type="Texture2D" uid="uid://dt5he77x83jrn" path="res://Assets/UI/LobbyUI/LobbyBackground/OutsideBackground.png" id="3_vtn67"]
@@ -55,7 +55,7 @@ spacing_glyph = 5
 base_font = ExtResource("33_nk7xc")
 spacing_glyph = 5
 
-[node name="Lobby" type="Control"]
+[node name="Lobby" type="Control" unique_id=83756046]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,7 +65,7 @@ grow_vertical = 2
 script = ExtResource("1_8p2f5")
 metadata/_edit_vertical_guides_ = [-366.0]
 
-[node name="Background" type="Control" parent="."]
+[node name="Background" type="Control" parent="." unique_id=946756511]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -73,7 +73,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="OutsideBackground" type="TextureRect" parent="Background"]
+[node name="OutsideBackground" type="TextureRect" parent="Background" unique_id=844005681]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -85,7 +85,7 @@ expand_mode = 1
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="Floor" type="TextureRect" parent="Background"]
+[node name="Floor" type="TextureRect" parent="Background" unique_id=610412831]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -99,7 +99,7 @@ expand_mode = 1
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="WallFrame" type="TextureRect" parent="Background"]
+[node name="WallFrame" type="TextureRect" parent="Background" unique_id=1311215418]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -111,7 +111,7 @@ expand_mode = 1
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="WallDec" type="TextureRect" parent="Background"]
+[node name="WallDec" type="TextureRect" parent="Background" unique_id=685370919]
 layout_mode = 0
 offset_left = 852.0
 offset_top = 115.0
@@ -122,7 +122,7 @@ expand_mode = 1
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="HighTable" type="TextureRect" parent="Background"]
+[node name="HighTable" type="TextureRect" parent="Background" unique_id=1674086323]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -137,7 +137,7 @@ expand_mode = 1
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="HighChairs" type="TextureRect" parent="Background"]
+[node name="HighChairs" type="TextureRect" parent="Background" unique_id=14538032]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -153,7 +153,7 @@ expand_mode = 1
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="MainTables" type="TextureRect" parent="Background"]
+[node name="MainTables" type="TextureRect" parent="Background" unique_id=1557359720]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -168,7 +168,7 @@ expand_mode = 1
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="Countertop" type="TextureRect" parent="Background"]
+[node name="Countertop" type="TextureRect" parent="Background" unique_id=2053254234]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -183,7 +183,7 @@ texture = SubResource("AtlasTexture_uu58y")
 expand_mode = 1
 metadata/_edit_lock_ = true
 
-[node name="Lights" type="TextureRect" parent="Background"]
+[node name="Lights" type="TextureRect" parent="Background" unique_id=1651841325]
 layout_mode = 0
 offset_left = 193.0
 offset_top = -1.0
@@ -194,7 +194,7 @@ expand_mode = 1
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="CashRegister" type="TextureRect" parent="Background"]
+[node name="CashRegister" type="TextureRect" parent="Background" unique_id=1332384986]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -209,7 +209,7 @@ expand_mode = 1
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="Tray" type="TextureRect" parent="Background"]
+[node name="Tray" type="TextureRect" parent="Background" unique_id=978486493]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.02109375
@@ -223,7 +223,7 @@ stretch_mode = 2
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="CountertopDec" type="TextureRect" parent="Background"]
+[node name="CountertopDec" type="TextureRect" parent="Background" unique_id=1677557079]
 z_index = 4
 layout_mode = 1
 anchors_preset = 15
@@ -239,7 +239,7 @@ expand_mode = 1
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="Noise" type="TextureRect" parent="Background"]
+[node name="Noise" type="TextureRect" parent="Background" unique_id=662557791]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -252,7 +252,7 @@ stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="BottomButtons" type="Control" parent="." node_paths=PackedStringArray("hide_show_btn", "buttons_to_toggle")]
+[node name="BottomButtons" type="Control" parent="." unique_id=1231713677 node_paths=PackedStringArray("hide_show_btn", "buttons_to_toggle")]
 z_index = 99
 layout_mode = 1
 anchors_preset = 2
@@ -268,7 +268,7 @@ hide_show_btn = NodePath("HBoxContainer/HideShowButton")
 buttons_to_toggle = [NodePath("HBoxContainer/Almanac"), NodePath("HBoxContainer/GlowBoard"), NodePath("HBoxContainer/GlowShop"), NodePath("HBoxContainer/GlowDesk")]
 metadata/_edit_lock_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BottomButtons"]
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomButtons" unique_id=1226767412]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -280,42 +280,42 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
 
-[node name="HideShowButton" type="TextureButton" parent="BottomButtons/HBoxContainer"]
+[node name="HideShowButton" type="TextureButton" parent="BottomButtons/HBoxContainer" unique_id=2101957941]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 toggle_mode = true
 texture_normal = ExtResource("15_fw8iq")
 
-[node name="Almanac" type="TextureButton" parent="BottomButtons/HBoxContainer"]
+[node name="Almanac" type="TextureButton" parent="BottomButtons/HBoxContainer" unique_id=1910518820]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("15_7yiff")
 stretch_mode = 4
 
-[node name="GlowBoard" type="TextureButton" parent="BottomButtons/HBoxContainer"]
+[node name="GlowBoard" type="TextureButton" parent="BottomButtons/HBoxContainer" unique_id=686380515]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("16_fw8iq")
 stretch_mode = 4
 
-[node name="GlowShop" type="TextureButton" parent="BottomButtons/HBoxContainer"]
+[node name="GlowShop" type="TextureButton" parent="BottomButtons/HBoxContainer" unique_id=2036836272]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("17_krqk6")
 stretch_mode = 4
 
-[node name="GlowDesk" type="TextureButton" parent="BottomButtons/HBoxContainer"]
+[node name="GlowDesk" type="TextureButton" parent="BottomButtons/HBoxContainer" unique_id=515936081]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("18_uu58y")
 stretch_mode = 4
 
-[node name="StartDayButton" type="TextureButton" parent="BottomButtons"]
+[node name="StartDayButton" type="TextureButton" parent="BottomButtons" unique_id=1471594317]
 layout_mode = 0
 offset_left = 952.0
 offset_top = 70.0
@@ -325,7 +325,7 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("21_8rcq3")
 texture_pressed = ExtResource("22_8rcq3")
 
-[node name="Label" type="Label" parent="BottomButtons/StartDayButton"]
+[node name="Label" type="Label" parent="BottomButtons/StartDayButton" unique_id=675910352]
 layout_mode = 0
 offset_left = 54.0
 offset_top = 27.0
@@ -336,18 +336,18 @@ theme_override_font_sizes/font_size = 28
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Fade_transition" parent="." instance=ExtResource("14_hcpvu")]
+[node name="Fade_transition" parent="." unique_id=183074715 instance=ExtResource("14_hcpvu")]
 layout_mode = 0
 offset_top = -3.0
 offset_right = 1282.0
 offset_bottom = 720.0
 
-[node name="Fade_timer" type="Timer" parent="Fade_transition"]
+[node name="Fade_timer" type="Timer" parent="Fade_transition" unique_id=1193372227]
 
-[node name="OverlayCanvas" type="CanvasLayer" parent="."]
+[node name="OverlayCanvas" type="CanvasLayer" parent="." unique_id=994769531]
 layer = 100
 
-[node name="DarkenOverlay" type="ColorRect" parent="OverlayCanvas"]
+[node name="DarkenOverlay" type="ColorRect" parent="OverlayCanvas" unique_id=1875882742]
 visible = false
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
@@ -357,16 +357,16 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="AlmanacUI" parent="OverlayCanvas" instance=ExtResource("15_sgopm")]
+[node name="AlmanacUI" parent="OverlayCanvas" unique_id=1757031620 instance=ExtResource("15_sgopm")]
 visible = false
 
-[node name="GlowBoard" parent="OverlayCanvas" instance=ExtResource("16_vrvqj")]
+[node name="GlowBoard" parent="OverlayCanvas" unique_id=1027624998 instance=ExtResource("16_vrvqj")]
 visible = false
 
-[node name="NutriShop" parent="OverlayCanvas" instance=ExtResource("25_7yiff")]
+[node name="NutriShop" parent="OverlayCanvas" unique_id=1557234571 instance=ExtResource("25_7yiff")]
 visible = false
 
-[node name="GlowDesk" parent="OverlayCanvas" instance=ExtResource("28_uu58y")]
+[node name="GlowDesk" parent="OverlayCanvas" unique_id=1442010191 instance=ExtResource("28_uu58y")]
 visible = false
 sign_quick = null
 sign_endless = null
@@ -377,12 +377,12 @@ tex_count_3 = null
 tex_count_2 = null
 tex_count_1 = null
 
-[node name="GameHUD" parent="OverlayCanvas" instance=ExtResource("12_k43ou")]
+[node name="GameHUD" parent="OverlayCanvas" unique_id=817988902 instance=ExtResource("12_k43ou")]
 
-[node name="DayScene" type="Node2D" parent="."]
+[node name="DayScene" type="Node2D" parent="." unique_id=1512053809]
 script = ExtResource("17_wdy5h")
 
-[node name="DialogueBox" type="TextureRect" parent="DayScene"]
+[node name="DialogueBox" type="TextureRect" parent="DayScene" unique_id=1046283841]
 offset_left = -28.0
 offset_top = 5.0
 offset_right = 923.0
@@ -390,12 +390,12 @@ offset_bottom = 539.0
 texture = ExtResource("32_uu58y")
 expand_mode = 1
 
-[node name="CustomerName" type="Label" parent="DayScene/DialogueBox"]
+[node name="CustomerName" type="Label" parent="DayScene/DialogueBox" unique_id=1332185638]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="OrderText" type="Label" parent="DayScene/DialogueBox"]
+[node name="OrderText" type="Label" parent="DayScene/DialogueBox" unique_id=931550230]
 layout_mode = 0
 offset_left = 102.0
 offset_top = 145.0
@@ -407,7 +407,7 @@ theme_override_font_sizes/font_size = 32
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BtnAccept" type="TextureButton" parent="DayScene"]
+[node name="BtnAccept" type="TextureButton" parent="DayScene" unique_id=2083280428]
 offset_left = 206.0
 offset_top = 406.0
 offset_right = 410.0
@@ -415,7 +415,7 @@ offset_bottom = 514.0
 texture_normal = ExtResource("28_q6g5s")
 stretch_mode = 5
 
-[node name="BtnContinue" type="TextureButton" parent="DayScene"]
+[node name="BtnContinue" type="TextureButton" parent="DayScene" unique_id=1286653414]
 offset_left = 481.0
 offset_top = 406.0
 offset_right = 685.0
@@ -423,7 +423,7 @@ offset_bottom = 514.0
 texture_normal = ExtResource("29_7yiff")
 stretch_mode = 5
 
-[node name="BtnPrincipalLeave" type="TextureButton" parent="DayScene"]
+[node name="BtnPrincipalLeave" type="TextureButton" parent="DayScene" unique_id=1168429915]
 offset_left = 343.0
 offset_top = 408.0
 offset_right = 547.0
@@ -431,13 +431,13 @@ offset_bottom = 516.0
 texture_normal = ExtResource("28_q6g5s")
 stretch_mode = 5
 
-[node name="CustomerManager" type="Node" parent="DayScene"]
+[node name="CustomerManager" type="Node" parent="DayScene" unique_id=1904045500]
 script = ExtResource("20_k43ou")
 customer_scene = ExtResource("20_5fhlb")
 spawn_y = 1.0
 offscreen_x = 1400.0
 
-[node name="SpecialStar" type="TextureRect" parent="DayScene"]
+[node name="SpecialStar" type="TextureRect" parent="DayScene" unique_id=1282552785]
 visible = false
 offset_left = 949.0
 offset_top = 134.0
@@ -446,7 +446,7 @@ offset_bottom = 219.0
 texture = ExtResource("37_nk7xc")
 stretch_mode = 2
 
-[node name="CatSpecialInfo" type="TextureRect" parent="DayScene"]
+[node name="CatSpecialInfo" type="TextureRect" parent="DayScene" unique_id=1522563201]
 visible = false
 z_index = 20
 offset_left = 184.0
@@ -456,7 +456,7 @@ offset_bottom = 253.0
 mouse_filter = 0
 stretch_mode = 5
 
-[node name="KeyPopup" type="TextureRect" parent="DayScene"]
+[node name="KeyPopup" type="TextureRect" parent="DayScene" unique_id=1816379976]
 visible = false
 z_index = 25
 offset_left = 962.0
@@ -466,7 +466,7 @@ offset_bottom = 96.0
 mouse_filter = 2
 texture = ExtResource("38_8rcq3")
 
-[node name="LeoSpecial" type="TextureRect" parent="DayScene"]
+[node name="LeoSpecial" type="TextureRect" parent="DayScene" unique_id=1918327366]
 visible = false
 z_index = 7
 offset_left = 728.0
@@ -477,7 +477,7 @@ texture = ExtResource("40_o8hjd")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SpecialDim" type="TextureRect" parent="DayScene"]
+[node name="SpecialDim" type="TextureRect" parent="DayScene" unique_id=800258053]
 visible = false
 z_index = 5
 offset_right = 1280.0
@@ -485,7 +485,7 @@ offset_bottom = 720.0
 mouse_filter = 0
 texture = ExtResource("39_o8hjd")
 
-[node name="FinalPlateDisplay" type="Control" parent="."]
+[node name="FinalPlateDisplay" type="Control" parent="." unique_id=683897394]
 visible = false
 anchors_preset = 0
 offset_left = 496.0
@@ -493,30 +493,30 @@ offset_top = 504.0
 offset_right = 882.0
 offset_bottom = 674.0
 
-[node name="TrayDisplay" type="Sprite2D" parent="FinalPlateDisplay"]
+[node name="TrayDisplay" type="Sprite2D" parent="FinalPlateDisplay" unique_id=2039685581]
 visible = false
 position = Vector2(108.00001, 148.99998)
 scale = Vector2(0.89027786, 0.42222223)
 texture = ExtResource("27_hcpvu")
 
-[node name="PlateDisplay" type="Sprite2D" parent="FinalPlateDisplay"]
+[node name="PlateDisplay" type="Sprite2D" parent="FinalPlateDisplay" unique_id=1463546955]
 position = Vector2(50.000023, 123.00003)
 scale = Vector2(0.23195688, 0.24479164)
 texture = ExtResource("27_cmvyw")
 
-[node name="PlateSpriteGo" type="Sprite2D" parent="FinalPlateDisplay"]
+[node name="PlateSpriteGo" type="Sprite2D" parent="FinalPlateDisplay" unique_id=1639258675]
 position = Vector2(11, 149)
 
-[node name="PlateSpriteGrow" type="Sprite2D" parent="FinalPlateDisplay"]
+[node name="PlateSpriteGrow" type="Sprite2D" parent="FinalPlateDisplay" unique_id=1941412791]
 position = Vector2(12, 91)
 
-[node name="PlateSpriteVeg" type="Sprite2D" parent="FinalPlateDisplay"]
+[node name="PlateSpriteVeg" type="Sprite2D" parent="FinalPlateDisplay" unique_id=1491825364]
 position = Vector2(70, 146)
 
-[node name="PlateSpriteFru" type="Sprite2D" parent="FinalPlateDisplay"]
+[node name="PlateSpriteFru" type="Sprite2D" parent="FinalPlateDisplay" unique_id=1746508470]
 position = Vector2(65, 91)
 
-[node name="BtnFinalServe" type="Button" parent="FinalPlateDisplay"]
+[node name="BtnFinalServe" type="Button" parent="FinalPlateDisplay" unique_id=1127358803]
 layout_mode = 0
 offset_left = 318.0
 offset_top = 92.0
@@ -525,17 +525,17 @@ offset_bottom = 213.0
 icon = ExtResource("39_uu58y")
 flat = true
 
-[node name="FinalBeverageDisplay" type="Control" parent="."]
+[node name="FinalBeverageDisplay" type="Control" parent="." unique_id=222150433]
 anchors_preset = 0
 offset_left = 632.0
 offset_top = 544.0
 offset_right = 737.0
 offset_bottom = 679.0
 
-[node name="BeverageSprite1" type="Sprite2D" parent="FinalBeverageDisplay"]
+[node name="BeverageSprite1" type="Sprite2D" parent="FinalBeverageDisplay" unique_id=1051923621]
 position = Vector2(17, 71)
 
-[node name="BeverageSprite2" type="Sprite2D" parent="FinalBeverageDisplay"]
+[node name="BeverageSprite2" type="Sprite2D" parent="FinalBeverageDisplay" unique_id=795704036]
 position = Vector2(78, 71)
 
 [connection signal="pressed" from="BottomButtons/HBoxContainer/Almanac" to="." method="_on_almanac_pressed"]

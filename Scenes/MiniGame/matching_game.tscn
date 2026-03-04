@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://ctl6sxeshrxbu"]
+[gd_scene format=3 uid="uid://ctl6sxeshrxbu"]
 
 [ext_resource type="Script" uid="uid://u3qhy5pns8k0" path="res://Scripts/MiniGame/matching_game.gd" id="1_pssnd"]
 [ext_resource type="Texture2D" uid="uid://cfvugwijhyu8x" path="res://Assets/MiniGame/Exercises/Refined/Exercise Card Back.png" id="2_xdroa"]
@@ -39,7 +39,7 @@
 base_font = ExtResource("21_x1b3m")
 spacing_glyph = 5
 
-[node name="MatchingGame" type="Control"]
+[node name="MatchingGame" type="Control" unique_id=2072236990]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -82,13 +82,13 @@ ExtResource("9_b4at2"): ExtResource("18_eatd0"),
 ExtResource("10_gjhrx"): ExtResource("18_8jjub")
 }
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1370280282]
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("11_3jjgu")
 
-[node name="Grid" type="GridContainer" parent="."]
+[node name="Grid" type="GridContainer" parent="." unique_id=511879774]
 layout_mode = 0
 offset_left = 26.0
 offset_top = 29.0
@@ -98,7 +98,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 4
 
-[node name="Stats" type="TextureRect" parent="."]
+[node name="Stats" type="TextureRect" parent="." unique_id=1164508290]
 layout_mode = 0
 offset_left = 773.0
 offset_top = 6.0
@@ -106,25 +106,26 @@ offset_right = 1246.0
 offset_bottom = 693.0
 texture = ExtResource("20_kqnsh")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1129962097]
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=860597544]
 offset_left = 954.0
-offset_top = 360.0
+offset_top = 384.0
 offset_right = 1078.0
-offset_bottom = 484.0
+offset_bottom = 508.0
 texture = ExtResource("21_xtgos")
 
-[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+[node name="ScoreLabel" type="Label" parent="CanvasLayer" unique_id=695563391]
 offset_left = 943.0
-offset_top = 381.0
+offset_top = 405.0
 offset_right = 1090.0
-offset_bottom = 462.0
+offset_bottom = 486.0
+theme_override_colors/font_color = Color(1, 0.7921569, 0.5529412, 1)
 theme_override_fonts/font = ExtResource("21_x1b3m")
 theme_override_font_sizes/font_size = 70
 horizontal_alignment = 1
 
-[node name="TurnsLabel" type="Label" parent="CanvasLayer"]
+[node name="TurnsLabel" type="Label" parent="CanvasLayer" unique_id=820085555]
 visible = false
 offset_left = 954.0
 offset_top = 410.0
@@ -132,7 +133,7 @@ offset_right = 1097.0
 offset_bottom = 453.0
 theme_override_fonts/font = ExtResource("21_x1b3m")
 
-[node name="InfoPopup" type="Panel" parent="CanvasLayer"]
+[node name="InfoPopup" type="Panel" parent="CanvasLayer" unique_id=1181105649]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -144,7 +145,7 @@ offset_bottom = -151.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/InfoPopup"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/InfoPopup" unique_id=665176610]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -156,46 +157,48 @@ offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ExerciseImage" type="TextureRect" parent="CanvasLayer/InfoPopup/VBoxContainer"]
+[node name="ExerciseImage" type="TextureRect" parent="CanvasLayer/InfoPopup/VBoxContainer" unique_id=1253769909]
 layout_mode = 2
 expand_mode = 5
 stretch_mode = 5
 
-[node name="ExerciseText" type="Label" parent="CanvasLayer/InfoPopup/VBoxContainer"]
+[node name="ExerciseText" type="Label" parent="CanvasLayer/InfoPopup/VBoxContainer" unique_id=761362366]
 layout_mode = 2
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="CloseButton" type="Button" parent="CanvasLayer/InfoPopup/VBoxContainer"]
+[node name="CloseButton" type="Button" parent="CanvasLayer/InfoPopup/VBoxContainer" unique_id=1101153784]
 layout_mode = 2
 
-[node name="Turns Left" type="Label" parent="CanvasLayer"]
+[node name="Turns Left" type="Label" parent="CanvasLayer" unique_id=2137370481]
 offset_left = 826.0
 offset_top = 123.0
 offset_right = 1073.0
 offset_bottom = 151.0
+theme_override_colors/font_color = Color(1, 0.7921569, 0.5529412, 1)
 theme_override_fonts/font = ExtResource("21_x1b3m")
 theme_override_font_sizes/font_size = 20
 text = "Turns Left"
 
-[node name="Score" type="Label" parent="CanvasLayer"]
+[node name="Score" type="Label" parent="CanvasLayer" unique_id=923070654]
 offset_left = 892.0
 offset_top = 328.0
 offset_right = 1139.0
 offset_bottom = 364.0
+theme_override_colors/font_color = Color(1, 0.7921569, 0.5529412, 1)
 theme_override_fonts/font = ExtResource("21_x1b3m")
 theme_override_font_sizes/font_size = 31
 text = "Score"
 horizontal_alignment = 1
 
-[node name="InGameSkip" type="TextureButton" parent="CanvasLayer"]
+[node name="InGameSkip" type="TextureButton" parent="CanvasLayer" unique_id=1312166343]
 offset_left = 800.0
 offset_top = 621.0
 offset_right = 994.0
 offset_bottom = 661.0
 texture_normal = ExtResource("23_8jjub")
 
-[node name="Heartbg" type="HBoxContainer" parent="."]
+[node name="Heartbg" type="HBoxContainer" parent="." unique_id=1124348914]
 layout_mode = 0
 offset_left = 820.0
 offset_top = 150.0
@@ -204,27 +207,27 @@ offset_bottom = 231.0
 theme_override_constants/separation = -3
 alignment = 1
 
-[node name="Heart1" type="TextureRect" parent="Heartbg"]
+[node name="Heart1" type="TextureRect" parent="Heartbg" unique_id=2031573305]
 layout_mode = 2
 texture = ExtResource("22_bt5ei")
 
-[node name="Heart2" type="TextureRect" parent="Heartbg"]
+[node name="Heart2" type="TextureRect" parent="Heartbg" unique_id=1001595581]
 layout_mode = 2
 texture = ExtResource("22_bt5ei")
 
-[node name="Heart3" type="TextureRect" parent="Heartbg"]
+[node name="Heart3" type="TextureRect" parent="Heartbg" unique_id=1025403426]
 layout_mode = 2
 texture = ExtResource("22_bt5ei")
 
-[node name="Heart4" type="TextureRect" parent="Heartbg"]
+[node name="Heart4" type="TextureRect" parent="Heartbg" unique_id=1128266874]
 layout_mode = 2
 texture = ExtResource("22_bt5ei")
 
-[node name="Heart5" type="TextureRect" parent="Heartbg"]
+[node name="Heart5" type="TextureRect" parent="Heartbg" unique_id=1959108743]
 layout_mode = 2
 texture = ExtResource("22_bt5ei")
 
-[node name="HeartsContainer" type="HBoxContainer" parent="."]
+[node name="HeartsContainer" type="HBoxContainer" parent="." unique_id=1037256583]
 layout_mode = 0
 offset_left = 836.0
 offset_top = 158.0
@@ -232,39 +235,39 @@ offset_right = 1192.0
 offset_bottom = 209.0
 theme_override_constants/separation = 28
 
-[node name="Heart0" type="TextureRect" parent="HeartsContainer"]
+[node name="Heart0" type="TextureRect" parent="HeartsContainer" unique_id=96755342]
 layout_mode = 2
 texture = ExtResource("22_m345l")
 
-[node name="Heart1" type="TextureRect" parent="HeartsContainer"]
+[node name="Heart1" type="TextureRect" parent="HeartsContainer" unique_id=728553433]
 layout_mode = 2
 texture = ExtResource("22_m345l")
 
-[node name="Heart2" type="TextureRect" parent="HeartsContainer"]
+[node name="Heart2" type="TextureRect" parent="HeartsContainer" unique_id=1583056217]
 layout_mode = 2
 texture = ExtResource("22_m345l")
 
-[node name="Heart3" type="TextureRect" parent="HeartsContainer"]
+[node name="Heart3" type="TextureRect" parent="HeartsContainer" unique_id=1283714437]
 layout_mode = 2
 texture = ExtResource("22_m345l")
 
-[node name="Heart4" type="TextureRect" parent="HeartsContainer"]
+[node name="Heart4" type="TextureRect" parent="HeartsContainer" unique_id=1621494307]
 layout_mode = 2
 texture = ExtResource("22_m345l")
 
-[node name="GameOverOverlay" type="Control" parent="."]
+[node name="GameOverOverlay" type="Control" parent="." unique_id=1360336060]
 visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="TextureRect" type="TextureRect" parent="GameOverOverlay"]
+[node name="TextureRect" type="TextureRect" parent="GameOverOverlay" unique_id=938559247]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("25_b4at2")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameOverOverlay"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverOverlay" unique_id=287848186]
 layout_mode = 0
 offset_left = 831.0
 offset_top = 205.0
@@ -272,38 +275,38 @@ offset_right = 1128.0
 offset_bottom = 469.0
 theme_override_constants/separation = 12
 
-[node name="TryAgainButton" type="Button" parent="GameOverOverlay/VBoxContainer"]
+[node name="TryAgainButton" type="Button" parent="GameOverOverlay/VBoxContainer" unique_id=1368541433]
 layout_mode = 2
 icon = ExtResource("26_54qja")
 flat = true
 
-[node name="MainMenuButton" type="Button" parent="GameOverOverlay/VBoxContainer"]
+[node name="MainMenuButton" type="Button" parent="GameOverOverlay/VBoxContainer" unique_id=1710097530]
 layout_mode = 2
 icon = ExtResource("27_lpk1w")
 flat = true
 
-[node name="SkipButton" type="Button" parent="GameOverOverlay/VBoxContainer"]
+[node name="SkipButton" type="Button" parent="GameOverOverlay/VBoxContainer" unique_id=411702249]
 layout_mode = 2
 icon = ExtResource("28_7mefl")
 flat = true
 
-[node name="WinOverlay" type="Control" parent="."]
+[node name="WinOverlay" type="Control" parent="." unique_id=1972009499]
 visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="TextureRect" type="TextureRect" parent="WinOverlay"]
+[node name="TextureRect" type="TextureRect" parent="WinOverlay" unique_id=952997447]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("29_lpk1w")
 
-[node name="ShuffleOverlay" type="Control" parent="."]
+[node name="ShuffleOverlay" type="Control" parent="." unique_id=564905435]
 visible = false
 anchors_preset = 0
 
-[node name="TextureRect" type="TextureRect" parent="ShuffleOverlay"]
+[node name="TextureRect" type="TextureRect" parent="ShuffleOverlay" unique_id=712121432]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -316,7 +319,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("30_7mefl")
 
-[node name="CardGrid" type="GridContainer" parent="ShuffleOverlay"]
+[node name="CardGrid" type="GridContainer" parent="ShuffleOverlay" unique_id=283072333]
 layout_mode = 0
 offset_left = 461.0
 offset_top = 234.0
@@ -324,58 +327,58 @@ offset_right = 1125.0
 offset_bottom = 578.0
 columns = 4
 
-[node name="TextureRect" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+[node name="TextureRect" type="TextureRect" parent="ShuffleOverlay/CardGrid" unique_id=282197225]
 layout_mode = 2
 texture = ExtResource("2_xdroa")
 
-[node name="TextureRect2" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+[node name="TextureRect2" type="TextureRect" parent="ShuffleOverlay/CardGrid" unique_id=2078117926]
 layout_mode = 2
 texture = ExtResource("2_xdroa")
 
-[node name="TextureRect3" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+[node name="TextureRect3" type="TextureRect" parent="ShuffleOverlay/CardGrid" unique_id=236931167]
 layout_mode = 2
 texture = ExtResource("2_xdroa")
 
-[node name="TextureRect4" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+[node name="TextureRect4" type="TextureRect" parent="ShuffleOverlay/CardGrid" unique_id=759856426]
 layout_mode = 2
 texture = ExtResource("2_xdroa")
 
-[node name="TextureRect5" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+[node name="TextureRect5" type="TextureRect" parent="ShuffleOverlay/CardGrid" unique_id=775019783]
 layout_mode = 2
 texture = ExtResource("2_xdroa")
 
-[node name="TextureRect6" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+[node name="TextureRect6" type="TextureRect" parent="ShuffleOverlay/CardGrid" unique_id=2008533534]
 layout_mode = 2
 texture = ExtResource("2_xdroa")
 
-[node name="TextureRect7" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+[node name="TextureRect7" type="TextureRect" parent="ShuffleOverlay/CardGrid" unique_id=834743535]
 layout_mode = 2
 texture = ExtResource("2_xdroa")
 
-[node name="TextureRect8" type="TextureRect" parent="ShuffleOverlay/CardGrid"]
+[node name="TextureRect8" type="TextureRect" parent="ShuffleOverlay/CardGrid" unique_id=1234392714]
 layout_mode = 2
 texture = ExtResource("2_xdroa")
 
-[node name="ExerciseResultOverlay" type="Control" parent="."]
+[node name="ExerciseResultOverlay" type="Control" parent="." unique_id=1491890532]
 visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Background" type="TextureRect" parent="ExerciseResultOverlay"]
+[node name="Background" type="TextureRect" parent="ExerciseResultOverlay" unique_id=333654565]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("31_hu6c8")
 
-[node name="PickedExercise" type="TextureRect" parent="ExerciseResultOverlay"]
+[node name="PickedExercise" type="TextureRect" parent="ExerciseResultOverlay" unique_id=971403013]
 layout_mode = 0
 offset_left = 484.0
 offset_top = 219.0
 offset_right = 774.0
 offset_bottom = 446.0
 
-[node name="NameBG" type="TextureRect" parent="ExerciseResultOverlay"]
+[node name="NameBG" type="TextureRect" parent="ExerciseResultOverlay" unique_id=596641270]
 layout_mode = 0
 offset_left = 175.0
 offset_top = 374.0
@@ -384,7 +387,7 @@ offset_bottom = 441.0
 texture = ExtResource("32_gjhrx")
 expand_mode = 1
 
-[node name="ExerciseNameLabel" type="Label" parent="ExerciseResultOverlay"]
+[node name="ExerciseNameLabel" type="Label" parent="ExerciseResultOverlay" unique_id=2071924425]
 layout_mode = 0
 offset_left = 192.0
 offset_top = 382.0
@@ -395,7 +398,7 @@ theme_override_fonts/font = ExtResource("21_x1b3m")
 theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 
-[node name="ExerciseDescriptionLabel" type="Label" parent="ExerciseResultOverlay"]
+[node name="ExerciseDescriptionLabel" type="Label" parent="ExerciseResultOverlay" unique_id=233689394]
 layout_mode = 0
 offset_left = 128.0
 offset_top = 460.0
@@ -405,7 +408,7 @@ theme_override_fonts/font = SubResource("FontVariation_gjhrx")
 theme_override_font_sizes/font_size = 24
 autowrap_mode = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ExerciseResultOverlay"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ExerciseResultOverlay" unique_id=884429764]
 layout_mode = 0
 offset_left = 778.0
 offset_top = 157.0
@@ -414,23 +417,23 @@ offset_bottom = 497.0
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="ContinueButton" type="Button" parent="ExerciseResultOverlay/VBoxContainer"]
+[node name="ContinueButton" type="Button" parent="ExerciseResultOverlay/VBoxContainer" unique_id=1935426922]
 layout_mode = 2
 icon = ExtResource("32_5f0w2")
 flat = true
 
-[node name="MainMenuButton" type="Button" parent="ExerciseResultOverlay/VBoxContainer"]
+[node name="MainMenuButton" type="Button" parent="ExerciseResultOverlay/VBoxContainer" unique_id=530819278]
 layout_mode = 2
 icon = ExtResource("27_lpk1w")
 flat = true
 
-[node name="MatchPopupOverlay" type="Control" parent="."]
+[node name="MatchPopupOverlay" type="Control" parent="." unique_id=1119841087]
 visible = false
 anchors_preset = 0
 offset_right = 1278.0
 offset_bottom = 729.0
 
-[node name="MatchPopupImage" type="TextureRect" parent="MatchPopupOverlay"]
+[node name="MatchPopupImage" type="TextureRect" parent="MatchPopupOverlay" unique_id=79329396]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -443,28 +446,28 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch_mode = 3
 
-[node name="TutorialOverlay" type="Control" parent="."]
+[node name="TutorialOverlay" type="Control" parent="." unique_id=442691813]
 anchors_preset = 0
 offset_left = 6.0
 offset_top = -1.0
 offset_right = 1282.0
 offset_bottom = 723.0
 
-[node name="bg" type="TextureRect" parent="TutorialOverlay"]
+[node name="bg" type="TextureRect" parent="TutorialOverlay" unique_id=2120999018]
 visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("11_3jjgu")
 
-[node name="TutorialStepImage" type="TextureRect" parent="TutorialOverlay"]
+[node name="TutorialStepImage" type="TextureRect" parent="TutorialOverlay" unique_id=1550576537]
 layout_mode = 0
 offset_left = 193.0
 offset_top = 181.0
 offset_right = 858.0
 offset_bottom = 456.0
 
-[node name="TutorialPopupImage" type="TextureRect" parent="TutorialOverlay"]
+[node name="TutorialPopupImage" type="TextureRect" parent="TutorialOverlay" unique_id=931857183]
 layout_mode = 0
 offset_left = 142.0
 offset_top = 286.0
@@ -472,7 +475,7 @@ offset_right = 555.0
 offset_bottom = 358.0
 stretch_mode = 5
 
-[node name="TutorialPopupImage2" type="TextureRect" parent="TutorialOverlay"]
+[node name="TutorialPopupImage2" type="TextureRect" parent="TutorialOverlay" unique_id=682757249]
 layout_mode = 0
 offset_left = 714.0
 offset_top = 460.0

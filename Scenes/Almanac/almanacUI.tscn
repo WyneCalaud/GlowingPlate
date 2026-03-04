@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://clbki6vphqy7t"]
+[gd_scene format=3 uid="uid://clbki6vphqy7t"]
 
 [ext_resource type="Script" uid="uid://buuoq4bsevlop" path="res://Scripts/Lobby/almanac_ui.gd" id="1_8l0e0"]
 [ext_resource type="Texture2D" uid="uid://c364h4j3e0aq2" path="res://Assets/UI/DarkenLayer.png" id="2_jpf65"]
@@ -77,7 +77,7 @@ region = Rect2(3, 3, 523, 118)
 [sub_resource type="AtlasTexture" id="AtlasTexture_lg1bt"]
 atlas = ExtResource("9_ubeeb")
 
-[node name="AlmanacUI" type="Control"]
+[node name="AlmanacUI" type="Control" unique_id=1911070530]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -105,13 +105,13 @@ glow_btn_icons = Array[Texture2D]([ExtResource("15_byxuj"), ExtResource("16_v5ay
 glow_info_pages = Array[Texture2D]([ExtResource("40_ff3e4"), ExtResource("41_u5dsw"), ExtResource("42_tcoq7"), ExtResource("43_v0e6r"), ExtResource("44_g51u7"), ExtResource("45_8n8yg"), ExtResource("46_lurp0"), ExtResource("47_ovlqo")])
 glow_portion_pages = Array[Texture2D]([ExtResource("42_ylyat"), ExtResource("43_2ff4h"), ExtResource("44_ivpej"), ExtResource("45_fh3j3"), ExtResource("46_mg0v4"), ExtResource("47_wjqnk"), ExtResource("48_ff3e4"), ExtResource("49_u5dsw")])
 
-[node name="DarkenBackground" type="TextureRect" parent="."]
+[node name="DarkenBackground" type="TextureRect" parent="." unique_id=1848137116]
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("2_jpf65")
 
-[node name="Almanac" type="TextureRect" parent="."]
+[node name="Almanac" type="TextureRect" parent="." unique_id=923024485]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -127,7 +127,7 @@ grow_vertical = 2
 texture = ExtResource("3_lg1bt")
 expand_mode = 1
 
-[node name="Exitbutton" type="TextureButton" parent="Almanac"]
+[node name="Exitbutton" type="TextureButton" parent="Almanac" unique_id=1572355213]
 layout_mode = 0
 offset_left = 709.0
 offset_top = -80.0
@@ -135,7 +135,7 @@ offset_right = 883.0
 offset_bottom = 29.0
 texture_normal = ExtResource("3_3xfrq")
 
-[node name="PortionTab" type="TextureButton" parent="Almanac"]
+[node name="PortionTab" type="TextureButton" parent="Almanac" unique_id=2018947245]
 layout_mode = 0
 offset_left = 840.0
 offset_top = 265.0
@@ -146,7 +146,7 @@ texture_normal = ExtResource("37_8vcey")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="GoTab" type="TextureButton" parent="Almanac"]
+[node name="GoTab" type="TextureButton" parent="Almanac" unique_id=1871265009]
 layout_mode = 0
 offset_left = 840.0
 offset_top = 337.0
@@ -157,7 +157,7 @@ texture_normal = ExtResource("3_mmgp3")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="GrowTab" type="TextureButton" parent="Almanac"]
+[node name="GrowTab" type="TextureButton" parent="Almanac" unique_id=803425437]
 layout_mode = 0
 offset_left = 842.0
 offset_top = 408.0
@@ -168,7 +168,7 @@ texture_normal = ExtResource("4_aghlv")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="GlowTab" type="TextureButton" parent="Almanac"]
+[node name="GlowTab" type="TextureButton" parent="Almanac" unique_id=1655250754]
 layout_mode = 0
 offset_left = 842.0
 offset_top = 476.0
@@ -179,14 +179,14 @@ texture_normal = ExtResource("5_8eymg")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="LeftPage" type="Control" parent="Almanac"]
+[node name="LeftPage" type="Control" parent="Almanac" unique_id=1577953599]
 anchors_preset = 0
 offset_left = 67.0
 offset_top = 24.0
 offset_right = 426.68
 offset_bottom = 522.744
 
-[node name="CategorySign" type="TextureRect" parent="Almanac/LeftPage"]
+[node name="CategorySign" type="TextureRect" parent="Almanac/LeftPage" unique_id=1204897573]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -198,7 +198,7 @@ grow_horizontal = 2
 texture = SubResource("AtlasTexture_77g2a")
 expand_mode = 3
 
-[node name="2x2" type="GridContainer" parent="Almanac/LeftPage"]
+[node name="2x2" type="GridContainer" parent="Almanac/LeftPage" unique_id=64365237]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.089
@@ -213,7 +213,7 @@ grow_horizontal = 2
 grow_vertical = 2
 columns = 2
 
-[node name="One" type="TextureButton" parent="Almanac/LeftPage/2x2"]
+[node name="One" type="TextureButton" parent="Almanac/LeftPage/2x2" unique_id=413524495]
 custom_minimum_size = Vector2(150, 180)
 layout_mode = 2
 toggle_mode = true
@@ -221,7 +221,7 @@ texture_normal = ExtResource("9_ubeeb")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="Two" type="TextureButton" parent="Almanac/LeftPage/2x2"]
+[node name="Two" type="TextureButton" parent="Almanac/LeftPage/2x2" unique_id=1384489017]
 custom_minimum_size = Vector2(150, 180)
 layout_mode = 2
 toggle_mode = true
@@ -229,7 +229,7 @@ texture_normal = ExtResource("10_i56je")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="Three" type="TextureButton" parent="Almanac/LeftPage/2x2"]
+[node name="Three" type="TextureButton" parent="Almanac/LeftPage/2x2" unique_id=1543393399]
 custom_minimum_size = Vector2(150, 180)
 layout_mode = 2
 toggle_mode = true
@@ -237,7 +237,7 @@ texture_normal = ExtResource("11_6fjyo")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="Four" type="TextureButton" parent="Almanac/LeftPage/2x2"]
+[node name="Four" type="TextureButton" parent="Almanac/LeftPage/2x2" unique_id=1536343273]
 custom_minimum_size = Vector2(150, 180)
 layout_mode = 2
 toggle_mode = true
@@ -245,7 +245,7 @@ texture_normal = ExtResource("12_i0gx2")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="3x3" type="GridContainer" parent="Almanac/LeftPage"]
+[node name="3x3" type="GridContainer" parent="Almanac/LeftPage" unique_id=381728146]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -262,7 +262,7 @@ grow_vertical = 2
 theme_override_constants/v_separation = -20
 columns = 3
 
-[node name="One" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+[node name="One" type="TextureButton" parent="Almanac/LeftPage/3x3" unique_id=1306215383]
 custom_minimum_size = Vector2(110, 150)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -272,7 +272,7 @@ texture_normal = SubResource("AtlasTexture_lg1bt")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Two" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+[node name="Two" type="TextureButton" parent="Almanac/LeftPage/3x3" unique_id=403844888]
 custom_minimum_size = Vector2(110, 150)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -282,7 +282,7 @@ texture_normal = SubResource("AtlasTexture_lg1bt")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Three" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+[node name="Three" type="TextureButton" parent="Almanac/LeftPage/3x3" unique_id=397641394]
 custom_minimum_size = Vector2(110, 150)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -292,7 +292,7 @@ texture_normal = SubResource("AtlasTexture_lg1bt")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Four" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+[node name="Four" type="TextureButton" parent="Almanac/LeftPage/3x3" unique_id=693005527]
 custom_minimum_size = Vector2(110, 150)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -302,7 +302,7 @@ texture_normal = SubResource("AtlasTexture_lg1bt")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Five" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+[node name="Five" type="TextureButton" parent="Almanac/LeftPage/3x3" unique_id=681615251]
 custom_minimum_size = Vector2(110, 150)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -312,7 +312,7 @@ texture_normal = SubResource("AtlasTexture_lg1bt")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Six" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+[node name="Six" type="TextureButton" parent="Almanac/LeftPage/3x3" unique_id=952723198]
 custom_minimum_size = Vector2(110, 150)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -322,7 +322,7 @@ texture_normal = SubResource("AtlasTexture_lg1bt")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Seven" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+[node name="Seven" type="TextureButton" parent="Almanac/LeftPage/3x3" unique_id=1032743922]
 custom_minimum_size = Vector2(110, 150)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -332,7 +332,7 @@ texture_normal = SubResource("AtlasTexture_lg1bt")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Eight" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+[node name="Eight" type="TextureButton" parent="Almanac/LeftPage/3x3" unique_id=768390284]
 custom_minimum_size = Vector2(110, 150)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -342,7 +342,7 @@ texture_normal = SubResource("AtlasTexture_lg1bt")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Nine" type="TextureButton" parent="Almanac/LeftPage/3x3"]
+[node name="Nine" type="TextureButton" parent="Almanac/LeftPage/3x3" unique_id=1112375274]
 custom_minimum_size = Vector2(110, 150)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -352,7 +352,7 @@ texture_normal = SubResource("AtlasTexture_lg1bt")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="RightPage" type="Control" parent="Almanac"]
+[node name="RightPage" type="Control" parent="Almanac" unique_id=754253701]
 layout_mode = 1
 anchor_left = 0.52900004
 anchor_top = 0.041
@@ -363,7 +363,7 @@ offset_top = -0.27200127
 offset_right = 0.39990234
 offset_bottom = 0.0079956055
 
-[node name="RighSideInfo" type="TextureRect" parent="Almanac/RightPage"]
+[node name="RighSideInfo" type="TextureRect" parent="Almanac/RightPage" unique_id=1655053468]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://chaqv2o4rajlv"]
+[gd_scene format=3 uid="uid://chaqv2o4rajlv"]
 
 [ext_resource type="Script" uid="uid://bteybm5j11cxh" path="res://Scripts/Gameplay/beverage_station.gd" id="1_xqbgv"]
 [ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="2_3v2pv"]
@@ -17,12 +17,12 @@
 radius = 195.01257
 height = 799.1057
 
-[node name="BeveragesStation" type="Node2D"]
+[node name="BeveragesStation" type="Node2D" unique_id=1150510552]
 script = ExtResource("1_xqbgv")
 
-[node name="Background" type="Node2D" parent="."]
+[node name="Background" type="Node2D" parent="." unique_id=1566457695]
 
-[node name="ColorRect" type="TextureRect" parent="Background"]
+[node name="ColorRect" type="TextureRect" parent="Background" unique_id=182072785]
 offset_left = 1.0
 offset_right = 1281.0
 offset_bottom = 720.0
@@ -32,33 +32,33 @@ texture = ExtResource("2_3v2pv")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Mat" type="Node2D" parent="."]
+[node name="Mat" type="Node2D" parent="." unique_id=946200627]
 position = Vector2(408, 480)
 
-[node name="LongMat" type="Sprite2D" parent="Mat"]
+[node name="LongMat" type="Sprite2D" parent="Mat" unique_id=793905287]
 position = Vector2(365.00003, -250)
 scale = Vector2(0.7705696, 1)
 texture = ExtResource("3_xhudw")
 
-[node name="Mat1" type="Sprite2D" parent="Mat"]
+[node name="Mat1" type="Sprite2D" parent="Mat" unique_id=1761773439]
 position = Vector2(95.99999, 95.99997)
 scale = Vector2(0.25830182, 0.29435477)
 texture = ExtResource("6_3v2pv")
 
-[node name="Mat2" type="Sprite2D" parent="Mat"]
+[node name="Mat2" type="Sprite2D" parent="Mat" unique_id=630374115]
 position = Vector2(335, 96)
 scale = Vector2(0.25830182, 0.29435477)
 texture = ExtResource("6_3v2pv")
 
-[node name="WaterStation" type="Node2D" parent="."]
-position = Vector2(540, 80)
+[node name="WaterStation" type="Node2D" parent="." unique_id=1851865473]
+position = Vector2(540, 64)
 
-[node name="ColdWater" type="Sprite2D" parent="WaterStation"]
-position = Vector2(88.000015, 88.00002)
-scale = Vector2(0.359, 0.36)
+[node name="ColdWater" type="Sprite2D" parent="WaterStation" unique_id=653815182]
+position = Vector2(85.59602, 93.16)
+scale = Vector2(0.3543047, 0.3499219)
 texture = ExtResource("3_5tifh")
 
-[node name="Area2D" type="Area2D" parent="WaterStation/ColdWater"]
+[node name="Area2D" type="Area2D" parent="WaterStation/ColdWater" unique_id=545876689]
 collision_mask = 2
 monitorable = false
 script = ExtResource("3_vjurt")
@@ -66,17 +66,17 @@ liquid_type = "Cold"
 unselected_texture = ExtResource("3_5tifh")
 selected_texture = ExtResource("3_5tifh")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterStation/ColdWater/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterStation/ColdWater/Area2D" unique_id=312393037]
 visible = false
 position = Vector2(-41.809296, 8.78042)
 shape = SubResource("CapsuleShape2D_xsyws")
 
-[node name="HotWater" type="Sprite2D" parent="WaterStation"]
+[node name="HotWater" type="Sprite2D" parent="WaterStation" unique_id=1732886674]
 position = Vector2(279, 88.99999)
-scale = Vector2(0.359, 0.36)
+scale = Vector2(0.3543047, 0.3499219)
 texture = ExtResource("7_0fyd5")
 
-[node name="Area2D" type="Area2D" parent="WaterStation/HotWater"]
+[node name="Area2D" type="Area2D" parent="WaterStation/HotWater" unique_id=1779877119]
 collision_mask = 2
 monitorable = false
 script = ExtResource("3_vjurt")
@@ -84,12 +84,12 @@ liquid_type = "Hot"
 unselected_texture = ExtResource("7_0fyd5")
 selected_texture = ExtResource("7_0fyd5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterStation/HotWater/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterStation/HotWater/Area2D" unique_id=1406692163]
 visible = false
 position = Vector2(-41.809296, 8.78042)
 shape = SubResource("CapsuleShape2D_xsyws")
 
-[node name="MilkStation" type="Control" parent="."]
+[node name="MilkStation" type="Control" parent="." unique_id=696315879]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 951.0
@@ -97,7 +97,7 @@ offset_top = 61.0
 offset_right = 951.0
 offset_bottom = 61.0
 
-[node name="MilkCartons" type="TextureButton" parent="MilkStation" node_paths=PackedStringArray("mat1", "mat2")]
+[node name="MilkCartons" type="TextureButton" parent="MilkStation" unique_id=1658013811 node_paths=PackedStringArray("mat1", "mat2")]
 layout_mode = 0
 offset_right = 276.0
 offset_bottom = 188.0
@@ -107,10 +107,10 @@ milk_scene = ExtResource("10_3v2pv")
 mat1 = NodePath("../../Mat/Mat1")
 mat2 = NodePath("../../Mat/Mat2")
 
-[node name="Glasses" type="Node2D" parent="."]
-position = Vector2(247, 205)
+[node name="Glasses" type="Node2D" parent="." unique_id=71476584]
+position = Vector2(247, 189)
 
-[node name="StackGlass" type="Sprite2D" parent="Glasses" groups=["global_controller"]]
+[node name="StackGlass" type="Sprite2D" parent="Glasses" unique_id=128440049 groups=["global_controller"]]
 light_mask = 3
 visibility_layer = 9
 position = Vector2(161, 2)

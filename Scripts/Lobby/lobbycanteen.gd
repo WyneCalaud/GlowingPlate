@@ -73,15 +73,34 @@ func _ready() -> void:
 			nutridesk_btn.pressed.connect(_on_glow_desk_pressed)
 
 	_check_for_returned_items()
+	
+	var GD = get_node("/root/GameData")
+	day_number.text = "Day %02d" % GD.current_day
+
+	# --- AUTO START LOGIC ---
+	if GD.has_meta("tutorial_auto_start") and GD.get_meta("tutorial_auto_start"):
+		GD.set_meta("tutorial_auto_start", false) # Consume the flag so it only happens once
+		
+		# Immediately hide lobby UI so the player never sees it
+		almanac_btn.hide()
+		bulletin_btn.hide()
+		start_day_btn.hide()
+		nutridesk_btn.hide()
+		nutrishop_btn.hide()
+		hideshowbutton.hide()
+		bottom_buttons.hide()
+		
+		# Give the engine a frame to settle, then immediately simulate pressing the button
+		call_deferred("_on_day_button_pressed")
+		return # Exit early so we don't run the normal lobby setup
+		
+	# Normal lobby setup if we didn't auto-start
 	_restore_day_ui_state()
 	
 	if not principal_leave_btn.pressed.is_connected(_on_principal_leave_pressed):
 		principal_leave_btn.pressed.connect(_on_principal_leave_pressed)
 	
 	_restore_patience_ui()
-	
-	var GD = get_node("/root/GameData")
-	day_number.text = "Day %02d" % GD.current_day
 
 	if GD.current_phase == GD.GamePhase.NEWS and GD.day_started:
 		# Small delay so scene fully loads
@@ -556,6 +575,10 @@ func _on_btn_final_serve_pressed() -> void:
 
 	if correct:
 		await typewriter_words(_get_happy_feedback())
+		
+		if character_id in ["Leo", "Maya", "Norma"]:
+			_show_special_key_reward()
+		
 	else:
 		await typewriter_words(_get_angry_feedback(mistakes))
 
@@ -680,14 +703,14 @@ func _get_detailed_mistakes() -> Array:
 func _get_angry_feedback(mistakes: Array) -> String:
 
 	if mistakes.is_empty():
-		return "😠 Something isn’t right..."
+		return "Something isn’t right..."
 
 	var combined = "\n".join(mistakes)
 
 	var variants = [
-		"😠 Oh no!\n%s",
-		"😡 That’s not correct!\n%s",
-		"😤 Hmm… there’s a problem!\n%s"
+		"Oh no!\n%s",
+		"That’s not correct!\n%s",
+		"Hmm… there’s a problem!\n%s"
 	]
 
 	return variants.pick_random() % combined
@@ -695,9 +718,9 @@ func _get_angry_feedback(mistakes: Array) -> String:
 func _get_happy_feedback() -> String:
 
 	var variants = [
-		"😊 Thank you!",
-		"😊 Thanks! This looks great!",
-		"😄 Yay! This is perfect!"
+		"Thank you!",
+		"Thanks! This looks great!",
+		"Yay! This is perfect!"
 	]
 
 	return variants.pick_random()
@@ -1073,3 +1096,14 @@ func _on_btn_accept_pressed() -> void:
 
 func _on_btn_continue_pressed() -> void:
 	pass # Replace with function body.
+	
+
+func _show_special_key_reward():
+
+	var GD = get_node("/root/GameData")
+
+	# Force HUD to update immediately
+	get_tree().call_group("HUD", "update_keys", GD.keys + 10)
+
+	# Optional: simple floating feedback text
+	dialogue_text.text += "\n\n⭐ +10 Keys!"

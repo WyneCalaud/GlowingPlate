@@ -102,17 +102,35 @@ func _finish_tutorial() -> void:
 		tutorial_finished.emit()
 		return
 		
-	_active_tween = create_tween().bind_node(self).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	_active_tween = create_tween().bind_node(self).set_parallel(true).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	_active_tween.tween_property(tutorial_overlay, "modulate:a", 0.0, 1.5)
 	
-	# CHANGED: Handles both "Standalone Scene" and "Popup inside KitchenArea" seamlessly
-	_active_tween.tween_callback(func(): 
-		if is_instance_valid(self) and is_instance_valid(tutorial_overlay):
-			tutorial_overlay.visible = false
+	# --- NEW: Create a dynamic black screen overlay to fade the entire screen to black ---
+	var fade_canvas = CanvasLayer.new()
+	fade_canvas.layer = 100
+	add_child(fade_canvas)
+	var fade_rect = ColorRect.new()
+	fade_rect.color = Color(0, 0, 0, 0)
+	fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	fade_canvas.add_child(fade_rect)
+	
+	_active_tween.tween_property(fade_rect, "color:a", 1.0, 1.5)
+	
+	# CHANGED: Use chain to wait for the fade to finish, then switch scenes
+	_active_tween.chain().tween_callback(func(): 
+		if is_instance_valid(self):
+			if is_instance_valid(tutorial_overlay): tutorial_overlay.visible = false
 			tutorial_finished.emit()
 			
 			# Check if this scene is running as the MAIN screen right now
 			if get_tree().current_scene == self:
+				# Ensure GameData is synced properly for Day 1 and set the auto-start flag
+				var gd = get_node_or_null("/root/GameData")
+				if gd:
+					gd.current_day = 1
+					# ---> THE SECRET NOTE FOR THE LOBBY <---
+					gd.set_meta("tutorial_auto_start", true) 
+				
 				# We are in Intro -> Tutorial -> Lobby flow, so load the Lobby!
 				get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
 			else:

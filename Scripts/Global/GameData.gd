@@ -9,6 +9,8 @@ var intro_completed: bool = false
 # --- Player & Customer Context ---
 var current_customer_age_group: String = ""
 var player_name : String = ""
+var music_volume: float = 1.0 
+var sfx_volume: float = 1.0
 
 # --- Core Progression Variables ---
 var current_day: int = 1         
@@ -183,11 +185,14 @@ func finalize_service(day_result: Dictionary) -> void:
 	
 	# --- Key Rewards ---
 	var keys_won = day_result.get("earned_keys", 0)
-	var special_char: String = day_result.get("character_id", "") as String
+	
+	# ⭐ FIX: Safe string checking and strip_edges to ensure spacing doesn't cause a failure
+	var special_char: String = str(day_result.get("character_id", "")).strip_edges()
 	var is_correct: bool = day_result.get("is_correct", false)
 
-	if is_correct and special_char in ["Leo","Maya","Norma"]:
+	if is_correct and (special_char == "Leo" or special_char == "Maya" or special_char == "Norma"):
 		keys_won += 10
+		print("⭐ Special character served successfully! Awarding +10 keys.")
 
 	keys += keys_won
 	daily_keys_earned += keys_won
@@ -200,6 +205,10 @@ func finalize_service(day_result: Dictionary) -> void:
 	
 	OrderSystem.clear_prepared_data()
 	get_tree().call_group("HUD", "update_all_labels")
+
+	# ⭐ FIX: Immediately save the game state here so the keys are persistently recorded
+	# Otherwise, if the player quits to menu before the day transitions, they lose their keys!
+	save_game()
 
 	# ======================================================
 	# 🔥 LAST CUSTOMER DELAY FIX
@@ -370,4 +379,4 @@ func add_prepared_beverage(beverage_res: Resource):
 func store_beverage_data(data: Dictionary):
 	OrderSystem.prepared_beverage_data = data
 	returning_from_beverage = true
-	transition_to_canteen_serve() 
+	transition_to_canteen_serve()

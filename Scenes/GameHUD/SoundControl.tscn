@@ -1,11 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://ccv4r1x8840d2"]
+[gd_scene format=3 uid="uid://ccv4r1x8840d2"]
 
 [ext_resource type="Script" uid="uid://c8xoeufpmgkl8" path="res://Scripts/Utility/SoundControl.gd" id="1_jxku6"]
 [ext_resource type="Texture2D" uid="uid://c5ui0ks2ghgqs" path="res://Assets/UI/Interface/Niger.png" id="1_ry2qj"]
 [ext_resource type="Texture2D" uid="uid://cjwqakd3pubtk" path="res://Assets/UI/CloseButton1.png" id="1_yy33u"]
 [ext_resource type="Texture2D" uid="uid://52mpmjq87htm" path="res://Assets/UI/Interface/SettingsMenu.png" id="2_yy33u"]
-[ext_resource type="FontFile" uid="uid://b443ju2lx1p21" path="res://Fonts/Comic_Neue/ComicNeue-BoldItalic.ttf" id="3_jxku6"]
-[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/Fonts/Rowdies-Regular.ttf" id="3_ry2qj"]
+[ext_resource type="FontFile" uid="uid://b443ju2lx1p21" path="res://fonts/Comic_Neue/ComicNeue-BoldItalic.ttf" id="3_jxku6"]
+[ext_resource type="FontFile" uid="uid://dke3jxenlvu46" path="res://Assets/fonts/Rowdies-Regular.ttf" id="3_ry2qj"]
 [ext_resource type="LabelSettings" uid="uid://dnbs1daf6c8v5" path="res://Theme/LabelTheme.tres" id="4_jxku6"]
 [ext_resource type="Texture2D" uid="uid://baxfeu7t2d6xf" path="res://Assets/UI/SoundSettingsUI/MusicButton.png" id="5_pgnl1"]
 [ext_resource type="Texture2D" uid="uid://dpmlupi1iu1fb" path="res://Assets/UI/SoundSettingsUI/MuteMusicButton.png" id="6_l7g36"]
@@ -39,7 +39,7 @@ texture = ExtResource("8_eonuu")
 expand_margin_bottom = 10.0
 region_rect = Rect2(4, 0, 302, 22)
 
-[node name="SoundControl" type="Control"]
+[node name="SoundControl" type="Control" unique_id=1476271829]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -49,14 +49,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jxku6")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2117784722]
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("1_ry2qj")
 stretch_mode = 2
 
-[node name="CloseButton" type="TextureButton" parent="."]
+[node name="CloseButton" type="TextureButton" parent="." unique_id=1044003866]
 layout_mode = 0
 offset_left = 786.0
 offset_top = 18.0
@@ -64,7 +64,7 @@ offset_right = 960.0
 offset_bottom = 127.0
 texture_normal = ExtResource("1_yy33u")
 
-[node name="SettingsPanel" type="TextureRect" parent="."]
+[node name="SettingsPanel" type="TextureRect" parent="." unique_id=666860167]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -80,12 +80,12 @@ grow_vertical = 2
 texture = ExtResource("2_yy33u")
 stretch_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel" unique_id=1290347376]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Music" type="Label" parent="SettingsPanel"]
+[node name="Music" type="Label" parent="SettingsPanel" unique_id=1825203238]
 layout_mode = 0
 offset_left = 245.5
 offset_top = 162.0
@@ -100,7 +100,7 @@ label_settings = ExtResource("4_jxku6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sound Effects" type="Label" parent="SettingsPanel"]
+[node name="Sound Effects" type="Label" parent="SettingsPanel" unique_id=1931038622]
 layout_mode = 0
 offset_left = 117.5
 offset_top = 255.0
@@ -113,7 +113,7 @@ label_settings = ExtResource("4_jxku6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Language" type="Label" parent="SettingsPanel"]
+[node name="Language" type="Label" parent="SettingsPanel" unique_id=71021543]
 layout_mode = 0
 offset_left = 117.5
 offset_top = 373.0
@@ -126,7 +126,7 @@ label_settings = ExtResource("4_jxku6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VolumeSettings" type="VBoxContainer" parent="SettingsPanel"]
+[node name="VolumeSettings" type="VBoxContainer" parent="SettingsPanel" unique_id=1541296850]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -141,22 +141,22 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 
-[node name="HSeparator3" type="HSeparator" parent="SettingsPanel/VolumeSettings"]
+[node name="HSeparator3" type="HSeparator" parent="SettingsPanel/VolumeSettings" unique_id=1263447885]
 layout_mode = 2
 theme_override_constants/separation = 30
 theme_override_styles/separator = SubResource("StyleBoxEmpty_w5x8q")
 
-[node name="MusicGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings"]
+[node name="MusicGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings" unique_id=999291306]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="MusicMuteButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/MusicGroup"]
+[node name="MusicMuteButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/MusicGroup" unique_id=994681624]
 layout_mode = 2
 toggle_mode = true
 texture_normal = ExtResource("5_pgnl1")
 texture_pressed = ExtResource("6_l7g36")
 
-[node name="MusicSlider" type="HSlider" parent="SettingsPanel/VolumeSettings/MusicGroup"]
+[node name="MusicSlider" type="HSlider" parent="SettingsPanel/VolumeSettings/MusicGroup" unique_id=1428314616]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -166,27 +166,27 @@ theme_override_icons/grabber_highlight = ExtResource("7_6cahj")
 theme_override_styles/slider = SubResource("StyleBoxTexture_7br87")
 theme_override_styles/grabber_area = SubResource("StyleBoxTexture_uq2nh")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxTexture_df0c7")
-max_value = 1.5
-step = 0.001
+max_value = 1.0
+step = 0.01
 value = 0.8
 ticks_position = 2
 
-[node name="HSeparator2" type="HSeparator" parent="SettingsPanel/VolumeSettings"]
+[node name="HSeparator2" type="HSeparator" parent="SettingsPanel/VolumeSettings" unique_id=1038835449]
 layout_mode = 2
 theme_override_constants/separation = 30
 theme_override_styles/separator = SubResource("StyleBoxEmpty_w5x8q")
 
-[node name="SFXGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings"]
+[node name="SFXGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings" unique_id=1552501772]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="SFXMuteButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/SFXGroup"]
+[node name="SFXMuteButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/SFXGroup" unique_id=672809061]
 layout_mode = 2
 toggle_mode = true
 texture_normal = ExtResource("9_cwkrk")
 texture_pressed = ExtResource("10_n11vq")
 
-[node name="SFXSlider" type="HSlider" parent="SettingsPanel/VolumeSettings/SFXGroup"]
+[node name="SFXSlider" type="HSlider" parent="SettingsPanel/VolumeSettings/SFXGroup" unique_id=1688289512]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -196,27 +196,27 @@ theme_override_icons/grabber_highlight = ExtResource("7_6cahj")
 theme_override_styles/slider = SubResource("StyleBoxTexture_7br87")
 theme_override_styles/grabber_area = SubResource("StyleBoxTexture_uq2nh")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxTexture_df0c7")
-max_value = 1.5
-step = 0.001
+max_value = 1.0
+step = 0.01
 value = 0.8
 ticks_position = 2
 
-[node name="HSeparator" type="HSeparator" parent="SettingsPanel/VolumeSettings"]
+[node name="HSeparator" type="HSeparator" parent="SettingsPanel/VolumeSettings" unique_id=620622484]
 layout_mode = 2
 theme_override_constants/separation = 60
 theme_override_styles/separator = SubResource("StyleBoxEmpty_w5x8q")
 
-[node name="LanguageGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings"]
+[node name="LanguageGroup" type="HBoxContainer" parent="SettingsPanel/VolumeSettings" unique_id=1290851551]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="LanguageButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/LanguageGroup"]
+[node name="LanguageButton" type="TextureButton" parent="SettingsPanel/VolumeSettings/LanguageGroup" unique_id=163293557]
 layout_mode = 2
 disabled = true
 toggle_mode = true
 texture_normal = ExtResource("11_oe1vw")
 
-[node name="LanguageOptions" type="NinePatchRect" parent="SettingsPanel/VolumeSettings/LanguageGroup"]
+[node name="LanguageOptions" type="NinePatchRect" parent="SettingsPanel/VolumeSettings/LanguageGroup" unique_id=833593667]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("13_pgnl1")

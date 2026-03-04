@@ -8,7 +8,7 @@ extends Control
 
 # NEW: Dialogue Settings & Texture Slots
 @export_group("Dialogue Box & Text Settings")
-@export var text_speed_per_char: float = 0.03 # Time it takes for 1 letter to appear
+@export var text_speed_per_word: float = 0.15 # Equivalent to typing_speed
 
 @export_subgroup("Box Textures")
 @export var box_texture_small: Texture2D      # Slot for the Small Box
@@ -32,7 +32,8 @@ var base_btn_choice2_pos := Vector2.ZERO
 
 # Typewriter state variables
 var is_typing := false
-var text_tween: Tween
+var full_dialogue_text := ""
+var typewriter_id := 0
 
 # --- SAFELY FETCH NODES ---
 @onready var dialogue_box = get_node_or_null("DialogueBox")
@@ -159,31 +160,51 @@ func _play_dialogue(text_content: String, box_size_type: String = "medium"):
 		var box_tween = create_tween().bind_node(self)
 		box_tween.tween_property(dialogue_box, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	
-	# 3. Setup Text Typewriter
-	dialogue_text.text = text_content
-	dialogue_text.visible_characters = 0
+	# 3. Call your custom typewriter animation
+	typewriter_words(text_content)
+
+# Your requested typewriter function
+func typewriter_words(text: String) -> void:
 	is_typing = true
+	full_dialogue_text = text
 	
-	# 4. Animate characters
-	if text_tween and text_tween.is_valid():
-		text_tween.kill()
-		
-	text_tween = create_tween().bind_node(self)
-	var length = text_content.length()
-	var duration = length * text_speed_per_char
-	text_tween.tween_property(dialogue_text, "visible_characters", length, duration)
-	
-	text_tween.tween_callback(func():
+	if is_instance_valid(dialogue_text):
+		dialogue_text.text = ""
+		# Ensure we show all characters instead of relying on visible_characters
+		dialogue_text.visible_characters = -1 
+
+	# Update ID to cancel any previously running typewriter loop
+	typewriter_id += 1
+	var current_id = typewriter_id
+
+	var words: PackedStringArray = text.split(" ")
+	var built_text: String = ""
+
+	for i in words.size():
+		# Safety check: Break loop if skipped OR if a new dialogue started
+		if not is_typing or current_id != typewriter_id:
+			break
+			
+		built_text += words[i]
+
+		if i < words.size() - 1:
+			built_text += " "
+
+		if is_instance_valid(dialogue_text):
+			dialogue_text.text = built_text
+
+		await get_tree().create_timer(text_speed_per_word).timeout
+
+	# Only set to false if it finished naturally (wasn't interrupted)
+	if current_id == typewriter_id:
 		is_typing = false
-		dialogue_text.visible_characters = -1 # Safety net
-	)
 
 func _skip_typing():
-	if text_tween and text_tween.is_valid():
-		text_tween.kill()
-	if is_instance_valid(dialogue_text):
-		dialogue_text.visible_characters = -1
+	# Setting this to false instantly breaks the loop inside typewriter_words()
 	is_typing = false
+	
+	if is_instance_valid(dialogue_text):
+		dialogue_text.text = full_dialogue_text
 
 # ===================================================
 # MAIN DIALOGUE SYSTEM
@@ -228,7 +249,7 @@ func show_step():
 			btn_choice1.show()
 			btn_choice2.show()
 			btn_choice1_label.text = "I'm ready!"
-			btn_choice2_label.text = "I'm nervous."
+			btn_choice2_label.text = "I'm nervous"
 		10:
 			_play_dialogue("Don’t worry, I know you will do great, %s!" % player_name, "medium")
 			_set_next_btn("Thanks!")
@@ -421,5 +442,3 @@ func _kill_active_tween():
 
 func _exit_tree() -> void:
 	_kill_active_tween()
-	if text_tween and text_tween.is_valid():
-		text_tween.kill()

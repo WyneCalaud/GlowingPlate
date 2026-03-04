@@ -62,23 +62,25 @@ func _on_customer_arrived(order: CustomerOrder):
 	var GD := get_node("/root/GameData")
 
 	# --------------------------------------------------
-	# ⭐ SPECIAL CHARACTER INTRO CHECK (FIXED)
+	# ⭐ SPECIAL CHARACTER INTRO CHECK (UPDATED)
 	# --------------------------------------------------
 	if order.customer_name in ["Leo", "Maya", "Norma"]:
-
+		
+		# 1. ALWAYS show the star for special customers
 		special_star.show()
 
-		# If intro was NEVER shown before
-		if not GD.special_intro_shown.get(order.customer_name, false):
-
-			GD.special_intro_shown[order.customer_name] = true
+		# 2. ONLY show the intro sequence for Leo, and ONLY if it hasn't been shown before
+		if order.customer_name == "Leo" and not GD.special_intro_shown.get("Leo", false):
+			
+			GD.special_intro_shown["Leo"] = true
 			GD.save_game()
 
-			_start_special_intro(order.customer_name)
-			return  # 🚨 STOP normal dialogue flow
+			_start_special_intro("Leo")
+			return  # 🚨 STOP normal dialogue flow and wait for the intro to finish
 
 	else:
 		special_star.hide()
+
 
 	# --------------------------------------------------
 	# Normal Flow

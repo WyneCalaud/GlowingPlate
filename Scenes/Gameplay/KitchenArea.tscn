@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://dspwcgo3enhkn"]
+[gd_scene format=3 uid="uid://dspwcgo3enhkn"]
 
 [ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/KitchenArea.gd" id="1_k5enx"]
 [ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="2_i7i4q"]
@@ -67,7 +67,7 @@
 [ext_resource type="PackedScene" uid="uid://jjcnedpqlb6a" path="res://Scenes/FoodDispenser/VeggieCup.tscn" id="53_slnmu"]
 [ext_resource type="PackedScene" uid="uid://chdn7q1q0s44g" path="res://Scenes/Ticket/order_ticket.tscn" id="54_i7i4q"]
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="54_nf282"]
-[ext_resource type="PackedScene" uid="uid://gk1x0mn06ngk" path="res://Scenes/Tutorial/KitchenTutorial.tscn" id="55_oxc20"]
+[ext_resource type="PackedScene" uid="uid://duqcd4sv1178i" path="res://Scenes/Tutorial/KitchenTutorial.tscn" id="55_oxc20"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n7sx4"]
 atlas = ExtResource("4_oxc20")
@@ -79,7 +79,7 @@ radius = 146.03082
 [sub_resource type="CircleShape2D" id="CircleShape2D_nflrw"]
 radius = 51.0392
 
-[node name="KitchenArea" type="Node2D"]
+[node name="KitchenArea" type="Node2D" unique_id=41746146]
 script = ExtResource("1_k5enx")
 empty_go_tex = ExtResource("2_pmqpb")
 empty_grow_tex = ExtResource("3_u5w8p")
@@ -87,16 +87,16 @@ empty_fru_tex = ExtResource("4_s6luy")
 empty_veg_tex = ExtResource("5_yao3w")
 metadata/_edit_lock_ = true
 
-[node name="Background" type="Node2D" parent="."]
+[node name="Background" type="Node2D" parent="." unique_id=1071184950]
 
-[node name="ColorRect" type="TextureRect" parent="Background"]
+[node name="ColorRect" type="TextureRect" parent="Background" unique_id=1130174965]
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("2_i7i4q")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="ColorRect2" type="TextureRect" parent="Background"]
+[node name="ColorRect2" type="TextureRect" parent="Background" unique_id=1703486568]
 offset_left = 1279.0
 offset_right = 2559.0
 offset_bottom = 720.0
@@ -104,17 +104,17 @@ texture = ExtResource("2_i7i4q")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="BeveragesStation" parent="." instance=ExtResource("3_i7i4q")]
+[node name="BeveragesStation" parent="." unique_id=401877769 instance=ExtResource("3_i7i4q")]
 position = Vector2(1351, 1)
 
-[node name="Mat" type="Control" parent="."]
+[node name="Mat" type="Control" parent="." unique_id=503569833]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 48.0
 offset_right = 48.0
 metadata/_edit_use_anchors_ = true
 
-[node name="PlateBorder" type="TextureRect" parent="Mat"]
+[node name="PlateBorder" type="TextureRect" parent="Mat" unique_id=44385411]
 layout_mode = 0
 offset_left = 325.0
 offset_top = 349.00003
@@ -124,7 +124,7 @@ scale = Vector2(0.51, 0.49035153)
 texture = SubResource("AtlasTexture_n7sx4")
 stretch_mode = 2
 
-[node name="UndoButton" type="TextureButton" parent="Mat"]
+[node name="UndoButton" type="TextureButton" parent="Mat" unique_id=335336399]
 visible = false
 layout_mode = 0
 offset_left = 240.0
@@ -134,51 +134,51 @@ offset_bottom = 676.0
 texture_normal = ExtResource("9_b3ytg")
 script = ExtResource("10_orncx")
 
-[node name="Plate" type="Node2D" parent="."]
+[node name="Plate" type="Node2D" parent="." unique_id=242238018]
 position = Vector2(48, 0)
 
-[node name="FoodPlate" parent="Plate" instance=ExtResource("5_nflrw")]
+[node name="FoodPlate" parent="Plate" unique_id=1467841319 instance=ExtResource("5_nflrw")]
 z_index = 1
 position = Vector2(502, 511)
 scale = Vector2(0.517, 0.517)
 script = ExtResource("6_hkpja")
 
-[node name="Area2D" type="Area2D" parent="Plate/FoodPlate"]
+[node name="Area2D" type="Area2D" parent="Plate/FoodPlate" unique_id=1626040549]
 position = Vector2(0, 1.9342651)
 scale = Vector2(1.9342359, 1.9342359)
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Plate/FoodPlate/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plate/FoodPlate/Area2D" unique_id=221791117]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_hhl0g")
 
-[node name="Go Section" type="Node2D" parent="."]
+[node name="Go Section" type="Node2D" parent="." unique_id=18175787]
 
-[node name="RiceCupMat" type="Sprite2D" parent="Go Section"]
+[node name="RiceCupMat" type="Sprite2D" parent="Go Section" unique_id=789072312]
 position = Vector2(176, 552)
 scale = Vector2(0.21, 0.21)
 texture = ExtResource("7_kcelb")
 
-[node name="BrownRiceCupMat" type="Sprite2D" parent="Go Section"]
+[node name="BrownRiceCupMat" type="Sprite2D" parent="Go Section" unique_id=1410246682]
 visible = false
 position = Vector2(448, 552.00006)
 scale = Vector2(0.21, 0.21)
 texture = ExtResource("7_kcelb")
 
-[node name="WhiteRiceCooker" type="Sprite2D" parent="Go Section"]
+[node name="WhiteRiceCooker" type="Sprite2D" parent="Go Section" unique_id=28686392]
 position = Vector2(167, 278)
 texture = ExtResource("10_kcelb")
 script = ExtResource("9_t48f3")
 wr_closed_texture = ExtResource("10_kcelb")
 wr_open_texture = ExtResource("10_hkpja")
 
-[node name="Area2D" type="Area2D" parent="Go Section/WhiteRiceCooker"]
+[node name="Area2D" type="Area2D" parent="Go Section/WhiteRiceCooker" unique_id=1072825283]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Go Section/WhiteRiceCooker/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Go Section/WhiteRiceCooker/Area2D" unique_id=1856278875]
 polygon = PackedVector2Array(13, -152, 55, -149, 88, -134, 109, -98, 118, -50, 113, 3, 99, 41, 75, 64, 39, 78, -7, 81, -46, 76, -76, 60, -91, 44, -108, 12, -113, -40, -111, -89, -93, -127, -67, -144, -32, -152)
 
-[node name="BrownRiceCooker" type="Sprite2D" parent="Go Section"]
+[node name="BrownRiceCooker" type="Sprite2D" parent="Go Section" unique_id=883930900]
 visible = false
 position = Vector2(447, 278)
 texture = ExtResource("10_nflrw")
@@ -187,12 +187,12 @@ rice_type = "Brown"
 br_closed_texture = ExtResource("10_nflrw")
 br_open_texture = ExtResource("12_n7sx4")
 
-[node name="Area2D" type="Area2D" parent="Go Section/BrownRiceCooker"]
+[node name="Area2D" type="Area2D" parent="Go Section/BrownRiceCooker" unique_id=327138344]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Go Section/BrownRiceCooker/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Go Section/BrownRiceCooker/Area2D" unique_id=2094380549]
 polygon = PackedVector2Array(13, -152, 55, -149, 88, -134, 109, -98, 118, -50, 113, 3, 99, 41, 75, 64, 39, 78, -7, 81, -46, 76, -76, 60, -91, 44, -108, 12, -113, -40, -111, -89, -93, -127, -67, -144, -32, -152)
 
-[node name="WhiteRiceCup" type="Sprite2D" parent="Go Section"]
+[node name="WhiteRiceCup" type="Sprite2D" parent="Go Section" unique_id=196110206]
 position = Vector2(176, 544)
 texture = ExtResource("20_hkpja")
 script = ExtResource("12_vfpnn")
@@ -203,14 +203,14 @@ wr_full_cup = ExtResource("16_i7i4q")
 wr_too_high = ExtResource("18_pmqpb")
 food_data = ExtResource("17_b3ytg")
 
-[node name="Area2D" type="Area2D" parent="Go Section/WhiteRiceCup"]
+[node name="Area2D" type="Area2D" parent="Go Section/WhiteRiceCup" unique_id=1386788698]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Go Section/WhiteRiceCup/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Go Section/WhiteRiceCup/Area2D" unique_id=1127665509]
 position = Vector2(-3, 6)
 shape = SubResource("CircleShape2D_nflrw")
 one_way_collision_margin = 0.0
 
-[node name="BrownRiceCup" type="Sprite2D" parent="Go Section"]
+[node name="BrownRiceCup" type="Sprite2D" parent="Go Section" unique_id=1997482210]
 visible = false
 position = Vector2(448, 544)
 texture = ExtResource("20_hkpja")
@@ -224,37 +224,38 @@ br_too_high = ExtResource("23_yao3w")
 target_cooker_name = "BrownRiceCooker"
 food_data = ExtResource("24_u5w8p")
 
-[node name="Area2D" type="Area2D" parent="Go Section/BrownRiceCup"]
+[node name="Area2D" type="Area2D" parent="Go Section/BrownRiceCup" unique_id=1668929078]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Go Section/BrownRiceCup/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Go Section/BrownRiceCup/Area2D" unique_id=95335410]
 position = Vector2(-3, 6)
 shape = SubResource("CircleShape2D_nflrw")
 one_way_collision_margin = 0.0
 
-[node name="Row1" type="Control" parent="."]
+[node name="Row1" type="Control" parent="." unique_id=665402455]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 340.0
+offset_left = 337.0
 offset_top = 110.0
-offset_right = 783.0
+offset_right = 780.0
 offset_bottom = 310.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="GoFoodRow" type="HBoxContainer" parent="Row1"]
+[node name="GoFoodRow" type="HBoxContainer" parent="Row1" unique_id=1259612884]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -16.0
+offset_left = -14.5
+offset_right = -17.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = -15
+theme_override_constants/separation = 0
 
-[node name="Slot1" parent="Row1/GoFoodRow" instance=ExtResource("18_orncx")]
+[node name="Slot1" parent="Row1/GoFoodRow" unique_id=1309743937 instance=ExtResource("18_orncx")]
 clip_contents = true
 custom_minimum_size = Vector2(220, 100)
 layout_mode = 2
@@ -263,7 +264,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("42_32cy7")
 
-[node name="Slot2" parent="Row1/GoFoodRow" instance=ExtResource("18_orncx")]
+[node name="Slot2" parent="Row1/GoFoodRow" unique_id=547282445 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("28_32cy7")
@@ -271,7 +272,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("24_k5enx")
 
-[node name="Row2" type="Control" parent="."]
+[node name="Row2" type="Control" parent="." unique_id=1820144400]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 758.0
@@ -280,16 +281,20 @@ offset_right = 1596.0
 offset_bottom = 313.0
 metadata/_edit_use_anchors_ = true
 
-[node name="GrowFoodRow" type="HBoxContainer" parent="Row2"]
+[node name="GrowFoodRow" type="HBoxContainer" parent="Row2" unique_id=1008525858]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 60.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = -15
+theme_override_constants/separation = 0
 
-[node name="Slot1" parent="Row2/GrowFoodRow" instance=ExtResource("18_orncx")]
+[node name="Slot1" parent="Row2/GrowFoodRow" unique_id=1880963542 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("30_t48f3")
@@ -297,7 +302,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("20_x03y5")
 
-[node name="Slot2" parent="Row2/GrowFoodRow" instance=ExtResource("18_orncx")]
+[node name="Slot2" parent="Row2/GrowFoodRow" unique_id=537396535 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("32_m2bwa")
@@ -305,7 +310,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("22_jgock")
 
-[node name="Slot3" parent="Row2/GrowFoodRow" instance=ExtResource("18_orncx")]
+[node name="Slot3" parent="Row2/GrowFoodRow" unique_id=2065652958 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("34_n7sx4")
@@ -313,7 +318,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("39_s6luy")
 
-[node name="Slot4" parent="Row2/GrowFoodRow" instance=ExtResource("18_orncx")]
+[node name="Slot4" parent="Row2/GrowFoodRow" unique_id=883334192 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("35_vfpnn")
@@ -321,7 +326,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("41_yao3w")
 
-[node name="Row3" type="Control" parent="."]
+[node name="Row3" type="Control" parent="." unique_id=1733747116]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -334,19 +339,19 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="GlowFruitRow" type="HBoxContainer" parent="Row3"]
+[node name="GlowFruitRow" type="HBoxContainer" parent="Row3" unique_id=1976975539]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -12.0
-offset_right = 12.0
+offset_left = -13.0
+offset_right = 71.0
 offset_bottom = -42.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = -15
+theme_override_constants/separation = 0
 
-[node name="Slot1" parent="Row3/GlowFruitRow" instance=ExtResource("18_orncx")]
+[node name="Slot1" parent="Row3/GlowFruitRow" unique_id=137118018 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("36_pmqpb")
@@ -354,7 +359,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("44_t48f3")
 
-[node name="Slot2" parent="Row3/GlowFruitRow" instance=ExtResource("18_orncx")]
+[node name="Slot2" parent="Row3/GlowFruitRow" unique_id=507997541 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("38_t48f3")
@@ -362,7 +367,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("46_m2bwa")
 
-[node name="Slot3" parent="Row3/GlowFruitRow" instance=ExtResource("18_orncx")]
+[node name="Slot3" parent="Row3/GlowFruitRow" unique_id=1532319194 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("40_m2bwa")
@@ -370,7 +375,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("38_hkpja")
 
-[node name="Slot4" parent="Row3/GlowFruitRow" instance=ExtResource("18_orncx")]
+[node name="Slot4" parent="Row3/GlowFruitRow" unique_id=331131776 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("42_n7sx4")
@@ -378,7 +383,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("40_kcelb")
 
-[node name="Row4" type="Control" parent="."]
+[node name="Row4" type="Control" parent="." unique_id=919486800]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -391,18 +396,18 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="GlowVeggieRow" type="HBoxContainer" parent="Row4"]
+[node name="GlowVeggieRow" type="HBoxContainer" parent="Row4" unique_id=1959916657]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -2.0
-offset_right = 24.0
+offset_left = -6.0
+offset_right = 46.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = -15
+theme_override_constants/separation = 0
 
-[node name="Slot1" parent="Row4/GlowVeggieRow" instance=ExtResource("18_orncx")]
+[node name="Slot1" parent="Row4/GlowVeggieRow" unique_id=1989177213 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("44_vfpnn")
@@ -410,7 +415,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("32_i7i4q")
 
-[node name="Slot2" parent="Row4/GlowVeggieRow" instance=ExtResource("18_orncx")]
+[node name="Slot2" parent="Row4/GlowVeggieRow" unique_id=1062941931 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("46_pmqpb")
@@ -418,7 +423,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("34_oxc20")
 
-[node name="Slot3" parent="Row4/GlowVeggieRow" instance=ExtResource("18_orncx")]
+[node name="Slot3" parent="Row4/GlowVeggieRow" unique_id=213802869 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("48_u5w8p")
@@ -426,7 +431,7 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("36_nflrw")
 
-[node name="Slot4" parent="Row4/GlowVeggieRow" instance=ExtResource("18_orncx")]
+[node name="Slot4" parent="Row4/GlowVeggieRow" unique_id=2059488834 instance=ExtResource("18_orncx")]
 custom_minimum_size = Vector2(220, 200)
 layout_mode = 2
 texture = ExtResource("50_s6luy")
@@ -434,63 +439,62 @@ expand_mode = 0
 stretch_mode = 2
 food_data = ExtResource("26_slnmu")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1736555845]
 position = Vector2(640, 360)
 script = ExtResource("52_aa5gg")
 
-[node name="OverlayCanvas" type="CanvasLayer" parent="."]
+[node name="OverlayCanvas" type="CanvasLayer" parent="." unique_id=663470070]
 
-[node name="GameHUD" parent="OverlayCanvas" instance=ExtResource("54_nf282")]
+[node name="GameHUD" parent="OverlayCanvas" unique_id=1312606255 instance=ExtResource("54_nf282")]
 
-[node name="CircleIntroTransition" parent="OverlayCanvas" instance=ExtResource("49_1mo6l")]
+[node name="CircleIntroTransition" parent="OverlayCanvas" unique_id=909655023 instance=ExtResource("49_1mo6l")]
 visible = false
 
-[node name="ServeOrTrash" type="Node2D" parent="."]
+[node name="ServeOrTrash" type="Node2D" parent="." unique_id=2010659106]
 visible = false
 position = Vector2(8, 0)
 
-[node name="Serve" type="Sprite2D" parent="ServeOrTrash"]
+[node name="Serve" type="Sprite2D" parent="ServeOrTrash" unique_id=745512928]
 position = Vector2(664, 51)
 scale = Vector2(0.527, 0.49)
 texture = ExtResource("50_k5enx")
 
-[node name="GlobalServeZone" type="Area2D" parent="ServeOrTrash/Serve"]
+[node name="GlobalServeZone" type="Area2D" parent="ServeOrTrash/Serve" unique_id=2021010700]
 collision_layer = 2
 monitoring = false
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Serve/GlobalServeZone"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Serve/GlobalServeZone" unique_id=1247361672]
 position = Vector2(125.23718, -2.0408134)
 polygon = PackedVector2Array(-423.1499, -102.04082, -426.94495, -53.061226, -421.25238, -22.448982, -409.8672, 10.204079, -377.60913, 55.102036, -354.83875, 75.51021, -324.47815, 91.83673, -284.63, 104.081635, -239.08923, 106.12245, -204.9336, 97.95918, -176.47058, 87.7551, -155.59778, 81.632645, -132.82727, 79.59183, -92.979126, 83.67346, -47.438354, 100, -9.487671, 104.081635, 24.667969, 102.04082, 64.51611, 89.79591, 94.87671, 75.51021, 115.74951, 57.142853, 138.5199, 34.69388, 155.59778, 6.122444, 168.8805, -26.530617, 174.573, -53.061226, 172.67554, -102.04082)
 
-[node name="Trash" type="Sprite2D" parent="ServeOrTrash"]
+[node name="Trash" type="Sprite2D" parent="ServeOrTrash" unique_id=743248737]
 position = Vector2(654, 689.275)
 scale = Vector2(0.56081086, 0.4667913)
 texture = ExtResource("51_slnmu")
 
-[node name="GlobalTrashZone" type="Area2D" parent="ServeOrTrash/Trash"]
+[node name="GlobalTrashZone" type="Area2D" parent="ServeOrTrash/Trash" unique_id=794664149]
 collision_layer = 2
 monitoring = false
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Trash/GlobalTrashZone"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Trash/GlobalTrashZone" unique_id=1207520050]
 position = Vector2(-7.589736, -38.700317)
 polygon = PackedVector2Array(13.2821045, -1.6125488, -26.289673, 31.684204, -127.92822, 35.968872, -215.30176, 44.537964, -263.7436, 59.662964, -282.71796, 104.813354, 299.7948, 104.813354, 286.51282, 62.88806, 258.05127, 24.187744, 237.17944, 4.8375244, 203.02563, -14.512573, 166.97437, -25.80017, 127.128174, -29.025269, 92.974365, -22.575195, 66.41028, -12.9001465, 39.84619, -4.8375244)
 
-[node name="PortionSelector" parent="." instance=ExtResource("52_k5enx")]
+[node name="PortionSelector" parent="." unique_id=478623591 instance=ExtResource("52_k5enx")]
 visible = false
 offset_right = 406.0
 offset_bottom = 207.0
 
-[node name="VeggieScoop" parent="." instance=ExtResource("53_slnmu")]
+[node name="VeggieScoop" parent="." unique_id=1044146268 instance=ExtResource("53_slnmu")]
 visible = false
 
-[node name="FoodIntroOverlay" parent="." instance=ExtResource("55_oxc20")]
+[node name="FoodIntroOverlay" parent="." unique_id=1302584512 instance=ExtResource("55_oxc20")]
 visible = false
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=921459276]
 layer = 5
-visible = false
 
-[node name="OrderTicket" parent="CanvasLayer" instance=ExtResource("54_i7i4q")]
+[node name="OrderTicket" parent="CanvasLayer" unique_id=1472059872 instance=ExtResource("54_i7i4q")]
 z_index = 10
 offset_left = -3.0
 offset_top = -353.0

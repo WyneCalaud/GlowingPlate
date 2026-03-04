@@ -1,13 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://cqlt61gaad8v8"]
+[gd_scene format=3 uid="uid://cqlt61gaad8v8"]
 
 [ext_resource type="Script" uid="uid://bnklncubj3hih" path="res://Scenes/Introduction/IntroScene.gd" id="1_m2t0u"]
 [ext_resource type="Texture2D" uid="uid://yivew5xs77r" path="res://Assets/UI/DBoxSmall.png" id="2_fysj7"]
-[ext_resource type="VideoStream" path="res://Assets/Videos/Final Cutscene.ogv" id="2_l4wtw"]
+[ext_resource type="VideoStream" uid="uid://b40wdejkdy754" path="res://Assets/Videos/Final Cutscene.ogv" id="2_l4wtw"]
 [ext_resource type="Texture2D" uid="uid://dy8drcukb4jik" path="res://Assets/UI/LobbyUI/buon.png" id="3_36ejc"]
 [ext_resource type="Texture2D" uid="uid://200h5enr2xy3" path="res://Assets/UI/Interface/Type Name Pop Up (1).png" id="3_ggi6h"]
 [ext_resource type="Texture2D" uid="uid://bidrperywufqq" path="res://Assets/background/introbg2.png" id="3_l4wtw"]
 [ext_resource type="Texture2D" uid="uid://boc8mugn3fhcb" path="res://Assets/UI/DBoxMed.png" id="3_vo2uc"]
-[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://Fonts/Comic_Neue/ComicNeue-Bold.ttf" id="4_36ejc"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://fonts/Comic_Neue/ComicNeue-Bold.ttf" id="4_36ejc"]
 [ext_resource type="Texture2D" uid="uid://c6xfnd4h7mwg4" path="res://Assets/Customers/cutprincipal.png" id="4_l4wtw"]
 [ext_resource type="Texture2D" uid="uid://djpefw4shr018" path="res://Assets/UI/DBoxLarge.png" id="4_n6pkl"]
 [ext_resource type="Texture2D" uid="uid://oud8lj264na3" path="res://Assets/Customers/Jenna.png" id="5_l4wtw"]
@@ -26,10 +26,6 @@ region = Rect2(11, 13, 764, 231)
 atlas = ExtResource("4_n6pkl")
 region = Rect2(59, 101, 750, 323)
 
-[sub_resource type="FontVariation" id="FontVariation_pc13s"]
-base_font = ExtResource("4_36ejc")
-spacing_glyph = 5
-
 [sub_resource type="FontVariation" id="FontVariation_187ro"]
 base_font = ExtResource("4_36ejc")
 spacing_glyph = 5
@@ -38,7 +34,7 @@ spacing_glyph = 5
 base_font = ExtResource("4_36ejc")
 spacing_glyph = 5
 
-[node name="IntroScene" type="Control"]
+[node name="IntroScene" type="Control" unique_id=165554054]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1275.0
@@ -48,19 +44,19 @@ box_texture_small = SubResource("AtlasTexture_2d82u")
 box_texture_medium = SubResource("AtlasTexture_mdycm")
 box_texture_large = SubResource("AtlasTexture_q3k1q")
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=750412859]
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 stream = ExtResource("2_l4wtw")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1862081187]
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("3_l4wtw")
 
-[node name="PrincipalPortrait" type="TextureRect" parent="."]
+[node name="PrincipalPortrait" type="TextureRect" parent="." unique_id=2056211157]
 layout_mode = 0
 offset_left = 819.0
 offset_top = 102.0
@@ -70,7 +66,7 @@ texture = ExtResource("4_l4wtw")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="JennaPortrait" type="TextureRect" parent="."]
+[node name="JennaPortrait" type="TextureRect" parent="." unique_id=1480014979]
 visible = false
 layout_mode = 0
 offset_left = 905.0
@@ -80,7 +76,7 @@ offset_bottom = 589.0
 texture = ExtResource("5_l4wtw")
 stretch_mode = 2
 
-[node name="DialogueBox" type="TextureRect" parent="."]
+[node name="DialogueBox" type="TextureRect" parent="." unique_id=2600612]
 layout_mode = 0
 offset_left = 160.0
 offset_top = 92.0
@@ -89,7 +85,7 @@ offset_bottom = 415.0
 texture = SubResource("AtlasTexture_q3k1q")
 stretch_mode = 2
 
-[node name="BtnNext" type="TextureButton" parent="DialogueBox"]
+[node name="BtnNext" type="TextureButton" parent="DialogueBox" unique_id=253839840]
 layout_mode = 0
 offset_left = 262.0
 offset_top = 229.0
@@ -98,21 +94,21 @@ offset_bottom = 333.0
 texture_normal = ExtResource("3_36ejc")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="DialogueBox/BtnNext"]
+[node name="Label" type="Label" parent="DialogueBox/BtnNext" unique_id=43864818]
 layout_mode = 0
-offset_left = 25.0
-offset_top = 28.0
-offset_right = 223.0
-offset_bottom = 74.0
+offset_left = 13.0
+offset_top = 21.0
+offset_right = 221.0
+offset_bottom = 85.0
 theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
-theme_override_fonts/font = SubResource("FontVariation_pc13s")
+theme_override_fonts/font = SubResource("FontVariation_187ro")
 theme_override_font_sizes/font_size = 28
 text = "WAR"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="BtnChoice1" type="TextureButton" parent="DialogueBox"]
+[node name="BtnChoice1" type="TextureButton" parent="DialogueBox" unique_id=358940877]
 layout_mode = 0
 offset_left = 117.0
 offset_top = 228.0
@@ -121,12 +117,12 @@ offset_bottom = 332.0
 texture_normal = ExtResource("3_36ejc")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="DialogueBox/BtnChoice1"]
+[node name="Label" type="Label" parent="DialogueBox/BtnChoice1" unique_id=1191862026]
 layout_mode = 0
-offset_left = 23.0
-offset_top = 30.0
-offset_right = 200.0
-offset_bottom = 73.0
+offset_left = 13.0
+offset_top = 21.0
+offset_right = 211.0
+offset_bottom = 85.0
 theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
 theme_override_fonts/font = SubResource("FontVariation_187ro")
 theme_override_font_sizes/font_size = 28
@@ -135,7 +131,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="BtnChoice2" type="TextureButton" parent="DialogueBox"]
+[node name="BtnChoice2" type="TextureButton" parent="DialogueBox" unique_id=1352360385]
 layout_mode = 0
 offset_left = 420.0
 offset_top = 229.0
@@ -144,12 +140,12 @@ offset_bottom = 333.0
 texture_normal = ExtResource("3_36ejc")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="DialogueBox/BtnChoice2"]
+[node name="Label" type="Label" parent="DialogueBox/BtnChoice2" unique_id=982406724]
 layout_mode = 0
-offset_left = 23.0
-offset_top = 30.0
-offset_right = 200.0
-offset_bottom = 73.0
+offset_left = 13.0
+offset_top = 21.0
+offset_right = 221.0
+offset_bottom = 85.0
 theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
 theme_override_fonts/font = SubResource("FontVariation_187ro")
 theme_override_font_sizes/font_size = 28
@@ -158,7 +154,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="DialogueText" type="RichTextLabel" parent="."]
+[node name="DialogueText" type="RichTextLabel" parent="." unique_id=1708835140]
 layout_mode = 0
 offset_left = 224.0
 offset_top = 128.0
@@ -169,7 +165,7 @@ theme_override_fonts/normal_font = SubResource("FontVariation_l4wtw")
 theme_override_font_sizes/normal_font_size = 36
 horizontal_alignment = 3
 
-[node name="CountertopDec" type="TextureRect" parent="."]
+[node name="CountertopDec" type="TextureRect" parent="." unique_id=1499670819]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -184,7 +180,7 @@ texture = ExtResource("10_l4wtw")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="DimBackground" type="ColorRect" parent="."]
+[node name="DimBackground" type="ColorRect" parent="." unique_id=1966976779]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -198,7 +194,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.21568628, 0.11764706, 0.03137255, 0.7882353)
 
-[node name="NamePopup" type="Control" parent="."]
+[node name="NamePopup" type="Control" parent="." unique_id=1408390336]
 visible = false
 anchors_preset = 0
 offset_left = -24.0
@@ -206,7 +202,7 @@ offset_top = -73.0
 offset_right = 1254.0
 offset_bottom = 645.0
 
-[node name="PopupBG" type="TextureRect" parent="NamePopup"]
+[node name="PopupBG" type="TextureRect" parent="NamePopup" unique_id=1007464956]
 layout_mode = 0
 offset_left = 327.0
 offset_top = 198.0
@@ -214,7 +210,7 @@ offset_right = 994.0
 offset_bottom = 555.0
 texture = ExtResource("3_ggi6h")
 
-[node name="LineEdit" type="LineEdit" parent="NamePopup"]
+[node name="LineEdit" type="LineEdit" parent="NamePopup" unique_id=299443986]
 layout_mode = 0
 offset_left = 496.0
 offset_top = 373.0
@@ -229,7 +225,7 @@ alignment = 1
 max_length = 8
 flat = true
 
-[node name="Confirmbutton" type="Button" parent="NamePopup"]
+[node name="Confirmbutton" type="Button" parent="NamePopup" unique_id=1100741855]
 layout_mode = 0
 offset_left = 596.0
 offset_top = 463.0
@@ -239,7 +235,7 @@ icon = ExtResource("5_q83fk")
 flat = true
 icon_alignment = 1
 
-[node name="FadeOverlay" type="ColorRect" parent="."]
+[node name="FadeOverlay" type="ColorRect" parent="." unique_id=1890621311]
 visible = false
 layout_mode = 1
 anchors_preset = 15

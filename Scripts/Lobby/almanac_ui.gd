@@ -109,7 +109,8 @@ func _switch_category(category: String):
 		tab_portion.modulate = Color.WHITE
 	
 	# Fetch the list of allowed foods up to the current completed day from OrderSystem
-	var unlocked_foods = OrderSystem.get_unlocked_foods(player_completed_day)
+	var GD = get_node("/root/GameData")
+	var unlocked_foods = OrderSystem.get_unlocked_foods(GD.current_day - 1)
 	
 	# --- 1. SETUP UI BASED ON CATEGORY ---
 	# We use set_deferred for visibility to prevent UI layout loops that crash the GPU
