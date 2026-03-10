@@ -75,6 +75,12 @@ func _ready() -> void:
 	_check_for_returned_items()
 	
 	var GD = get_node("/root/GameData")
+
+	# 🔥 Always reset phase when entering lobby
+	if GD.current_phase == GD.GamePhase.NEWS and not GD.day_started:
+		GD.current_phase = GD.GamePhase.LOBBY
+		GD.save_game()
+
 	day_number.text = "Day %02d" % GD.current_day
 
 	# --- AUTO START LOGIC ---
@@ -920,6 +926,15 @@ func _on_fade_timer_timeout() -> void:
 		SceneTransition.fade_to("res://Scenes/Main Menu/Main_menu.tscn")
 
 func _on_settings_button_pressed() -> void:
+
+	var GD = get_node("/root/GameData")
+
+	# 🔥 FIX: If player leaves mid-service, clear the active customer
+	GD.clear_customer()
+	GD.service_state = GameData.ServiceState.IDLE
+	GD.returning_from_kitchen = false
+	GD.day_started = false
+
 	_start_transition("menu")
 
 
@@ -1004,17 +1019,14 @@ func _restore_patience_ui():
 	if not hud:
 		return
 
-	# 🚫 If day is NOT active, force hide
+	# 🚫 If day isn't active, hide patience UI
 	if not GD.day_started:
 		hud.reset_patience()
 		return
 
-	# ✅ Only restore if actively mid-service
-	if GD.service_state == GameData.ServiceState.IN_KITCHEN \
-	or GD.service_state == GameData.ServiceState.SERVED:
-
+	# ✅ If a customer still exists, show paused patience
+	if GD.saved_customer_order != null:
 		hud.stop_patience()
-
 
 func spawn_next_customer():
 
@@ -1023,13 +1035,13 @@ func spawn_next_customer():
 	if GD.remaining_customers.is_empty():
 		return
 
-	# Reset patience for new customer
-	GD.customer_patience = 100.0
-	GD.patience_running = false
-	get_tree().call_group("HUD", "reset_patience")
+	# Only reset patience if we are NOT returning from kitchen
+	if not GD.returning_from_kitchen:
+		GD.customer_patience = 100.0
+		GD.patience_running = false
+		get_tree().call_group("HUD", "reset_patience")
 
-	# 🔥 DO NOT POP YET — just peek
-	var order: CustomerOrder = GD.remaining_customers[0]
+	var order: CustomerOrder = GD.remaining_customers.pop_front()
 
 	var tex: Texture2D
 	var stage : int = GD.get_character_stage(order.customer_name)
@@ -1088,8 +1100,6 @@ func spawn_next_customer():
 
 	customer_manager.spawn_customer(order, tex)
 
-	# 🔥 NOW remove from queue AFTER spawning
-	GD.remaining_customers.pop_front()
 
 func _on_btn_accept_pressed() -> void:
 	pass # Replace with function body.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dy6gawubssej3"]
+[gd_scene format=3 uid="uid://dy6gawubssej3"]
 
 [ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="1"]
 [ext_resource type="Script" uid="uid://pyv06wdu0qoo" path="res://Scenes/GameHUD/GameHUD.gd" id="2"]
@@ -33,10 +33,10 @@
 [ext_resource type="Texture2D" uid="uid://wjqcob2xhk1f" path="res://Assets/UI/Interface/HomeYes.png" id="31_lvxom"]
 [ext_resource type="Texture2D" uid="uid://cslqm6uaaivex" path="res://Assets/UI/Interface/HomeCancel.png" id="32_34olp"]
 
-[node name="GameHUD" type="CanvasLayer"]
+[node name="GameHUD" type="CanvasLayer" unique_id=691066953]
 script = ExtResource("2")
 
-[node name="HUDControl" type="Control" parent="."]
+[node name="HUDControl" type="Control" parent="." unique_id=1651129995]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,7 +45,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="TopBarLeft" type="MarginContainer" parent="HUDControl"]
+[node name="TopBarLeft" type="MarginContainer" parent="HUDControl" unique_id=189186601]
 layout_mode = 1
 offset_right = 618.0
 offset_bottom = 120.0
@@ -53,19 +53,19 @@ theme_override_constants/margin_left = 23
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarLeft"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarLeft" unique_id=564780390]
 layout_mode = 2
 theme_override_constants/separation = 11
 
-[node name="ProfileGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft/HBoxContainer"]
+[node name="ProfileGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft/HBoxContainer" unique_id=570059063]
 layout_mode = 2
 
-[node name="Profile" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup"]
+[node name="Profile" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup" unique_id=1969779548]
 layout_mode = 2
 texture = ExtResource("2_uq2nh")
 stretch_mode = 2
 
-[node name="Name" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile"]
+[node name="Name" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile" unique_id=193827406]
 layout_mode = 0
 offset_left = 62.0
 offset_top = 29.0
@@ -76,7 +76,7 @@ label_settings = ExtResource("4_g7tnq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Day" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile"]
+[node name="Day" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/ProfileGroup/Profile" unique_id=666469158]
 layout_mode = 0
 offset_left = 65.0
 offset_top = 7.0
@@ -87,11 +87,11 @@ label_settings = ExtResource("15")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TimeGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft/HBoxContainer"]
+[node name="TimeGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft/HBoxContainer" unique_id=295334585]
 visible = false
 layout_mode = 2
 
-[node name="DayCycle" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/TimeGroup"]
+[node name="DayCycle" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/TimeGroup" unique_id=756823344]
 layout_mode = 2
 texture = ExtResource("3")
 stretch_mode = 2
@@ -101,7 +101,7 @@ second_cycle = ExtResource("5")
 third_cycle = ExtResource("6")
 fourth_cycle = ExtResource("7")
 
-[node name="Time" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/TimeGroup/DayCycle"]
+[node name="Time" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/TimeGroup/DayCycle" unique_id=1734440561]
 layout_mode = 0
 offset_left = 71.0
 offset_top = 34.0
@@ -113,7 +113,7 @@ label_settings = ExtResource("4_g7tnq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Day" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/TimeGroup/DayCycle"]
+[node name="Day" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/TimeGroup/DayCycle" unique_id=1748341118]
 layout_mode = 0
 offset_left = 70.0
 offset_top = 9.0
@@ -125,15 +125,15 @@ label_settings = ExtResource("4_g7tnq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HappinessGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft/HBoxContainer"]
+[node name="HappinessGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft/HBoxContainer" unique_id=863741374]
 layout_mode = 2
 
-[node name="Happinessbg" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup"]
+[node name="Happinessbg" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup" unique_id=925986824]
 layout_mode = 2
 texture = ExtResource("11_2nljy")
 stretch_mode = 2
 
-[node name="Happy" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg"]
+[node name="Happy" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg" unique_id=1951586825]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 15.0
@@ -142,7 +142,7 @@ offset_bottom = 57.0
 texture = ExtResource("12_38rtn")
 stretch_mode = 5
 
-[node name="Neutral" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg"]
+[node name="Neutral" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg" unique_id=1932706583]
 layout_mode = 0
 offset_left = 2.0
 offset_right = 71.0
@@ -150,7 +150,7 @@ offset_bottom = 71.0
 texture = ExtResource("13_2q6du")
 expand_mode = 1
 
-[node name="Sad" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg"]
+[node name="Sad" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg" unique_id=1025090416]
 layout_mode = 0
 offset_left = 2.0
 offset_right = 71.0
@@ -158,7 +158,7 @@ offset_bottom = 71.0
 texture = ExtResource("14_v6160")
 expand_mode = 1
 
-[node name="Angry" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg"]
+[node name="Angry" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg" unique_id=143810245]
 layout_mode = 0
 offset_left = 2.0
 offset_right = 71.0
@@ -166,7 +166,7 @@ offset_bottom = 71.0
 texture = ExtResource("15_64h4a")
 expand_mode = 1
 
-[node name="PatiencePercent" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg"]
+[node name="PatiencePercent" type="Label" parent="HUDControl/TopBarLeft/HBoxContainer/HappinessGroup/Happinessbg" unique_id=584341993]
 layout_mode = 0
 offset_left = 77.0
 offset_top = 8.0
@@ -177,15 +177,15 @@ label_settings = ExtResource("4_g7tnq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AgeGroup" type="Control" parent="HUDControl/TopBarLeft/HBoxContainer"]
+[node name="AgeGroup" type="Control" parent="HUDControl/TopBarLeft/HBoxContainer" unique_id=708858534]
 layout_mode = 2
 
-[node name="6-9" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
+[node name="6-9" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup" unique_id=1857518797]
 layout_mode = 0
 texture = ExtResource("11_df0c7")
 stretch_mode = 2
 
-[node name="10-12" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup"]
+[node name="10-12" type="TextureRect" parent="HUDControl/TopBarLeft/HBoxContainer/AgeGroup" unique_id=1274667982]
 layout_mode = 0
 offset_left = -3.0
 offset_right = 162.0
@@ -193,7 +193,7 @@ offset_bottom = 71.0
 texture = ExtResource("10")
 stretch_mode = 2
 
-[node name="TopBarLeft2" type="MarginContainer" parent="HUDControl"]
+[node name="TopBarLeft2" type="MarginContainer" parent="HUDControl" unique_id=1380557013]
 visible = false
 layout_mode = 1
 offset_right = 211.0
@@ -202,19 +202,19 @@ theme_override_constants/margin_left = 44
 theme_override_constants/margin_top = 46
 theme_override_constants/margin_right = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarLeft2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarLeft2" unique_id=65530133]
 layout_mode = 2
 theme_override_constants/separation = 50
 
-[node name="TimeGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft2/HBoxContainer"]
+[node name="TimeGroup" type="HBoxContainer" parent="HUDControl/TopBarLeft2/HBoxContainer" unique_id=785202134]
 layout_mode = 2
 
-[node name="UserProfile" type="TextureRect" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup"]
+[node name="UserProfile" type="TextureRect" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup" unique_id=611326793]
 layout_mode = 2
 texture = ExtResource("12")
 stretch_mode = 2
 
-[node name="Name" type="Label" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup/UserProfile"]
+[node name="Name" type="Label" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup/UserProfile" unique_id=2046058059]
 layout_mode = 0
 offset_left = 72.0
 offset_top = 29.0
@@ -227,7 +227,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="DayOfTheWeek" type="Label" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup/UserProfile"]
+[node name="DayOfTheWeek" type="Label" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup/UserProfile" unique_id=185433691]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 8.0
@@ -238,7 +238,7 @@ label_settings = ExtResource("4_g7tnq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup/UserProfile"]
+[node name="TextureRect" type="TextureRect" parent="HUDControl/TopBarLeft2/HBoxContainer/TimeGroup/UserProfile" unique_id=666781761]
 layout_mode = 0
 offset_left = 17.0
 offset_top = 18.0
@@ -247,7 +247,7 @@ offset_bottom = 54.0
 texture = ExtResource("13")
 stretch_mode = 2
 
-[node name="TopBarRight" type="MarginContainer" parent="HUDControl"]
+[node name="TopBarRight" type="MarginContainer" parent="HUDControl" unique_id=739765223]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -260,29 +260,29 @@ theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 23
 theme_override_constants/margin_right = 23
 
-[node name="MenuGroup" type="VBoxContainer" parent="HUDControl/TopBarRight"]
+[node name="MenuGroup" type="VBoxContainer" parent="HUDControl/TopBarRight" unique_id=33007260]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="MenuButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup"]
+[node name="MenuButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup" unique_id=1755610021]
 layout_mode = 2
 texture_normal = ExtResource("1")
 
-[node name="SettingsButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton"]
+[node name="SettingsButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton" unique_id=1855426325]
 layout_mode = 0
 offset_top = 73.0
 offset_right = 62.0
 offset_bottom = 131.0
 texture_normal = ExtResource("9")
 
-[node name="HomeButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton"]
+[node name="HomeButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton" unique_id=212880845]
 layout_mode = 0
 offset_top = 146.0
 offset_right = 62.0
 offset_bottom = 204.0
 texture_normal = ExtResource("11")
 
-[node name="AlmanacButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton"]
+[node name="AlmanacButton" type="TextureButton" parent="HUDControl/TopBarRight/MenuGroup/MenuButton" unique_id=1947710784]
 layout_mode = 0
 offset_left = -1.0
 offset_top = 221.0
@@ -290,7 +290,7 @@ offset_right = 61.0
 offset_bottom = 279.0
 texture_normal = ExtResource("17_g7tnq")
 
-[node name="TopBarRight2" type="MarginContainer" parent="HUDControl"]
+[node name="TopBarRight2" type="MarginContainer" parent="HUDControl" unique_id=2117894129]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -302,17 +302,17 @@ mouse_filter = 2
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 165
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarRight2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUDControl/TopBarRight2" unique_id=1313866485]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 2
 
-[node name="Money" type="TextureRect" parent="HUDControl/TopBarRight2/HBoxContainer"]
+[node name="Money" type="TextureRect" parent="HUDControl/TopBarRight2/HBoxContainer" unique_id=907258274]
 layout_mode = 2
 texture = ExtResource("18")
 stretch_mode = 2
 
-[node name="Label" type="Label" parent="HUDControl/TopBarRight2/HBoxContainer/Money"]
+[node name="Label" type="Label" parent="HUDControl/TopBarRight2/HBoxContainer/Money" unique_id=727202776]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 8.0
@@ -324,12 +324,12 @@ label_settings = ExtResource("4_g7tnq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Key" type="TextureRect" parent="HUDControl/TopBarRight2/HBoxContainer"]
+[node name="Key" type="TextureRect" parent="HUDControl/TopBarRight2/HBoxContainer" unique_id=1827008764]
 layout_mode = 2
 texture = ExtResource("19")
 stretch_mode = 2
 
-[node name="Label" type="Label" parent="HUDControl/TopBarRight2/HBoxContainer/Key"]
+[node name="Label" type="Label" parent="HUDControl/TopBarRight2/HBoxContainer/Key" unique_id=1760419247]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 8.0
@@ -341,7 +341,7 @@ label_settings = ExtResource("4_g7tnq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BottomRight" type="MarginContainer" parent="HUDControl"]
+[node name="BottomRight" type="MarginContainer" parent="HUDControl" unique_id=1188218064]
 visible = false
 layout_mode = 1
 anchors_preset = 3
@@ -357,23 +357,23 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="FinishButton" type="TextureButton" parent="HUDControl/BottomRight"]
+[node name="FinishButton" type="TextureButton" parent="HUDControl/BottomRight" unique_id=1148475899]
 layout_mode = 2
 texture_normal = ExtResource("17")
 
-[node name="SoundControl" parent="HUDControl" instance=ExtResource("16")]
+[node name="SoundControl" parent="HUDControl" unique_id=1456619183 instance=ExtResource("16")]
 layout_mode = 1
 
-[node name="AlmanacUI" parent="." instance=ExtResource("21_uq2nh")]
+[node name="AlmanacUI" parent="." unique_id=1896449768 instance=ExtResource("21_uq2nh")]
 visible = false
 
-[node name="HomeDim" type="TextureRect" parent="."]
+[node name="HomeDim" type="TextureRect" parent="." unique_id=1523098583]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("29_64h4a")
 
-[node name="HomePopup" type="TextureRect" parent="."]
+[node name="HomePopup" type="TextureRect" parent="." unique_id=33718304]
 visible = false
 offset_left = 357.0
 offset_top = 213.0
@@ -381,7 +381,7 @@ offset_right = 923.0
 offset_bottom = 463.0
 texture = ExtResource("30_8bbf6")
 
-[node name="HomeConfirm" type="TextureButton" parent="HomePopup"]
+[node name="HomeConfirm" type="TextureButton" parent="HomePopup" unique_id=378815636]
 layout_mode = 0
 offset_left = 315.0
 offset_top = 156.0
@@ -389,7 +389,7 @@ offset_right = 466.0
 offset_bottom = 202.0
 texture_normal = ExtResource("31_lvxom")
 
-[node name="HomeCancel" type="TextureButton" parent="HomePopup"]
+[node name="HomeCancel" type="TextureButton" parent="HomePopup" unique_id=2031959421]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 156.0

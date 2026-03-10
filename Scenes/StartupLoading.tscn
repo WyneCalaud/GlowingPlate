@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cv6anp1v3l7ao"]
+[gd_scene format=3 uid="uid://cv6anp1v3l7ao"]
 
 [ext_resource type="Script" uid="uid://clbqrs1q14q47" path="res://Scripts/Utility/BootUpLoading.gd" id="1_36tyt"]
 
@@ -8,7 +8,7 @@ bg_color = Color(0.41568628, 0.18431373, 0.06666667, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bbkxi"]
 bg_color = Color(0.9647059, 0.7764706, 0.41568628, 1)
 
-[node name="StartupLoading" type="Control"]
+[node name="StartupLoading" type="Control" unique_id=1447924408]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,7 +18,7 @@ grow_vertical = 2
 script = ExtResource("1_36tyt")
 main_menu_scene_path = "uid://du6kd2g4u6epa"
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1618074205]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,7 +28,7 @@ grow_vertical = 2
 color = Color(0.9647059, 0.7764706, 0.41568628, 1)
 metadata/_edit_lock_ = true
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=939024301]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
