@@ -34,7 +34,7 @@ func _ready():
 	_hide_menu_ui()
 	
 	# Handle Video vs Menu Logic
-	if FileAccess.file_exists("user://save_data.json"):
+	if GameData.intro_completed:
 		if video_player:
 			video_player.stop()
 			video_player.hide()
@@ -148,17 +148,22 @@ func _play_transition_animation():
 
 func _execute_scene_change() -> void:
 	if button_type == "start":
-		# --- SAVE STATE DETECTION / ROUTING ---
-		if FileAccess.file_exists("user://save_data.json"):
-			print("Save found! Resuming game...")
-			get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
-		else:
-			print("No save found. Starting New Game / Intro...")
+
+		# FIRST TIME PLAY (Intro not finished yet)
+		if not GameData.intro_completed:
+			print("First time player. Starting Intro...")
+
 			if intro_scene_path != "":
 				get_tree().change_scene_to_file(intro_scene_path)
 			else:
-				printerr("Intro scene path is empty! Please assign it in the inspector.")
-				get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")
+				printerr("Intro scene path is empty!")
+				get_tree().change_scene_to_file(GameData.LOBBY_CANTEEN_PATH)
+
+			return
+
+		# EXISTING PLAYER
+		print("Returning player. Loading lobby...")
+		get_tree().change_scene_to_file(GameData.LOBBY_CANTEEN_PATH)
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()

@@ -113,8 +113,19 @@ func _ready():
 	update_age_group_display() # ⭐ NEW
 	var GD = get_node("/root/GameData")
 	update_progress_display(GD.customer_patience)
+
+	# Restore patience UI state
+	if GD.saved_customer_order != null:
+		var group = hud_control.get_node("TopBarLeft/HBoxContainer/HappinessGroup")
+		group.visible = true
+
+		patience = GD.customer_patience
+		update_progress_display(patience)
+		_update_face()
+
+	# Resume timer if it was running
 	if GD.patience_running:
-		start_patience()
+		patience_active = true
 
 func _setup_initial_visibility():
 	# 1. FORCE RESET DEFAULT VISIBILITY
@@ -442,8 +453,13 @@ func _on_home_confirm_pressed():
 
 	var GD = get_node("/root/GameData")
 
-	# Reset everything properly
+	# 🔥 FULL RESET (fixes ghost customer bug)
 	GD.reset_day_state()
+	GD.clear_customer()
+
+	# Make sure kitchen-return flags are cleared
+	GD.returning_from_kitchen = false
+	GD.returning_from_beverage = false
 
 	# Hide popup
 	home_dim.visible = false
