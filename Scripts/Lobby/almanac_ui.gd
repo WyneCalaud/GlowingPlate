@@ -19,7 +19,9 @@ func _on_texture_button_pressed() -> void:
 @onready var tab_go: TextureButton = $Almanac/GoTab
 @onready var tab_grow: TextureButton = $Almanac/GrowTab
 @onready var tab_glow: TextureButton = $Almanac/GlowTab
-@onready var tab_portion: BaseButton = $Almanac/PortionTab # NEW: Portion Tab
+@onready var tab_portion: BaseButton = $Almanac/PortionTab
+@onready var left_portion: BaseButton = $Almanac/PortionTab/LeftButton
+@onready var right_portion: BaseButton = $Almanac/PortionTab/RightButton
 
 # Grids
 @onready var grid_2x2: GridContainer = $"Almanac/LeftPage/2x2"
@@ -33,21 +35,21 @@ func _on_texture_button_pressed() -> void:
 @export var sign_glow_texture: Texture2D
 
 @export_group("Go Data")
-@export var go_food_keys: Array[String] # NEW: Must match OrderSystem keys (e.g. "RICE", "PANDESAL")
+@export var go_food_keys: Array[String] # Must match OrderSystem keys (e.g. "RICE", "PANDESAL")
 @export var go_default_info: Texture2D 
 @export var go_btn_icons: Array[Texture2D] 
 @export var go_info_pages: Array[Texture2D] 
 @export var go_portion_pages: Array[Texture2D] 
 
 @export_group("Grow Data")
-@export var grow_food_keys: Array[String] # NEW: Must match OrderSystem keys
+@export var grow_food_keys: Array[String] # Must match OrderSystem keys
 @export var grow_default_info: Texture2D
 @export var grow_btn_icons: Array[Texture2D]
 @export var grow_info_pages: Array[Texture2D]
 @export var grow_portion_pages: Array[Texture2D] 
 
 @export_group("Glow Data")
-@export var glow_food_keys: Array[String] # NEW: Must match OrderSystem keys
+@export var glow_food_keys: Array[String] # Must match OrderSystem keys
 @export var glow_default_info: Texture2D
 @export var glow_btn_icons: Array[Texture2D]
 @export var glow_info_pages: Array[Texture2D]
@@ -68,8 +70,15 @@ func _ready():
 	if tab_portion:
 		tab_portion.toggle_mode = true 
 		tab_portion.toggled.connect(_on_portion_tab_toggled)
+		
+	# 3. Setup Left and Right Portion Buttons
+	if left_portion and right_portion:
+		left_portion.hide()
+		right_portion.hide()
+		left_portion.pressed.connect(_on_left_portion_pressed)
+		right_portion.pressed.connect(_on_right_portion_pressed)
 	
-	# 3. Connect Button Signals safely
+	# 4. Connect Button Signals safely
 	var index = 0
 	if grid_2x2:
 		for btn in grid_2x2.get_children():
@@ -86,10 +95,12 @@ func _ready():
 				btn.pressed.connect(_on_food_button_pressed.bind(btn, index))
 				index += 1
 
-	# 4. Initialize
+	# 5. Initialize
 	call_deferred("_switch_category", "Go")
 
-func _switch_category(category: String):
+
+# --- CATEGORY LOGIC ---
+func _switch_category(category: String, keep_portion_tab: bool = false):
 	if is_updating: return
 	is_updating = true
 	
@@ -98,24 +109,24 @@ func _switch_category(category: String):
 	
 	_deselect_all_buttons()
 	
-	# Reset Tab highlights
-	tab_go.modulate = Color.WHITE
-	tab_grow.modulate = Color.WHITE
-	tab_glow.modulate = Color.WHITE
+	# Reset Tab highlights using self_modulate so it doesn't affect children
+	tab_go.self_modulate = Color.WHITE
+	tab_grow.self_modulate = Color.WHITE
+	tab_glow.self_modulate = Color.WHITE
 	
-	# Reset Portion Tab without emitting a signal
-	if tab_portion:
+	# Reset Portion Tab ONLY if we are clicking a main tab (not using arrows)
+	if tab_portion and not keep_portion_tab:
 		tab_portion.set_pressed_no_signal(false) 
-		tab_portion.modulate = Color.WHITE
+		tab_portion.self_modulate = Color.WHITE # Changed to self_modulate
+		left_portion.hide()
+		right_portion.hide()
 	
-	# Fetch the list of allowed foods up to the current completed day from OrderSystem
 	var GD = get_node("/root/GameData")
 	var unlocked_foods = OrderSystem.get_unlocked_foods(GD.current_day - 1)
 	
 	# --- 1. SETUP UI BASED ON CATEGORY ---
-	# We use set_deferred for visibility to prevent UI layout loops that crash the GPU
 	if category == "Go":
-		tab_go.modulate = Color(1.5, 1.5, 1.5) 
+		tab_go.self_modulate = Color(1.5, 1.5, 1.5) # Changed to self_modulate
 		category_sign.set_deferred("texture", sign_go_texture)
 		right_info.set_deferred("texture", go_default_info)
 		
@@ -125,7 +136,7 @@ func _switch_category(category: String):
 		_apply_button_textures(active_buttons, go_btn_icons, go_food_keys, unlocked_foods)
 
 	elif category == "Grow":
-		tab_grow.modulate = Color(1.5, 1.5, 1.5) 
+		tab_grow.self_modulate = Color(1.5, 1.5, 1.5) # Changed to self_modulate
 		category_sign.set_deferred("texture", sign_grow_texture)
 		right_info.set_deferred("texture", grow_default_info)
 		
@@ -135,7 +146,7 @@ func _switch_category(category: String):
 		_apply_button_textures(active_buttons, grow_btn_icons, grow_food_keys, unlocked_foods)
 
 	elif category == "Glow":
-		tab_glow.modulate = Color(1.5, 1.5, 1.5) 
+		tab_glow.self_modulate = Color(1.5, 1.5, 1.5) # Changed to self_modulate
 		category_sign.set_deferred("texture", sign_glow_texture)
 		right_info.set_deferred("texture", glow_default_info)
 		
@@ -143,8 +154,29 @@ func _switch_category(category: String):
 		grid_3x3.set_deferred("visible", true)
 		active_buttons = grid_3x3.get_children()
 		_apply_button_textures(active_buttons, glow_btn_icons, glow_food_keys, unlocked_foods)
+
+	# If we switched via the arrows, keep the portion UI active!
+	if keep_portion_tab and tab_portion:
+		left_portion.show()
+		right_portion.show()
+		
+		left_portion.modulate = Color.WHITE
+		right_portion.modulate = Color.WHITE
+		
+		# Auto-select the very first UNLOCKED food in this new category
+		if active_buttons.size() > 0:
+			for i in range(active_buttons.size()):
+				var btn = active_buttons[i] as BaseButton
+				if btn.get_meta("is_locked", true) == false:
+					current_food_index = i
+					btn.set_pressed_no_signal(true)
+					btn.self_modulate = Color(1.5, 1.5, 1.5)
+					break
+		
+		call_deferred("_update_info_page")
 		
 	is_updating = false
+
 
 func _apply_button_textures(buttons: Array, textures: Array, category_keys: Array, unlocked_foods: Array):
 	var tex_index = 0
@@ -154,81 +186,127 @@ func _apply_button_textures(buttons: Array, textures: Array, category_keys: Arra
 				btn.texture_normal = textures[tex_index]
 				btn.set_deferred("visible", true)
 				
-				# --- NEW CHECK LOCK STATUS ---
+				# CHECK LOCK STATUS
 				var food_key = category_keys[tex_index] if tex_index < category_keys.size() else ""
 				
 				if food_key != "" and unlocked_foods.has(food_key):
 					btn.set_meta("is_locked", false)
-					btn.modulate = Color.WHITE # Normal, unlocked
+					btn.self_modulate = Color.WHITE # Changed to self_modulate
 				else:
 					btn.set_meta("is_locked", true)
-					btn.modulate = Color(0.2, 0.2, 0.2, 1.0) # Dark grey overlay for locked items
+					btn.self_modulate = Color(0.2, 0.2, 0.2, 1.0) # Changed to self_modulate
 			else:
 				btn.set_deferred("visible", false)
 			tex_index += 1
 
+
 func _on_food_button_pressed(pressed_btn: BaseButton, index: int):
-	# --- NEW BLOCK CLICK IF LOCKED ---
+	# BLOCK CLICK IF LOCKED
 	if pressed_btn.get_meta("is_locked", true) == true:
 		_play_error_animation(pressed_btn)
 		pressed_btn.set_pressed_no_signal(false) # Force untoggle immediately
 		return
 
-	# NEW LOGIC: Untoggle portion tab when switching food
+	# Untoggle portion tab when switching food manually
 	if tab_portion and tab_portion.button_pressed:
 		tab_portion.set_pressed_no_signal(false)
-		tab_portion.modulate = Color.WHITE
+		tab_portion.self_modulate = Color.WHITE # Changed to self_modulate
+		left_portion.hide() 
+		right_portion.hide() 
 
 	# Radio Button Logic
 	for btn in active_buttons:
 		if btn is BaseButton and btn != pressed_btn:
 			btn.set_pressed_no_signal(false)
-			# Restore locked grey color if it was locked, else white
-			btn.modulate = Color(0.2, 0.2, 0.2, 1.0) if btn.get_meta("is_locked", false) else Color.WHITE
+			btn.self_modulate = Color(0.2, 0.2, 0.2, 1.0) if btn.get_meta("is_locked", false) else Color.WHITE
 	
 	pressed_btn.set_pressed_no_signal(true)
-	pressed_btn.modulate = Color(1.5, 1.5, 1.5) 
+	pressed_btn.self_modulate = Color(1.5, 1.5, 1.5) 
 	
 	current_food_index = index
-	call_deferred("_update_info_page") # Call deferred to prevent layout freeze
+	call_deferred("_update_info_page") 
 
-# --- NEW ERROR ANIMATION ---
+
+# --- ERROR ANIMATION ---
 func _play_error_animation(btn: BaseButton):
-	# Set pivot so it rotates around the center, not the top-left
 	btn.pivot_offset = btn.size / 2.0
 	
 	var tween = create_tween()
-	# 1. Shake left and right
 	tween.tween_property(btn, "rotation_degrees", 15.0, 0.05)
 	tween.tween_property(btn, "rotation_degrees", -15.0, 0.05)
 	tween.tween_property(btn, "rotation_degrees", 10.0, 0.05)
 	tween.tween_property(btn, "rotation_degrees", -10.0, 0.05)
 	tween.tween_property(btn, "rotation_degrees", 0.0, 0.05)
 	
-	# 2. Briefly flash RED, then go back to dark grey (locked state)
-	btn.modulate = Color(1, 0, 0)
+	btn.self_modulate = Color(1, 0, 0)
 	var color_tween = create_tween()
-	color_tween.tween_property(btn, "modulate", Color(0.2, 0.2, 0.2, 1.0), 0.25)
+	color_tween.tween_property(btn, "self_modulate", Color(0.2, 0.2, 0.2, 1.0), 0.25)
 
+
+# --- PORTION TAB LOGIC ---
 func _on_portion_tab_toggled(toggled_on: bool):
 	if toggled_on:
-		tab_portion.modulate = Color(1.5, 1.5, 1.5)
+		tab_portion.self_modulate = Color(1.5, 1.5, 1.5) # Changed to self_modulate
 		
-		# --- NEW: Auto-select the first food item if none is selected ---
+		# Show navigation arrows
+		left_portion.show()
+		right_portion.show()
+		
+		# Explicitly make sure they are normal color
+		left_portion.modulate = Color.WHITE
+		right_portion.modulate = Color.WHITE
+		
+		# Auto-select the first food item if none is selected
 		if current_food_index == -1 and active_buttons.size() > 0:
 			for i in range(active_buttons.size()):
 				var btn = active_buttons[i] as BaseButton
-				# Only auto-select if it is visible and NOT locked
 				if btn and btn.visible and btn.get_meta("is_locked", true) == false:
 					current_food_index = i
 					btn.set_pressed_no_signal(true)
-					btn.modulate = Color(1.5, 1.5, 1.5)
+					btn.self_modulate = Color(1.5, 1.5, 1.5)
 					break
 	else:
-		tab_portion.modulate = Color.WHITE
+		tab_portion.self_modulate = Color.WHITE # Changed to self_modulate
+		
+		# Hide navigation arrows
+		left_portion.hide()
+		right_portion.hide()
 
 	call_deferred("_update_info_page")
 
+
+# --- NEW: LEFT AND RIGHT CYCLING TABS LOGIC ---
+
+func _on_left_portion_pressed():
+	_play_glow_animation(left_portion)
+	_cycle_category(-1) # Move backwards in tabs
+
+func _on_right_portion_pressed():
+	_play_glow_animation(right_portion)
+	_cycle_category(1) # Move forwards in tabs
+
+func _play_glow_animation(btn: BaseButton):
+	# Flash bright white/yellow, then fade back to normal color
+	var tween = create_tween()
+	tween.tween_property(btn, "modulate", Color(2.0, 2.0, 1.5, 1.0), 0.1)
+	tween.tween_property(btn, "modulate", Color.WHITE, 0.15)
+
+func _cycle_category(direction: int):
+	# Defines the order of your tabs
+	var categories = ["Go", "Grow", "Glow"]
+	
+	var current_idx = categories.find(current_category)
+	if current_idx == -1: current_idx = 0
+	
+	# Safely cycles up and down the array (e.g. from Glow back to Go)
+	var next_idx = (current_idx + direction + categories.size()) % categories.size()
+	var next_category = categories[next_idx]
+	
+	# Call _switch_category but pass "true" so we stay locked in the Portion tab mode!
+	_switch_category(next_category, true)
+
+
+# --- INFO PAGE UPDATER ---
 func _update_info_page():
 	var index = current_food_index
 	
@@ -258,7 +336,6 @@ func _update_info_page():
 		target_list = portion_list
 	
 	if index >= 0 and index < target_list.size():
-		# Using set_deferred here is crucial to preventing the texture loop freeze
 		right_info.set_deferred("texture", target_list[index])
 	else:
 		print("Warning: No info texture found for index ", index)
@@ -268,9 +345,9 @@ func _deselect_all_buttons():
 		for btn in grid_2x2.get_children():
 			if btn is BaseButton:
 				btn.set_pressed_no_signal(false)
-				btn.modulate = Color(0.2, 0.2, 0.2, 1.0) if btn.get_meta("is_locked", false) else Color.WHITE
+				btn.self_modulate = Color(0.2, 0.2, 0.2, 1.0) if btn.get_meta("is_locked", false) else Color.WHITE
 	if grid_3x3:
 		for btn in grid_3x3.get_children():
 			if btn is BaseButton:
 				btn.set_pressed_no_signal(false)
-				btn.modulate = Color(0.2, 0.2, 0.2, 1.0) if btn.get_meta("is_locked", false) else Color.WHITE
+				btn.self_modulate = Color(0.2, 0.2, 0.2, 1.0) if btn.get_meta("is_locked", false) else Color.WHITE
