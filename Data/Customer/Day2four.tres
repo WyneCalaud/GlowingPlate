@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://ddrke6rp7h3xa"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://ddrke6rp7h3xa"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_0plpd"]
 
 [resource]
 script = ExtResource("1_0plpd")
 customer_name = "Cyril"
-order_text = "Pan de sal please. The rest is up to you.Hot water please, and no milk. Thank you!"
+order_text = "Pan de sal please. The rest is up to you. Hot water please, and no milk. Thank you!"
 expanded_text = "Go: Pan de sal Grow: Chicken Glow: Sitaw + Mango Drink: Hot water, no milk"
 age = 10
 needs = {

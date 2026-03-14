@@ -427,7 +427,6 @@ func _end_news():
 
 	var GD = get_node("/root/GameData")
 
-	GD.day_started = true   # 🔥 THIS IS THE FIX
 	GD.current_phase = GD.GamePhase.NEWS
 	GD.save_game()
 
@@ -492,7 +491,6 @@ func _on_skip_button_pressed() -> void:
 
 	var GD = get_node("/root/GameData")
 
-	GD.day_started = true   # 🔥 THIS IS THE FIX
 	GD.current_phase = GD.GamePhase.NEWS
 	GD.save_game()
 

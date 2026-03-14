@@ -86,3 +86,60 @@ func scale_customer_sprite(sprite: Sprite2D, max_height: float = 300.0) -> void:
 
 	var scale_factor = max_height / tex_size.y
 	sprite.scale = Vector2.ONE * scale_factor
+
+func _get_sad_texture(character_name:String) -> Texture2D:
+
+	var GD = get_node("/root/GameData")
+	var stage : int = GD.get_character_stage(character_name)
+
+	match character_name:
+
+		"Cyril": return preload("res://Assets/Customers/Sad/Cyril_sad.png")
+		"Nestor": return preload("res://Assets/Customers/Sad/Nestor_sad.png")
+		"Milan": return preload("res://Assets/Customers/Sad/Milan_sad.png")
+		"Nina": return preload("res://Assets/Customers/Sad/Nina_sad.png")
+		"Pedro Pan": return preload("res://Assets/Customers/Sad/PedroPan_sad.png")
+		"Rimo": return preload("res://Assets/Customers/Sad/Rimo_sad.png")
+		"Troy": return preload("res://Assets/Customers/Sad/Troy_sad.png")
+		"Yeeha": return preload("res://Assets/Customers/Sad/Yeeha_sad.png")
+		"Boba": return preload("res://Assets/Customers/Sad/Boba_sad.png")
+		"Bree": return preload("res://Assets/Customers/Sad/Bree_sad.png")
+		"Jenna": return preload("res://Assets/Customers/Sad/Jenna_sad.png")
+		"Miggy": return preload("res://Assets/Customers/Sad/Miggy_sad.png")
+		"Tina": return preload("res://Assets/Customers/Sad/Tina_sad.png")
+
+		# ⭐ SPECIAL CHARACTERS
+
+		"Leo":
+			match stage:
+				1: return preload("res://Assets/Customers/Special Characters/Sad/Leo Current_sad.png")
+				2: return preload("res://Assets/Customers/Special Characters/Sad/Leo Better_sad.png")
+				3: return preload("res://Assets/Customers/Special Characters/Sad/Leo Glowing_sad.png")
+
+		"Maya":
+			match stage:
+				1: return preload("res://Assets/Customers/Special Characters/Sad/Maya Current_sad.png")
+				2: return preload("res://Assets/Customers/Special Characters/Sad/Maya Better_sad.png")
+				3: return preload("res://Assets/Customers/Special Characters/Sad/Maya Glowing_sad.png")
+
+		"Norma":
+			match stage:
+				1: return preload("res://Assets/Customers/Special Characters/Sad/Norma Current_sad.png")
+				2: return preload("res://Assets/Customers/Special Characters/Sad/Norma Better_sad.png")
+				3: return preload("res://Assets/Customers/Special Characters/Sad/Norma Glowing_sad.png")
+
+	return null
+
+func play_sad_reaction(character_name:String) -> void:
+
+	if not current_customer:
+		return
+
+	var sprite := current_customer.get_node_or_null("CustomerSprite") as Sprite2D
+	if sprite:
+
+		var sad_tex := _get_sad_texture(character_name)
+
+		if sad_tex:
+			sprite.texture = sad_tex
+			scale_customer_sprite(sprite, 470)
