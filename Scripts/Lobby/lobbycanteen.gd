@@ -543,6 +543,7 @@ func _format_slot_name(slot:String) -> String:
 			return slot
 
 func _on_btn_final_serve_pressed() -> void:
+	$FinalPlateDisplay/BtnFinalServe.hide()
 
 	if is_inside_tree():
 		get_tree().call_group("HUD", "stop_patience")
@@ -588,6 +589,9 @@ func _on_btn_final_serve_pressed() -> void:
 	else:
 		await typewriter_words(_get_angry_feedback(mistakes))
 
+		if character_id != "":
+			customer_manager.play_sad_reaction(character_id)
+
 	# NOW finalize service
 	GD.finalize_service({
 		"earned_money": money_earned,
@@ -598,7 +602,6 @@ func _on_btn_final_serve_pressed() -> void:
 		"is_correct": correct
 	})
 
-	GD.clear_customer()
 	GD.service_state = GameData.ServiceState.SERVED
 	
 	GD.returning_from_kitchen = false
@@ -618,12 +621,13 @@ func _on_btn_final_serve_pressed() -> void:
 
 	await get_tree().create_timer(3.5).timeout
 
-	# Wait for leave signal BEFORE triggering next
-	var leave_signal = customer_manager.customer_left
-
 	customer_manager.next_customer()
 
-	await leave_signal
+	# Wait for customer to fully leave
+	await customer_manager.customer_left
+
+	# 🔥 NOW it is safe to clear the previous customer
+	GD.clear_customer()
 
 	# Safety check
 	if not is_inside_tree():
@@ -631,7 +635,6 @@ func _on_btn_final_serve_pressed() -> void:
 
 	await get_tree().create_timer(0.15).timeout
 
-	# Spawn next customer if available
 	if not GD.remaining_customers.is_empty():
 		spawn_next_customer()
 
@@ -663,21 +666,19 @@ func _get_detailed_mistakes() -> Array:
 
 		# --- Missing slot entirely ---
 		if not plated_map.has(category):
-			mistakes.append("I’m missing my %s!" % _format_food_name(expected_key))
+			mistakes.append("Missing my %s!" % _format_food_name(expected_key))
 			continue
 
 		var actual = plated_map[category]
 		# --- Wrong category placement (non-ANY too) ---
 		var food_res = OrderSystem.FOOD_DB.get(actual.key)
 		if food_res and food_res.food_category != category:
-			mistakes.append(
-				"Wrong food category in %s slot!" % _format_slot_name(category)
-			)
+			mistakes.append("Wrong %s food!" % _format_slot_name(category))
 			continue
 
 		# --- Wrong food ---
 		if expected_key != "ANY" and actual.key != expected_key:
-			mistakes.append("I ordered %s, not %s!" % [
+			mistakes.append("I asked for %s, not %s!" % [
 				_format_food_name(expected_key),
 				_format_food_name(actual.key)
 			])
@@ -686,37 +687,50 @@ func _get_detailed_mistakes() -> Array:
 		# --- ANY but wrong category placement ---
 		if expected_key == "ANY":
 			if food_res and food_res.food_category != category:
-				mistakes.append("This food is in the wrong place!")
+				mistakes.append("Wrong %s food!" % _format_slot_name(category))
 				continue
 
 		# --- Portion checks ---
 		match expected_key:
 
-			"CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU", "CORN","SITAW", "CARROTS", "EGGPLANT", "PUMPKIN":
+			"CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU", "CORN", "SITAW", "CARROTS", "EGGPLANT", "PUMPKIN":
 				if actual.portion != expected_portion:
-					mistakes.append("My %s food is the wrong portion!" % category)
+					mistakes.append("Wrong %s portion!" % _format_slot_name(category))
 
 			"RICE":
 				if actual.rice != expected_portion:
-					mistakes.append("My rice amount isn’t right!")
+					mistakes.append("Wrong rice amount!")
 
 			"PANDESAL":
 				if actual.quantity != expected_portion:
-					mistakes.append("I need %s pandesal!" % str(expected_portion))
+					mistakes.append("Need %s pandesal!" % str(expected_portion))
 
 	return mistakes
 
 func _get_angry_feedback(mistakes: Array) -> String:
 
 	if mistakes.is_empty():
-		return "Something isn’t right..."
+		return "Something’s wrong..."
 
-	var combined = "\n".join(mistakes)
+	var combined := ""
+
+	if mistakes.size() == 1:
+		combined = mistakes[0]
+
+	elif mistakes.size() == 2:
+		combined = "%s and %s" % [mistakes[0], mistakes[1]]
+
+	else:
+		for i in range(mistakes.size()):
+			if i == mistakes.size() - 1:
+				combined += "and " + mistakes[i]
+			else:
+				combined += mistakes[i] + ", "
 
 	var variants = [
-		"Oh no!\n%s",
-		"That’s not correct!\n%s",
-		"Hmm… there’s a problem!\n%s"
+		"Oh no! %s",
+		"Not quite! %s",
+		"Hmm... %s"
 	]
 
 	return variants.pick_random() % combined
@@ -882,7 +896,8 @@ func _on_day_button_pressed() -> void:
 				preload("res://Data/Customer/Day1one.tres")
 			]
 
-	GD.start_day_with_orders(day_orders)
+	if not GD.day_started:
+		GD.start_day_with_orders(day_orders)
 
 	# -------------------------
 	# DAY 1 → No mini game
@@ -1032,16 +1047,29 @@ func spawn_next_customer():
 
 	var GD = get_node("/root/GameData")
 
+	# ------------------------------------------------
+	# 🔥 CRITICAL FIX
+	# If we returned from kitchen, DO NOT spawn.
+	# The customer is already on screen.
+	# ------------------------------------------------
+	if GD.returning_from_kitchen:
+		return
+
 	if GD.remaining_customers.is_empty():
 		return
 
-	# Only reset patience if we are NOT returning from kitchen
-	if not GD.returning_from_kitchen:
-		GD.customer_patience = 100.0
-		GD.patience_running = false
-		get_tree().call_group("HUD", "reset_patience")
+	# Wait until animation system is free
+	if customer_manager.is_animating:
+		await get_tree().process_frame
+		spawn_next_customer()
+		return
 
-	var order: CustomerOrder = GD.remaining_customers.pop_front()
+	GD.customer_patience = 100.0
+	GD.patience_running = false
+	get_tree().call_group("HUD", "reset_patience")
+
+	# ⭐ Get the order WITHOUT removing it yet
+	var order: CustomerOrder = GD.remaining_customers[0]
 
 	var tex: Texture2D
 	var stage : int = GD.get_character_stage(order.customer_name)
@@ -1094,6 +1122,9 @@ func spawn_next_customer():
 				1: tex = preload("res://Assets/Customers/Special Characters/Norma Current.png")
 				2: tex = preload("res://Assets/Customers/Special Characters/Norma Better.png")
 				3: tex = preload("res://Assets/Customers/Special Characters/Norma Glowing.png")
+
+	# ⭐ NOW remove from queue AFTER everything is ready
+	GD.remaining_customers.pop_front()
 
 	GD.save_customer(order, tex)
 	GD.service_state = GameData.ServiceState.CUSTOMER_PRESENT

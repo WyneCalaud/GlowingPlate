@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://bhsawp8prntqf"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://bhsawp8prntqf"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_wrf55"]
 
 [resource]
 script = ExtResource("1_wrf55")
 customer_name = "Leo"
-order_text = "Hi! I don’t want rice today please.I’ll have pan de sal, chicken, sitaw, and mango.Cold water please, and no milk today."
+order_text = "Hi! I don’t want rice today please. I’ll have pan de sal, chicken, sitaw, and mango. Cold water please, and no milk today."
 expanded_text = "Go: Pan de sal Grow: Chicken Glow: Sitaw (vegetable) + Mango (fruit) Drink: Cold water, no milk"
 age = 7
 needs = {

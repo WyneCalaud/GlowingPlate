@@ -160,6 +160,7 @@ func start_day_with_orders(orders: Array):
 	remaining_customers = orders.duplicate()
 	max_customers_today = max(1, remaining_customers.size()) 
 	service_state = ServiceState.IDLE
+	returning_from_kitchen = false
 	day_started = true
 
 func finalize_service(day_result: Dictionary) -> void:
@@ -215,6 +216,10 @@ func finalize_service(day_result: Dictionary) -> void:
 	# ======================================================
 
 	if remaining_customers.is_empty():
+
+		# 🔥 CRITICAL FIX
+		clear_customer()
+
 		day_started = false
 
 		# ⏳ Wait 3 seconds before ending day
