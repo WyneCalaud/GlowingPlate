@@ -23,6 +23,9 @@ var current_state: String = "LOCKED" # States: LOCKED, UNLOCKED, EQUIPPED
 
 func _ready():
 	if btn:
+		# ⭐ Tell the global UIAudioManager NOT to attach the default click sound to this button
+		btn.add_to_group("silent_button")
+		
 		btn.pressed.connect(_on_btn_pressed)
 
 # Called by NutriShop to initialize the card

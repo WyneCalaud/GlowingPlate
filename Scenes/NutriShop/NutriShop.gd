@@ -58,6 +58,14 @@ signal closed
 @onready var close_btn: TextureButton = $CloseTextureButton
 @onready var shop_window: Control = $NutriShopBackground
 
+# Audio Nodes
+@onready var success_sfx = get_node_or_null("SuccessSFX")
+@onready var fail_sfx = get_node_or_null("FailedSFX")
+
+# Audio Ducking State
+var is_music_ducked: bool = false
+var original_music_vol: float = 0.0
+
 # Left Tabs System
 @onready var btn_upgrades: BaseButton = $NutriShopBackground/LeftTabs/BtnUpgrades
 @onready var btn_canteen: BaseButton = $NutriShopBackground/LeftTabs/BtnCanteen
@@ -88,6 +96,13 @@ var unlocked_registry: Dictionary = {}
 var equipped_registry: Dictionary = {}
 var category_map: Dictionary = {} 
 
+# --- SWIPE TO SCROLL VARIABLES ---
+var is_swiping: bool = false
+var swipe_start_pos: Vector2
+var swipe_start_scroll: float = 0.0
+var swipe_threshold: float = 10.0 # How many pixels before we consider it a swipe
+var has_swiped: bool = false
+
 # --- TRANSFORM DEFAULTS ---
 # Main Tables
 var default_mt_size: Vector2; var default_mt_pos: Vector2; var defaults_captured: bool = false
@@ -104,16 +119,16 @@ func _ready():
 	if shop_window:
 		shop_window.call_deferred("set_pivot_offset", shop_window.size / 2)
 	
-	# 1. Build the Data Map (Links Data -> Buttons -> Scene Nodes)
+	# 1. Build the Data Map
 	_build_category_data()
 	
-	# 2. Sync with GameData to load previous session's state
+	# 2. Sync with GameData
 	_sync_with_gamedata()
 	
 	# 3. Initialize Defaults
 	_initialize_defaults()
 	
-	# 4. Apply Skins to Scene immediately
+	# 4. Apply Skins to Scene
 	call_deferred("_apply_all_equipped_skins")
 
 	# 5. Setup UI Layouts
@@ -127,46 +142,70 @@ func _ready():
 	call_deferred("_on_main_tab_pressed", "Upgrades")
 
 func close_shop():
+	is_swiping = false # Reset swipe flag safely
 	closed.emit()
+
+# --- AUDIO DUCKING LOGIC ---
+func _play_success_and_duck_music():
+	if success_sfx:
+		success_sfx.play()
+	
+	var bg_music = get_node_or_null("/root/BGMusic")
+	if bg_music and not is_music_ducked:
+		is_music_ducked = true
+		original_music_vol = bg_music.volume_db
+		
+		# Lower volume by 15 decibels
+		var ducked_vol = original_music_vol - 15.0
+		
+		var tween = create_tween()
+		# Fade music down quickly
+		tween.tween_property(bg_music, "volume_db", ducked_vol, 0.1)
+		
+		# Wait for the sound effect to finish (fallback to 1.5s if length unknown)
+		var wait_time = 1.5
+		if success_sfx and success_sfx.stream:
+			wait_time = success_sfx.stream.get_length()
+			
+		tween.tween_interval(wait_time)
+		
+		# Fade music back up to original volume smoothly
+		tween.tween_property(bg_music, "volume_db", original_music_vol, 0.5)
+		
+		# Free up the system to be ducked again
+		tween.tween_callback(func(): is_music_ducked = false)
 
 # --- SYNC DATA ---
 func _sync_with_gamedata():
 	var gd = get_tree().get_first_node_in_group("GameData")
 	if not gd: return
 	
-	# Load unlocked decor
 	if "shop_unlocked_registry" in gd:
 		for key in gd.shop_unlocked_registry:
 			unlocked_registry[key] = gd.shop_unlocked_registry[key]
 			
-	# Load equipped decor
 	if "shop_equipped_registry" in gd:
 		for key in gd.shop_equipped_registry:
 			equipped_registry[key] = gd.shop_equipped_registry[key]
 			
-	# Sync Upgrades
 	if "unlocked_upgrades" in gd:
 		for upgrade in gd.unlocked_upgrades:
 			unlocked_registry[upgrade] = true
 
-# --- CONFIGURATION: MAP CATEGORIES TO SCENE NODES ---
 func _build_category_data():
-	# Key = Category Name
-	# node = The exact name of the node inside "Background" in LobbyCanteen.tscn
 	category_map = {
-		"WallFrame": 	{ "names": wallframe_names, "prices": wallframe_prices, "icons": wallframe_icons, "skins": wallframe_skins, "btn": sub_btn_wallframe, "node": "WallFrame" },
-		"Floors": 		{ "names": floor_names, "prices": floor_prices, "icons": floor_icons, "skins": floor_skins, "btn": sub_btn_floors, "node": "Floor" },
-		"HighTables": 	{ "names": hightable_names, "prices": hightable_prices, "icons": hightable_icons, "skins": hightable_skins, "btn": sub_btn_hightable, "node": "HighTable" },
-		"HighChairs": 	{ "names": highchair_names, "prices": highchair_prices, "icons": highchair_icons, "skins": highchair_skins, "btn": sub_btn_highchairs, "node": "HighChairs" },
-		"MainTables": 	{ "names": maintable_names, "prices": maintable_prices, "icons": maintable_icons, "skins": maintable_skins, "btn": sub_btn_maintable, "node": "MainTables" },
-		"CounterTops": 	{ "names": countertop_names, "prices": countertop_prices, "icons": countertop_icons, "skins": countertop_skins, "btn": sub_btn_countertop, "node": "Countertop" },
+		"WallFrame":     { "names": wallframe_names, "prices": wallframe_prices, "icons": wallframe_icons, "skins": wallframe_skins, "btn": sub_btn_wallframe, "node": "WallFrame" },
+		"Floors":         { "names": floor_names, "prices": floor_prices, "icons": floor_icons, "skins": floor_skins, "btn": sub_btn_floors, "node": "Floor" },
+		"HighTables":     { "names": hightable_names, "prices": hightable_prices, "icons": hightable_icons, "skins": hightable_skins, "btn": sub_btn_hightable, "node": "HighTable" },
+		"HighChairs":     { "names": highchair_names, "prices": highchair_prices, "icons": highchair_icons, "skins": highchair_skins, "btn": sub_btn_highchairs, "node": "HighChairs" },
+		"MainTables":     { "names": maintable_names, "prices": maintable_prices, "icons": maintable_icons, "skins": maintable_skins, "btn": sub_btn_maintable, "node": "MainTables" },
+		"CounterTops":     { "names": countertop_names, "prices": countertop_prices, "icons": countertop_icons, "skins": countertop_skins, "btn": sub_btn_countertop, "node": "Countertop" },
 		"CounterDecor": { "names": counterdecor_names, "prices": counterdecor_prices, "icons": counterdecor_icons, "skins": counterdecor_skins, "btn": sub_btn_counterdecor, "node": "CountertopDec" },
 		"EntranceDecor":{ "names": entrancedecor_names, "prices": entrancedecor_prices, "icons": entrancedecor_icons, "skins": entrancedecor_skins, "btn": sub_btn_entrancedecor, "node": "WallDec" },
-		"Lights": 		{ "names": lights_names, "prices": lights_prices, "icons": lights_icons, "skins": lights_skins, "btn": sub_btn_lights, "node": "Lights" },
+		"Lights":         { "names": lights_names, "prices": lights_prices, "icons": lights_icons, "skins": lights_skins, "btn": sub_btn_lights, "node": "Lights" },
 		"CashRegister": { "names": cashregister_names, "prices": cashregister_prices, "icons": cashregister_icons, "skins": cashregister_skins, "btn": sub_btn_cashregister, "node": "CashRegister" }
 	}
 
-# --- SETUP HELPERS ---
 func _setup_layouts():
 	canteen_submenu_scroll.visible = false 
 	canteen_submenu_scroll.custom_minimum_size.y = 0 
@@ -192,28 +231,23 @@ func _connect_signals():
 		if data.btn:
 			data.btn.pressed.connect(func(): _on_sub_tab_pressed(category_key))
 
-# --- DEFAULTS ---
 func _initialize_defaults():
 	var gd = get_tree().get_first_node_in_group("GameData")
 	for category in category_map:
 		var data = category_map[category]
 		var names = data.names
 		var prices = data.prices
-		
 		var default_item = ""
 		
-		# 1. Search for a FREE item (Price == 0) to be the default
 		for i in range(names.size()):
 			var p = prices[i] if i < prices.size() else 0
 			if p == 0:
 				default_item = names[i]
 				break
 		
-		# 2. If no free item found, fallback to the very first item (Index 0)
 		if default_item == "" and names.size() > 0:
 			default_item = names[0]
 			
-		# 3. Unlock and Equip default if empty
 		if default_item != "":
 			if not unlocked_registry.has(default_item):
 				unlocked_registry[default_item] = true
@@ -224,7 +258,6 @@ func _initialize_defaults():
 				if gd and "shop_equipped_registry" in gd:
 					gd.shop_equipped_registry[category] = default_item
 
-# --- TAB LOGIC ---
 func _on_main_tab_pressed(category: String):
 	btn_upgrades.modulate = inactive_color
 	btn_canteen.modulate = inactive_color
@@ -233,7 +266,7 @@ func _on_main_tab_pressed(category: String):
 	if category == "Canteen":
 		btn_canteen.modulate = active_color
 		_animate_submenu(true)
-		_on_sub_tab_pressed("WallFrame") # Default sub-tab
+		_on_sub_tab_pressed("WallFrame") 
 	else:
 		_animate_submenu(false) 
 		if category == "Upgrades":
@@ -251,7 +284,6 @@ func _on_sub_tab_pressed(category_key: String):
 	if category_map.has(category_key):
 		var data = category_map[category_key]
 		if data.btn: data.btn.modulate = active_color
-		# Use Icons for the Shop Card, Names for ID
 		_populate_items(data.icons, data.prices, data.names, category_key)
 
 func _animate_submenu(open: bool):
@@ -261,7 +293,6 @@ func _animate_submenu(open: bool):
 	if not open: tween.tween_callback(func(): canteen_submenu_scroll.visible = false)
 	else: canteen_submenu_scroll.visible = true
 
-# --- POPULATION & LOGIC ---
 func _populate_items(icons: Array, prices: Array, names: Array, category: String):
 	if not shop_card_scene: return
 	
@@ -281,10 +312,8 @@ func _populate_items(icons: Array, prices: Array, names: Array, category: String
 		var state = "LOCKED"
 		if unlocked_registry.has(item_name):
 			if category == "Upgrades" or category == "Kitchen":
-				# Upgrades & Kitchen are always active once unlocked
 				state = "EQUIPPED"
 			else:
-				# Decor: Only one active per category (Exclusive)
 				state = "UNLOCKED"
 				if equipped_registry.has(category) and equipped_registry[category] == item_name:
 					state = "EQUIPPED"
@@ -298,6 +327,60 @@ func _populate_items(icons: Array, prices: Array, names: Array, category: String
 	scroll_container.modulate.a = 0.0
 	create_tween().tween_property(scroll_container, "modulate:a", 1.0, 0.3)
 
+# --- NEW: SWIPE/DRAG LOGIC ---
+func _input(event: InputEvent):
+	# Only process if shop is visible and scroll container exists
+	if not scroll_container or not is_visible_in_tree():
+		return
+
+	var is_press = false
+	var is_release = false
+	var is_drag = false
+	var e_pos = Vector2.ZERO
+
+	# Identify if event is Mouse or Touch screen
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		is_press = event.pressed
+		is_release = not event.pressed
+		e_pos = event.position
+	elif event is InputEventScreenTouch:
+		is_press = event.pressed
+		is_release = not event.pressed
+		e_pos = event.position
+	elif event is InputEventMouseMotion or event is InputEventScreenDrag:
+		is_drag = true
+		e_pos = event.position
+
+	if is_press:
+		# Check if they clicked INSIDE the item display scroll area
+		var local_pos = scroll_container.get_local_mouse_position()
+		var scroll_rect = Rect2(Vector2.ZERO, scroll_container.size)
+		
+		if scroll_rect.has_point(local_pos):
+			is_swiping = true
+			has_swiped = false
+			swipe_start_pos = e_pos
+			swipe_start_scroll = scroll_container.scroll_horizontal
+			
+	elif is_release:
+		if is_swiping and has_swiped:
+			# ⭐ This is the magic line. It cancels the mouse release!
+			# Since the button inside the card never gets the release signal, 
+			# it will NOT trigger a purchase if the player was just swiping.
+			get_viewport().set_input_as_handled()
+		is_swiping = false
+		
+	elif is_drag and is_swiping:
+		var dist_x = e_pos.x - swipe_start_pos.x
+		
+		# If we moved more than the threshold (10 pixels), it's a swipe, not a click
+		if not has_swiped and abs(dist_x) > swipe_threshold:
+			has_swiped = true
+			
+		if has_swiped:
+			scroll_container.scroll_horizontal = int(swipe_start_scroll - dist_x)
+
+
 func _on_card_action(card_node):
 	var state = card_node.current_state
 	var cost = card_node.price
@@ -308,11 +391,13 @@ func _on_card_action(card_node):
 	if state == "LOCKED":
 		# === BUY ===
 		if gd and gd.money >= cost:
+			# ⭐ PLAY SUCCESS AND LOWER MUSIC ⭐
+			_play_success_and_duck_music()
+			
 			gd.add_money(-cost)
 			print("Purchased: ", item_name)
 			unlocked_registry[item_name] = true
 			
-			# SAVE THE UNLOCK TO GAMEDATA
 			if "shop_unlocked_registry" in gd:
 				gd.shop_unlocked_registry[item_name] = true
 			
@@ -324,30 +409,66 @@ func _on_card_action(card_node):
 			
 			gd.save_game() 
 		else:
-			# Not enough money shake
-			var tween = create_tween()
-			tween.tween_property(card_node, "modulate", Color.RED, 0.1)
-			tween.tween_property(card_node, "modulate", Color.WHITE, 0.1)
+			# === BUY FAILED (Not enough money) ===
+			if fail_sfx: fail_sfx.play()
+			
+			# Fetch the actual button inside the card scene (ShopItemCard.gd named it "BtnPrice")
+			var target_btn = card_node.get_node_or_null("BtnPrice")
+			
+			if target_btn:
+				# ⭐ Save the true original X position inside the button's metadata on first click
+				if not target_btn.has_meta("orig_x"):
+					target_btn.set_meta("orig_x", target_btn.position.x)
+				
+				var orig_x = target_btn.get_meta("orig_x")
+				
+				# ⭐ Reset the button instantly to its true center before shaking
+				# This prevents it from drifting if clicked mid-animation!
+				target_btn.position.x = orig_x
+				
+				# 1. Color Flash Tween
+				var color_tween = create_tween()
+				color_tween.tween_property(target_btn, "modulate", Color.RED, 0.1)
+				color_tween.tween_property(target_btn, "modulate", Color.WHITE, 0.1)
+				
+				# 2. Shake Tween (Left and Right)
+				var shake_tween = create_tween()
+				var offset = 8.0 # How far left/right it shakes
+				var dur = 0.05   # How fast each shake movement is
+				
+				shake_tween.tween_property(target_btn, "position:x", orig_x - offset, dur)
+				shake_tween.tween_property(target_btn, "position:x", orig_x + offset, dur)
+				shake_tween.tween_property(target_btn, "position:x", orig_x - offset, dur)
+				shake_tween.tween_property(target_btn, "position:x", orig_x + offset, dur)
+				shake_tween.tween_property(target_btn, "position:x", orig_x, dur)
+			else:
+				# Fallback if it can't find the button for some reason
+				var tween = create_tween()
+				tween.tween_property(card_node, "modulate", Color.RED, 0.1)
+				tween.tween_property(card_node, "modulate", Color.WHITE, 0.1)
 			
 	elif state == "UNLOCKED":
 		# === EQUIP (Decor Only) ===
+		
+		# ⭐ PLAY THE GLOBAL CLICK SOUND MANUALLY ⭐
+		var ui_audio = get_node_or_null("/root/UIAudioManager")
+		if not ui_audio: ui_audio = get_node_or_null("/root/UiAudioManager") # Failsafe for naming
+		if ui_audio and ui_audio.has_method("_play_click_sound"):
+			ui_audio._play_click_sound()
+			
 		print("Equipping: ", item_name, " in category: ", category)
 		equipped_registry[category] = item_name
 		
-		# SAVE THE EQUIPMENT TO GAMEDATA
 		if gd and "shop_equipped_registry" in gd:
 			gd.shop_equipped_registry[category] = item_name
 			gd.save_game()
 		
-		# 1. Update the actual scene texture
 		if category_map.has(category):
 			var data = category_map[category]
 			var idx = data.names.find(item_name)
-			# Validate index and check if skin exists
 			if idx != -1 and idx < data.skins.size():
 				_update_decor_node(data.node, item_name, data.skins[idx])
 		
-		# 2. Update UI (Lock others in same category, equip this one)
 		for child in item_container.get_children():
 			if child.has_method("update_state"):
 				var new_state = "LOCKED"
@@ -368,20 +489,15 @@ func _apply_all_equipped_skins():
 				_update_decor_node(data.node, item_name, data.skins[idx])
 
 func _update_decor_node(node_name: String, item_name: String, texture: Texture2D):
-	# SAFETY CHECK: If texture is missing (null), do not update
-	if texture == null:
-		print("Safety Fallback: No skin texture found for ", node_name, ". Keeping existing skin.")
-		return
+	if texture == null: return
 	
 	var root = get_tree().root
-	# Search for the "Background" container first
 	var background = root.find_child("Background", true, false)
 	
 	if background:
-		# Search for the specific piece inside Background
 		var target_node = background.get_node_or_null(node_name)
 		if target_node:
-			# 1. SPECIAL LOGIC FOR MAIN TABLES (Size/Position Override)
+			# 1. SPECIAL LOGIC FOR MAIN TABLES
 			if node_name == "MainTables":
 				if not defaults_captured:
 					if "size" in target_node: default_mt_size = target_node.size
@@ -412,7 +528,7 @@ func _update_decor_node(node_name: String, item_name: String, texture: Texture2D
 					if "size" in target_node: target_node.size = default_cd_size
 					if "position" in target_node: target_node.position = default_cd_pos
 
-			# 3. SPECIAL LOGIC FOR ENTRANCE DECOR (WallDec)
+			# 3. SPECIAL LOGIC FOR ENTRANCE DECOR
 			if node_name == "WallDec":
 				if not defaults_ed_captured:
 					if "size" in target_node: default_ed_size = target_node.size
@@ -466,15 +582,9 @@ func _update_decor_node(node_name: String, item_name: String, texture: Texture2D
 					if "size" in target_node: target_node.size = default_cr_size
 					if "position" in target_node: target_node.position = default_cr_pos
 
-			# 6. Apply Texture
 			if "texture" in target_node: target_node.texture = texture
 			elif target_node.has_method("set_texture"): target_node.set_texture(texture)
-		else:
-			print("Warning: Node '", node_name, "' not found inside Background.")
-	else:
-		print("Warning: 'Background' node not found in current scene.")
 
-# --- STYLE ---
 func _setup_scrollbar_style(scroll: ScrollContainer):
 	var h_bar = scroll.get_h_scroll_bar()
 	var v_bar = scroll.get_v_scroll_bar()
@@ -491,29 +601,20 @@ func _setup_scrollbar_style(scroll: ScrollContainer):
 	if h_bar: apply_style.call(h_bar)
 	if v_bar: apply_style.call(v_bar)
 
-# --- NEW: APPLY UPGRADE EFFECT ---
 func _apply_upgrade_effect(upgrade_name:String):
 	var GD = get_tree().get_first_node_in_group("GameData")
 	if not GD: return
 
-	# 1. Add the upgrade to GameData so it persists and the Kitchen can read it
 	if "unlocked_upgrades" in GD:
 		if not GD.unlocked_upgrades.has(upgrade_name):
 			GD.unlocked_upgrades.append(upgrade_name)
 	else:
-		# If GameData doesn't have the array yet, create it!
 		GD.set("unlocked_upgrades", [upgrade_name])
-		print("NutriShop created 'unlocked_upgrades' array in GameData.")
 
-	# 2. Check which upgrade was bought and trigger any instant effects
 	match upgrade_name:
 		"PatientCustomers":
 			GD.customer_patience_multiplier = 1.5
-			print("Upgrade applied: Patient Customers")
-		
-		# MAKE SURE THIS STRING MATCHES YOUR INSPECTOR EXACTLY (E.g. "Return Food")
 		"ReturnFood", "Return Food", "Undo Button": 
-			print("Upgrade applied: Return Food (Undo Button now active!)")
-			
+			print("Upgrade applied: Return Food")
 		"Meal Bonus", "MealBonus":
-			print("Upgrade applied: Meal Bonus (+15 money per meal!)")
+			print("Upgrade applied: Meal Bonus") 

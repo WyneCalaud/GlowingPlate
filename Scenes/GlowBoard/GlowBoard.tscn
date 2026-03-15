@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://bs42us5samyyd"]
+[gd_scene format=3 uid="uid://bs42us5samyyd"]
 
 [ext_resource type="Script" uid="uid://ejkgyhmbfm6x" path="res://Scripts/Lobby/GlowBoard.gd" id="1_1v4b8"]
 [ext_resource type="Texture2D" uid="uid://cftl0o6kvihpo" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P1.png" id="2_hbvem"]
@@ -7,10 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://dhp5xrtt3nkx7" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P2.png" id="3_v4bkd"]
 [ext_resource type="Texture2D" uid="uid://dpgfalnac2h5c" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P3.png" id="4_b0na2"]
 [ext_resource type="Texture2D" uid="uid://ddg80chhavokp" path="res://Assets/UI/GlowBoard/GlowBoardSign.png" id="4_hetde"]
-[ext_resource type="Texture2D" uid="uid://de6tyysekcw3h" path="res://Assets/UI/GlowBoard/KeysUI.png" id="5_lh86r"]
 [ext_resource type="Texture2D" uid="uid://ba7worswg5dfs" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P4.png" id="5_phni6"]
 [ext_resource type="Texture2D" uid="uid://dkwg7ksxwm30f" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P5.png" id="6_20fw6"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="6_k3bx0"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="6_k3bx0"]
 [ext_resource type="Texture2D" uid="uid://ryu6th5fud2h" path="res://Assets/UI/GlowBoard/LeoCard.png" id="7_bwta1"]
 [ext_resource type="Texture2D" uid="uid://mjqgeuhws7iy" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P6.png" id="7_itx7g"]
 [ext_resource type="Texture2D" uid="uid://gvqouldsggx8" path="res://Assets/UI/GlowBoard/Leo/ACT1/LeoAct1P7.png" id="8_5pkxf"]
@@ -60,6 +59,8 @@
 [ext_resource type="Texture2D" uid="uid://2i5j3rd6k5d3" path="res://Assets/UI/GlowBoard/CharacterCards/BetterNorma.png" id="43_g6m08"]
 [ext_resource type="Texture2D" uid="uid://clby3ge8x5rjo" path="res://Assets/UI/GlowBoard/CharacterCards/GlowingNorma.png" id="44_h613u"]
 [ext_resource type="Texture2D" uid="uid://b4nrk6wg2cd2o" path="res://Assets/UI/GlowBoard/CompletedButton.png" id="46_qo4xq"]
+[ext_resource type="Texture2D" uid="uid://cgrtxjbkvl3iv" path="res://Assets/UI/Interface/KeyBar.png" id="50_lgvd2"]
+[ext_resource type="Texture2D" uid="uid://6xta4mkn4q77" path="res://Assets/UI/GlowBoard/NotEnoughKeys.png" id="56_lgvd2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u5tat"]
 font_size = 27
@@ -67,7 +68,7 @@ font_color = Color(0.41568628, 0.18431373, 0.06666667, 1)
 outline_size = 3
 outline_color = Color(0, 0, 0, 1)
 
-[node name="GlowBoard" type="Control"]
+[node name="GlowBoard" type="Control" unique_id=1025022683]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -95,14 +96,14 @@ progress_act1_tex = ExtResource("8_8ph0k")
 progress_act2_tex = ExtResource("8_8ph0k")
 progress_act3_tex = ExtResource("46_qo4xq")
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." unique_id=1699043268]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 114.0
 grow_horizontal = 2
 
-[node name="GlowBoardBackground" type="TextureRect" parent="UI"]
+[node name="GlowBoardBackground" type="TextureRect" parent="UI" unique_id=1341054778]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -113,21 +114,21 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_x2fdi")
 
-[node name="BackButtonImage" type="MarginContainer" parent="UI"]
+[node name="BackButtonImage" type="MarginContainer" parent="UI" unique_id=1050696912]
 layout_mode = 1
 offset_right = 101.0
 offset_bottom = 92.0
 theme_override_constants/margin_top = 20
 
-[node name="TopLeftButton" type="HBoxContainer" parent="UI/BackButtonImage"]
+[node name="TopLeftButton" type="HBoxContainer" parent="UI/BackButtonImage" unique_id=1674235128]
 layout_mode = 2
 
-[node name="BackButton" type="TextureButton" parent="UI/BackButtonImage/TopLeftButton"]
+[node name="BackButton" type="TextureButton" parent="UI/BackButtonImage/TopLeftButton" unique_id=954964600]
 z_index = 100
 layout_mode = 2
 texture_normal = ExtResource("3_0er7u")
 
-[node name="SignImage" type="MarginContainer" parent="UI"]
+[node name="SignImage" type="MarginContainer" parent="UI" unique_id=321695091]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -138,14 +139,14 @@ offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_constants/margin_top = 20
 
-[node name="TopMiddleSign" type="HBoxContainer" parent="UI/SignImage"]
+[node name="TopMiddleSign" type="HBoxContainer" parent="UI/SignImage" unique_id=1674306366]
 layout_mode = 2
 
-[node name="GlowBoardSign" type="TextureRect" parent="UI/SignImage/TopMiddleSign"]
+[node name="GlowBoardSign" type="TextureRect" parent="UI/SignImage/TopMiddleSign" unique_id=1773087862]
 layout_mode = 2
 texture = ExtResource("4_hetde")
 
-[node name="KeysUI" type="MarginContainer" parent="UI"]
+[node name="KeysUI" type="MarginContainer" parent="UI" unique_id=1944252263]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -156,16 +157,16 @@ grow_horizontal = 0
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 
-[node name="TopRightKeys" type="HBoxContainer" parent="UI/KeysUI"]
+[node name="TopRightKeys" type="HBoxContainer" parent="UI/KeysUI" unique_id=652328724]
 layout_mode = 2
 alignment = 2
 
-[node name="KeyImage" type="TextureRect" parent="UI/KeysUI/TopRightKeys"]
+[node name="KeyImage" type="TextureRect" parent="UI/KeysUI/TopRightKeys" unique_id=270058447]
 layout_mode = 2
-texture = ExtResource("5_lh86r")
+texture = ExtResource("50_lgvd2")
 expand_mode = 3
 
-[node name="KeyAmount" type="Label" parent="UI/KeysUI/TopRightKeys/KeyImage"]
+[node name="KeyAmount" type="Label" parent="UI/KeysUI/TopRightKeys/KeyImage" unique_id=1543196327]
 layout_mode = 0
 offset_left = 66.0
 offset_top = 18.0
@@ -177,7 +178,8 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Layout1" type="Control" parent="."]
+[node name="Layout1" type="Control" parent="." unique_id=1093199073]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -186,7 +188,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CharacterCards" type="HBoxContainer" parent="Layout1"]
+[node name="CharacterCards" type="HBoxContainer" parent="Layout1" unique_id=980239850]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -200,50 +202,49 @@ offset_bottom = 321.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LeoCard" type="VBoxContainer" parent="Layout1/CharacterCards"]
+[node name="LeoCard" type="VBoxContainer" parent="Layout1/CharacterCards" unique_id=1624572592]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="LeoPicture" type="TextureButton" parent="Layout1/CharacterCards/LeoCard"]
+[node name="LeoPicture" type="TextureButton" parent="Layout1/CharacterCards/LeoCard" unique_id=1081463624]
 layout_mode = 2
 texture_normal = ExtResource("7_bwta1")
 
-[node name="ProgressButton" type="TextureButton" parent="Layout1/CharacterCards/LeoCard"]
+[node name="ProgressButton" type="TextureButton" parent="Layout1/CharacterCards/LeoCard" unique_id=1916796038]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("8_8ph0k")
 
-[node name="MayaCard" type="VBoxContainer" parent="Layout1/CharacterCards"]
+[node name="MayaCard" type="VBoxContainer" parent="Layout1/CharacterCards" unique_id=1455738253]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="MayaPicture" type="TextureButton" parent="Layout1/CharacterCards/MayaCard"]
+[node name="MayaPicture" type="TextureButton" parent="Layout1/CharacterCards/MayaCard" unique_id=663048184]
 layout_mode = 2
 texture_normal = ExtResource("9_q5kgl")
 
-[node name="ProgressButton" type="TextureButton" parent="Layout1/CharacterCards/MayaCard"]
+[node name="ProgressButton" type="TextureButton" parent="Layout1/CharacterCards/MayaCard" unique_id=775661686]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("8_8ph0k")
 
-[node name="NormaCard" type="VBoxContainer" parent="Layout1/CharacterCards"]
+[node name="NormaCard" type="VBoxContainer" parent="Layout1/CharacterCards" unique_id=1430987115]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="NormaPicture" type="TextureButton" parent="Layout1/CharacterCards/NormaCard"]
+[node name="NormaPicture" type="TextureButton" parent="Layout1/CharacterCards/NormaCard" unique_id=1052134790]
 layout_mode = 2
 texture_normal = ExtResource("11_m030s")
 
-[node name="ProgressButton" type="TextureButton" parent="Layout1/CharacterCards/NormaCard"]
+[node name="ProgressButton" type="TextureButton" parent="Layout1/CharacterCards/NormaCard" unique_id=1171822891]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("8_8ph0k")
 
-[node name="Layout2" type="Control" parent="."]
-visible = false
+[node name="Layout2" type="Control" parent="." unique_id=337574161]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -252,7 +253,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="SelectedCharacter" type="Control" parent="Layout2"]
+[node name="SelectedCharacter" type="Control" parent="Layout2" unique_id=850929789]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -262,7 +263,7 @@ offset_right = 696.0
 offset_bottom = 331.0
 grow_vertical = 2
 
-[node name="UnknownCards" type="TextureRect" parent="Layout2/SelectedCharacter"]
+[node name="UnknownCards" type="TextureRect" parent="Layout2/SelectedCharacter" unique_id=1108485329]
 layout_mode = 0
 offset_left = 100.0
 offset_top = -14.0
@@ -273,7 +274,7 @@ size_flags_vertical = 4
 texture = ExtResource("12_m030s")
 stretch_mode = 2
 
-[node name="CharacterPicture" type="TextureButton" parent="Layout2/SelectedCharacter"]
+[node name="CharacterPicture" type="TextureButton" parent="Layout2/SelectedCharacter" unique_id=217319465]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 66.0
@@ -282,7 +283,7 @@ offset_bottom = 517.0
 size_flags_horizontal = 0
 texture_normal = ExtResource("7_bwta1")
 
-[node name="Parts" type="VBoxContainer" parent="Layout2"]
+[node name="Parts" type="VBoxContainer" parent="Layout2" unique_id=2077677717]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -297,19 +298,19 @@ grow_vertical = 0
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="Part1" type="TextureButton" parent="Layout2/Parts"]
+[node name="Part1" type="TextureButton" parent="Layout2/Parts" unique_id=1072985155]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("13_8ycj0")
 
-[node name="Part2" type="TextureButton" parent="Layout2/Parts"]
+[node name="Part2" type="TextureButton" parent="Layout2/Parts" unique_id=1550771444]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("14_nwv6s")
 
-[node name="KeyPrice" type="Label" parent="Layout2/Parts/Part2"]
+[node name="KeyPrice" type="Label" parent="Layout2/Parts/Part2" unique_id=1623859056]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -326,13 +327,13 @@ label_settings = SubResource("LabelSettings_u5tat")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Part3" type="TextureButton" parent="Layout2/Parts"]
+[node name="Part3" type="TextureButton" parent="Layout2/Parts" unique_id=1531187513]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("15_u5tat")
 
-[node name="KeyPrice" type="Label" parent="Layout2/Parts/Part3"]
+[node name="KeyPrice" type="Label" parent="Layout2/Parts/Part3" unique_id=800601899]
 visible = false
 layout_mode = 1
 anchors_preset = 6
@@ -350,7 +351,17 @@ label_settings = SubResource("LabelSettings_u5tat")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Layout3" type="Control" parent="."]
+[node name="NotEnoughKeys" type="TextureRect" parent="Layout2" unique_id=543000040]
+visible = false
+layout_mode = 0
+offset_left = 393.0
+offset_top = 628.0
+offset_right = 819.0
+offset_bottom = 713.0
+texture = ExtResource("56_lgvd2")
+stretch_mode = 3
+
+[node name="Layout3" type="Control" parent="." unique_id=458121355]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -360,7 +371,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="SelectedCharacter" type="Control" parent="Layout3"]
+[node name="SelectedCharacter" type="Control" parent="Layout3" unique_id=2068873575]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -370,7 +381,7 @@ offset_right = 696.0
 offset_bottom = 285.5
 grow_vertical = 2
 
-[node name="CharacterPicture" type="TextureButton" parent="Layout3/SelectedCharacter"]
+[node name="CharacterPicture" type="TextureButton" parent="Layout3/SelectedCharacter" unique_id=2135349872]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 111.0
@@ -379,7 +390,7 @@ offset_bottom = 562.0
 size_flags_horizontal = 0
 texture_normal = ExtResource("7_bwta1")
 
-[node name="BackstoryCharacter" type="Control" parent="Layout3"]
+[node name="BackstoryCharacter" type="Control" parent="Layout3" unique_id=674927370]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -392,7 +403,7 @@ offset_bottom = 285.5
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="LorePaper" type="TextureRect" parent="Layout3/BackstoryCharacter"]
+[node name="LorePaper" type="TextureRect" parent="Layout3/BackstoryCharacter" unique_id=1148194708]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -408,7 +419,7 @@ grow_vertical = 2
 texture = ExtResource("16_8ycj0")
 stretch_mode = 2
 
-[node name="NextButton" type="TextureButton" parent="Layout3/BackstoryCharacter/LorePaper"]
+[node name="NextButton" type="TextureButton" parent="Layout3/BackstoryCharacter/LorePaper" unique_id=201634886]
 layout_mode = 0
 offset_left = 748.0
 offset_top = 231.5
@@ -416,7 +427,7 @@ offset_right = 813.0
 offset_bottom = 296.5
 texture_normal = ExtResource("18_1nc3a")
 
-[node name="PrevButton" type="TextureButton" parent="Layout3/BackstoryCharacter/LorePaper"]
+[node name="PrevButton" type="TextureButton" parent="Layout3/BackstoryCharacter/LorePaper" unique_id=612436580]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 231.5
@@ -424,7 +435,7 @@ offset_right = 69.0
 offset_bottom = 296.5
 texture_normal = ExtResource("36_v4bkd")
 
-[node name="LorePart" type="TextureRect" parent="Layout3/BackstoryCharacter/LorePaper"]
+[node name="LorePart" type="TextureRect" parent="Layout3/BackstoryCharacter/LorePaper" unique_id=13844158]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -440,10 +451,10 @@ grow_vertical = 2
 texture = ExtResource("2_hbvem")
 stretch_mode = 2
 
-[node name="SuccessSFX" type="AudioStreamPlayer2D" parent="."]
+[node name="SuccessSFX" type="AudioStreamPlayer2D" parent="." unique_id=1001627388]
 stream = ExtResource("18_jupim")
 
-[node name="FailedSFX" type="AudioStreamPlayer2D" parent="."]
+[node name="FailedSFX" type="AudioStreamPlayer2D" parent="." unique_id=776157022]
 stream = ExtResource("19_1nc3a")
 
 [connection signal="pressed" from="UI/BackButtonImage/TopLeftButton/BackButton" to="." method="_on_back_button_pressed"]

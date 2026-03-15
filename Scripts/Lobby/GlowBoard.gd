@@ -55,6 +55,11 @@ var current_slide_index: int = 0
 var is_slide_transitioning: bool = false
 var is_transitioning: bool = false # NEW: Global transition lock prevents UI spam overlaps
 
+# --- POPUP VARIABLES ---
+var not_enough_keys_base_pos: Vector2
+var not_enough_keys_hidden_pos: Vector2
+var popup_tween: Tween
+
 # --- NODES ---
 @onready var layout1 = $Layout1
 @onready var layout2 = $Layout2
@@ -81,6 +86,7 @@ var is_transitioning: bool = false # NEW: Global transition lock prevents UI spa
 @onready var act1_btn = $Layout2/Parts/Part1
 @onready var act2_btn = $Layout2/Parts/Part2
 @onready var act3_btn = $Layout2/Parts/Part3
+@onready var not_enough_keys = $Layout2/NotEnoughKeys
 
 # Key Price Labels (Layout 2)
 @onready var act2_price_label = $Layout2/Parts/Part2/KeyPrice
@@ -127,6 +133,15 @@ func _setup_ui():
 	layout2.visible = false
 	layout3.visible = false
 	
+	# Initialize "Not Enough Keys" Popup setup
+	if not_enough_keys:
+		not_enough_keys_base_pos = not_enough_keys.position
+		# Set hidden position 300 pixels lower (adjust if needed depending on your screen size)
+		not_enough_keys_hidden_pos = not_enough_keys_base_pos + Vector2(0, 300) 
+		not_enough_keys.position = not_enough_keys_hidden_pos
+		not_enough_keys.pivot_offset = not_enough_keys.size / 2
+		not_enough_keys.visible = true # Needs to be visible so we can tween its position smoothly
+	
 	# Pre-update the L1 portraits in case acts were already bought
 	var saved_name = current_character_name
 	
@@ -144,10 +159,17 @@ func _setup_ui():
 	# Update Progress Buttons for L1
 	_update_all_progress_buttons()
 	
+	# Connect Portraits
 	leo_pic.pressed.connect(func(): _on_character_selected("Leo", leo_pic))
 	maya_pic.pressed.connect(func(): _on_character_selected("Maya", maya_pic))
 	norma_pic.pressed.connect(func(): _on_character_selected("Norma", norma_pic))
 	
+	# Connect Progress Buttons
+	leo_progress.pressed.connect(func(): _on_character_selected("Leo", leo_pic))
+	maya_progress.pressed.connect(func(): _on_character_selected("Maya", maya_pic))
+	norma_progress.pressed.connect(func(): _on_character_selected("Norma", norma_pic))
+	
+	# Connect Act Buttons
 	act1_btn.pressed.connect(func(): _handle_act_interaction("Act1", act1_btn))
 	act2_btn.pressed.connect(func(): _handle_act_interaction("Act2", act2_btn))
 	act3_btn.pressed.connect(func(): _handle_act_interaction("Act3", act3_btn))
@@ -200,7 +222,7 @@ func _get_current_character_portrait() -> Texture2D:
 			
 	return null
 
-# ⭐ RE-ADDED: WHITE SHEEN / CARD POP ANIMATION
+# ⭐ SMOOTHER CELEBRATION ANIMATION (Pop & Glow)
 func _celebrate_card(node: Control):
 	if not is_instance_valid(node): return
 	if node.has_meta("is_celebrating") and node.get_meta("is_celebrating"): return
@@ -208,19 +230,20 @@ func _celebrate_card(node: Control):
 
 	node.pivot_offset = node.size / 2
 
-	var tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	var tween = create_tween()
 
-	node.scale = Vector2(0.6, 0.6)
-	tween.tween_property(node, "scale", Vector2.ONE, 0.8)
+	# 1. Anticipation (Squish down quickly)
+	tween.tween_property(node, "scale", Vector2(0.85, 0.85), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(node, "modulate", Color(2.0, 2.0, 2.0, 1.0), 0.1) 
 
-	node.modulate = Color(3.5, 3.5, 3.5, 1.0) 
-	tween.tween_property(node, "modulate", Color.WHITE, 0.6) # FIX: Enforced target color
+	# 2. The Pop (Burst upwards past normal size with a glowing flash)
+	tween.chain().tween_property(node, "scale", Vector2(1.15, 1.15), 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(node, "modulate", Color(3.0, 3.0, 3.0, 1.0), 0.1) 
 
-	var shake_tween = create_tween()
-	shake_tween.tween_property(node, "rotation_degrees", 4.0, 0.05)
-	shake_tween.tween_property(node, "rotation_degrees", -4.0, 0.1)
-	shake_tween.tween_property(node, "rotation_degrees", 0.0, 0.05)
-	
+	# 3. Settle (Smoothly return to normal size and normal color)
+	tween.chain().tween_property(node, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(node, "modulate", Color.WHITE, 0.35)
+
 	tween.chain().tween_callback(func(): node.set_meta("is_celebrating", false))
 
 # --- PURCHASE LOGIC ---
@@ -232,7 +255,7 @@ func _handle_act_interaction(act_key: String, btn: TextureButton):
 		return
 
 	if act_key == "Act3" and not purchased_acts[current_character_name].has("Act2"):
-		_purchase_failed(btn) 
+		_purchase_failed(btn, false) # False = Just shakes the button, doesn't bring up popup
 		return
 
 	var price = PRICE_ACT2 if act_key == "Act2" else PRICE_ACT3
@@ -241,7 +264,7 @@ func _handle_act_interaction(act_key: String, btn: TextureButton):
 	if gd and gd.keys >= price:
 		_purchase_success(act_key, btn, price)
 	else:
-		_purchase_failed(btn)
+		_purchase_failed(btn, true) # True = Brings up the "Not Enough Keys" popup
 
 func _purchase_success(act_key: String, btn: TextureButton, price: int):
 	var gd = get_node_or_null("/root/GameData")
@@ -283,14 +306,18 @@ func _purchase_success(act_key: String, btn: TextureButton, price: int):
 
 	_refresh_act_textures()
 
-	# ⚠️ SAFETY GUARD: Check that they haven't pressed "back" before opening
+	# Allowed more time (0.8s) so the new, smooth animation finishes before changing screens
 	var cached_layout = layout2
-	await get_tree().create_timer(0.6).timeout
+	await get_tree().create_timer(0.8).timeout
 	if is_inside_tree() and is_instance_valid(btn) and cached_layout.visible:
-		is_transitioning = false # Bypass lock for auto-open
+		is_transitioning = false 
 		_on_act_selected(btn, act_key)
 
-func _purchase_failed(btn: TextureButton):
+func _purchase_failed(btn: TextureButton, show_key_popup: bool = false):
+	# Triggers the popup if they are missing keys specifically
+	if show_key_popup:
+		_show_not_enough_keys_popup()
+		
 	if not is_instance_valid(btn): return
 	if btn.has_meta("is_shaking") and btn.get_meta("is_shaking"): return
 	btn.set_meta("is_shaking", true)
@@ -312,6 +339,33 @@ func _purchase_failed(btn: TextureButton):
 	
 	tween.chain().tween_callback(func(): btn.set_meta("is_shaking", false))
 
+# --- POPUP LOGIC ---
+func _show_not_enough_keys_popup():
+	if not is_instance_valid(not_enough_keys): return
+	
+	# ⭐ SPAM PROOF: If they click again while animating, kill the current animation immediately.
+	# This cancels the "go down" phase and resets the wait timer back to 1.5 seconds!
+	if popup_tween and popup_tween.is_valid():
+		popup_tween.kill()
+		
+	popup_tween = create_tween()
+	
+	# 1. Bring it up quickly (using TRANS_BACK to give it a nice "pop" effect)
+	popup_tween.tween_property(not_enough_keys, "position", not_enough_keys_base_pos, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	
+	# 2. Shake it
+	popup_tween.tween_property(not_enough_keys, "rotation_degrees", 5.0, 0.05)
+	popup_tween.tween_property(not_enough_keys, "rotation_degrees", -5.0, 0.05)
+	popup_tween.tween_property(not_enough_keys, "rotation_degrees", 3.0, 0.05)
+	popup_tween.tween_property(not_enough_keys, "rotation_degrees", -3.0, 0.05)
+	popup_tween.tween_property(not_enough_keys, "rotation_degrees", 0.0, 0.05)
+	
+	# 3. Wait for 1.5 seconds
+	popup_tween.tween_interval(1.5)
+	
+	# 4. Tween it back down
+	popup_tween.tween_property(not_enough_keys, "position", not_enough_keys_hidden_pos, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+
 # --- TRANSITION: L1 -> L2 ---
 func _on_character_selected(char_name: String, source_button: TextureButton):
 	if is_transitioning: return
@@ -330,7 +384,6 @@ func _on_character_selected(char_name: String, source_button: TextureButton):
 	layout2.modulate.a = 0.0
 	layout2.visible = true
 	
-	# GPU CRASH PREVENTION: Safely fallback positions
 	var target_size = character_picture_l2.size
 	if target_size.x <= 1 or target_size.y <= 1: target_size = Vector2(250, 400)
 	var target_pos = character_picture_l2.global_position
@@ -401,13 +454,12 @@ func _on_act_selected(clicked_btn: TextureButton, act_key: String):
 	var ghost_char = _create_ghost(character_picture_l2)
 	
 	var original_lore_pos = lore_paper.global_position
-	if original_lore_pos == Vector2.ZERO: original_lore_pos = Vector2(640, 360) # Fallback center
+	if original_lore_pos == Vector2.ZERO: original_lore_pos = Vector2(640, 360)
 	
 	lore_paper.pivot_offset = lore_paper.size / 2
 	lore_paper.scale = Vector2(0.1, 0.1)
 	lore_paper.global_position = clicked_btn.global_position
 	
-	# GPU CRASH PREVENTION: Safely fallback positions
 	var target_size = character_picture_l3.size
 	if target_size.x <= 1 or target_size.y <= 1: target_size = Vector2(250, 400)
 	var target_pos = character_picture_l3.global_position
@@ -475,7 +527,6 @@ func _create_ghost(source: TextureButton) -> TextureRect:
 	ghost.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	ghost.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	
-	# ⭐ CRITICAL FIX: NEVER allow 0 size (This caused the GPU Driver Crash)
 	var safe_size = source.size
 	if safe_size.x <= 1: safe_size.x = 150
 	if safe_size.y <= 1: safe_size.y = 150
@@ -491,6 +542,10 @@ func _on_back_button_pressed():
 	if layout3.visible:
 		_fade_transition(layout3, layout2)
 	elif layout2.visible:
+		# Hide and reset popup when exiting Layout 2 so it doesn't leak into other menus!
+		if popup_tween and popup_tween.is_valid(): popup_tween.kill()
+		if is_instance_valid(not_enough_keys): not_enough_keys.position = not_enough_keys_hidden_pos
+		
 		_fade_transition(layout2, layout1)
 	else:
 		closed.emit()
@@ -523,5 +578,4 @@ func _sync_character_progress():
 		else:
 			stage = 1
 
-		# ⭐ REAL visual stage (NO VALUES)
 		gd.character_stage[char_name] = stage

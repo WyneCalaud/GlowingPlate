@@ -25,20 +25,21 @@ func _ready() -> void:
 	# 3. Recursively scan the existing nodes (just in case some loaded before this script)
 	_scan_for_buttons(get_tree().root)
 
-
 # Triggered automatically every time a node enters the game
 func _on_node_added(node: Node) -> void:
 	# BaseButton covers Button, TextureButton, CheckButton, etc.
 	if node is BaseButton:
 		_connect_button(node)
 
-
 # Connects the sound to the button's pressed signal
 func _connect_button(button: BaseButton) -> void:
+	# ⭐ EXCEPTION CHECK: Ignore buttons that have their own custom sounds!
+	if button.is_in_group("silent_button") or button.name == "BtnPrice":
+		return
+
 	# Ensure we don't accidentally connect it twice
 	if not button.pressed.is_connected(_play_click_sound):
 		button.pressed.connect(_play_click_sound)
-
 
 # Scans an existing tree of nodes
 func _scan_for_buttons(root_node: Node) -> void:
@@ -47,7 +48,6 @@ func _scan_for_buttons(root_node: Node) -> void:
 		
 	for child in root_node.get_children():
 		_scan_for_buttons(child)
-
 
 # The function that actually plays the sound
 func _play_click_sound() -> void:

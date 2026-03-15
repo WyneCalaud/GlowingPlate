@@ -15,7 +15,7 @@ var sfx_volume: float = 1.0
 # --- Core Progression Variables ---
 var current_day: int = 1         
 const TOTAL_DAYS: int = 14         
-var money: int = 900                
+var money: int = 0         
 var keys: int = 60  
 
 # --- Save Logic ---
