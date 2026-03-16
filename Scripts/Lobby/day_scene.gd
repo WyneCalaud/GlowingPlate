@@ -46,6 +46,7 @@ func _ready():
 
 
 func _on_customer_arrived(order: CustomerOrder):
+	$OrderText.show()
 
 	# 🚫 Block during food intro
 	if get_parent().is_food_intro_active:
@@ -96,12 +97,13 @@ func _on_customer_arrived(order: CustomerOrder):
 	# 🔥 Only show for fresh arrival
 	if GD.service_state == GameData.ServiceState.CUSTOMER_PRESENT:
 		$DialogueBox.show()
-		await typewriter_words(order.order_text)
+		await get_parent()._play_dialogue(order.order_text, "medium")
 		$BtnAccept.show()
 		$BtnContinue.show()
 
 
 func _on_customer_left():
+	$OrderText.hide()
 	$DialogueBox.hide()
 	$BtnAccept.hide()
 	$BtnContinue.hide()
@@ -127,7 +129,7 @@ func _on_btn_continue_pressed() -> void:
 	if active_order == null:
 		return
 	# Replace the dialogue text with the expanded clarification
-	await typewriter_words(active_order.expanded_text)
+	await get_parent()._play_dialogue(active_order.expanded_text, "large")
 
 func _end_day():
 	# CRITICAL FIX:

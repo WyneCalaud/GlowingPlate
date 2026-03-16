@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://k701y0pnbadu"]
 
 [ext_resource type="Script" uid="uid://b6fuasjuk5dm" path="res://Scripts/Lobby/lobbycanteen.gd" id="1_8p2f5"]
+[ext_resource type="Texture2D" uid="uid://yivew5xs77r" path="res://Assets/UI/DBoxSmall.png" id="2_t3xjw"]
+[ext_resource type="Texture2D" uid="uid://cbruqyhtgjw5l" path="res://Assets/UI/LobbyUI/Dialogue Box Medium (1).png" id="3_t3xjw"]
 [ext_resource type="Texture2D" uid="uid://dt5he77x83jrn" path="res://Assets/UI/LobbyUI/LobbyBackground/OutsideBackground.png" id="3_vtn67"]
+[ext_resource type="Texture2D" uid="uid://djpefw4shr018" path="res://Assets/UI/DBoxLarge.png" id="4_gevdi"]
 [ext_resource type="Texture2D" uid="uid://b42vdgmuiggtf" path="res://Assets/UI/LobbyUI/LobbyBackground/Floor.png" id="4_nk7xc"]
 [ext_resource type="Texture2D" uid="uid://cinteuxw081s6" path="res://Assets/UI/LobbyUI/LobbyBackground/WallFrame.png" id="5_vtn67"]
 [ext_resource type="Texture2D" uid="uid://dnwqtxeef5vht" path="res://Assets/UI/NutriShop/WallDecVariants/BasicPlantEntranceDecor.png" id="6_8rcq3"]
@@ -43,6 +46,18 @@
 [ext_resource type="Texture2D" uid="uid://ccx1a6h1n05n0" path="res://Assets/UI/Interface/ServeButton.png" id="39_uu58y"]
 [ext_resource type="Texture2D" uid="uid://xi2raya0es68" path="res://Assets/UI/SpecialInfo/leowithstarexample.png" id="40_o8hjd"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cw4d"]
+atlas = ExtResource("2_t3xjw")
+region = Rect2(5.5, 8.5, 764, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnxui"]
+atlas = ExtResource("3_t3xjw")
+region = Rect2(10.040131, 12.301392, 808.4761, 317.33386)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a1bq6"]
+atlas = ExtResource("4_gevdi")
+region = Rect2(58.57498, 99.90265, 750.4978, 320.49152)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_uu58y"]
 atlas = ExtResource("9_uu58y")
 region = Rect2(0, 578, 1280, 142)
@@ -63,6 +78,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8p2f5")
+box_texture_small = SubResource("AtlasTexture_7cw4d")
+box_texture_medium = SubResource("AtlasTexture_hnxui")
+box_texture_large = SubResource("AtlasTexture_a1bq6")
+box_size_medium = Vector2(808, 278)
+box_size_large = Vector2(750, 320)
+box_position_small = Vector2(75, 190)
+box_position_medium = Vector2(55, 140)
 metadata/_edit_vertical_guides_ = [-366.0]
 
 [node name="Background" type="Control" parent="." unique_id=946756511]
@@ -390,17 +412,17 @@ offset_bottom = 539.0
 texture = ExtResource("32_uu58y")
 expand_mode = 1
 
-[node name="CustomerName" type="Label" parent="DayScene/DialogueBox" unique_id=1332185638]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="CustomerName" type="Label" parent="DayScene" unique_id=1332185638]
+offset_left = -28.0
+offset_top = 5.0
+offset_right = 12.0
+offset_bottom = 28.0
 
-[node name="OrderText" type="Label" parent="DayScene/DialogueBox" unique_id=931550230]
-layout_mode = 0
-offset_left = 108.0
-offset_top = 146.0
-offset_right = 832.0
-offset_bottom = 360.0
+[node name="OrderText" type="Label" parent="DayScene" unique_id=931550230]
+offset_left = 80.0
+offset_top = 151.0
+offset_right = 804.0
+offset_bottom = 365.0
 theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
 theme_override_fonts/font = SubResource("FontVariation_o8hjd")
 theme_override_font_sizes/font_size = 32
@@ -408,25 +430,25 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="BtnAccept" type="TextureButton" parent="DayScene" unique_id=2083280428]
-offset_left = 206.0
+offset_left = 168.0
 offset_top = 406.0
-offset_right = 410.0
+offset_right = 372.0
 offset_bottom = 514.0
 texture_normal = ExtResource("28_q6g5s")
 stretch_mode = 5
 
 [node name="BtnContinue" type="TextureButton" parent="DayScene" unique_id=1286653414]
-offset_left = 481.0
+offset_left = 456.0
 offset_top = 406.0
-offset_right = 685.0
+offset_right = 660.0
 offset_bottom = 514.0
 texture_normal = ExtResource("29_7yiff")
 stretch_mode = 5
 
 [node name="BtnPrincipalLeave" type="TextureButton" parent="DayScene" unique_id=1168429915]
-offset_left = 343.0
+offset_left = 314.0
 offset_top = 408.0
-offset_right = 547.0
+offset_right = 518.0
 offset_bottom = 516.0
 texture_normal = ExtResource("28_q6g5s")
 stretch_mode = 5
