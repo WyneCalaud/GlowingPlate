@@ -125,6 +125,12 @@ func _ready() -> void:
 		principal_leave_btn.pressed.connect(_on_principal_leave_pressed)
 	
 	_restore_patience_ui()
+	
+	# 🔥 FIX: Resume day after skipping matching (Day 6+)
+	if GD.current_phase == GD.GamePhase.LOBBY and GD.day_started:
+		await get_tree().process_frame
+		play_food_intro_if_needed()
+		return
 
 	if GD.current_phase == GD.GamePhase.NEWS and GD.day_started:
 		# Small delay so scene fully loads
