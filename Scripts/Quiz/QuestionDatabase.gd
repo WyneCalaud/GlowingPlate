@@ -474,8 +474,6 @@ static var data: Dictionary = {
 	"C": group_c
 }
 
-# --- DAILY SCHEDULE (14 DAYS) ---
-# Spread the 50 questions across 14 days
 static var daily_schedule: Dictionary = {
 	1: ["A1", "B1", "C1"],
 	2: ["A2", "B2", "C2"],
@@ -493,14 +491,38 @@ static var daily_schedule: Dictionary = {
 	14: ["A14", "B21", "B22", "B23"]
 }
 
-# --- HELPERS ---
+# ==========================================================
+# 🔥 NEW: AUTO ADD CONCEPT BASED ON ID
+# ==========================================================
+
+static func _add_concept_field(q: Dictionary) -> Dictionary:
+	var new_q = q.duplicate(true)
+
+	if not new_q.has("concept"):
+		var id: String = new_q.get("id", "")
+		
+		# Extract concept (A5 → A5, B12 → B12)
+		new_q["concept"] = id
+
+	return new_q
+
+
+# ==========================================================
+# HELPERS (UPDATED)
+# ==========================================================
 
 static func get_all_questions() -> Array:
 	var all = []
-	all.append_array(group_a)
-	all.append_array(group_b)
-	all.append_array(group_c)
+	
+	for q in group_a:
+		all.append(_add_concept_field(q))
+	for q in group_b:
+		all.append(_add_concept_field(q))
+	for q in group_c:
+		all.append(_add_concept_field(q))
+	
 	return all
+
 
 static func get_question_by_id(target_id: String) -> Dictionary:
 	for q in get_all_questions():
@@ -508,21 +530,35 @@ static func get_question_by_id(target_id: String) -> Dictionary:
 			return q
 	return {}
 
+
 static func get_questions_for_day(day: int) -> Array:
 	var ids = daily_schedule.get(day, [])
 	var questions = []
+
 	for id in ids:
 		var q = get_question_by_id(id)
 		if not q.is_empty():
 			questions.append(q)
+
 	return questions
 
+
 static func get_all_concepts() -> Array:
-	return ["PINGGANG", "GO", "GROW", "GLOW", "CLASSIFY", "BALANCE", "PORTION", "DRINKS"]
+	var concepts = []
+
+	for q in get_all_questions():
+		var c = q.get("concept")
+		if c != null and not concepts.has(c):
+			concepts.append(c)
+
+	return concepts
+
 
 static func get_questions_by_concept(concept: String) -> Array:
 	var results = []
+
 	for q in get_all_questions():
-		if q.has("concept") and q["concept"] == concept:
+		if q.get("concept") == concept:
 			results.append(q)
+
 	return results

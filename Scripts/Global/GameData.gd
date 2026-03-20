@@ -94,6 +94,8 @@ var current_phase: GamePhase = GamePhase.LOBBY
 
 var returning_from_kitchen := false
 
+var saved_quiz_sets: Dictionary = {}
+
 # ==========================================================
 # INITIALIZATION
 # ==========================================================
@@ -301,7 +303,8 @@ func save_game():
 		"quiz_concept_progress": quiz_concept_progress,
 		"current_phase": current_phase,
 		"special_intro_shown": special_intro_shown,
-		"intro_completed": intro_completed
+		"intro_completed": intro_completed,
+		"saved_quiz_sets": saved_quiz_sets
 	}
 
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -355,6 +358,7 @@ func load_game():
 	# --- Load Quiz Data (Critical for SM-2) ---
 	quiz_question_progress = data.get("quiz_question_progress", {})
 	quiz_concept_progress = data.get("quiz_concept_progress", {})
+	saved_quiz_sets = data.get("saved_quiz_sets", {})
 
 	print("Persistence: Game Loaded.")
 

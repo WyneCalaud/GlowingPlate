@@ -253,7 +253,7 @@ const FOOD_INTRO_TEXT := {
 	
 	7: "Not all Grow foods are meat or fish! Today, we’re introducing eggs. They help kids grow strong and are a great source of protein. A great alternative for students that don't want fish or chicken.Let’s try serving these cute kids some eggs, shall we?.",
 	
-	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. They’re crunchy, colorful, and full of vitamin A.Some kids might be curious about how carrots taste so let’s try serving these cute kids some carrots today, shall we?",
+	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. They’re crunchy, colorful, and full of vitamin A. Let’s try serving these cute kids some carrots today, shall we?",
 	
 	9: "Rice gives us energy, and there are different kinds to try! Today we’re introducin brown rice — a healthy choice that keeps our tummies healthy and gives lasting energy. Some kids might want to try brown rice instead of white rice. Let’s serve them some and give it a try!",
 	

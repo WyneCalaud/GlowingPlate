@@ -64,7 +64,10 @@ const ANIM_DURATION: float = 0.3
 # ==========================================================
 
 func _ready():
-	current_day = game_data.current_day
+	# 🔥 FIX: lock quiz to previous day
+	current_day = game_data.current_day - 1
+	if current_day < 1:
+		current_day = 1
 	original_panel_pos = quiz_panel.position
 
 	# Setup Menu, Pause Layer & Age Display
@@ -74,8 +77,15 @@ func _ready():
 	# Initialize concept scheduler
 	QuizSystem.initialize_concepts(current_day)
 
-	# Get questions (New + Reviews)
-	_get_due_concept_questions()
+	# 🔥 LOAD SAVED QUIZ IF EXISTS
+	if GameData.saved_quiz_sets.has(current_day):
+		current_quiz_set = GameData.saved_quiz_sets[current_day].duplicate(true)
+		MAX_QUESTIONS = current_quiz_set.size()
+		print("📦 Loaded saved quiz set for day", current_day)
+
+		# 🔥 IMPORTANT: DO NOT regenerate
+	else:
+		_get_due_concept_questions()
 
 	if current_quiz_set.is_empty():
 		question_label.text = "No questions due today!"
@@ -150,33 +160,80 @@ func update_age_group_display():
 func _get_due_concept_questions():
 	current_quiz_set.clear()
 
-	# 1. ADD NEW QUESTIONS FOR THE DAY (e.g., the 3 new ones)
+	var review_questions: Array = []
 	var daily_questions = QuestionDatabase.get_questions_for_day(current_day)
-	current_quiz_set.append_array(daily_questions)
 
-	# 2. ADD DUE REVIEWS (Spaced Repetition/Incorrect from previous days)
-	var due_concepts = QuizSystem.get_due_concepts(current_day, 5) # Check up to 5 review concepts
+	# --------------------------------------------------
+	# 1. GET DUE CONCEPTS
+	# --------------------------------------------------
+	var due_concepts = QuizSystem.get_due_concepts(current_day)
+
+	print("📅 QUIZ DAY:", current_day, "| GAME DAY:", game_data.current_day)
 	for concept in due_concepts:
-		var questions = QuestionDatabase.get_questions_by_concept(concept)
-		if questions.size() > 0:
-			questions.shuffle()
-			var review_q = questions[0]
-			
-			# Check for duplicates so we don't ask the same question twice in one session
+		var data = QuizSystem.concept_progress.get(concept, {})
+		print(" -", concept, "| next_day:", data.get("next_review_day"))
+
+	# --------------------------------------------------
+	# 2. BUILD REVIEW QUESTIONS FIRST (PRIORITY)
+	# --------------------------------------------------
+	for concept in due_concepts:
+		var review_q = QuestionDatabase.get_question_by_id(concept)
+
+		if not review_q.is_empty():
 			var is_dup = false
-			for existing in current_quiz_set:
-				if existing["id"] == review_q["id"]: 
+
+			for existing in review_questions:
+				if existing["id"] == review_q["id"]:
 					is_dup = true
 					break
-			if not is_dup:
-				current_quiz_set.append(review_q)
 
-	# 3. SET THE LIMIT BASED ON CONTENT
-	# We no longer cap it at 3. It will be 3 + whatever reviews are due.
+			if not is_dup:
+				review_questions.append(review_q)
+		else:
+			print("⚠️ Missing question for concept:", concept)
+
+	# OPTIONAL: limit reviews per day (prevents overload)
+	review_questions.shuffle()
+	review_questions = review_questions.slice(0, 10)
+
+	# --------------------------------------------------
+	# 3. ADD DAILY QUESTIONS (SECOND PRIORITY)
+	# --------------------------------------------------
+	for q in daily_questions:
+		var is_dup = false
+
+		for existing in review_questions:
+			if existing["id"] == q["id"]:
+				is_dup = true
+				break
+
+		if not is_dup:
+			current_quiz_set.append(q)
+
+	# --------------------------------------------------
+	# 4. FINAL ORDER = REVIEWS FIRST
+	# --------------------------------------------------
+	current_quiz_set = review_questions + current_quiz_set
+
+	# --------------------------------------------------
+	# 5. LIMIT + SHUFFLE (OPTIONAL)
+	# --------------------------------------------------
 	MAX_QUESTIONS = current_quiz_set.size()
 
-	# Shuffle so the player doesn't know which ones are reviews vs new ones
-	current_quiz_set.shuffle()
+	print("🧪 FINAL QUIZ SET:")
+	for q in current_quiz_set:
+		var concept = q.get("concept")
+		if concept == null:
+			concept = q["id"]
+
+		print(" -", q["id"], "| concept:", concept)
+
+	# SAVE THIS QUIZ SET FOR THIS DAY
+	if not GameData.saved_quiz_sets.has(current_day):
+		GameData.saved_quiz_sets[current_day] = current_quiz_set.duplicate(true)
+		GameData.save_game()
+		print("💾 Saved quiz set for day", current_day)
+
 
 # ==========================================================
 # QUIZ FLOW
@@ -245,8 +302,16 @@ func _on_answer_button_pressed(button_index: int):
 
 	if has_node("/root/QuizSystem"):
 		# SM-2 Quality: 4 for correct, 0 for incorrect
-		var quality = 4 if is_correct else 0
-		QuizSystem.update_concept_progress(current_concept, quality, current_day)
+		var response_time = 1.5 # (temporary, we can improve later)
+		var next_day = QuizSystem.update_concept_progress(current_concept, is_correct, response_time, current_day)
+		# 🔥 SAVE IMMEDIATELY (CRITICAL FIX)
+		GameData.quiz_concept_progress = QuizSystem.concept_progress
+		GameData.save_game()
+		print("📚 QUIZ DEBUG")
+		print("Concept:", current_concept)
+		print("Result:", "CORRECT" if is_correct else "WRONG")
+		print("Next Review Day:", next_day)
+		print("------------------------")
 
 	result_label.visible = true
 	result_label.scale = Vector2.ZERO
@@ -266,11 +331,31 @@ func _on_answer_button_pressed(button_index: int):
 	if is_correct:
 		total_correct_answers += 1
 		result_label.text = "CORRECT!"
+		var data = QuizSystem.concept_progress.get(current_concept, {})
+
+		var exposure = data.get("exposure", 1)
+
+		if exposure == 1:
+			print("👀 First time seeing this!")
+		elif exposure < 4:
+			print("📘 Getting familiar with this concept")
+		else:
+			print("🧠 You’ve seen this", exposure, "times")
 		result_label.modulate = Color.GREEN
 		if sfx_correct: sfx_correct.play()
 		_animate_correct_feedback(button_index)
 	else:
 		result_label.text = "INCORRECT."
+		var data = QuizSystem.concept_progress.get(current_concept, {})
+
+		var exposure = data.get("exposure", 1)
+
+		if exposure == 1:
+			print("👀 First time seeing this!")
+		elif exposure < 4:
+			print("📘 Getting familiar with this concept")
+		else:
+			print("🧠 You’ve seen this", exposure, "times")
 		result_label.modulate = Color.RED
 		if sfx_incorrect: sfx_incorrect.play()
 		_animate_incorrect_feedback(button_index)
@@ -358,7 +443,8 @@ func finish_quiz():
 	var reward_money = total_correct_answers * 50
 
 	if has_node("/root/QuizSystem"):
-		QuizSystem.apply_quiz_results({}) 
+		GameData.quiz_concept_progress = QuizSystem.concept_progress
+		GameData.save_game()
 
 	if game_data:
 		game_data.add_money(reward_money)

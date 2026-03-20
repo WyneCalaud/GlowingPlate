@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CustomItemData" load_steps=6 format=3 uid="uid://dw3v4m5y7nbwm"]
+[gd_resource type="Resource" script_class="CustomItemData" format=3 uid="uid://dw3v4m5y7nbwm"]
 
 [ext_resource type="Script" uid="uid://jdcig8g3adhl" path="res://Scripts/Resources/FoodItemData.gd" id="1_emn42"]
 [ext_resource type="Texture2D" uid="uid://b2781c8lberpg" path="res://Assets/Food Containers/Watermelon.png" id="1_jfupy"]

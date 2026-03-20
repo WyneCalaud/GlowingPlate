@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://bvik5s0hxqf6f"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://bvik5s0hxqf6f"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_onqam"]
 
