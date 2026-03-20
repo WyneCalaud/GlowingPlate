@@ -129,7 +129,7 @@ func _on_btn_continue_pressed() -> void:
 	if active_order == null:
 		return
 	# Replace the dialogue text with the expanded clarification
-	await get_parent()._play_dialogue(active_order.expanded_text, "large")
+	await get_parent()._play_dialogue(active_order.expanded_text, "medium")
 
 func _end_day():
 	# CRITICAL FIX:

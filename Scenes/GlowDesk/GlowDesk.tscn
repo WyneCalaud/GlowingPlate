@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://c5l8auaitpptq"]
+[gd_scene format=3 uid="uid://c5l8auaitpptq"]
 
 [ext_resource type="Texture2D" uid="uid://brv6v260jforn" path="res://Assets/UI/GlowDesk/GlowDeskBackground.png" id="1_057f4"]
 [ext_resource type="Script" uid="uid://be185ofgy7lb5" path="res://Scripts/GlowDesk/GlowDeskManager.gd" id="1_sf6pf"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bes4gbhdlrf02" path="res://Assets/UI/GlowDesk/PracticeButton.png" id="3_f1vpk"]
 [ext_resource type="Texture2D" uid="uid://byydxqul1u5xp" path="res://Assets/UI/GlowDesk/EndlessSign.png" id="3_o01m3"]
 [ext_resource type="Texture2D" uid="uid://cf845g8e02e5f" path="res://Assets/UI/GlowDesk/BrowseCard.png" id="4_057f4"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="4_mb5fr"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="4_mb5fr"]
 [ext_resource type="Texture2D" uid="uid://dlmn7blamker5" path="res://Assets/UI/GlowDesk/GroupBSign.png" id="5_8t6cw"]
 [ext_resource type="Texture2D" uid="uid://dp8wdk2cua5ix" path="res://Assets/UI/GlowDesk/BrowseButton.png" id="5_kqkk5"]
 [ext_resource type="Texture2D" uid="uid://cbqlj0hdp0nx1" path="res://Assets/UI/GlowDesk/GroupCSign.png" id="6_60x4y"]
@@ -48,7 +48,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6q71q"]
 
-[node name="GlowDesk" type="Control"]
+[node name="GlowDesk" type="Control" unique_id=1942549452]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,7 +65,7 @@ tex_count_3 = ExtResource("13_t450l")
 tex_count_2 = ExtResource("8_bqq7l")
 tex_count_1 = ExtResource("7_u0x3h")
 
-[node name="GlowDeskBackground" type="TextureRect" parent="."]
+[node name="GlowDeskBackground" type="TextureRect" parent="." unique_id=185180046]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,7 +75,7 @@ grow_vertical = 2
 texture = ExtResource("1_057f4")
 metadata/_edit_lock_ = true
 
-[node name="PracticeOrBrowse" type="Control" parent="."]
+[node name="PracticeOrBrowse" type="Control" parent="." unique_id=1519247150]
 visible = false
 anchors_preset = 0
 offset_left = 218.0
@@ -85,7 +85,7 @@ offset_bottom = 586.0
 mouse_filter = 1
 metadata/_edit_lock_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PracticeOrBrowse"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PracticeOrBrowse" unique_id=1720748576]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -101,12 +101,12 @@ grow_vertical = 2
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="PracticeCard" type="TextureRect" parent="PracticeOrBrowse/HBoxContainer"]
+[node name="PracticeCard" type="TextureRect" parent="PracticeOrBrowse/HBoxContainer" unique_id=1959887126]
 layout_mode = 2
 texture = ExtResource("2_6o23y")
 stretch_mode = 4
 
-[node name="PracticeButton" type="TextureButton" parent="PracticeOrBrowse/HBoxContainer/PracticeCard"]
+[node name="PracticeButton" type="TextureButton" parent="PracticeOrBrowse/HBoxContainer/PracticeCard" unique_id=579533621]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -120,12 +120,12 @@ grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("3_f1vpk")
 
-[node name="BrowseCard" type="TextureRect" parent="PracticeOrBrowse/HBoxContainer"]
+[node name="BrowseCard" type="TextureRect" parent="PracticeOrBrowse/HBoxContainer" unique_id=1642176012]
 layout_mode = 2
 texture = ExtResource("4_057f4")
 stretch_mode = 4
 
-[node name="BrowseButton" type="TextureButton" parent="PracticeOrBrowse/HBoxContainer/BrowseCard"]
+[node name="BrowseButton" type="TextureButton" parent="PracticeOrBrowse/HBoxContainer/BrowseCard" unique_id=1424998217]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -140,7 +140,7 @@ grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("5_kqkk5")
 
-[node name="QuickOrEndlessSelection" type="Control" parent="."]
+[node name="QuickOrEndlessSelection" type="Control" parent="." unique_id=312563931]
 visible = false
 anchors_preset = 0
 offset_left = 218.0
@@ -150,7 +150,7 @@ offset_bottom = 586.0
 mouse_filter = 1
 metadata/_edit_lock_ = true
 
-[node name="PracticeSign" type="TextureRect" parent="QuickOrEndlessSelection"]
+[node name="PracticeSign" type="TextureRect" parent="QuickOrEndlessSelection" unique_id=942011791]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -163,7 +163,7 @@ grow_horizontal = 2
 texture = ExtResource("8_ac1q2")
 stretch_mode = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="QuickOrEndlessSelection"]
+[node name="HBoxContainer" type="HBoxContainer" parent="QuickOrEndlessSelection" unique_id=2089339146]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -179,14 +179,14 @@ grow_vertical = 2
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="QuickCard" type="TextureRect" parent="QuickOrEndlessSelection/HBoxContainer"]
+[node name="QuickCard" type="TextureRect" parent="QuickOrEndlessSelection/HBoxContainer" unique_id=1064736975]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("6_kqkk5")
 stretch_mode = 4
 
-[node name="QuickButton" type="TextureButton" parent="QuickOrEndlessSelection/HBoxContainer/QuickCard"]
+[node name="QuickButton" type="TextureButton" parent="QuickOrEndlessSelection/HBoxContainer/QuickCard" unique_id=1227962253]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -201,14 +201,14 @@ grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("9_6q71q")
 
-[node name="EndlessCard" type="TextureRect" parent="QuickOrEndlessSelection/HBoxContainer"]
+[node name="EndlessCard" type="TextureRect" parent="QuickOrEndlessSelection/HBoxContainer" unique_id=1170473748]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("7_ws786")
 stretch_mode = 4
 
-[node name="EndlessButton" type="TextureButton" parent="QuickOrEndlessSelection/HBoxContainer/EndlessCard"]
+[node name="EndlessButton" type="TextureButton" parent="QuickOrEndlessSelection/HBoxContainer/EndlessCard" unique_id=299939542]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -223,7 +223,7 @@ grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("11_fkpc5")
 
-[node name="BrowseGroup" type="Control" parent="."]
+[node name="BrowseGroup" type="Control" parent="." unique_id=393004935]
 visible = false
 anchors_preset = 0
 offset_left = 218.0
@@ -233,7 +233,7 @@ offset_bottom = 586.0
 mouse_filter = 1
 metadata/_edit_lock_ = true
 
-[node name="BrowseSign" type="TextureRect" parent="BrowseGroup"]
+[node name="BrowseSign" type="TextureRect" parent="BrowseGroup" unique_id=640245316]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -246,7 +246,7 @@ grow_horizontal = 2
 texture = ExtResource("12_1qgkl")
 stretch_mode = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BrowseGroup"]
+[node name="HBoxContainer" type="HBoxContainer" parent="BrowseGroup" unique_id=99361995]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -262,12 +262,12 @@ grow_vertical = 2
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="GroupACard" type="TextureRect" parent="BrowseGroup/HBoxContainer"]
+[node name="GroupACard" type="TextureRect" parent="BrowseGroup/HBoxContainer" unique_id=1296772384]
 layout_mode = 2
 texture = ExtResource("13_o01m3")
 stretch_mode = 4
 
-[node name="GroupAButton" type="TextureButton" parent="BrowseGroup/HBoxContainer/GroupACard"]
+[node name="GroupAButton" type="TextureButton" parent="BrowseGroup/HBoxContainer/GroupACard" unique_id=1393417703]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -281,12 +281,12 @@ grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("14_8t6cw")
 
-[node name="GroupBCard" type="TextureRect" parent="BrowseGroup/HBoxContainer"]
+[node name="GroupBCard" type="TextureRect" parent="BrowseGroup/HBoxContainer" unique_id=88466993]
 layout_mode = 2
 texture = ExtResource("13_o01m3")
 stretch_mode = 4
 
-[node name="GroupBButton" type="TextureButton" parent="BrowseGroup/HBoxContainer/GroupBCard"]
+[node name="GroupBButton" type="TextureButton" parent="BrowseGroup/HBoxContainer/GroupBCard" unique_id=872032199]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -300,12 +300,12 @@ grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("15_60x4y")
 
-[node name="GroupCCard" type="TextureRect" parent="BrowseGroup/HBoxContainer"]
+[node name="GroupCCard" type="TextureRect" parent="BrowseGroup/HBoxContainer" unique_id=1748820205]
 layout_mode = 2
 texture = ExtResource("13_o01m3")
 stretch_mode = 4
 
-[node name="GroupCButton" type="TextureButton" parent="BrowseGroup/HBoxContainer/GroupCCard"]
+[node name="GroupCButton" type="TextureButton" parent="BrowseGroup/HBoxContainer/GroupCCard" unique_id=768058219]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -319,7 +319,7 @@ grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("16_u0x3h")
 
-[node name="BrowseGroupSelected" type="Control" parent="."]
+[node name="BrowseGroupSelected" type="Control" parent="." unique_id=312423965]
 anchors_preset = 0
 offset_left = 218.0
 offset_top = 95.0
@@ -328,7 +328,7 @@ offset_bottom = 586.0
 mouse_filter = 1
 metadata/_edit_lock_ = true
 
-[node name="GroupSign" type="TextureRect" parent="BrowseGroupSelected"]
+[node name="GroupSign" type="TextureRect" parent="BrowseGroupSelected" unique_id=89921033]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -341,7 +341,7 @@ grow_horizontal = 2
 texture = ExtResource("14_nunxq")
 stretch_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="BrowseGroupSelected"]
+[node name="ScrollContainer" type="ScrollContainer" parent="BrowseGroupSelected" unique_id=1637631133]
 custom_minimum_size = Vector2(800, 400)
 layout_mode = 0
 offset_left = 29.0
@@ -352,22 +352,22 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="GridContainer" type="GridContainer" parent="BrowseGroupSelected/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="BrowseGroupSelected/ScrollContainer" unique_id=1295268651]
 layout_mode = 2
 theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 20
 columns = 2
 
-[node name="List1" type="VBoxContainer" parent="BrowseGroupSelected/ScrollContainer/GridContainer"]
+[node name="List1" type="VBoxContainer" parent="BrowseGroupSelected/ScrollContainer/GridContainer" unique_id=256875937]
 layout_mode = 2
 
-[node name="QuestionBox" type="TextureButton" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List1"]
+[node name="QuestionBox" type="TextureButton" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List1" unique_id=1414174228]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 texture_normal = ExtResource("18_bqq7l")
 
-[node name="QuestionText" type="Label" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List1/QuestionBox"]
+[node name="QuestionText" type="Label" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List1/QuestionBox" unique_id=623386831]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -383,16 +383,16 @@ label_settings = ExtResource("19_uoomi")
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="List2" type="VBoxContainer" parent="BrowseGroupSelected/ScrollContainer/GridContainer"]
+[node name="List2" type="VBoxContainer" parent="BrowseGroupSelected/ScrollContainer/GridContainer" unique_id=683905176]
 layout_mode = 2
 
-[node name="QuestionBox" type="TextureButton" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List2"]
+[node name="QuestionBox" type="TextureButton" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List2" unique_id=504599263]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 texture_normal = ExtResource("18_bqq7l")
 
-[node name="QuestionText" type="Label" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List2/QuestionBox"]
+[node name="QuestionText" type="Label" parent="BrowseGroupSelected/ScrollContainer/GridContainer/List2/QuestionBox" unique_id=998653304]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -408,7 +408,7 @@ label_settings = ExtResource("19_uoomi")
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="BrowseQuestionBox" type="Control" parent="."]
+[node name="BrowseQuestionBox" type="Control" parent="." unique_id=1643234015]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -423,7 +423,7 @@ grow_vertical = 2
 mouse_filter = 1
 metadata/_edit_lock_ = true
 
-[node name="GroupSign" type="TextureRect" parent="BrowseQuestionBox"]
+[node name="GroupSign" type="TextureRect" parent="BrowseQuestionBox" unique_id=1010264154]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -434,14 +434,14 @@ offset_bottom = 40.0
 grow_horizontal = 2
 texture = ExtResource("14_nunxq")
 
-[node name="AnswerBox" type="Control" parent="BrowseQuestionBox"]
+[node name="AnswerBox" type="Control" parent="BrowseQuestionBox" unique_id=1227278843]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 329.0
 grow_horizontal = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BrowseQuestionBox/AnswerBox"]
+[node name="HBoxContainer" type="HBoxContainer" parent="BrowseQuestionBox/AnswerBox" unique_id=983525152]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -454,7 +454,7 @@ grow_vertical = 2
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="QuestionText" type="Label" parent="BrowseQuestionBox/AnswerBox/HBoxContainer"]
+[node name="QuestionText" type="Label" parent="BrowseQuestionBox/AnswerBox/HBoxContainer" unique_id=959299488]
 custom_minimum_size = Vector2(350, 50)
 layout_mode = 2
 size_flags_vertical = 1
@@ -465,12 +465,12 @@ text = "Which type of food gives our body lots of energy to run, jump, and play?
 label_settings = ExtResource("25_o01m3")
 autowrap_mode = 3
 
-[node name="QuestionImage" type="TextureRect" parent="BrowseQuestionBox/AnswerBox/HBoxContainer"]
+[node name="QuestionImage" type="TextureRect" parent="BrowseQuestionBox/AnswerBox/HBoxContainer" unique_id=1597113912]
 layout_mode = 2
 texture = ExtResource("16_ksixq")
 stretch_mode = 2
 
-[node name="AnswersContainer" type="HBoxContainer" parent="BrowseQuestionBox"]
+[node name="AnswersContainer" type="HBoxContainer" parent="BrowseQuestionBox" unique_id=149236964]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -484,18 +484,18 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 20
 
-[node name="VSeparator" type="VSeparator" parent="BrowseQuestionBox/AnswersContainer"]
+[node name="VSeparator" type="VSeparator" parent="BrowseQuestionBox/AnswersContainer" unique_id=105915320]
 layout_mode = 2
 theme_override_constants/separation = 50
 theme_override_styles/separator = SubResource("StyleBoxEmpty_6q71q")
 
-[node name="RightAnswerButton" type="TextureButton" parent="BrowseQuestionBox/AnswersContainer"]
+[node name="RightAnswerButton" type="TextureButton" parent="BrowseQuestionBox/AnswersContainer" unique_id=444313034]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("30_o38ri")
 
-[node name="RightAnswerText" type="Label" parent="BrowseQuestionBox/AnswersContainer/RightAnswerButton"]
+[node name="RightAnswerText" type="Label" parent="BrowseQuestionBox/AnswersContainer/RightAnswerButton" unique_id=543897270]
 layout_mode = 0
 offset_left = 15.0
 offset_right = 236.0
@@ -506,7 +506,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="RightAnswerImage" type="TextureRect" parent="BrowseQuestionBox/AnswersContainer/RightAnswerButton"]
+[node name="RightAnswerImage" type="TextureRect" parent="BrowseQuestionBox/AnswersContainer/RightAnswerButton" unique_id=438783826]
 layout_mode = 0
 offset_left = 19.0
 offset_top = 2.0
@@ -514,7 +514,7 @@ offset_right = 236.0
 offset_bottom = 106.0
 stretch_mode = 3
 
-[node name="ExplanationText" type="Label" parent="BrowseQuestionBox/AnswersContainer"]
+[node name="ExplanationText" type="Label" parent="BrowseQuestionBox/AnswersContainer" unique_id=1796374874]
 custom_minimum_size = Vector2(350, 50)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -527,7 +527,7 @@ label_settings = ExtResource("19_eibyc")
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Countdown" type="Control" parent="."]
+[node name="Countdown" type="Control" parent="." unique_id=1330472123]
 visible = false
 anchors_preset = 0
 offset_left = 218.0
@@ -537,7 +537,7 @@ offset_bottom = 586.0
 mouse_filter = 1
 metadata/_edit_lock_ = true
 
-[node name="Starting In" type="TextureRect" parent="Countdown"]
+[node name="Starting In" type="TextureRect" parent="Countdown" unique_id=1666406623]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -550,7 +550,7 @@ grow_horizontal = 2
 texture = ExtResource("12_mb5fr")
 stretch_mode = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Countdown"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Countdown" unique_id=860826034]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -566,14 +566,14 @@ grow_vertical = 2
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="CountIcon" type="TextureRect" parent="Countdown/HBoxContainer"]
+[node name="CountIcon" type="TextureRect" parent="Countdown/HBoxContainer" unique_id=928188193]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("13_t450l")
 stretch_mode = 4
 
-[node name="QuickOrEndlessMode" type="Control" parent="."]
+[node name="QuickOrEndlessMode" type="Control" parent="." unique_id=1684830809]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -588,7 +588,7 @@ grow_vertical = 2
 mouse_filter = 1
 metadata/_edit_lock_ = true
 
-[node name="QuickOrEndlessSign" type="TextureRect" parent="QuickOrEndlessMode"]
+[node name="QuickOrEndlessSign" type="TextureRect" parent="QuickOrEndlessMode" unique_id=668568426]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -599,7 +599,7 @@ offset_bottom = 61.0
 grow_horizontal = 2
 texture = ExtResource("18_iljl6")
 
-[node name="Timer" type="Label" parent="QuickOrEndlessMode"]
+[node name="Timer" type="Label" parent="QuickOrEndlessMode" unique_id=1464907415]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 2.0
@@ -610,14 +610,14 @@ label_settings = ExtResource("25_o01m3")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AnswerBox" type="Control" parent="QuickOrEndlessMode"]
+[node name="AnswerBox" type="Control" parent="QuickOrEndlessMode" unique_id=1980389744]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 329.0
 grow_horizontal = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="QuickOrEndlessMode/AnswerBox"]
+[node name="HBoxContainer" type="HBoxContainer" parent="QuickOrEndlessMode/AnswerBox" unique_id=2056804340]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -630,7 +630,7 @@ grow_vertical = 2
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="QuestionText" type="Label" parent="QuickOrEndlessMode/AnswerBox/HBoxContainer"]
+[node name="QuestionText" type="Label" parent="QuickOrEndlessMode/AnswerBox/HBoxContainer" unique_id=331951762]
 custom_minimum_size = Vector2(350, 50)
 layout_mode = 2
 size_flags_vertical = 1
@@ -641,12 +641,12 @@ text = "Which type of food gives our body lots of energy to run, jump, and play?
 label_settings = ExtResource("19_sf6pf")
 autowrap_mode = 3
 
-[node name="QuestionImage" type="TextureRect" parent="QuickOrEndlessMode/AnswerBox/HBoxContainer"]
+[node name="QuestionImage" type="TextureRect" parent="QuickOrEndlessMode/AnswerBox/HBoxContainer" unique_id=1252431282]
 layout_mode = 2
 texture = ExtResource("16_ksixq")
 stretch_mode = 2
 
-[node name="AnswersContainer" type="HBoxContainer" parent="QuickOrEndlessMode"]
+[node name="AnswersContainer" type="HBoxContainer" parent="QuickOrEndlessMode" unique_id=1486426979]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -660,13 +660,13 @@ grow_vertical = 0
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="A" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer"]
+[node name="A" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer" unique_id=337454509]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("35_o38ri")
 
-[node name="AText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/A"]
+[node name="AText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/A" unique_id=248990039]
 layout_mode = 0
 offset_left = 53.0
 offset_top = 19.0
@@ -678,7 +678,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="AImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/A"]
+[node name="AImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/A" unique_id=1967222483]
 layout_mode = 0
 offset_left = 55.0
 offset_top = 19.0
@@ -686,13 +686,13 @@ offset_right = 250.0
 offset_bottom = 124.0
 stretch_mode = 3
 
-[node name="B" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer"]
+[node name="B" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer" unique_id=38108049]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("36_qu1ft")
 
-[node name="BText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/B"]
+[node name="BText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/B" unique_id=72744704]
 layout_mode = 0
 offset_left = 53.0
 offset_top = 19.0
@@ -704,7 +704,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/B"]
+[node name="BImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/B" unique_id=1405010893]
 layout_mode = 0
 offset_left = 55.0
 offset_top = 19.0
@@ -712,13 +712,13 @@ offset_right = 250.0
 offset_bottom = 124.0
 stretch_mode = 3
 
-[node name="C" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer"]
+[node name="C" type="TextureButton" parent="QuickOrEndlessMode/AnswersContainer" unique_id=959841723]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("37_r7cl4")
 
-[node name="CText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/C"]
+[node name="CText" type="Label" parent="QuickOrEndlessMode/AnswersContainer/C" unique_id=1113429910]
 layout_mode = 0
 offset_left = 53.0
 offset_top = 19.0
@@ -730,7 +730,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="CImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/C"]
+[node name="CImage" type="TextureRect" parent="QuickOrEndlessMode/AnswersContainer/C" unique_id=958654676]
 layout_mode = 0
 offset_left = 55.0
 offset_top = 19.0
@@ -738,7 +738,7 @@ offset_right = 250.0
 offset_bottom = 124.0
 stretch_mode = 3
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." unique_id=1408411182]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -747,7 +747,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PauseLayer" type="TextureRect" parent="UI"]
+[node name="PauseLayer" type="TextureRect" parent="UI" unique_id=216252693]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -758,7 +758,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("21_g4848")
 
-[node name="TopBarRight" type="MarginContainer" parent="UI"]
+[node name="TopBarRight" type="MarginContainer" parent="UI" unique_id=764560931]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -769,15 +769,15 @@ grow_horizontal = 0
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 150
 
-[node name="MoneyGroup" type="HBoxContainer" parent="UI/TopBarRight"]
+[node name="MoneyGroup" type="HBoxContainer" parent="UI/TopBarRight" unique_id=1212771305]
 layout_mode = 2
 
-[node name="Money" type="TextureRect" parent="UI/TopBarRight/MoneyGroup"]
+[node name="Money" type="TextureRect" parent="UI/TopBarRight/MoneyGroup" unique_id=1500281124]
 layout_mode = 2
 texture = ExtResource("38_uoomi")
 stretch_mode = 2
 
-[node name="Label" type="Label" parent="UI/TopBarRight/MoneyGroup/Money"]
+[node name="Label" type="Label" parent="UI/TopBarRight/MoneyGroup/Money" unique_id=1926945860]
 layout_mode = 0
 offset_left = 70.0
 offset_top = 8.0
@@ -789,21 +789,21 @@ label_settings = ExtResource("39_uoomi")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BackButtonImage" type="MarginContainer" parent="UI"]
+[node name="BackButtonImage" type="MarginContainer" parent="UI" unique_id=1859195415]
 layout_mode = 0
 offset_right = 101.0
 offset_bottom = 92.0
 theme_override_constants/margin_top = 20
 
-[node name="TopLeftButton" type="HBoxContainer" parent="UI/BackButtonImage"]
+[node name="TopLeftButton" type="HBoxContainer" parent="UI/BackButtonImage" unique_id=1388400254]
 layout_mode = 2
 
-[node name="BackButton" type="TextureButton" parent="UI/BackButtonImage/TopLeftButton"]
+[node name="BackButton" type="TextureButton" parent="UI/BackButtonImage/TopLeftButton" unique_id=1864256602]
 z_index = 100
 layout_mode = 2
 texture_normal = ExtResource("2_ac1q2")
 
-[node name="TopBarRight2" type="MarginContainer" parent="UI"]
+[node name="TopBarRight2" type="MarginContainer" parent="UI" unique_id=1686670378]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -816,28 +816,28 @@ theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 23
 theme_override_constants/margin_right = 23
 
-[node name="MenuGroup" type="VBoxContainer" parent="UI/TopBarRight2"]
+[node name="MenuGroup" type="VBoxContainer" parent="UI/TopBarRight2" unique_id=1721192472]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="MenuButton" type="TextureButton" parent="UI/TopBarRight2/MenuGroup"]
+[node name="MenuButton" type="TextureButton" parent="UI/TopBarRight2/MenuGroup" unique_id=62365559]
 layout_mode = 2
 texture_normal = ExtResource("39_bqq7l")
 
-[node name="SettingsButton" type="TextureButton" parent="UI/TopBarRight2/MenuGroup/MenuButton"]
+[node name="SettingsButton" type="TextureButton" parent="UI/TopBarRight2/MenuGroup/MenuButton" unique_id=202513450]
 layout_mode = 0
 offset_top = 73.0
 offset_right = 62.0
 offset_bottom = 131.0
 texture_normal = ExtResource("40_uoomi")
 
-[node name="HomeButton" type="TextureButton" parent="UI/TopBarRight2/MenuGroup/MenuButton"]
+[node name="HomeButton" type="TextureButton" parent="UI/TopBarRight2/MenuGroup/MenuButton" unique_id=538728345]
 layout_mode = 0
 offset_top = 146.0
 offset_right = 62.0
 offset_bottom = 204.0
 texture_normal = ExtResource("41_o38ri")
 
-[node name="SoundControl" parent="." instance=ExtResource("42_qu1ft")]
+[node name="SoundControl" parent="." unique_id=531111614 instance=ExtResource("42_qu1ft")]
 layout_mode = 1
 script = null
