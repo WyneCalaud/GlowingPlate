@@ -1,5 +1,13 @@
 extends Control
 
+# --- CUSTOM MESSAGES (EDIT THESE IN THE INSPECTOR!) ---
+@export_group("Custom Feedback Messages")
+@export var msg_correct_fast: Array[String] = ["Wow! You answered that super fast!"]
+@export var msg_correct_normal: Array[String] = ["Good job! That's correct."]
+@export var msg_correct_slow: Array[String] = ["Correct! But try to be a bit faster."]
+@export var msg_incorrect: Array[String] = ["Oops! Let's review this concept."]
+@export var msg_new_concept: Array[String] = ["\nPay close attention, this is a new concept!"]
+
 # --- AUDIO REFERENCES ---
 @onready var sfx_correct: AudioStreamPlayer2D = $SfxCorrect
 @onready var sfx_incorrect: AudioStreamPlayer2D = $SfxIncorrect
@@ -11,6 +19,11 @@ extends Control
 @onready var quiz_panel: Control = $QuizPanel
 @onready var question_label: Label = $QuizPanel/Questionaire/HBoxContainer/QuestionText
 @onready var image_display: TextureRect = $QuizPanel/Questionaire/HBoxContainer/QuestionImage
+
+# --- MESSAGE BOX REFERENCES ---
+@onready var message_box: TextureRect = $MessageBox
+@onready var message_label: Label = $MessageBox/MessageLabel
+var message_box_original_pos: Vector2
 
 @onready var answer_nodes = [
 	{
@@ -30,7 +43,10 @@ extends Control
 	}
 ]
 
-@onready var result_label: Label = $Result/ResultLabel
+# 🔥 NEW UI REFS: Added the two extra labels required by the professor
+@onready var result_label: Label = $Result/ResultLabel # Serves as Performance Feedback
+@onready var exposure_label: Label = get_node_or_null("Result/ExposureLabel") 
+@onready var mastery_label: Label = get_node_or_null("Result/MasteryLabel")
 
 # --- MENU & PAUSE NODE REFERENCES ---
 @onready var menu_button: BaseButton = $TopBarRight/MenuGroup/MenuButton
@@ -46,12 +62,15 @@ extends Control
 var current_quiz_set: Array = []
 var current_question_index: int = 0
 var total_correct_answers: int = 0
-var MAX_QUESTIONS: int = 0 # Now dynamically set based on content
+var MAX_QUESTIONS: int = 0 
 var is_mechanic_active: bool = true
 var current_day: int = 1
 var original_panel_pos: Vector2
 var correct_button_index: int = -1
 var current_concept: String = ""
+
+# 🔥 NEW: Timer Variable to track Response Speed
+var question_start_time: float = 0.0
 
 # --- MENU STATE ---
 var is_menu_open: bool = false
@@ -60,30 +79,54 @@ const BUTTON_SPACING: float = 70.0
 const ANIM_DURATION: float = 0.3
 
 # ==========================================================
+# CUSTOM MESSAGE LOGIC
+# ==========================================================
+
+func _get_custom_message(is_correct: bool, response_time: float, exposure_text: String) -> String:
+	var my_message = ""
+	
+	if is_correct:
+		if response_time <= 1.5:
+			my_message = msg_correct_fast.pick_random() if msg_correct_fast.size() > 0 else "Correct!"
+		elif response_time <= 3.0:
+			my_message = msg_correct_normal.pick_random() if msg_correct_normal.size() > 0 else "Correct!"
+		else:
+			my_message = msg_correct_slow.pick_random() if msg_correct_slow.size() > 0 else "Correct!"
+	else:
+		my_message = msg_incorrect.pick_random() if msg_incorrect.size() > 0 else "Incorrect!"
+		
+	# Add new concept warning if applicable
+	if exposure_text == "First time seeing this!":
+		var new_concept_text = msg_new_concept.pick_random() if msg_new_concept.size() > 0 else ""
+		my_message += new_concept_text
+		
+	return my_message
+
+# ==========================================================
 # INITIALIZATION
 # ==========================================================
 
 func _ready():
-	# 🔥 FIX: lock quiz to previous day
 	current_day = game_data.current_day - 1
 	if current_day < 1:
 		current_day = 1
 	original_panel_pos = quiz_panel.position
 
-	# Setup Menu, Pause Layer & Age Display
+	# Safe Initialization for the Message Box
+	await get_tree().process_frame # Ensures correct layout calculation before hiding
+	if is_instance_valid(message_box):
+		message_box_original_pos = message_box.position
+		message_box.pivot_offset = message_box.size / 2
+		message_box.visible = false
+
 	_setup_menu_buttons()
 	update_age_group_display()
-
-	# Initialize concept scheduler
 	QuizSystem.initialize_concepts(current_day)
 
-	# 🔥 LOAD SAVED QUIZ IF EXISTS
 	if GameData.saved_quiz_sets.has(current_day):
 		current_quiz_set = GameData.saved_quiz_sets[current_day].duplicate(true)
 		MAX_QUESTIONS = current_quiz_set.size()
 		print("📦 Loaded saved quiz set for day", current_day)
-
-		# 🔥 IMPORTANT: DO NOT regenerate
 	else:
 		_get_due_concept_questions()
 
@@ -93,15 +136,17 @@ func _ready():
 		finish_quiz()
 		return
 
-	# Start quiz with the dynamically calculated MAX_QUESTIONS
 	start_quiz()
 
 	result_label.visible = false
 	result_label.pivot_offset = result_label.size / 2
+	
+	if is_instance_valid(exposure_label): exposure_label.visible = false
+	if is_instance_valid(mastery_label): mastery_label.visible = false
 
 	for i in range(answer_nodes.size()):
 		var btn = answer_nodes[i].button
-		if btn:
+		if is_instance_valid(btn):
 			var connections = btn.get_signal_connection_list("pressed")
 			for conn in connections:
 				btn.disconnect("pressed", conn.callable)
@@ -109,9 +154,8 @@ func _ready():
 			btn.pivot_offset = btn.size / 2
 
 func _setup_menu_buttons():
-	if menu_button:
-		menu_button.pressed.connect(_on_menu_button_pressed)
-		
+	if menu_button: menu_button.pressed.connect(_on_menu_button_pressed)
+	
 	if settings_button:
 		settings_button.top_level = false
 		settings_button.show_behind_parent = true
@@ -130,110 +174,63 @@ func _setup_menu_buttons():
 		home_button.modulate.a = 0.0
 		home_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		
-	if pause_layer:
-		pause_layer.visible = false
+	if pause_layer: pause_layer.visible = false
 
 # ==========================================================
 # AGE GROUP DISPLAY
 # ==========================================================
 
 func update_age_group_display():
-	if not has_node("/root/GameData"):
-		return
-
+	if not has_node("/root/GameData"): return
 	var GD = get_node("/root/GameData")
 	var age: String = GD.get("current_customer_age_group") if "current_customer_age_group" in GD else "6-9"
-
-	if sixtonine: sixtonine.visible = false
-	if tentotwelve: tentotwelve.visible = false
+	
+	if is_instance_valid(sixtonine): sixtonine.visible = false
+	if is_instance_valid(tentotwelve): tentotwelve.visible = false
 
 	match age:
-		"6-9":
-			if sixtonine: sixtonine.visible = true
-		"10-12":
-			if tentotwelve: tentotwelve.visible = true
+		"6-9": if is_instance_valid(sixtonine): sixtonine.visible = true
+		"10-12": if is_instance_valid(tentotwelve): tentotwelve.visible = true
 
 # ==========================================================
-# DYNAMIC QUESTION SELECTION (SM-2 + NEW CONTENT)
+# DYNAMIC QUESTION SELECTION
 # ==========================================================
 
 func _get_due_concept_questions():
 	current_quiz_set.clear()
-
 	var review_questions: Array = []
 	var daily_questions = QuestionDatabase.get_questions_for_day(current_day)
-
-	# --------------------------------------------------
-	# 1. GET DUE CONCEPTS
-	# --------------------------------------------------
 	var due_concepts = QuizSystem.get_due_concepts(current_day)
 
-	print("📅 QUIZ DAY:", current_day, "| GAME DAY:", game_data.current_day)
 	for concept in due_concepts:
 		var data = QuizSystem.concept_progress.get(concept, {})
-		print(" -", concept, "| next_day:", data.get("next_review_day"))
-
-	# --------------------------------------------------
-	# 2. BUILD REVIEW QUESTIONS FIRST (PRIORITY)
-	# --------------------------------------------------
-	for concept in due_concepts:
 		var review_q = QuestionDatabase.get_question_by_id(concept)
 
 		if not review_q.is_empty():
 			var is_dup = false
-
 			for existing in review_questions:
 				if existing["id"] == review_q["id"]:
 					is_dup = true
 					break
+			if not is_dup: review_questions.append(review_q)
 
-			if not is_dup:
-				review_questions.append(review_q)
-		else:
-			print("⚠️ Missing question for concept:", concept)
-
-	# OPTIONAL: limit reviews per day (prevents overload)
 	review_questions.shuffle()
 	review_questions = review_questions.slice(0, 10)
 
-	# --------------------------------------------------
-	# 3. ADD DAILY QUESTIONS (SECOND PRIORITY)
-	# --------------------------------------------------
 	for q in daily_questions:
 		var is_dup = false
-
 		for existing in review_questions:
 			if existing["id"] == q["id"]:
 				is_dup = true
 				break
+		if not is_dup: current_quiz_set.append(q)
 
-		if not is_dup:
-			current_quiz_set.append(q)
-
-	# --------------------------------------------------
-	# 4. FINAL ORDER = REVIEWS FIRST
-	# --------------------------------------------------
 	current_quiz_set = review_questions + current_quiz_set
-
-	# --------------------------------------------------
-	# 5. LIMIT + SHUFFLE (OPTIONAL)
-	# --------------------------------------------------
 	MAX_QUESTIONS = current_quiz_set.size()
 
-	print("🧪 FINAL QUIZ SET:")
-	for q in current_quiz_set:
-		var concept = q.get("concept")
-		if concept == null:
-			concept = q["id"]
-
-		print(" -", q["id"], "| concept:", concept)
-
-	# SAVE THIS QUIZ SET FOR THIS DAY
 	if not GameData.saved_quiz_sets.has(current_day):
 		GameData.saved_quiz_sets[current_day] = current_quiz_set.duplicate(true)
 		GameData.save_game()
-		print("💾 Saved quiz set for day", current_day)
-
 
 # ==========================================================
 # QUIZ FLOW
@@ -250,10 +247,10 @@ func load_question():
 		return
 
 	quiz_panel.position = original_panel_pos
+	question_start_time = Time.get_unix_time_from_system()
 
 	var q_data: Dictionary = current_quiz_set[current_question_index]
 	current_concept = q_data.get("concept", q_data["id"]) 
-
 	question_label.text = q_data["q"]
 
 	image_display.texture = q_data.get("q_img", null)
@@ -272,12 +269,13 @@ func load_question():
 		
 		if opt.is_correct: correct_button_index = i
 
-		btn.visible = true
-		btn.disabled = false
-		btn.modulate = Color.WHITE
-		btn.scale = Vector2.ONE
-		btn.rotation_degrees = 0
-		btn.pivot_offset = btn.size / 2
+		if is_instance_valid(btn):
+			btn.visible = true
+			btn.disabled = false
+			btn.modulate = Color.WHITE
+			btn.scale = Vector2.ONE
+			btn.rotation_degrees = 0
+			btn.pivot_offset = btn.size / 2
 
 		nodes.text.text = opt.text
 		nodes.text.visible = (opt.text != "") 
@@ -289,86 +287,117 @@ func load_question():
 # ==========================================================
 
 func _on_answer_button_pressed(button_index: int):
-	if not is_mechanic_active:
-		return
-
+	if not is_mechanic_active: return
 	is_mechanic_active = false
-
+	
+	var actual_response_time = Time.get_unix_time_from_system() - question_start_time
 	var q_data: Dictionary = current_quiz_set[current_question_index]
 	var is_correct = (button_index == correct_button_index)
 
 	if has_node("/root/QuizProgress"):
 		QuizProgress.record_attempt(q_data["id"], is_correct, current_day)
 
+	var feedback_dict = {}
 	if has_node("/root/QuizSystem"):
-		# SM-2 Quality: 4 for correct, 0 for incorrect
-		var response_time = 1.5 # (temporary, we can improve later)
-		var next_day = QuizSystem.update_concept_progress(current_concept, is_correct, response_time, current_day)
-		# 🔥 SAVE IMMEDIATELY (CRITICAL FIX)
+		feedback_dict = QuizSystem.update_concept_progress(current_concept, is_correct, actual_response_time, current_day)
 		GameData.quiz_concept_progress = QuizSystem.concept_progress
 		GameData.save_game()
-		print("📚 QUIZ DEBUG")
-		print("Concept:", current_concept)
-		print("Result:", "CORRECT" if is_correct else "WRONG")
-		print("Next Review Day:", next_day)
-		print("------------------------")
 
-	result_label.visible = true
-	result_label.scale = Vector2.ZERO
+	# --- UI POPUP VISUALS ---
+	if is_instance_valid(result_label):
+		result_label.visible = true
+		result_label.scale = Vector2.ZERO
+		var pop_tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		pop_tween.tween_property(result_label, "scale", Vector2.ONE, 0.3)
+	
+	if is_instance_valid(exposure_label):
+		exposure_label.visible = true
+		exposure_label.text = feedback_dict.get("exposure", "")
+	if is_instance_valid(mastery_label):
+		mastery_label.visible = true
+		mastery_label.text = feedback_dict.get("mastery", "")
 
-	var pop_tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	pop_tween.tween_property(result_label, "scale", Vector2.ONE, 0.3)
+	# --- GET YOUR CUSTOM TEXT AND SHOW THE ANIMATED BOX ---
+	var final_custom_text = _get_custom_message(is_correct, actual_response_time, feedback_dict.get("exposure", ""))
+	_show_message_box(final_custom_text)
 
+	# --- BUTTON COLOR UPDATES ---
 	for i in range(answer_nodes.size()):
 		var btn = answer_nodes[i].button
-		btn.disabled = true
+		if is_instance_valid(btn):
+			btn.disabled = true
+			if i == correct_button_index:
+				btn.modulate = Color.GREEN
+			elif i == button_index and not is_correct:
+				btn.modulate = Color.RED
 
-		if i == correct_button_index:
-			btn.modulate = Color.GREEN
-		elif i == button_index and not is_correct:
-			btn.modulate = Color.RED
-
+	# --- PROFESSOR'S TEXT & SOUNDS ---
 	if is_correct:
 		total_correct_answers += 1
-		result_label.text = "CORRECT!"
-		var data = QuizSystem.concept_progress.get(current_concept, {})
-
-		var exposure = data.get("exposure", 1)
-
-		if exposure == 1:
-			print("👀 First time seeing this!")
-		elif exposure < 4:
-			print("📘 Getting familiar with this concept")
-		else:
-			print("🧠 You’ve seen this", exposure, "times")
-		result_label.modulate = Color.GREEN
-		if sfx_correct: sfx_correct.play()
+		if is_instance_valid(result_label): 
+			result_label.text = feedback_dict.get("performance", "CORRECT!")
+			result_label.modulate = Color.GREEN
+		if is_instance_valid(exposure_label): exposure_label.modulate = Color.GREEN
+		if is_instance_valid(sfx_correct): sfx_correct.play()
 		_animate_correct_feedback(button_index)
 	else:
-		result_label.text = "INCORRECT."
-		var data = QuizSystem.concept_progress.get(current_concept, {})
-
-		var exposure = data.get("exposure", 1)
-
-		if exposure == 1:
-			print("👀 First time seeing this!")
-		elif exposure < 4:
-			print("📘 Getting familiar with this concept")
-		else:
-			print("🧠 You’ve seen this", exposure, "times")
-		result_label.modulate = Color.RED
-		if sfx_incorrect: sfx_incorrect.play()
+		if is_instance_valid(result_label): 
+			result_label.text = feedback_dict.get("performance", "INCORRECT.")
+			result_label.modulate = Color.RED
+		if is_instance_valid(exposure_label): exposure_label.modulate = Color.RED
+		if is_instance_valid(sfx_incorrect): sfx_incorrect.play()
 		_animate_incorrect_feedback(button_index)
 
-	await get_tree().create_timer(1.8).timeout
-	
+	await get_tree().create_timer(2.5).timeout # Slightly longer to read the new text
 	if not is_inside_tree(): return 
 
-	result_label.visible = false
-	result_label.modulate.a = 1.0
+	# Hide everything safely
+	if is_instance_valid(result_label): 
+		result_label.visible = false
+		result_label.modulate.a = 1.0
+	if is_instance_valid(exposure_label): exposure_label.visible = false
+	if is_instance_valid(mastery_label): mastery_label.visible = false
+	if is_instance_valid(message_box): message_box.visible = false
+	
 	is_mechanic_active = true
 	current_question_index += 1
 	load_question()
+
+# ==========================================================
+# MESSAGE BOX ANIMATION
+# ==========================================================
+
+func _show_message_box(text: String):
+	# Safely check if the nodes exist before animating to prevent crashes
+	if not is_instance_valid(message_box) or not is_instance_valid(message_label): 
+		return
+
+	# Force to front so it's always visible
+	message_box.move_to_front()
+	message_box.z_index = 50
+
+	message_label.text = text
+	message_box.visible = true
+	message_box.modulate.a = 1.0
+	
+	# Start position: 400 pixels lower than its original position (off-screen or bottom)
+	message_box.position = message_box_original_pos + Vector2(0, 400)
+	message_box.scale = Vector2.ONE
+	
+	var tween = create_tween()
+	
+	# 1. Slide Up from the bottom
+	tween.tween_property(message_box, "position", message_box_original_pos, 0.4)\
+		 .set_trans(Tween.TRANS_QUART)\
+		 .set_ease(Tween.EASE_OUT)
+		
+	# 2. Pop Animation (Scale slightly up, then bounce back to normal)
+	tween.tween_property(message_box, "scale", Vector2(1.1, 1.1), 0.15)\
+		 .set_trans(Tween.TRANS_BACK)\
+		 .set_ease(Tween.EASE_OUT)
+	tween.tween_property(message_box, "scale", Vector2.ONE, 0.15)\
+		 .set_trans(Tween.TRANS_BOUNCE)\
+		 .set_ease(Tween.EASE_OUT)
 
 # ==========================================================
 # ANIMATIONS
@@ -400,38 +429,38 @@ func _animate_incorrect_feedback(idx: int):
 # ==========================================================
 
 func _on_menu_button_pressed():
-	if not settings_button or not home_button: return
+	if not is_instance_valid(settings_button) or not is_instance_valid(home_button): return
 	
 	is_menu_open = !is_menu_open
 	if menu_tween and menu_tween.is_valid(): menu_tween.kill()
 	menu_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	
 	if is_menu_open:
-		if pause_layer: pause_layer.visible = true
-		if settings_button:
+		if is_instance_valid(pause_layer): pause_layer.visible = true
+		if is_instance_valid(settings_button):
 			settings_button.visible = true
 			settings_button.mouse_filter = Control.MOUSE_FILTER_STOP
 			menu_tween.tween_property(settings_button, "position:y", BUTTON_SPACING, ANIM_DURATION)
 			menu_tween.tween_property(settings_button, "modulate:a", 1.0, ANIM_DURATION)
-		if home_button:
+		if is_instance_valid(home_button):
 			home_button.visible = true
 			home_button.mouse_filter = Control.MOUSE_FILTER_STOP
 			menu_tween.tween_property(home_button, "position:y", BUTTON_SPACING * 2, ANIM_DURATION).set_delay(0.05)
 			menu_tween.tween_property(home_button, "modulate:a", 1.0, ANIM_DURATION).set_delay(0.05)
 	else:
-		if pause_layer: pause_layer.visible = false
-		if settings_button:
+		if is_instance_valid(pause_layer): pause_layer.visible = false
+		if is_instance_valid(settings_button):
 			settings_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			menu_tween.tween_property(settings_button, "position:y", 0.0, ANIM_DURATION)
 			menu_tween.tween_property(settings_button, "modulate:a", 0.0, ANIM_DURATION)
-		if home_button:
+		if is_instance_valid(home_button):
 			home_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			menu_tween.tween_property(home_button, "position:y", 0.0, ANIM_DURATION)
 			menu_tween.tween_property(home_button, "modulate:a", 0.0, ANIM_DURATION)
 			
 		menu_tween.chain().tween_callback(func():
-			if settings_button: settings_button.visible = false
-			if home_button: home_button.visible = false
+			if is_instance_valid(settings_button): settings_button.visible = false
+			if is_instance_valid(home_button): home_button.visible = false
 		)
 
 # ==========================================================
@@ -439,9 +468,7 @@ func _on_menu_button_pressed():
 # ==========================================================
 
 func finish_quiz():
-	# Pay the player based on performance
 	var reward_money = total_correct_answers * 50
-
 	if has_node("/root/QuizSystem"):
 		GameData.quiz_concept_progress = QuizSystem.concept_progress
 		GameData.save_game()

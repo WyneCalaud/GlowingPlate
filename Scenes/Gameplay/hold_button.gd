@@ -13,6 +13,11 @@ const TIME_RIGHT: float = 3.0
 const TIME_FULL: float = 4.0
 const PENALTY_INTERVAL: float = 1.0 # Every 1 second over 4s
 
+# --- POSITION TWEAK ---
+# Adjust these numbers in the Inspector! 
+# X > 0 moves right, Y > 0 moves down.
+@export var position_offset: Vector2 = Vector2(150, 100) 
+
 # --- RICE TYPE SELECTION ---
 @export_enum("White", "Brown") var default_rice_type: String = "White"
 
@@ -50,6 +55,9 @@ var tex_too_high: Texture2D
 func _ready():
 	add_to_group("rice_scoop_ui")
 	set_rice_type(default_rice_type)
+	
+	# Apply the offset to move it right and down!
+	position += position_offset
 	
 	if button:
 		button.button_down.connect(_on_button_down)

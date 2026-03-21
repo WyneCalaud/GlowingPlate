@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://btkys8o7l5ylt" path="res://Assets/UI/QuestionImages/HD1.png" id="5_1wj21"]
 [ext_resource type="Texture2D" uid="uid://dqjjqqhrm1up0" path="res://Assets/UI/GlowDesk/AChoice.png" id="5_nc0by"]
 [ext_resource type="LabelSettings" uid="uid://dar4gad22igrx" path="res://Theme/AnswerText.tres" id="5_vc1sw"]
-[ext_resource type="LabelSettings" uid="uid://c7ptqt68bqpsk" path="res://Theme/QuizText.tres" id="6_yo6g2"]
+[ext_resource type="LabelSettings" uid="uid://3enqe0kbe4jf" path="res://Theme/QuizMessage.tres" id="7_qarmq"]
 [ext_resource type="Texture2D" uid="uid://cq3ah0b7dcaar" path="res://Assets/UI/GlowDesk/BChoice.png" id="7_vc1sw"]
 [ext_resource type="Texture2D" uid="uid://yue64ka8ictw" path="res://Assets/UI/GlowDesk/CChoice.png" id="8_1wj21"]
 [ext_resource type="Texture2D" uid="uid://c6hwx61tmp7b3" path="res://Assets/UI/AnswerImages/FishAndEgg.png" id="8_l0ke5"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="19_tmr7e"]
 [ext_resource type="Texture2D" uid="uid://c7o7arewtutfj" path="res://Assets/UI/Interface/SettingsButton.png" id="20_i1mhp"]
 [ext_resource type="Texture2D" uid="uid://dquyayxor6rta" path="res://Assets/UI/Interface/HomeButton.png" id="21_dqs0d"]
+[ext_resource type="Texture2D" uid="uid://cs0bami0rckdl" path="res://Assets/UI/QuizUI/MessageBox.png" id="21_m5poc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yo6g2"]
 font = ExtResource("10_nc0by")
@@ -36,6 +37,11 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_8s52k")
+msg_correct_fast = Array[String](["Wow! "])
+msg_correct_normal = Array[String](["Good job! "])
+msg_correct_slow = Array[String](["Correct! "])
+msg_incorrect = Array[String](["Oops! Try again later. "])
+msg_new_concept = Array[String](["This is a new concept!"])
 
 [node name="QuizBackground" type="Control" parent="." unique_id=1429905356]
 layout_mode = 1
@@ -131,7 +137,7 @@ offset_top = 19.0
 offset_right = 249.0
 offset_bottom = 124.0
 text = "GO FOOD"
-label_settings = ExtResource("6_yo6g2")
+label_settings = ExtResource("7_qarmq")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -165,7 +171,7 @@ offset_top = 19.0
 offset_right = 249.0
 offset_bottom = 124.0
 text = "GO FOOD"
-label_settings = ExtResource("6_yo6g2")
+label_settings = ExtResource("7_qarmq")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -199,7 +205,7 @@ offset_top = 19.0
 offset_right = 249.0
 offset_bottom = 124.0
 text = "GO FOOD"
-label_settings = ExtResource("6_yo6g2")
+label_settings = ExtResource("7_qarmq")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -299,3 +305,31 @@ offset_top = 146.0
 offset_right = 62.0
 offset_bottom = 204.0
 texture_normal = ExtResource("21_dqs0d")
+
+[node name="MessageBox" type="TextureRect" parent="." unique_id=2038630278]
+layout_mode = 0
+offset_left = 458.0
+offset_top = 576.0
+offset_right = 821.0
+offset_bottom = 682.0
+texture = ExtResource("21_m5poc")
+stretch_mode = 2
+
+[node name="MessageLabel" type="Label" parent="MessageBox" unique_id=1824801086]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -179.5
+offset_top = -51.0
+offset_right = 179.5
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Try Again Next Day"
+label_settings = ExtResource("7_qarmq")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
