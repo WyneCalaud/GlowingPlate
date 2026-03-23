@@ -3,15 +3,15 @@
 [ext_resource type="Script" uid="uid://dcek1knwpaq1t" path="res://Scripts/Quiz/QuizManager.gd" id="1_8s52k"]
 [ext_resource type="Texture2D" uid="uid://b1dvwltxkj1ft" path="res://Assets/UI/QuizUI/QuizTemplateX3.png" id="3_nc0by"]
 [ext_resource type="FontFile" uid="uid://btg6v4f2xjtf8" path="res://monogram.ttf" id="4_8s52k"]
-[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://Fonts/Comic_Neue/ComicNeue-Regular.ttf" id="4_cwbs8"]
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="4_cwbs8"]
 [ext_resource type="Texture2D" uid="uid://btkys8o7l5ylt" path="res://Assets/UI/QuestionImages/HD1.png" id="5_1wj21"]
 [ext_resource type="Texture2D" uid="uid://dqjjqqhrm1up0" path="res://Assets/UI/GlowDesk/AChoice.png" id="5_nc0by"]
 [ext_resource type="LabelSettings" uid="uid://dar4gad22igrx" path="res://Theme/AnswerText.tres" id="5_vc1sw"]
-[ext_resource type="LabelSettings" uid="uid://c7ptqt68bqpsk" path="res://Theme/QuizText.tres" id="6_yo6g2"]
+[ext_resource type="LabelSettings" uid="uid://3enqe0kbe4jf" path="res://Theme/QuizMessage.tres" id="7_qarmq"]
 [ext_resource type="Texture2D" uid="uid://cq3ah0b7dcaar" path="res://Assets/UI/GlowDesk/BChoice.png" id="7_vc1sw"]
 [ext_resource type="Texture2D" uid="uid://yue64ka8ictw" path="res://Assets/UI/GlowDesk/CChoice.png" id="8_1wj21"]
 [ext_resource type="Texture2D" uid="uid://c6hwx61tmp7b3" path="res://Assets/UI/AnswerImages/FishAndEgg.png" id="8_l0ke5"]
-[ext_resource type="FontFile" uid="uid://b443ju2lx1p21" path="res://Fonts/Comic_Neue/ComicNeue-BoldItalic.ttf" id="10_nc0by"]
+[ext_resource type="FontFile" uid="uid://b443ju2lx1p21" path="res://fonts/Comic_Neue/ComicNeue-BoldItalic.ttf" id="10_nc0by"]
 [ext_resource type="Texture2D" uid="uid://cvpa7kncyp00m" path="res://Assets/UI/AnswerImages/RiceAndCorn.png" id="10_wmtu8"]
 [ext_resource type="AudioStream" uid="uid://bcp43wsb52wne" path="res://Assets/SFX/CorrectSound.mp3" id="11_nc0by"]
 [ext_resource type="Texture2D" uid="uid://hwu2kg7m3k87" path="res://Assets/UI/AnswerImages/MangoAndCarrot.png" id="12_ng2d4"]
@@ -20,13 +20,14 @@
 [ext_resource type="Texture2D" uid="uid://b0yps2wbh3akv" path="res://Assets/UI/Interface/Menu.png" id="19_tmr7e"]
 [ext_resource type="Texture2D" uid="uid://c7o7arewtutfj" path="res://Assets/UI/Interface/SettingsButton.png" id="20_i1mhp"]
 [ext_resource type="Texture2D" uid="uid://dquyayxor6rta" path="res://Assets/UI/Interface/HomeButton.png" id="21_dqs0d"]
+[ext_resource type="Texture2D" uid="uid://cs0bami0rckdl" path="res://Assets/UI/QuizUI/MessageBox.png" id="21_m5poc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yo6g2"]
 font = ExtResource("10_nc0by")
 font_size = 40
 outline_size = 3
 
-[node name="QuizScene" type="Control" unique_id=1750913201]
+[node name="QuizScene" type="Control" unique_id=1906560270]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,8 +37,13 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_8s52k")
+msg_correct_fast = Array[String](["Wow! "])
+msg_correct_normal = Array[String](["Good job! "])
+msg_correct_slow = Array[String](["Correct! "])
+msg_incorrect = Array[String](["Oops! Try again later. "])
+msg_new_concept = Array[String](["This is a new concept!"])
 
-[node name="QuizBackground" type="Control" parent="." unique_id=2103166881]
+[node name="QuizBackground" type="Control" parent="." unique_id=1429905356]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,7 +52,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="BGImage" type="TextureRect" parent="QuizBackground" unique_id=9872326]
+[node name="BGImage" type="TextureRect" parent="QuizBackground" unique_id=917332001]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,7 +63,7 @@ texture = ExtResource("3_nc0by")
 expand_mode = 1
 metadata/_edit_lock_ = true
 
-[node name="QuizPanel" type="Control" parent="." unique_id=228493146]
+[node name="QuizPanel" type="Control" parent="." unique_id=1757082754]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,14 +76,14 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="Questionaire" type="Control" parent="QuizPanel" unique_id=58585052]
+[node name="Questionaire" type="Control" parent="QuizPanel" unique_id=1963165863]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 329.0
 grow_horizontal = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="QuizPanel/Questionaire" unique_id=534839499]
+[node name="HBoxContainer" type="HBoxContainer" parent="QuizPanel/Questionaire" unique_id=1272209260]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -86,7 +92,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="QuestionText" type="Label" parent="QuizPanel/Questionaire/HBoxContainer" unique_id=445067250]
+[node name="QuestionText" type="Label" parent="QuizPanel/Questionaire/HBoxContainer" unique_id=295831576]
 custom_minimum_size = Vector2(350, 100)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -97,14 +103,14 @@ label_settings = ExtResource("5_vc1sw")
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="QuestionImage" type="TextureRect" parent="QuizPanel/Questionaire/HBoxContainer" unique_id=691611962]
+[node name="QuestionImage" type="TextureRect" parent="QuizPanel/Questionaire/HBoxContainer" unique_id=1074023895]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("5_1wj21")
 stretch_mode = 2
 
-[node name="AnswersContainer" type="HBoxContainer" parent="QuizPanel" unique_id=1421546269]
+[node name="AnswersContainer" type="HBoxContainer" parent="QuizPanel" unique_id=354724136]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -118,25 +124,25 @@ grow_vertical = 0
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="A" type="TextureButton" parent="QuizPanel/AnswersContainer" unique_id=2055474379]
+[node name="A" type="TextureButton" parent="QuizPanel/AnswersContainer" unique_id=1272221154]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("5_nc0by")
 
-[node name="AText" type="Label" parent="QuizPanel/AnswersContainer/A" unique_id=232407278]
+[node name="AText" type="Label" parent="QuizPanel/AnswersContainer/A" unique_id=312949663]
 layout_mode = 0
 offset_left = 54.0
 offset_top = 19.0
 offset_right = 249.0
 offset_bottom = 124.0
 text = "GO FOOD"
-label_settings = ExtResource("6_yo6g2")
+label_settings = ExtResource("7_qarmq")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="AImage" type="TextureRect" parent="QuizPanel/AnswersContainer/A" unique_id=343674563]
+[node name="AImage" type="TextureRect" parent="QuizPanel/AnswersContainer/A" unique_id=521284485]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -152,25 +158,25 @@ grow_vertical = 2
 texture = ExtResource("8_l0ke5")
 stretch_mode = 3
 
-[node name="B" type="TextureButton" parent="QuizPanel/AnswersContainer" unique_id=1423542135]
+[node name="B" type="TextureButton" parent="QuizPanel/AnswersContainer" unique_id=339730239]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("7_vc1sw")
 
-[node name="BText" type="Label" parent="QuizPanel/AnswersContainer/B" unique_id=776298878]
+[node name="BText" type="Label" parent="QuizPanel/AnswersContainer/B" unique_id=1774550152]
 layout_mode = 0
 offset_left = 54.0
 offset_top = 19.0
 offset_right = 249.0
 offset_bottom = 124.0
 text = "GO FOOD"
-label_settings = ExtResource("6_yo6g2")
+label_settings = ExtResource("7_qarmq")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BImage" type="TextureRect" parent="QuizPanel/AnswersContainer/B" unique_id=1176491912]
+[node name="BImage" type="TextureRect" parent="QuizPanel/AnswersContainer/B" unique_id=544239380]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -186,25 +192,25 @@ grow_vertical = 2
 texture = ExtResource("10_wmtu8")
 stretch_mode = 3
 
-[node name="C" type="TextureButton" parent="QuizPanel/AnswersContainer" unique_id=1866614198]
+[node name="C" type="TextureButton" parent="QuizPanel/AnswersContainer" unique_id=460719717]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("8_1wj21")
 
-[node name="CText" type="Label" parent="QuizPanel/AnswersContainer/C" unique_id=1722352742]
+[node name="CText" type="Label" parent="QuizPanel/AnswersContainer/C" unique_id=1544793531]
 layout_mode = 0
 offset_left = 54.0
 offset_top = 19.0
 offset_right = 249.0
 offset_bottom = 124.0
 text = "GO FOOD"
-label_settings = ExtResource("6_yo6g2")
+label_settings = ExtResource("7_qarmq")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="CImage" type="TextureRect" parent="QuizPanel/AnswersContainer/C" unique_id=1027385023]
+[node name="CImage" type="TextureRect" parent="QuizPanel/AnswersContainer/C" unique_id=52203082]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -220,7 +226,7 @@ grow_vertical = 2
 texture = ExtResource("12_ng2d4")
 stretch_mode = 3
 
-[node name="Result" type="Control" parent="." unique_id=149342492]
+[node name="Result" type="Control" parent="." unique_id=1135032415]
 visible = false
 anchors_preset = 0
 offset_left = 576.0
@@ -229,7 +235,7 @@ offset_right = 712.0
 offset_bottom = 336.0
 metadata/_edit_lock_ = true
 
-[node name="ResultLabel" type="Label" parent="Result" unique_id=7899522]
+[node name="ResultLabel" type="Label" parent="Result" unique_id=1582038455]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -246,15 +252,15 @@ label_settings = SubResource("LabelSettings_yo6g2")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SfxCorrect" type="AudioStreamPlayer2D" parent="." unique_id=250527810]
+[node name="SfxCorrect" type="AudioStreamPlayer2D" parent="." unique_id=1907923771]
 stream = ExtResource("11_nc0by")
 metadata/_edit_lock_ = true
 
-[node name="SfxIncorrect" type="AudioStreamPlayer2D" parent="." unique_id=165426444]
+[node name="SfxIncorrect" type="AudioStreamPlayer2D" parent="." unique_id=1741579448]
 stream = ExtResource("12_vc1sw")
 metadata/_edit_lock_ = true
 
-[node name="PauseLayer" type="TextureRect" parent="." unique_id=1291500385]
+[node name="PauseLayer" type="TextureRect" parent="." unique_id=375701432]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -265,7 +271,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("17_m5poc")
 
-[node name="TopBarRight" type="MarginContainer" parent="." unique_id=154249327]
+[node name="TopBarRight" type="MarginContainer" parent="." unique_id=1729247895]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -278,24 +284,52 @@ theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 23
 theme_override_constants/margin_right = 23
 
-[node name="MenuGroup" type="VBoxContainer" parent="TopBarRight" unique_id=1674325968]
+[node name="MenuGroup" type="VBoxContainer" parent="TopBarRight" unique_id=1996662157]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="MenuButton" type="TextureButton" parent="TopBarRight/MenuGroup" unique_id=837594348]
+[node name="MenuButton" type="TextureButton" parent="TopBarRight/MenuGroup" unique_id=1292120973]
 layout_mode = 2
 texture_normal = ExtResource("19_tmr7e")
 
-[node name="SettingsButton" type="TextureButton" parent="TopBarRight/MenuGroup/MenuButton" unique_id=1346739936]
+[node name="SettingsButton" type="TextureButton" parent="TopBarRight/MenuGroup/MenuButton" unique_id=263720823]
 layout_mode = 0
 offset_top = 73.0
 offset_right = 62.0
 offset_bottom = 131.0
 texture_normal = ExtResource("20_i1mhp")
 
-[node name="HomeButton" type="TextureButton" parent="TopBarRight/MenuGroup/MenuButton" unique_id=345645429]
+[node name="HomeButton" type="TextureButton" parent="TopBarRight/MenuGroup/MenuButton" unique_id=1437291491]
 layout_mode = 0
 offset_top = 146.0
 offset_right = 62.0
 offset_bottom = 204.0
 texture_normal = ExtResource("21_dqs0d")
+
+[node name="MessageBox" type="TextureRect" parent="." unique_id=2038630278]
+layout_mode = 0
+offset_left = 458.0
+offset_top = 576.0
+offset_right = 821.0
+offset_bottom = 682.0
+texture = ExtResource("21_m5poc")
+stretch_mode = 2
+
+[node name="MessageLabel" type="Label" parent="MessageBox" unique_id=1824801086]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -179.5
+offset_top = -51.0
+offset_right = 179.5
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Try Again Next Day"
+label_settings = ExtResource("7_qarmq")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

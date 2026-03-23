@@ -10,7 +10,7 @@ extends Control
 @onready var day_scene = $DayScene
 @onready var dialogue_box = $DayScene/DialogueBox
 @onready var customer_manager = $DayScene/CustomerManager
-@onready var dialogue_text: Label = $DayScene/DialogueBox/OrderText
+@onready var dialogue_text: Label = $DayScene/OrderText
 
 @onready var day_number: Label = $BottomButtons/StartDayButton/Label
 
@@ -41,6 +41,22 @@ var is_typing: bool = false
 var full_dialogue_text: String = ""
 var typing_speed: float = 0.08   # seconds between words
 
+@export_group("Dialogue Box Settings")
+
+@export var box_texture_small: Texture2D
+@export var box_texture_medium: Texture2D
+@export var box_texture_large: Texture2D
+
+@export var box_size_small: Vector2 = Vector2(764, 192)
+@export var box_size_medium: Vector2 = Vector2(782, 246)
+@export var box_size_large: Vector2 = Vector2(884, 496)
+
+@export var box_position_small: Vector2 = Vector2(80, 151)
+@export var box_position_medium: Vector2 = Vector2(80, 151)
+@export var box_position_large: Vector2 = Vector2(75, 120)
+
+var base_box_position: Vector2 = Vector2.ZERO
+
 # ---------------------------------------------------------
 # LIFECYCLE
 # ---------------------------------------------------------
@@ -48,6 +64,8 @@ var typing_speed: float = 0.08   # seconds between words
 func _ready() -> void:
 	add_to_group("LobbyAutoStart")
 	dialogue_box.hide()
+	if is_instance_valid(dialogue_box):
+		base_box_position = dialogue_box.position
 	$DayScene/BtnAccept.hide()
 	$DayScene/BtnContinue.hide()
 	principal_leave_btn.hide()
@@ -107,6 +125,12 @@ func _ready() -> void:
 		principal_leave_btn.pressed.connect(_on_principal_leave_pressed)
 	
 	_restore_patience_ui()
+	
+	# 🔥 FIX: Resume day after skipping matching (Day 6+)
+	if GD.current_phase == GD.GamePhase.LOBBY and GD.day_started:
+		await get_tree().process_frame
+		play_food_intro_if_needed()
+		return
 
 	if GD.current_phase == GD.GamePhase.NEWS and GD.day_started:
 		# Small delay so scene fully loads
@@ -152,6 +176,46 @@ func typewriter_words(text: String) -> void:
 
 	is_typing = false
 
+func _play_dialogue(text_content: String, box_size_type: String = "medium"):
+
+	var target_texture: Texture2D = null
+	var target_position: Vector2 = base_box_position
+	var target_size: Vector2 = dialogue_box.size
+
+	match box_size_type.to_lower():
+
+		"small":
+			target_texture = box_texture_small
+			target_size = box_size_small
+			target_position = base_box_position + box_position_small
+
+		"large":
+			target_texture = box_texture_large
+			target_size = box_size_large
+			target_position = base_box_position + box_position_large
+
+		_:
+			target_texture = box_texture_medium
+			target_size = box_size_medium
+			target_position = base_box_position + box_position_medium
+
+	if dialogue_box:
+
+		if target_texture != null and "texture" in dialogue_box:
+			dialogue_box.texture = target_texture
+
+		dialogue_box.size = target_size
+		dialogue_box.position = target_position
+		dialogue_box.pivot_offset = dialogue_box.size / 2.0
+
+		dialogue_box.scale = Vector2(0.95, 0.95)
+
+		var tween = create_tween()
+		tween.tween_property(dialogue_box, "scale", Vector2.ONE, 0.2)\
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+	await typewriter_words(text_content)
+
 func _input(event):
 	if event.is_action_pressed("ui_accept") and is_typing:
 		dialogue_text.text = full_dialogue_text
@@ -189,7 +253,7 @@ const FOOD_INTRO_TEXT := {
 	
 	7: "Not all Grow foods are meat or fish! Today, we’re introducing eggs. They help kids grow strong and are a great source of protein. A great alternative for students that don't want fish or chicken.Let’s try serving these cute kids some eggs, shall we?.",
 	
-	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. They’re crunchy, colorful, and full of vitamin A.Some kids might be curious about how carrots taste so let’s try serving these cute kids some carrots today, shall we?",
+	8: "Vegetables help keep our eyes, skin, and body healthy! Today, we’re introducing carrots. They’re crunchy, colorful, and full of vitamin A. Let’s try serving these cute kids some carrots today, shall we?",
 	
 	9: "Rice gives us energy, and there are different kinds to try! Today we’re introducin brown rice — a healthy choice that keeps our tummies healthy and gives lasting energy. Some kids might want to try brown rice instead of white rice. Let’s serve them some and give it a try!",
 	
@@ -254,7 +318,7 @@ func spawn_principal_intro(day:int, text:String):
 
 	dialogue_text.add_theme_font_size_override("font_size", font_size)
 
-	await typewriter_words(text)
+	await _play_dialogue(text, "large")
 
 	principal_leave_btn.show()
 
@@ -273,6 +337,7 @@ func _on_principal_confirm():
 func _on_principal_leave_pressed() -> void:
 	principal_leave_btn.hide()
 	dialogue_box.hide()
+	dialogue_text.hide()
 
 	customer_manager.next_customer()
 	await customer_manager.customer_left
@@ -542,6 +607,20 @@ func _format_slot_name(slot:String) -> String:
 		_:
 			return slot
 
+func _format_beverage_name(internal_key: String) -> String:
+	match internal_key:
+		"WATER": return "water"
+		"MILK": return "milk"
+		_:
+			return internal_key.to_lower()
+
+func _get_feedback_box_size(mistakes: Array) -> String:
+	if mistakes.size() <= 1:
+		return "small"
+	elif mistakes.size() == 2:
+		return "medium"
+	return "large"
+
 func _on_btn_final_serve_pressed() -> void:
 	$FinalPlateDisplay/BtnFinalServe.hide()
 
@@ -581,13 +660,13 @@ func _on_btn_final_serve_pressed() -> void:
 	dialogue_text.text = ""
 
 	if correct:
-		await typewriter_words(_get_happy_feedback())
+		await _play_dialogue(_get_happy_feedback(), "small")
 		
 		if character_id in ["Leo", "Maya", "Norma"]:
 			_show_special_key_reward()
 		
 	else:
-		await typewriter_words(_get_angry_feedback(mistakes))
+		await _play_dialogue(_get_angry_feedback(mistakes), _get_feedback_box_size(mistakes))
 
 		if character_id != "":
 			customer_manager.play_sad_reaction(character_id)
@@ -644,6 +723,7 @@ func _get_detailed_mistakes() -> Array:
 
 	var required_plate: Dictionary = OrderSystem.current_customer_order.required_plate
 	var required_portions: Dictionary = OrderSystem.current_customer_order.get("required_portions", {})
+	var required_beverages: Dictionary = OrderSystem.current_customer_order.get("required_beverages", {})
 
 	var plated_map := {}
 
@@ -704,6 +784,41 @@ func _get_detailed_mistakes() -> Array:
 			"PANDESAL":
 				if actual.quantity != expected_portion:
 					mistakes.append("Need %s pandesal!" % str(expected_portion))
+
+	# ---------------------------------------------------------
+	# BEVERAGE CHECKS
+	# ---------------------------------------------------------
+	var prepared_beverages: Dictionary = OrderSystem.prepared_beverage_data
+
+	for bev_slot in required_beverages.keys():
+		var expected_bev = required_beverages[bev_slot]
+
+		if not prepared_beverages.has(bev_slot):
+			if expected_bev == "WATER":
+				mistakes.append("Missing my water!")
+			elif expected_bev == "MILK":
+				mistakes.append("Missing my milk!")
+			else:
+				mistakes.append("Missing my %s!" % _format_beverage_name(expected_bev))
+			continue
+
+		var bev_entry = prepared_beverages[bev_slot]
+		var bev_item = bev_entry.get("item")
+		var actual_bev = ""
+
+		if bev_item:
+			actual_bev = bev_item.internal_key
+
+		if actual_bev != expected_bev:
+			if expected_bev == "WATER":
+				mistakes.append("I asked for water, not %s!" % _format_beverage_name(actual_bev))
+			elif expected_bev == "MILK":
+				mistakes.append("I asked for milk, not %s!" % _format_beverage_name(actual_bev))
+			else:
+				mistakes.append("I asked for %s, not %s!" % [
+					_format_beverage_name(expected_bev),
+					_format_beverage_name(actual_bev)
+				])
 
 	return mistakes
 
@@ -1145,6 +1260,3 @@ func _show_special_key_reward():
 
 	# Force HUD to update immediately
 	get_tree().call_group("HUD", "update_keys", GD.keys + 10)
-
-	# Optional: simple floating feedback text
-	dialogue_text.text += "\n\n⭐ +10 Keys!"

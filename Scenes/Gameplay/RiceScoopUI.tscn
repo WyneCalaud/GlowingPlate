@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dl6vkdqxfye3a"]
+[gd_scene format=3 uid="uid://dl6vkdqxfye3a"]
 
 [ext_resource type="Script" uid="uid://db22l0kqy82ml" path="res://Scenes/Gameplay/hold_button.gd" id="1_tyl08"]
 [ext_resource type="Texture2D" uid="uid://bbxxsyi7js1br" path="res://Assets/UI/RiceUI/EmptyRiceCup.png" id="2_34kpu"]
@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cq42rieqrmxkn" path="res://Assets/UI/RiceUI/BrownHigh.png" id="9_sd4j6"]
 [ext_resource type="Texture2D" uid="uid://bt7fgh08x3yu3" path="res://Assets/UI/RiceUI/BrownFull.png" id="10_03nap"]
 
-[node name="HoldButton" type="Control"]
+[node name="HoldButton" type="Control" unique_id=1745450359]
 layout_mode = 3
 anchor_right = 0.275
 anchor_bottom = 0.32200003
@@ -31,14 +31,14 @@ br_med = ExtResource("8_uxoud")
 br_right = ExtResource("9_sd4j6")
 br_too_high = ExtResource("10_03nap")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=419080457]
 layout_mode = 0
 offset_right = 210.0
 offset_bottom = 142.0
 texture = ExtResource("2_fvw70")
 stretch_mode = 2
 
-[node name="CupProgress" type="TextureRect" parent="."]
+[node name="CupProgress" type="TextureRect" parent="." unique_id=775328966]
 layout_mode = 0
 offset_left = 101.0
 offset_top = 37.0
@@ -47,7 +47,7 @@ offset_bottom = 176.0
 texture = ExtResource("2_34kpu")
 stretch_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=81099145]
 layout_mode = 0
 offset_left = 120.0
 offset_top = 176.0
@@ -57,7 +57,7 @@ scale = Vector2(0.6, 0.6)
 theme_override_constants/separation = -70
 alignment = 1
 
-[node name="HoldButton" type="TextureButton" parent="VBoxContainer"]
+[node name="HoldButton" type="TextureButton" parent="VBoxContainer" unique_id=800909]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

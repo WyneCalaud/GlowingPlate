@@ -1,93 +1,129 @@
 extends Node
 
-# SM-2 (SuperMemo-2) Spaced Repetition Logic
-# Tracks concepts to ensure players review missed content and space out mastered content.
-
 var concept_progress: Dictionary = {}
 
-const MIN_EF: float = 1.3
-const MAX_INTERVAL: int = 14 # Capped for a 14-day game loop
-
-func _ready():
-	# Restore saved concepts from GameData on launch
-	if GameData.get("quiz_concept_progress") != null and not GameData.quiz_concept_progress.is_empty():
-		concept_progress = GameData.quiz_concept_progress
-
 func initialize_concepts(current_day: int) -> void:
-	# FIX: We no longer pre-load all concepts here. 
-	# Pre-loading them was causing unseen concepts to jump the line and block missed questions.
-	# Concepts will now dynamically be added inside update_concept_progress() only AFTER they are answered.
-	pass
+	if not has_node("/root/QuestionDatabase"):
+		return
 
-func get_due_concepts(current_day: int, max_per_day: int = 5) -> Array:
+	# 🔥 ALWAYS START FROM SAVED DATA
+	if GameData.quiz_concept_progress != null and GameData.quiz_concept_progress.size() > 0:
+		concept_progress = GameData.quiz_concept_progress.duplicate(true)
+		print("✅ Loaded saved concept progress:", concept_progress.size())
+	else:
+		concept_progress.clear()
+		print("⚠️ No saved concept progress found")
+
+	var all_questions = QuestionDatabase.get_all_questions()
+
+	for q in all_questions:
+		var concept = q.get("concept", q["id"])
+
+		if not concept_progress.has(concept):
+			concept_progress[concept] = {
+				"correct": 0,
+				"incorrect": 0,
+				"exposure": 0,
+				"last_seen_day": current_day,
+				"next_review_day": current_day
+			}
+
+# ==========================================================
+# GET DUE CONCEPTS
+# ==========================================================
+
+func get_due_concepts(current_day: int) -> Array:
 	var due: Array = []
 	for concept in concept_progress.keys():
 		var data = concept_progress[concept]
-		# A concept is due if the current day has reached or passed the scheduled review day
 		if data.next_review_day <= current_day:
 			due.append(concept)
-	
-	# Sort: Newer/more urgent reviews (shorter intervals like wrong answers) first
-	due.sort_custom(func(a, b): return concept_progress[a].interval < concept_progress[b].interval)
-	
-	if due.size() > max_per_day: 
-		due = due.slice(0, max_per_day)
 	return due
 
-func update_concept_progress(concept: String, quality: int, current_day: int) -> int:
-	# If this is the FIRST time the player has seen this concept, initialize it now!
+# ==========================================================
+# UPDATE (FORMULA BASED + FEEDBACK GENERATION)
+# ==========================================================
+
+# 🔥 CHANGED: Now returns a Dictionary with all the UI strings + next_day
+func update_concept_progress(concept: String, is_correct: bool, response_time: float, current_day: int) -> Dictionary:
+	
 	if not concept_progress.has(concept):
 		concept_progress[concept] = {
-			"repetition": 0, "interval": 0, "ease_factor": 2.5, "next_review_day": current_day
+			"correct": 0, "incorrect": 0, "exposure": 0,
+			"last_seen_day": current_day, "next_review_day": current_day
 		}
 	
 	var data = concept_progress[concept]
-	var R = data.repetition
-	var I = data.interval
-	var EF = data.ease_factor
 	
-	# QUALITY MAPPING:
-	# 0-2: Incorrect/Fail -> Reset
-	# 3-5: Success -> Expand Interval
-	
-	if quality < 3:
-		# RESET LOGIC: If wrong, restart the repetition count and set interval to 1 (see tomorrow)
-		R = 0
-		I = 1
+	# --- UPDATE COUNTS ---
+	data.exposure += 1
+	if is_correct:
+		data.correct += 1
 	else:
-		# SUCCESS LOGIC: Expand the gap based on Ease Factor
-		if R == 0:
-			I = 1   # First time right: review tomorrow
-		elif R == 1:
-			I = 3   # Second time right: skip a few days
-		else:
-			I = ceil(I * EF) # Subsequent times: multiply by Ease Factor
-		
-		# Update Ease Factor based on performance (SM-2 formula)
-		EF = EF + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
-		if EF < MIN_EF: EF = MIN_EF
-		
-		R += 1
+		data.incorrect += 1
 	
-	# Cap the interval so they don't disappear for longer than the game lasts
-	I = min(I, MAX_INTERVAL)
+	# --- SPEED FACTOR ---
+	var S := 0
+	if response_time <= 1.5:
+		S = 2 # Fast
+	elif response_time <= 3.0:
+		S = 1 # Moderate
+	else:
+		S = 0 # Slow
 	
-	# Calculate the exact day for the next appearance
-	var next_day = current_day + I
+	var C = data.correct
+	var I = data.incorrect
+	var E = max(1, data.exposure)
 	
-	data.repetition = R
-	data.interval = I
-	data.ease_factor = EF
+	# --- MASTERY FORMULA ---
+	var M = float((C * 2) + S - (I * 2)) / float(E)
+	
+	# --- SCHEDULING ---
+	var next_day: int
+	var mastery_msg = ""
+	
+	if not is_correct:
+		next_day = current_day + 1
+		mastery_msg = "Mastery: Needs practice"
+	elif M >= 1.5:
+		next_day = current_day + 3
+		mastery_msg = "Mastery: Improving (High)"
+	elif M >= 0.5:
+		next_day = current_day + 2
+		mastery_msg = "Mastery: Moderate"
+	else:
+		next_day = current_day + 1
+		mastery_msg = "Mastery: Needs practice"
+	
 	data.next_review_day = next_day
+	data.last_seen_day = current_day
 	
 	concept_progress[concept] = data
-	
-	# Sync immediately to GameData for safety
 	GameData.quiz_concept_progress = concept_progress
 	
-	return next_day
-
-func apply_quiz_results(_results: Dictionary):
-	# Final confirmation that data is synced to persistence
-	GameData.quiz_concept_progress = concept_progress
-	GameData.save_game()
+	# --- GENERATE STRINGS FOR THE UI POPUP ---
+	var performance_msg = ""
+	if is_correct:
+		if S == 2: performance_msg = "Nice! That was quick!"
+		elif S == 1: performance_msg = "Good job!"
+		else: performance_msg = "Correct! Try to be a bit faster."
+	else:
+		performance_msg = "Let's try that again."
+		
+	var exposure_msg = ""
+	if E == 1: exposure_msg = "First time seeing this!"
+	elif E <= 3: exposure_msg = "You're getting familiar with this"
+	else: exposure_msg = "You've seen this %d times" % E
+	
+	# --- DEBUG (For thesis proof) ---
+	print("📊 CONCEPT UPDATE: ", concept)
+	print("Time: ", response_time, "s | C:", C, " I:", I, " E:", E, " S:", S)
+	print("Mastery Score (M): ", M)
+	print("--------------------")
+	
+	return {
+		"next_day": next_day,
+		"performance": performance_msg,
+		"exposure": exposure_msg,
+		"mastery": mastery_msg
+	}

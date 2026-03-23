@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bbq0o6jx72x3g" path="res://Assets/UI/RiceUI/OpenedWhiteRiceCooker.png" id="10_hkpja"]
 [ext_resource type="Texture2D" uid="uid://b33i1545pes2b" path="res://Assets/UI/RiceUI/WhiteRiceCooker.png" id="10_kcelb"]
 [ext_resource type="Texture2D" uid="uid://cctxefwqjikcf" path="res://Assets/UI/RiceUI/BrownRiceCooker.png" id="10_nflrw"]
-[ext_resource type="Script" uid="uid://dab8sxkkrxb1r" path="res://Scenes/Gameplay/UndoButton.gd" id="10_orncx"]
+[ext_resource type="Script" path="res://Scenes/Gameplay/UndoButton.gd" id="10_orncx"]
 [ext_resource type="Texture2D" uid="uid://oi7gamnoolue" path="res://Assets/UI/KitchenUI/OpenBrownRiceCooker.png" id="12_n7sx4"]
 [ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="12_vfpnn"]
 [ext_resource type="Texture2D" uid="uid://cecdbgmapkd34" path="res://Assets/UI/RiceUI/WhiteRiceScoopLow.png" id="15_n7sx4"]

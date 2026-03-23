@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://3enqe0kbe4jf"]
+
+[ext_resource type="FontFile" uid="uid://digqums1t6ixy" path="res://fonts/Comic_Neue/ComicNeue-Regular.ttf" id="1_v461n"]
+
+[resource]
+font = ExtResource("1_v461n")
+font_size = 30
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
