@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bwe76a0ehdxka"]
+[gd_scene format=3 uid="uid://bwe76a0ehdxka"]
 
 [ext_resource type="Script" uid="uid://dcek1knwpaq1t" path="res://Scripts/Quiz/QuizManager.gd" id="1_8s52k"]
 [ext_resource type="Texture2D" uid="uid://b1dvwltxkj1ft" path="res://Assets/UI/QuizUI/QuizTemplateX3.png" id="3_nc0by"]
@@ -26,7 +26,7 @@ font = ExtResource("10_nc0by")
 font_size = 40
 outline_size = 3
 
-[node name="QuizScene" type="Control"]
+[node name="QuizScene" type="Control" unique_id=1750913201]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,7 +37,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_8s52k")
 
-[node name="QuizBackground" type="Control" parent="."]
+[node name="QuizBackground" type="Control" parent="." unique_id=2103166881]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,7 +46,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="BGImage" type="TextureRect" parent="QuizBackground"]
+[node name="BGImage" type="TextureRect" parent="QuizBackground" unique_id=9872326]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,7 +57,7 @@ texture = ExtResource("3_nc0by")
 expand_mode = 1
 metadata/_edit_lock_ = true
 
-[node name="QuizPanel" type="Control" parent="."]
+[node name="QuizPanel" type="Control" parent="." unique_id=228493146]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,14 +70,14 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="Questionaire" type="Control" parent="QuizPanel"]
+[node name="Questionaire" type="Control" parent="QuizPanel" unique_id=58585052]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 329.0
 grow_horizontal = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="QuizPanel/Questionaire"]
+[node name="HBoxContainer" type="HBoxContainer" parent="QuizPanel/Questionaire" unique_id=534839499]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -86,7 +86,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="QuestionText" type="Label" parent="QuizPanel/Questionaire/HBoxContainer"]
+[node name="QuestionText" type="Label" parent="QuizPanel/Questionaire/HBoxContainer" unique_id=445067250]
 custom_minimum_size = Vector2(350, 100)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -97,14 +97,14 @@ label_settings = ExtResource("5_vc1sw")
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="QuestionImage" type="TextureRect" parent="QuizPanel/Questionaire/HBoxContainer"]
+[node name="QuestionImage" type="TextureRect" parent="QuizPanel/Questionaire/HBoxContainer" unique_id=691611962]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("5_1wj21")
 stretch_mode = 2
 
-[node name="AnswersContainer" type="HBoxContainer" parent="QuizPanel"]
+[node name="AnswersContainer" type="HBoxContainer" parent="QuizPanel" unique_id=1421546269]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -118,13 +118,13 @@ grow_vertical = 0
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="A" type="TextureButton" parent="QuizPanel/AnswersContainer"]
+[node name="A" type="TextureButton" parent="QuizPanel/AnswersContainer" unique_id=2055474379]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("5_nc0by")
 
-[node name="AText" type="Label" parent="QuizPanel/AnswersContainer/A"]
+[node name="AText" type="Label" parent="QuizPanel/AnswersContainer/A" unique_id=232407278]
 layout_mode = 0
 offset_left = 54.0
 offset_top = 19.0
@@ -136,7 +136,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="AImage" type="TextureRect" parent="QuizPanel/AnswersContainer/A"]
+[node name="AImage" type="TextureRect" parent="QuizPanel/AnswersContainer/A" unique_id=343674563]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -152,13 +152,13 @@ grow_vertical = 2
 texture = ExtResource("8_l0ke5")
 stretch_mode = 3
 
-[node name="B" type="TextureButton" parent="QuizPanel/AnswersContainer"]
+[node name="B" type="TextureButton" parent="QuizPanel/AnswersContainer" unique_id=1423542135]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("7_vc1sw")
 
-[node name="BText" type="Label" parent="QuizPanel/AnswersContainer/B"]
+[node name="BText" type="Label" parent="QuizPanel/AnswersContainer/B" unique_id=776298878]
 layout_mode = 0
 offset_left = 54.0
 offset_top = 19.0
@@ -170,7 +170,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BImage" type="TextureRect" parent="QuizPanel/AnswersContainer/B"]
+[node name="BImage" type="TextureRect" parent="QuizPanel/AnswersContainer/B" unique_id=1176491912]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -186,13 +186,13 @@ grow_vertical = 2
 texture = ExtResource("10_wmtu8")
 stretch_mode = 3
 
-[node name="C" type="TextureButton" parent="QuizPanel/AnswersContainer"]
+[node name="C" type="TextureButton" parent="QuizPanel/AnswersContainer" unique_id=1866614198]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("8_1wj21")
 
-[node name="CText" type="Label" parent="QuizPanel/AnswersContainer/C"]
+[node name="CText" type="Label" parent="QuizPanel/AnswersContainer/C" unique_id=1722352742]
 layout_mode = 0
 offset_left = 54.0
 offset_top = 19.0
@@ -204,7 +204,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="CImage" type="TextureRect" parent="QuizPanel/AnswersContainer/C"]
+[node name="CImage" type="TextureRect" parent="QuizPanel/AnswersContainer/C" unique_id=1027385023]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -220,7 +220,7 @@ grow_vertical = 2
 texture = ExtResource("12_ng2d4")
 stretch_mode = 3
 
-[node name="Result" type="Control" parent="."]
+[node name="Result" type="Control" parent="." unique_id=149342492]
 visible = false
 anchors_preset = 0
 offset_left = 576.0
@@ -229,7 +229,7 @@ offset_right = 712.0
 offset_bottom = 336.0
 metadata/_edit_lock_ = true
 
-[node name="ResultLabel" type="Label" parent="Result"]
+[node name="ResultLabel" type="Label" parent="Result" unique_id=7899522]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -246,15 +246,15 @@ label_settings = SubResource("LabelSettings_yo6g2")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SfxCorrect" type="AudioStreamPlayer2D" parent="."]
+[node name="SfxCorrect" type="AudioStreamPlayer2D" parent="." unique_id=250527810]
 stream = ExtResource("11_nc0by")
 metadata/_edit_lock_ = true
 
-[node name="SfxIncorrect" type="AudioStreamPlayer2D" parent="."]
+[node name="SfxIncorrect" type="AudioStreamPlayer2D" parent="." unique_id=165426444]
 stream = ExtResource("12_vc1sw")
 metadata/_edit_lock_ = true
 
-[node name="PauseLayer" type="TextureRect" parent="."]
+[node name="PauseLayer" type="TextureRect" parent="." unique_id=1291500385]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -265,7 +265,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("17_m5poc")
 
-[node name="TopBarRight" type="MarginContainer" parent="."]
+[node name="TopBarRight" type="MarginContainer" parent="." unique_id=154249327]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -278,22 +278,22 @@ theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 23
 theme_override_constants/margin_right = 23
 
-[node name="MenuGroup" type="VBoxContainer" parent="TopBarRight"]
+[node name="MenuGroup" type="VBoxContainer" parent="TopBarRight" unique_id=1674325968]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="MenuButton" type="TextureButton" parent="TopBarRight/MenuGroup"]
+[node name="MenuButton" type="TextureButton" parent="TopBarRight/MenuGroup" unique_id=837594348]
 layout_mode = 2
 texture_normal = ExtResource("19_tmr7e")
 
-[node name="SettingsButton" type="TextureButton" parent="TopBarRight/MenuGroup/MenuButton"]
+[node name="SettingsButton" type="TextureButton" parent="TopBarRight/MenuGroup/MenuButton" unique_id=1346739936]
 layout_mode = 0
 offset_top = 73.0
 offset_right = 62.0
 offset_bottom = 131.0
 texture_normal = ExtResource("20_i1mhp")
 
-[node name="HomeButton" type="TextureButton" parent="TopBarRight/MenuGroup/MenuButton"]
+[node name="HomeButton" type="TextureButton" parent="TopBarRight/MenuGroup/MenuButton" unique_id=345645429]
 layout_mode = 0
 offset_top = 146.0
 offset_right = 62.0

@@ -22,6 +22,9 @@ var drag_threshold: float = 10.0
 var press_pos: Vector2
 var is_pressing: bool = false
 
+# --- TUTORIAL SYSTEM ---
+var is_tutorial_locked: bool = false
+
 func _ready():
 	if sprite:
 		if is_instance_valid(unselected_texture):
@@ -36,6 +39,10 @@ func _ready():
 	add_to_group("liquid_dispenser")
 
 func _input_event(_viewport, event, _shape_idx):
+	# Block interaction if the tutorial has this node locked
+	if is_tutorial_locked:
+		return
+		
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			is_pressing = true
@@ -79,6 +86,14 @@ func select():
 		var tween = create_tween().set_parallel(true)
 		tween.tween_property(sprite, "scale", original_scale * hover_scale, anim_speed)
 		tween.tween_property(sprite, "modulate", highlight_color, anim_speed)
+		
+	# --- TUTORIAL NOTIFICATION ---
+	var in_tutorial = get_tree().get_node_count_in_group("InteractiveTutorial") > 0
+	if in_tutorial:
+		# Tell the tutorial we pressed it
+		get_tree().call_group("InteractiveTutorial", "action_completed", "Cold_Water_Pressed")
+		# Instantly lock self so the player cannot double-tap and deselect it during the transition
+		is_tutorial_locked = true
 
 func deselect():
 	if not is_selected: return # Break recursion

@@ -29,6 +29,9 @@ var is_spawning: bool = false
 var selected_liquid: String = "" 
 var current_dispenser_node: Node = null
 
+# --- TUTORIAL SYSTEM ---
+var is_tutorial_locked: bool = false
+
 func _ready():
 	var current_node = get_parent()
 	while current_node and current_node.get_parent() != null:
@@ -210,6 +213,10 @@ func replace_glass_with_filled(empty_glass: Node2D, fill_level: int, liquid_type
 	return false
 
 func _input(event: InputEvent) -> void:
+	# --- TUTORIAL LOCK CHECK ---
+	if is_tutorial_locked:
+		return
+		
 	if is_spawning: return
 	if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed()):
 		var local_click_pos = to_local(get_global_mouse_position())
@@ -217,6 +224,13 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			reset_liquid_selection_visuals()
 			spawn_and_place_glass()
+			
+			# --- TUTORIAL NOTIFICATION & SAFETY LOCK ---
+			var in_tutorial = get_tree().get_node_count_in_group("InteractiveTutorial") > 0
+			if in_tutorial:
+				get_tree().call_group("InteractiveTutorial", "action_completed", "Stack_Glass_Pressed")
+				# Instantly lock self so player cannot double click during the tutorial transition
+				is_tutorial_locked = true
 
 func is_mat_available(mat: Node2D) -> bool:
 	# Checks if it has no children AND isn't currently reserved by another mid-air item

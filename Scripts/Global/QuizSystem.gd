@@ -1,4 +1,3 @@
-# QuizSystem.gd
 extends Node
 
 # SM-2 (SuperMemo-2) Spaced Repetition Logic
@@ -15,17 +14,10 @@ func _ready():
 		concept_progress = GameData.quiz_concept_progress
 
 func initialize_concepts(current_day: int) -> void:
-	if not has_node("/root/QuestionDatabase"): return
-	var concepts = QuestionDatabase.get_all_concepts()
-	
-	for concept in concepts:
-		if not concept_progress.has(concept):
-			concept_progress[concept] = {
-				"repetition": 0,    # How many times successfully answered in a row
-				"interval": 0,      # Current gap between reviews (in days)
-				"ease_factor": 2.5, # Multiplier for the interval
-				"next_review_day": current_day
-			}
+	# FIX: We no longer pre-load all concepts here. 
+	# Pre-loading them was causing unseen concepts to jump the line and block missed questions.
+	# Concepts will now dynamically be added inside update_concept_progress() only AFTER they are answered.
+	pass
 
 func get_due_concepts(current_day: int, max_per_day: int = 5) -> Array:
 	var due: Array = []
@@ -35,7 +27,7 @@ func get_due_concepts(current_day: int, max_per_day: int = 5) -> Array:
 		if data.next_review_day <= current_day:
 			due.append(concept)
 	
-	# Sort: Newer/more urgent reviews (shorter intervals) first
+	# Sort: Newer/more urgent reviews (shorter intervals like wrong answers) first
 	due.sort_custom(func(a, b): return concept_progress[a].interval < concept_progress[b].interval)
 	
 	if due.size() > max_per_day: 
@@ -43,7 +35,7 @@ func get_due_concepts(current_day: int, max_per_day: int = 5) -> Array:
 	return due
 
 func update_concept_progress(concept: String, quality: int, current_day: int) -> int:
-	# Ensure the concept exists in our tracking
+	# If this is the FIRST time the player has seen this concept, initialize it now!
 	if not concept_progress.has(concept):
 		concept_progress[concept] = {
 			"repetition": 0, "interval": 0, "ease_factor": 2.5, "next_review_day": current_day
@@ -72,7 +64,6 @@ func update_concept_progress(concept: String, quality: int, current_day: int) ->
 			I = ceil(I * EF) # Subsequent times: multiply by Ease Factor
 		
 		# Update Ease Factor based on performance (SM-2 formula)
-		# This makes the question appear more or less often depending on how "easy" it is
 		EF = EF + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
 		if EF < MIN_EF: EF = MIN_EF
 		

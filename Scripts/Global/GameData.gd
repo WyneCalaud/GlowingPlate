@@ -1,6 +1,8 @@
 # GameData.gd
 extends Node
 
+var tutorial_completed: bool = false
+
 # --- Tutorial & Intro Flags ---
 var kitchen_tutorial_completed: bool = true
 var matching_tutorial_completed: bool = false

@@ -8,7 +8,17 @@ var is_updating: bool = false # Guard against recursive layout loops
 @export var player_completed_day: int = 1 
 
 func _on_texture_button_pressed() -> void:
-	closed.emit()
+	# =========================================================
+	# ---> TUTORIAL HOOK: Notify Interactive.gd when Almanac is closed
+	# =========================================================
+	var in_tutorial = get_tree().get_nodes_in_group("InteractiveTutorial").size() > 0
+	
+	if in_tutorial:
+		get_tree().call_group("InteractiveTutorial", "action_completed", "Almanac_Close")
+		hide() # Just hide the UI! Do NOT emit 'closed', which prevents the scene from changing to the Lobby.
+	else:
+		closed.emit() # Normal game behavior: Emit signal to let the parent script handle it.
+	# =========================================================
 
 # --- SCENE REFERENCES ---
 @onready var exit_button: TextureButton = $Almanac/Exitbutton
@@ -124,6 +134,18 @@ func _switch_category(category: String, keep_portion_tab: bool = false):
 	var GD = get_node("/root/GameData")
 	var unlocked_foods = OrderSystem.get_unlocked_foods(GD.current_day - 1)
 	
+	# =========================================================
+	# ---> NEW: TUTORIAL OVERRIDE <---
+	# If the tutorial is active, forcefully add the required items to the unlocked list!
+	# Make sure these strings match your OrderSystem keys exactly.
+	# =========================================================
+	if get_tree().get_nodes_in_group("InteractiveTutorial").size() > 0:
+		var tutorial_foods = ["RICE", "CHICKEN", "SITAW", "MANGO"]
+		for t_food in tutorial_foods:
+			if not unlocked_foods.has(t_food):
+				unlocked_foods.append(t_food)
+	# =========================================================
+	
 	# --- 1. SETUP UI BASED ON CATEGORY ---
 	if category == "Go":
 		tab_go.self_modulate = Color(1.5, 1.5, 1.5) # Changed to self_modulate
@@ -226,8 +248,22 @@ func _on_food_button_pressed(pressed_btn: BaseButton, index: int):
 	current_food_index = index
 	call_deferred("_update_info_page") 
 
+	# =========================================================
+	# ---> TUTORIAL HOOK: Notify Interactive.gd when a food is clicked
+	# =========================================================
+	var category_keys = []
+	match current_category:
+		"Go": category_keys = go_food_keys
+		"Grow": category_keys = grow_food_keys
+		"Glow": category_keys = glow_food_keys
+		
+	if index < category_keys.size():
+		var food_key = category_keys[index]
+		# Example output: "Almanac_Food_Clicked_RICE"
+		get_tree().call_group("InteractiveTutorial", "action_completed", "Almanac_Food_Clicked_" + food_key)
+	# =========================================================
 
-# --- ERROR ANIMATION ---
+# --- NEW ERROR ANIMATION ---
 func _play_error_animation(btn: BaseButton):
 	btn.pivot_offset = btn.size / 2.0
 	
@@ -246,6 +282,13 @@ func _play_error_animation(btn: BaseButton):
 # --- PORTION TAB LOGIC ---
 func _on_portion_tab_toggled(toggled_on: bool):
 	if toggled_on:
+		
+		# =========================================================
+		# ---> TUTORIAL HOOK: Notify Interactive.gd when Portion Tab is toggled ON
+		# =========================================================
+		get_tree().call_group("InteractiveTutorial", "action_completed", "Portion_Pressed")
+		# =========================================================
+		
 		tab_portion.self_modulate = Color(1.5, 1.5, 1.5) # Changed to self_modulate
 		
 		# Show navigation arrows

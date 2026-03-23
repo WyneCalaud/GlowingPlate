@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dspwcgo3enhkn"]
 
-[ext_resource type="Script" uid="uid://c8y0d84fbmrnr" path="res://Scenes/Gameplay/KitchenArea.gd" id="1_k5enx"]
+[ext_resource type="Script" uid="uid://ng3wej2m5goe" path="res://Scenes/Gameplay/KitchenArea.gd" id="1_k5enx"]
 [ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="2_i7i4q"]
 [ext_resource type="Texture2D" uid="uid://c6dwgia002v0i" path="res://Assets/Food Containers/EmptyGo.png" id="2_pmqpb"]
 [ext_resource type="PackedScene" uid="uid://chaqv2o4rajlv" path="res://Scenes/Gameplay/BeverageStation.tscn" id="3_i7i4q"]
@@ -67,7 +67,7 @@
 [ext_resource type="PackedScene" uid="uid://jjcnedpqlb6a" path="res://Scenes/FoodDispenser/VeggieCup.tscn" id="53_slnmu"]
 [ext_resource type="PackedScene" uid="uid://chdn7q1q0s44g" path="res://Scenes/Ticket/order_ticket.tscn" id="54_i7i4q"]
 [ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="54_nf282"]
-[ext_resource type="PackedScene" uid="uid://duqcd4sv1178i" path="res://Scenes/Tutorial/KitchenTutorial.tscn" id="55_oxc20"]
+[ext_resource type="PackedScene" uid="uid://des5ggi5bdapj" path="res://Scenes/Tutorial/KitchenTutorial.tscn" id="55_oxc20"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n7sx4"]
 atlas = ExtResource("4_oxc20")

@@ -38,6 +38,13 @@ func _ready():
 		serve_trash_zone.visible = false
 		print("DEBUG: Serve/Trash zone found.")
 
+	# --- TUTORIAL NOTIFICATION ---
+	# We don't lock this or add it to the interactable group.
+	# The fact that this node spawned means the player successfully filled the glass!
+	var in_tutorial = get_tree().get_node_count_in_group("InteractiveTutorial") > 0
+	if in_tutorial:
+		get_tree().call_group("InteractiveTutorial", "action_completed", "FullGlass_Filled")
+
 # --- OVERRIDE: Dragging Starts (Show Zones) ---
 func start_dragging():
 	super.start_dragging() 

@@ -3,8 +3,11 @@ extends Area2D
 # --- STATE ---
 var is_ui_active: bool = false
 var spawner_controller: Node = null
-# FIX: Added state to remember which liquid initiated the hold
 var active_liquid_type: String = "" 
+
+# --- CRITICAL TUTORIAL SYSTEM VARS ---
+# This MUST exist, or the Tutorial Manager will silently crash on the first image!
+var is_tutorial_locked: bool = false
 
 func _ready():
 	# 1. Find the Global Controller
@@ -14,9 +17,17 @@ func _ready():
 	
 	# 2. Ensure Input is active
 	set_pickable(true)
+	
+	# 3. Add to interactable group for the tutorial manager
+	add_to_group("interactable")
 
 # --- INPUT HANDLING ---
 func _input_event(_viewport, event, _shape_idx):
+	
+	# CRITICAL TUTORIAL FIX: Ignore clicks if the tutorial is currently showing an image
+	if is_tutorial_locked:
+		return
+		
 	# DEBUG: Check if the click is even registering
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 		var current_liquid = "None"
@@ -36,31 +47,35 @@ func try_start_filling():
 		print("ERROR: No Spawner Controller found!")
 		return
 	
-	# FIX: Convert to lower case to handle liquid names consistently
+	# Convert to lower case to handle liquid names consistently
 	var sel = spawner_controller.selected_liquid.to_lower()
 	print("DEBUG: Checking liquid match for: %s" % sel)
 	
-	# UPDATED FIX: Check for all water types, AND check if the selected liquid CONTAINS "milk" 
-	# (or starts with specific milk prefixes) for broader compatibility.
+	# Check for all water types, AND check if the selected liquid CONTAINS "milk" 
 	var is_water_type = sel.begins_with("water") or sel.begins_with("hot") or sel.begins_with("cold") or sel.begins_with("lukewarm")
-	
-	# CRITICAL FIX HERE: Check if the selection starts with 'milk', 'regular_milk', or 'almond_milk'
 	var is_milk_type = sel.begins_with("milk") or sel.begins_with("regularmilk") or sel.begins_with("almondmilk")
 	
 	if is_water_type or is_milk_type:
 		
-		# FIX: Capture the specific liquid string (e.g. "Cold" or "Regular Milk") so we remember it
+		# Capture the specific liquid string so we remember it
 		active_liquid_type = spawner_controller.selected_liquid
 		
-		# 2. Get the Hold Button Scene from the Spawner
+		# Get the Hold Button Scene from the Spawner
 		var ui_scene = spawner_controller.HOLD_BUTTON_SCENE
 		if ui_scene:
 			spawn_hold_button(ui_scene)
+			
+			# --- TUTORIAL NOTIFICATION ---
+			var in_tutorial = get_tree().get_node_count_in_group("InteractiveTutorial") > 0
+			if in_tutorial:
+				# Tell the tutorial we pressed the empty glass successfully
+				get_tree().call_group("InteractiveTutorial", "action_completed", "EmptyGlass_Pressed")
+				# Instantly lock self so the player cannot click again during the UI transition
+				is_tutorial_locked = true
 		else:
 			print("ERROR: HOLD_BUTTON_SCENE not found in Spawner.")
 			
 	elif spawner_controller.selected_liquid != "":
-		# UPDATED ERROR MESSAGE to reflect correct naming conventions
 		print("ACTION: Wrong liquid type (%s). Select a valid Water, Milk, or Almond Milk type." % spawner_controller.selected_liquid)
 	else:
 		print("ACTION: Select a liquid first.")
@@ -75,23 +90,20 @@ func spawn_hold_button(ui_scene: PackedScene):
 	# 2. Add it to the scene
 	add_child(hold_button)
 	
-	# 3. CRITICAL VISIBILITY FIX: Make it Top Level
+	# 3. Make it Top Level
 	if hold_button is CanvasItem:
 		hold_button.top_level = true
 	
 	# 4. Position it: TIE TO MAT POSITION (PARENT)
-	# Instead of using self.global_position, we use get_parent().global_position.
 	var parent_node = get_parent()
 	var target_pos = Vector2.ZERO
 	
 	if parent_node:
 		target_pos = parent_node.global_position
-		print("DEBUG: Anchoring UI to Parent Mat: %s at %s" % [parent_node.name, target_pos])
 	else:
-		# Fallback if for some reason it has no parent
 		target_pos = global_position
 	
-	# Add an offset (e.g., -145 X, -50 Y) to float it ABOVE the mat/glass
+	# Add an offset to float it ABOVE the mat/glass
 	hold_button.global_position = target_pos + Vector2(-145, -50)
 	
 	# 5. Force Z-Index to Max
@@ -100,17 +112,9 @@ func spawn_hold_button(ui_scene: PackedScene):
 	# 6. Connect the signal
 	if hold_button.has_signal("fill_finished"):
 		hold_button.connect("fill_finished", Callable(self, "_on_fill_finished"))
-	else:
-		print("ERROR: HoldButton scene is missing 'fill_finished' signal!")
-
-	print("DEBUG: Button spawned at global pos: ", hold_button.global_position)
 
 # --- CALLBACK ---
 func _on_fill_finished(_amount_str: String, amount_int: int):
 	is_ui_active = false
-
-	# 1. Replace the glass visually (this may free self)
+	# Replace the glass visually (this frees self)
 	spawner_controller.replace_glass_with_filled(self, amount_int, active_liquid_type)
-
-	# NOTE: The premature GameData saving logic has been removed from here.
-	# The filled_glass.gd script will handle properly storing the beverage once it is dropped into the Serve Zone.

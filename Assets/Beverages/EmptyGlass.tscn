@@ -1,19 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://6fesq2ao74ey"]
+[gd_scene format=3 uid="uid://6fesq2ao74ey"]
 
 [ext_resource type="Texture2D" uid="uid://dgv4ub7cntrpp" path="res://Assets/UI/Water/GlassEmpty.png" id="2_cdfwc"]
 [ext_resource type="Script" uid="uid://vqr7y0yjh74l" path="res://Assets/Beverages/empty_glass.gd" id="2_ifb35"]
 
-[node name="Glass" type="Area2D"]
+[node name="Glass" type="Area2D" unique_id=563062753 groups=["interactable"]]
 collision_mask = 2
 monitorable = false
 script = ExtResource("2_ifb35")
 
-[node name="EmptyGlass" type="Sprite2D" parent="."]
+[node name="EmptyGlass" type="Sprite2D" parent="." unique_id=1207214027 groups=["interactable"]]
 position = Vector2(2.5000005, -3.9999936)
 scale = Vector2(0.27542374, 0.27485383)
 texture = ExtResource("2_cdfwc")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1183953935 groups=["interactable"]]
 visible = false
 position = Vector2(-2.3841858e-07, 1.0000019)
 scale = Vector2(0.37109378, 0.34375)

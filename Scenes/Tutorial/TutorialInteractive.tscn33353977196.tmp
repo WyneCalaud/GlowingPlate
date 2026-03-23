@@ -1,0 +1,687 @@
+[gd_scene format=3 uid="uid://dp2bmkwjklngr"]
+
+[ext_resource type="Script" uid="uid://c0jttugajucs3" path="res://Scenes/Tutorial/Interactive.gd" id="1_qiaj6"]
+[ext_resource type="Script" uid="uid://bnagvteuqncdg" path="res://Scripts/Tutorial Items/TutorialPhase.gd" id="2_whngs"]
+[ext_resource type="Script" uid="uid://dyqrjab4hwgb7" path="res://Scripts/Tutorial Items/TutorialStep.gd" id="3_t1wkr"]
+[ext_resource type="Texture2D" uid="uid://belparemwo2v3" path="res://Assets/UI/TutorialSlide/Intro1.png" id="4_hqad5"]
+[ext_resource type="Texture2D" uid="uid://7e02vpkojogi" path="res://Assets/UI/TutorialSlide/Intro2.png" id="5_h4cfn"]
+[ext_resource type="Texture2D" uid="uid://bw2qfqm8dbwcw" path="res://Assets/UI/TutorialSlide/Intro3.png" id="6_op1d5"]
+[ext_resource type="Texture2D" uid="uid://tycm1xey14hc" path="res://Assets/UI/TutorialSlide/Intro4.png" id="7_gqxhh"]
+[ext_resource type="Texture2D" uid="uid://cau0x6ykxbi10" path="res://Assets/UI/TutorialSlide/Intro5.png" id="8_kd1tl"]
+[ext_resource type="Texture2D" uid="uid://bsxeb7wgrj0re" path="res://Assets/UI/TutorialSlide/IntroAge1.png" id="9_357mw"]
+[ext_resource type="Texture2D" uid="uid://beif4x48nbngb" path="res://Assets/UI/TutorialSlide/IntroAge2.png" id="10_sgf8q"]
+[ext_resource type="Texture2D" uid="uid://bqyckf8405asw" path="res://Assets/UI/TutorialSlide/IntroAge3.png" id="11_lm733"]
+[ext_resource type="Texture2D" uid="uid://udgopo7ihpeb" path="res://Assets/UI/TutorialSlide/IntroAlmanac1.png" id="12_t536m"]
+[ext_resource type="Texture2D" uid="uid://das06a0tivsoh" path="res://Assets/UI/TutorialSlide/IntroAlmanac2.png" id="13_f1us6"]
+[ext_resource type="Texture2D" uid="uid://dysf74dkgst3q" path="res://Assets/UI/CountertopBackground.png" id="13_pv4on"]
+[ext_resource type="Texture2D" uid="uid://d2oxqe7unf066" path="res://Assets/UI/TutorialSlide/IntroAlmanac3.png" id="14_sgf8q"]
+[ext_resource type="Texture2D" uid="uid://cjob6rgsmt6fj" path="res://Assets/Pinggan/Pinggang Border.png" id="14_wikwg"]
+[ext_resource type="PackedScene" uid="uid://cumqgtoajakm4" path="res://Scenes/Food Plate/food_plate.tscn" id="15_5lp15"]
+[ext_resource type="Texture2D" uid="uid://v3c5qf4l8a24" path="res://Assets/UI/TutorialSlide/IntroAlmanac4.png" id="15_lm733"]
+[ext_resource type="Script" uid="uid://d3gd8n1g16fj3" path="res://Scenes/Food Plate/food_plate_draggable.gd" id="16_adck0"]
+[ext_resource type="Texture2D" uid="uid://jooxkosexv67" path="res://Assets/UI/TutorialSlide/IntroAlmanac5.png" id="16_t536m"]
+[ext_resource type="Texture2D" uid="uid://dg3buvxd1vn2o" path="res://Assets/UI/TutorialSlide/IntroAlmanac6.png" id="17_f1us6"]
+[ext_resource type="Texture2D" uid="uid://cbp2ncq0mib8b" path="res://Assets/RiceCup/RiceCupTray.png" id="17_vgdr0"]
+[ext_resource type="Texture2D" uid="uid://b33i1545pes2b" path="res://Assets/UI/RiceUI/WhiteRiceCooker.png" id="18_kc7c7"]
+[ext_resource type="Script" uid="uid://dieojik7tyah5" path="res://Scenes/Gameplay/RiceCooker.gd" id="19_hqd2y"]
+[ext_resource type="Texture2D" uid="uid://bbq0o6jx72x3g" path="res://Assets/UI/RiceUI/OpenedWhiteRiceCooker.png" id="20_17drw"]
+[ext_resource type="Texture2D" uid="uid://c1ihv48yqhe4h" path="res://Assets/UI/RiceUI/BrownEmptyCup.png" id="21_rl6l5"]
+[ext_resource type="Script" uid="uid://c4hl2vol7m5pc" path="res://Scripts/Gameplay Items/rice_cup.gd" id="22_fh5vn"]
+[ext_resource type="Texture2D" uid="uid://cecdbgmapkd34" path="res://Assets/UI/RiceUI/WhiteRiceScoopLow.png" id="23_uvreo"]
+[ext_resource type="Texture2D" uid="uid://5g3kg7d60uei" path="res://Assets/UI/RiceUI/WhiteRiceScoopMed.png" id="24_3jkqy"]
+[ext_resource type="Texture2D" uid="uid://wdsw0bcd4j3m" path="res://Assets/UI/RiceUI/WhiteRiceRightSizeCup.png" id="25_8qtuu"]
+[ext_resource type="Texture2D" uid="uid://bi6n8p0tx57tw" path="res://Assets/UI/RiceUI/WhiteRiceScoopHigh.png" id="26_u4cvj"]
+[ext_resource type="Resource" uid="uid://0swaooqdh4n5" path="res://Data/Food/Go/Rice.tres" id="27_sjhy5"]
+[ext_resource type="PackedScene" uid="uid://b3eqyuw2etp2" path="res://Scenes/FoodDispenser/FoodDispenser.tscn" id="28_vawwu"]
+[ext_resource type="Texture2D" uid="uid://7htsl27chqwk" path="res://Assets/Food Containers/Chicken.png" id="29_cj0eg"]
+[ext_resource type="Resource" uid="uid://b2oeopgun652k" path="res://Data/Food/Grow/Chicken.tres" id="30_1vnqc"]
+[ext_resource type="Texture2D" uid="uid://bg3mtq3br20n1" path="res://Assets/Food Containers/Sitaw.png" id="31_xbh6d"]
+[ext_resource type="Resource" uid="uid://b620n7sw6261m" path="res://Data/Food/GlowVeg/Sitaw.tres" id="32_ekolq"]
+[ext_resource type="Texture2D" uid="uid://bi6qox307tm6e" path="res://Assets/Food Containers/Mango.png" id="33_lgexn"]
+[ext_resource type="Resource" uid="uid://iwjtv5icvmxp" path="res://Data/Food/GlowFru/Mango.tres" id="34_hq3ie"]
+[ext_resource type="Texture2D" uid="uid://ldahrl6rkxw3" path="res://Assets/UI/KitchenUI/LongMat.png" id="35_j3cvs"]
+[ext_resource type="Texture2D" uid="uid://ba826ogp85jji" path="res://Assets/Beverages/Mat/lines-square.png" id="36_4vjxv"]
+[ext_resource type="Texture2D" uid="uid://bskxkak4gn6ug" path="res://Assets/Beverages/WaterStation/Water Pitcher (Cold).PNG" id="37_chua6"]
+[ext_resource type="Script" uid="uid://drf28y3466o7l" path="res://Scenes/Gameplay/LiquidDispenser.gd" id="38_bwx02"]
+[ext_resource type="Texture2D" uid="uid://ry0sij3lf8qo" path="res://Assets/Beverages/WaterStation/Water Pitcher (Hot).PNG" id="39_bq3kb"]
+[ext_resource type="Texture2D" uid="uid://cacj1j2algte7" path="res://Assets/UI/Milk/MilkCartons.png" id="40_rx4jk"]
+[ext_resource type="Script" uid="uid://buffnjxiqte7a" path="res://Scenes/Gameplay/MilkCartonSpawner.gd" id="41_tpcem"]
+[ext_resource type="PackedScene" uid="uid://dk18m03jpielk" path="res://Scenes/LiquidDispenser/DraggableMilk.tscn" id="42_hapei"]
+[ext_resource type="Texture2D" uid="uid://b4t6anq2kh5dv" path="res://Assets/UI/Water/StackGlass.png" id="43_amlfo"]
+[ext_resource type="Script" uid="uid://dl5b6gat7441v" path="res://Scenes/Gameplay/stack_glass_spawner.gd" id="44_8m7ng"]
+[ext_resource type="Texture2D" uid="uid://bidrperywufqq" path="res://Assets/background/introbg2.png" id="45_x8uxq"]
+[ext_resource type="Texture2D" uid="uid://oud8lj264na3" path="res://Assets/Customers/Jenna.png" id="46_xxep4"]
+[ext_resource type="Texture2D" uid="uid://djpefw4shr018" path="res://Assets/UI/DBoxLarge.png" id="47_asifm"]
+[ext_resource type="Texture2D" uid="uid://dy8drcukb4jik" path="res://Assets/UI/LobbyUI/buon.png" id="48_pm28q"]
+[ext_resource type="FontFile" uid="uid://d7dori22uutu" path="res://Fonts/Comic_Neue/ComicNeue-Bold.ttf" id="49_tsbu8"]
+[ext_resource type="Texture2D" uid="uid://cua7565y16m42" path="res://Assets/UI/LobbyUI/LobbyBackground/TissueBox.png" id="50_vgw5y"]
+[ext_resource type="Script" uid="uid://diwlvutjao0ov" path="res://Scenes/Tutorial/CameraScrollerInteractive.gd" id="51_qika4"]
+[ext_resource type="Texture2D" uid="uid://bb0gtoq1vuvy5" path="res://Assets/UI/KitchenUI/Serve Section.png" id="52_8ye1i"]
+[ext_resource type="Texture2D" uid="uid://dj4wff5kf1w0r" path="res://Assets/UI/KitchenUI/Trash Section.png" id="53_1a7nw"]
+[ext_resource type="PackedScene" uid="uid://pphr73e4o3ik" path="res://Scenes/FoodDispenser/PortionSelection.tscn" id="54_061si"]
+[ext_resource type="PackedScene" uid="uid://jjcnedpqlb6a" path="res://Scenes/FoodDispenser/VeggieCup.tscn" id="55_a5m0y"]
+[ext_resource type="PackedScene" uid="uid://des5ggi5bdapj" path="res://Scenes/Tutorial/KitchenTutorial.tscn" id="56_v00f4"]
+[ext_resource type="PackedScene" uid="uid://chdn7q1q0s44g" path="res://Scenes/Ticket/order_ticket.tscn" id="57_asufv"]
+[ext_resource type="Script" uid="uid://bhehh7vnwo5gq" path="res://Scripts/Tutorial Items/OrderTicketTutorial.gd" id="58_38rlt"]
+[ext_resource type="PackedScene" uid="uid://dy6gawubssej3" path="res://Scenes/GameHUD/GameHUD.tscn" id="65_sgf8q"]
+[ext_resource type="PackedScene" uid="uid://clbki6vphqy7t" path="res://Scenes/Almanac/almanacUI.tscn" id="66_lm733"]
+
+[sub_resource type="Resource" id="Resource_ui52l"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("4_hqad5")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_pv4on"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("5_h4cfn")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_wikwg"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("6_op1d5")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_5lp15"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("7_gqxhh")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_adck0"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("8_kd1tl")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_a3lty"]
+script = ExtResource("2_whngs")
+phase_name = "Introduction"
+steps = Array[ExtResource("3_t1wkr")]([SubResource("Resource_ui52l"), SubResource("Resource_pv4on"), SubResource("Resource_wikwg"), SubResource("Resource_5lp15"), SubResource("Resource_adck0")])
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_vgdr0"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("9_357mw")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_kc7c7"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("10_sgf8q")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_hqd2y"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("11_lm733")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_17drw"]
+script = ExtResource("2_whngs")
+phase_name = "Age"
+steps = Array[ExtResource("3_t1wkr")]([SubResource("Resource_vgdr0"), SubResource("Resource_kc7c7"), SubResource("Resource_hqd2y")])
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_rl6l5"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("12_t536m")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_fh5vn"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("13_f1us6")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_uvreo"]
+script = ExtResource("3_t1wkr")
+step_type = 1
+action_name = "Menu_Pressed"
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_3jkqy"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("14_sgf8q")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_8qtuu"]
+script = ExtResource("3_t1wkr")
+step_type = 1
+action_name = "Almanac_Pressed"
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_u4cvj"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("15_lm733")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_lgexn"]
+script = ExtResource("3_t1wkr")
+step_type = 1
+action_name = "Portion_Pressed"
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_hq3ie"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("16_t536m")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_j3cvs"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("17_f1us6")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_g7q3q"]
+script = ExtResource("2_whngs")
+phase_name = "Almanac"
+steps = Array[ExtResource("3_t1wkr")]([SubResource("Resource_rl6l5"), SubResource("Resource_fh5vn"), SubResource("Resource_uvreo"), SubResource("Resource_3jkqy"), SubResource("Resource_8qtuu"), SubResource("Resource_u4cvj"), SubResource("Resource_lgexn"), SubResource("Resource_hq3ie"), SubResource("Resource_j3cvs")])
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_syvn5"]
+script = ExtResource("2_whngs")
+phase_name = "Go Food Tutorial"
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_a8t1c"]
+script = ExtResource("2_whngs")
+phase_name = "Grow Food Tutorial"
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_1yuvn"]
+script = ExtResource("2_whngs")
+phase_name = "Glow Food (Veggie) Tutorial"
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_1l5yu"]
+script = ExtResource("2_whngs")
+phase_name = "Glow Food (Fruit) Tutorial"
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_sjhy5"]
+script = ExtResource("2_whngs")
+phase_name = "Serve Or Trash Tutorial"
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_vawwu"]
+script = ExtResource("2_whngs")
+phase_name = "Scroll to BeverageStation Tutorial"
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_cj0eg"]
+script = ExtResource("2_whngs")
+phase_name = "Water Tutorial"
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_1vnqc"]
+script = ExtResource("2_whngs")
+phase_name = "Milk Tutorial "
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_xbh6d"]
+script = ExtResource("2_whngs")
+phase_name = "Finish Button/Transition to LobbyCanteen"
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_ekolq"]
+script = ExtResource("2_whngs")
+phase_name = "Serve Tutorial"
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebsje"]
+atlas = ExtResource("14_wikwg")
+region = Rect2(167, 178, 691, 665)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bnah1"]
+radius = 146.03082
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gev82"]
+radius = 51.0392
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kd1tl"]
+radius = 195.01257
+height = 799.1057
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_357mw"]
+atlas = ExtResource("47_asifm")
+region = Rect2(59, 101, 750, 323)
+
+[sub_resource type="FontVariation" id="FontVariation_sgf8q"]
+base_font = ExtResource("49_tsbu8")
+spacing_glyph = 5
+
+[sub_resource type="FontVariation" id="FontVariation_lm733"]
+base_font = ExtResource("49_tsbu8")
+spacing_glyph = 5
+
+[node name="TutorialInteractive" type="Control" unique_id=419831177]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qiaj6")
+tutorial_phases = Array[ExtResource("2_whngs")]([SubResource("Resource_a3lty"), SubResource("Resource_17drw"), SubResource("Resource_g7q3q"), SubResource("Resource_syvn5"), SubResource("Resource_a8t1c"), SubResource("Resource_1yuvn"), SubResource("Resource_1l5yu"), SubResource("Resource_sjhy5"), SubResource("Resource_vawwu"), SubResource("Resource_cj0eg"), SubResource("Resource_1vnqc"), SubResource("Resource_xbh6d"), SubResource("Resource_ekolq")])
+
+[node name="Background" type="TextureRect" parent="." unique_id=1413623797]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("13_pv4on")
+stretch_mode = 2
+
+[node name="Background2" type="TextureRect" parent="." unique_id=1667715549]
+layout_mode = 0
+offset_left = 832.0
+offset_right = 2112.0
+offset_bottom = 720.0
+texture = ExtResource("13_pv4on")
+stretch_mode = 2
+
+[node name="KitchenArea" type="Control" parent="." unique_id=1626253982]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Mat" type="Control" parent="KitchenArea" unique_id=517032852]
+anchors_preset = 0
+offset_left = 48.0
+offset_right = 48.0
+metadata/_edit_use_anchors_ = true
+
+[node name="PlateBorder" type="TextureRect" parent="KitchenArea/Mat" unique_id=1067925110]
+layout_mode = 0
+offset_left = 325.0
+offset_top = 349.00003
+offset_right = 1016.0
+offset_bottom = 1014.0
+scale = Vector2(0.51, 0.49035153)
+texture = SubResource("AtlasTexture_ebsje")
+stretch_mode = 2
+
+[node name="Plate" type="Node2D" parent="KitchenArea" unique_id=1580935922]
+position = Vector2(48, 0)
+
+[node name="FoodPlate" parent="KitchenArea/Plate" unique_id=1035989018 instance=ExtResource("15_5lp15")]
+z_index = 1
+position = Vector2(502, 511)
+scale = Vector2(0.517, 0.517)
+script = ExtResource("16_adck0")
+
+[node name="Area2D" type="Area2D" parent="KitchenArea/Plate/FoodPlate" unique_id=547995987]
+position = Vector2(0, 1.9342651)
+scale = Vector2(1.9342359, 1.9342359)
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenArea/Plate/FoodPlate/Area2D" unique_id=477184954]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_bnah1")
+
+[node name="Go Section" type="Node2D" parent="KitchenArea" unique_id=723535072]
+
+[node name="RiceCupMat" type="Sprite2D" parent="KitchenArea/Go Section" unique_id=1675268528]
+position = Vector2(176, 552)
+scale = Vector2(0.21, 0.21)
+texture = ExtResource("17_vgdr0")
+
+[node name="BrownRiceCupMat" type="Sprite2D" parent="KitchenArea/Go Section" unique_id=1527834651]
+visible = false
+position = Vector2(448, 552.00006)
+scale = Vector2(0.21, 0.21)
+texture = ExtResource("17_vgdr0")
+
+[node name="WhiteRiceCooker" type="Sprite2D" parent="KitchenArea/Go Section" unique_id=797555876]
+position = Vector2(167, 278)
+texture = ExtResource("18_kc7c7")
+script = ExtResource("19_hqd2y")
+wr_closed_texture = ExtResource("18_kc7c7")
+wr_open_texture = ExtResource("20_17drw")
+
+[node name="Area2D" type="Area2D" parent="KitchenArea/Go Section/WhiteRiceCooker" unique_id=591214128]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="KitchenArea/Go Section/WhiteRiceCooker/Area2D" unique_id=710736172]
+polygon = PackedVector2Array(13, -152, 55, -149, 88, -134, 109, -98, 118, -50, 113, 3, 99, 41, 75, 64, 39, 78, -7, 81, -46, 76, -76, 60, -91, 44, -108, 12, -113, -40, -111, -89, -93, -127, -67, -144, -32, -152)
+
+[node name="WhiteRiceCup" type="Sprite2D" parent="KitchenArea/Go Section" unique_id=1962706900]
+position = Vector2(176, 544)
+texture = ExtResource("21_rl6l5")
+script = ExtResource("22_fh5vn")
+wr_empty_cup = ExtResource("21_rl6l5")
+wr_small_scoop = ExtResource("23_uvreo")
+wr_medium_scoop = ExtResource("24_3jkqy")
+wr_full_cup = ExtResource("25_8qtuu")
+wr_too_high = ExtResource("26_u4cvj")
+food_data = ExtResource("27_sjhy5")
+
+[node name="Area2D" type="Area2D" parent="KitchenArea/Go Section/WhiteRiceCup" unique_id=363696840]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenArea/Go Section/WhiteRiceCup/Area2D" unique_id=265739200]
+position = Vector2(-3, 6)
+shape = SubResource("CircleShape2D_gev82")
+one_way_collision_margin = 0.0
+
+[node name="TutorialFoods" type="Control" parent="KitchenArea" unique_id=1857635700]
+layout_mode = 1
+anchor_left = -0.303125
+anchor_right = -0.45
+offset_left = 758.0
+offset_top = 107.0
+offset_right = 1596.0
+offset_bottom = 313.0
+metadata/_edit_use_anchors_ = true
+
+[node name="GrowFoodRow" type="HBoxContainer" parent="KitchenArea/TutorialFoods" unique_id=1253846502]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 12.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Chicken" parent="KitchenArea/TutorialFoods/GrowFoodRow" unique_id=1575521046 instance=ExtResource("28_vawwu")]
+custom_minimum_size = Vector2(220, 200)
+layout_mode = 2
+texture = ExtResource("29_cj0eg")
+expand_mode = 0
+stretch_mode = 2
+food_data = ExtResource("30_1vnqc")
+
+[node name="Sitaw" parent="KitchenArea/TutorialFoods/GrowFoodRow" unique_id=1846029734 instance=ExtResource("28_vawwu")]
+custom_minimum_size = Vector2(220, 200)
+layout_mode = 2
+texture = ExtResource("31_xbh6d")
+expand_mode = 0
+stretch_mode = 2
+food_data = ExtResource("32_ekolq")
+
+[node name="Mango" parent="KitchenArea/TutorialFoods/GrowFoodRow" unique_id=1569231577 instance=ExtResource("28_vawwu")]
+custom_minimum_size = Vector2(220, 200)
+layout_mode = 2
+texture = ExtResource("33_lgexn")
+expand_mode = 0
+stretch_mode = 2
+food_data = ExtResource("34_hq3ie")
+
+[node name="BeverageStation" type="Control" parent="." unique_id=1717116844]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 816.0
+offset_right = 816.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Mat" type="Node2D" parent="BeverageStation" unique_id=1777414275]
+position = Vector2(408, 480)
+
+[node name="LongMat" type="Sprite2D" parent="BeverageStation/Mat" unique_id=1994314047]
+position = Vector2(365.00003, -250)
+scale = Vector2(0.7705696, 1)
+texture = ExtResource("35_j3cvs")
+
+[node name="Mat1" type="Sprite2D" parent="BeverageStation/Mat" unique_id=869077475]
+position = Vector2(95.99999, 95.99997)
+scale = Vector2(0.25830182, 0.29435477)
+texture = ExtResource("36_4vjxv")
+
+[node name="Mat2" type="Sprite2D" parent="BeverageStation/Mat" unique_id=1045774782]
+position = Vector2(335, 96)
+scale = Vector2(0.25830182, 0.29435477)
+texture = ExtResource("36_4vjxv")
+
+[node name="WaterStation" type="Node2D" parent="BeverageStation" unique_id=932597829]
+position = Vector2(540, 64)
+
+[node name="ColdWater" type="Sprite2D" parent="BeverageStation/WaterStation" unique_id=1173779812]
+position = Vector2(85.59602, 93.16)
+scale = Vector2(0.3543047, 0.3499219)
+texture = ExtResource("37_chua6")
+
+[node name="Area2D" type="Area2D" parent="BeverageStation/WaterStation/ColdWater" unique_id=395383429]
+collision_mask = 2
+monitorable = false
+script = ExtResource("38_bwx02")
+liquid_type = "Cold"
+unselected_texture = ExtResource("37_chua6")
+selected_texture = ExtResource("37_chua6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BeverageStation/WaterStation/ColdWater/Area2D" unique_id=2078566650]
+visible = false
+position = Vector2(-41.809296, 8.78042)
+shape = SubResource("CapsuleShape2D_kd1tl")
+
+[node name="HotWater" type="Sprite2D" parent="BeverageStation/WaterStation" unique_id=1377622429]
+position = Vector2(279, 88.99999)
+scale = Vector2(0.3543047, 0.3499219)
+texture = ExtResource("39_bq3kb")
+
+[node name="Area2D" type="Area2D" parent="BeverageStation/WaterStation/HotWater" unique_id=1785035028]
+collision_mask = 2
+monitorable = false
+script = ExtResource("38_bwx02")
+liquid_type = "Hot"
+unselected_texture = ExtResource("39_bq3kb")
+selected_texture = ExtResource("39_bq3kb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BeverageStation/WaterStation/HotWater/Area2D" unique_id=1428313148]
+visible = false
+position = Vector2(-41.809296, 8.78042)
+shape = SubResource("CapsuleShape2D_kd1tl")
+
+[node name="MilkStation" type="Control" parent="BeverageStation" unique_id=1859305936]
+anchors_preset = 0
+offset_left = 951.0
+offset_top = 61.0
+offset_right = 951.0
+offset_bottom = 61.0
+
+[node name="MilkCartons" type="TextureButton" parent="BeverageStation/MilkStation" unique_id=511896350]
+layout_mode = 0
+offset_right = 276.0
+offset_bottom = 188.0
+texture_normal = ExtResource("40_rx4jk")
+script = ExtResource("41_tpcem")
+milk_scene = ExtResource("42_hapei")
+
+[node name="Glasses" type="Node2D" parent="BeverageStation" unique_id=1093534399]
+position = Vector2(247, 189)
+
+[node name="StackGlass" type="Sprite2D" parent="BeverageStation/Glasses" unique_id=1152440164 groups=["global_controller"]]
+light_mask = 3
+visibility_layer = 9
+position = Vector2(161, 2)
+scale = Vector2(0.54658383, 0.5566502)
+texture = ExtResource("43_amlfo")
+script = ExtResource("44_8m7ng")
+
+[node name="LobbyCanteen" type="Control" parent="." unique_id=394716275]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="LobbyCanteen" unique_id=1797499916]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("45_x8uxq")
+
+[node name="JennaPortrait" type="TextureRect" parent="LobbyCanteen" unique_id=1850105473]
+layout_mode = 0
+offset_left = 905.0
+offset_top = 102.0
+offset_right = 1208.0
+offset_bottom = 589.0
+texture = ExtResource("46_xxep4")
+stretch_mode = 2
+
+[node name="DialogueBox" type="TextureRect" parent="LobbyCanteen" unique_id=170132237]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 92.0
+offset_right = 910.0
+offset_bottom = 415.0
+texture = SubResource("AtlasTexture_357mw")
+stretch_mode = 2
+
+[node name="BtnChoice1" type="TextureButton" parent="LobbyCanteen/DialogueBox" unique_id=1994826881]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 285.0
+offset_right = 328.0
+offset_bottom = 389.0
+texture_normal = ExtResource("48_pm28q")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="LobbyCanteen/DialogueBox/BtnChoice1" unique_id=1060920767]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 21.0
+offset_right = 211.0
+offset_bottom = 85.0
+theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
+theme_override_fonts/font = SubResource("FontVariation_sgf8q")
+theme_override_font_sizes/font_size = 28
+text = "WAR"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnChoice2" type="TextureButton" parent="LobbyCanteen/DialogueBox" unique_id=1379932881]
+layout_mode = 0
+offset_left = 413.0
+offset_top = 286.0
+offset_right = 644.0
+offset_bottom = 390.0
+texture_normal = ExtResource("48_pm28q")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="LobbyCanteen/DialogueBox/BtnChoice2" unique_id=1478249159]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 21.0
+offset_right = 221.0
+offset_bottom = 85.0
+theme_override_colors/font_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
+theme_override_fonts/font = SubResource("FontVariation_sgf8q")
+theme_override_font_sizes/font_size = 28
+text = "WAR"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="DialogueText" type="RichTextLabel" parent="LobbyCanteen/DialogueBox" unique_id=1451368854]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 48.0
+offset_right = 686.0
+offset_bottom = 224.0
+theme_override_colors/default_color = Color(0.44705883, 0.21176471, 0.08627451, 1)
+theme_override_fonts/normal_font = SubResource("FontVariation_lm733")
+theme_override_font_sizes/normal_font_size = 36
+horizontal_alignment = 3
+
+[node name="CountertopDec" type="TextureRect" parent="LobbyCanteen" unique_id=1275051855]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1091.0
+offset_top = 527.0
+offset_right = 13.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("50_vgw5y")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=725168430]
+position = Vector2(640, 360)
+script = ExtResource("51_qika4")
+
+[node name="ServeOrTrash" type="Node2D" parent="." unique_id=1765167811]
+visible = false
+position = Vector2(8, 0)
+
+[node name="Serve" type="Sprite2D" parent="ServeOrTrash" unique_id=1770201708]
+position = Vector2(664, 51)
+scale = Vector2(0.527, 0.49)
+texture = ExtResource("52_8ye1i")
+
+[node name="GlobalServeZone" type="Area2D" parent="ServeOrTrash/Serve" unique_id=1307982385]
+collision_layer = 2
+monitoring = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Serve/GlobalServeZone" unique_id=1510666989]
+position = Vector2(125.23718, -2.0408134)
+polygon = PackedVector2Array(-423.1499, -102.04082, -426.94495, -53.061226, -421.25238, -22.448982, -409.8672, 10.204079, -377.60913, 55.102036, -354.83875, 75.51021, -324.47815, 91.83673, -284.63, 104.081635, -239.08923, 106.12245, -204.9336, 97.95918, -176.47058, 87.7551, -155.59778, 81.632645, -132.82727, 79.59183, -92.979126, 83.67346, -47.438354, 100, -9.487671, 104.081635, 24.667969, 102.04082, 64.51611, 89.79591, 94.87671, 75.51021, 115.74951, 57.142853, 138.5199, 34.69388, 155.59778, 6.122444, 168.8805, -26.530617, 174.573, -53.061226, 172.67554, -102.04082)
+
+[node name="Trash" type="Sprite2D" parent="ServeOrTrash" unique_id=2038333804]
+position = Vector2(654, 689.275)
+scale = Vector2(0.56081086, 0.4667913)
+texture = ExtResource("53_1a7nw")
+
+[node name="GlobalTrashZone" type="Area2D" parent="ServeOrTrash/Trash" unique_id=1750596496]
+collision_layer = 2
+monitoring = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ServeOrTrash/Trash/GlobalTrashZone" unique_id=905789822]
+position = Vector2(-7.589736, -38.700317)
+polygon = PackedVector2Array(13.2821045, -1.6125488, -26.289673, 31.684204, -127.92822, 35.968872, -215.30176, 44.537964, -263.7436, 59.662964, -282.71796, 104.813354, 299.7948, 104.813354, 286.51282, 62.88806, 258.05127, 24.187744, 237.17944, 4.8375244, 203.02563, -14.512573, 166.97437, -25.80017, 127.128174, -29.025269, 92.974365, -22.575195, 66.41028, -12.9001465, 39.84619, -4.8375244)
+
+[node name="PortionSelector" parent="." unique_id=1738307228 instance=ExtResource("54_061si")]
+visible = false
+layout_mode = 0
+offset_right = 406.0
+offset_bottom = 207.0
+
+[node name="VeggieScoop" parent="." unique_id=348753816 instance=ExtResource("55_a5m0y")]
+visible = false
+layout_mode = 0
+
+[node name="FoodIntroOverlay" parent="." unique_id=2045117199 instance=ExtResource("56_v00f4")]
+visible = false
+layout_mode = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=917906403]
+layer = 5
+
+[node name="OrderTicket" parent="CanvasLayer" unique_id=1666125790 instance=ExtResource("57_asufv")]
+z_index = 10
+offset_left = -3.0
+offset_top = -353.0
+offset_right = 354.0
+offset_bottom = 367.0
+script = ExtResource("58_38rlt")
+
+[node name="TutorialUI" type="CanvasLayer" parent="." unique_id=1363642477]
+
+[node name="TutorialOverlaySteps" type="TextureButton" parent="TutorialUI" unique_id=1673618618]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AlmanacUI" parent="." unique_id=1911070530 instance=ExtResource("66_lm733")]
+visible = false
+layout_mode = 1
+
+[node name="GameHUD" parent="." unique_id=1529264369 instance=ExtResource("65_sgf8q")]
+
+[connection signal="area_entered" from="KitchenArea/Plate/FoodPlate/Area2D" to="KitchenArea/Plate/FoodPlate" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="KitchenArea/Plate/FoodPlate/Area2D" to="KitchenArea/Plate/FoodPlate" method="_on_area_2d_area_exited"]
+[connection signal="area_entered" from="KitchenArea/Go Section/WhiteRiceCup/Area2D" to="KitchenArea/Go Section/WhiteRiceCup" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="KitchenArea/Go Section/WhiteRiceCup/Area2D" to="KitchenArea/Go Section/WhiteRiceCup" method="_on_area_2d_area_exited"]

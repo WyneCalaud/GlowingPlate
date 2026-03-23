@@ -7,9 +7,8 @@
 
 [node name="Plate" type="Sprite2D" parent="." unique_id=413793591]
 position = Vector2(-2.7105054e-20, 0)
-scale = Vector2(1.7422577, 1.7636735)
+scale = Vector2(1.892, 1.916)
 texture = ExtResource("1_dbxjq")
-metadata/_edit_lock_ = true
 
 [node name="GoFood" type="Sprite2D" parent="." unique_id=746388406]
 position = Vector2(-133, 108)
@@ -31,7 +30,7 @@ rice_scale_factor = 0.3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotGo" unique_id=951351410]
 position = Vector2(69, -76)
-polygon = PackedVector2Array(-168, -32, -144, -48, 28, -47, 51, -20, 56, 8, 56, 176, 48, 208, 8, 216, -30, 202, -82, 167, -125, 128, -154, 92, -169, 62, -180, 30, -182, -9)
+polygon = PackedVector2Array(-192, -32, -168, -48, 28, -47, 51, -20, 56, 8, 56, 208, 40, 232, 8, 240, -48, 216, -104, 184, -152, 128, -184, 80, -200, 32, -200, -8)
 
 [node name="SlotVeg" type="Area2D" parent="." unique_id=820244124 node_paths=PackedStringArray("linked_image") groups=["plate_slots"]]
 position = Vector2(128, 108)
@@ -43,7 +42,7 @@ rice_scale_factor = 0.3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotVeg" unique_id=4263737]
 position = Vector2(-224, -84)
-polygon = PackedVector2Array(104, 16, 98, 192, 104, 214, 117, 225, 155, 232, 199, 210, 243, 183, 281, 149, 309, 105, 329, 76, 340, 41, 342, 1, 334, -21, 318, -38, 143, -38, 112, -16)
+polygon = PackedVector2Array(104, 16, 98, 192, 104, 232, 120, 248, 160, 248, 208, 232, 272, 192, 304, 152, 336, 104, 360, 56, 368, 8, 352, -24, 336, -40, 240, -40, 143, -38, 112, -16)
 
 [node name="SlotGrow" type="Area2D" parent="." unique_id=181908134 node_paths=PackedStringArray("linked_image") groups=["plate_slots"]]
 position = Vector2(-133, -102)
@@ -56,7 +55,7 @@ rice_scale_factor = 0.3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotGrow" unique_id=947854431]
 position = Vector2(53, 150)
-polygon = PackedVector2Array(79, -267, 77, -120, 40, -72, -118, -72, -146, -77, -163, -102, -160, -136, -128, -192, -80, -240, -50, -265, 2, -291, 41, -299, 69, -292)
+polygon = PackedVector2Array(80, -288, 77, -120, 40, -72, -118, -72, -160, -80, -184, -112, -176, -160, -136, -216, -80, -272, -8, -312, 32, -320, 64, -312)
 
 [node name="SlotGlowFru" type="Area2D" parent="." unique_id=1226243610 node_paths=PackedStringArray("linked_image") groups=["plate_slots"]]
 position = Vector2(128, -102)
@@ -69,4 +68,4 @@ rice_scale_factor = 0.3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlotGlowFru" unique_id=2139190215]
 position = Vector2(-212, 154)
-polygon = PackedVector2Array(105, -299, 94, -283, 92, -116, 107, -90, 132, -76, 306, -76, 324, -91, 327, -116, 322, -140, 313, -166, 288, -204, 258, -238, 218, -273, 182, -292, 140, -305)
+polygon = PackedVector2Array(108, -316, 92, -292, 92, -116, 107, -90, 132, -76, 324, -76, 348, -100, 348, -132, 340, -164, 308, -220, 276, -252, 244, -276, 196, -308, 140, -324)

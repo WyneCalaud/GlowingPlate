@@ -34,7 +34,7 @@ func _ready():
 		base_image_rotation = linked_image.rotation_degrees
 		linked_image.visible = false
 	else:
-		print("[PlateSlot DEBUG] WARNING: No linked_image assigned to ", self.name)
+		print("[PlateSlot DEBUG] ⚠️ WARNING: No linked_image assigned to ", self.name)
 
 func _input(event: InputEvent) -> void:
 	var is_click = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed
@@ -42,7 +42,7 @@ func _input(event: InputEvent) -> void:
 	
 	if is_click or is_touch:
 		if _is_pos_inside(get_global_mouse_position()):
-			print("\n[PlateSlot DEBUG] --- 1. SLOT CLICKED: ", self.name, " ---")
+			print("\n[PlateSlot] 👆 SLOT CLICKED: ", self.name)
 			_process_placement_attempt()
 
 func _is_pos_inside(global_pos: Vector2) -> bool:
@@ -74,13 +74,16 @@ func _process_placement_attempt():
 		var incoming_name = data_to_check.get("item_name") if data_to_check else ""
 		
 		if current_name != incoming_name:
+			print("[PlateSlot] ❌ Mismatch: Slot has ", current_name, ", tried to place ", incoming_name)
 			return 
 		
 		var incoming_portion = selected.get("portion_type") if "portion_type" in selected else ""
 		if incoming_portion != "" and incoming_portion != current_portion_type:
+			print("[PlateSlot] ❌ Portion Mismatch: Slot has ", current_portion_type, ", tried to place ", incoming_portion)
 			return
 
 		if current_quantity >= MAX_QUANTITY:
+			print("[PlateSlot] ⚠️ Slot is full! Max quantity reached (", MAX_QUANTITY, ")")
 			return 
 
 	var success = try_place_food(selected)
@@ -115,11 +118,106 @@ func try_place_food(incoming_data: Variant) -> bool:
 		current_portion_type = incoming_portion
 		current_rice_amount = rice_amount
 		_update_visuals(incoming_initial_texture)
+		
+		# --- SAFELY GET ITEM NAME ---
+		var raw_item_name = ""
+		if incoming_resource:
+			if incoming_resource.get("item_name") != null:
+				raw_item_name = str(incoming_resource.get("item_name"))
+			else:
+				# Fallback: grabs the filename
+				raw_item_name = incoming_resource.resource_path.get_file().get_basename()
+				
+		var item_name_lower = raw_item_name.to_lower()
+		var slot_type_lower = str(slot_type).to_lower()
+		var node_name_lower = str(name).to_lower()
+		var is_veggie = incoming_resource.get("is_veggie_cup") if incoming_resource and incoming_resource.get("is_veggie_cup") != null else false
+		
+		# --- ENHANCED DEBUG PRINT TO HELP DIAGNOSE ---
+		print("\n=========================================================")
+		print(" 🍽️ [PLATE SLOT DEBUG] ITEM PLACED ")
+		print("=========================================================")
+		print(" 📍 Node Name:       ", name)
+		print(" 🏷️ Slot Type:       ", slot_type)
+		print(" 🍎 Item Placed:     ", raw_item_name)
+		print(" 📏 Portion/Amount:  ", incoming_portion if incoming_portion != "" else "N/A")
+		print(" 🍚 Rice Amount:     ", rice_amount if rice_amount != "" else "N/A")
+		print(" 🥗 Is Veggie Cup?   ", "Yes" if is_veggie else "No")
+		print("---------------------------------------------------------")
+		print(" 🔍 [TUTORIAL TRIGGER CHECKS] ")
+		
+		# =========================================================
+		# TUTORIAL FIX: Trigger step when Full Rice goes in GoSlot
+		# =========================================================
+		var is_go_slot = (slot_type_lower == "go" or node_name_lower.contains("goslot") or node_name_lower.contains("go_slot"))
+		var is_rice = (item_name_lower.contains("rice") or rice_amount == "RightAmount")
+		
+		print("   -> 🍚 Checking GoSlot + Rice:")
+		print("      | is_go_slot: ", is_go_slot, " | is_rice: ", is_rice)
+		
+		if is_go_slot and is_rice:
+			print("      ✅ MATCH! Triggering: Rice_In_GoSlot")
+			get_tree().call_group("InteractiveTutorial", "action_completed", "Rice_In_GoSlot")
+		
+		# =========================================================
+		# TUTORIAL FIX: Trigger step when Mango goes in GlowFruitSlot
+		# =========================================================
+		var is_glow_fruit_slot = (slot_type_lower.contains("glowfru") or node_name_lower.contains("glowfru") or (node_name_lower.contains("glow") and node_name_lower.contains("fru")))
+		var is_mango = item_name_lower.contains("mango")
+		
+		print("   -> 🥭 Checking GlowFruitSlot + Mango:")
+		print("      | is_glow_fruit_slot: ", is_glow_fruit_slot, " | is_mango: ", is_mango)
+		
+		if is_glow_fruit_slot and is_mango:
+			print("      ✅ MATCH! Triggering: Mango_In_GlowFruitSlot")
+			get_tree().call_group("InteractiveTutorial", "action_completed", "Mango_In_GlowFruitSlot")
+			
+		# =========================================================
+		# TUTORIAL FIX: Trigger step when Full Veggie Cup goes in GlowVegSlot
+		# =========================================================
+		var is_glow_veg_slot = (slot_type_lower.contains("glowveg") or node_name_lower.contains("glowveg") or (node_name_lower.contains("glow") and node_name_lower.contains("veg")))
+		
+		print("   -> 🥗 Checking GlowVegSlot + Veggie Cup:")
+		print("      | is_glow_veg_slot: ", is_glow_veg_slot, " | is_veggie: ", is_veggie)
+		
+		if is_glow_veg_slot and is_veggie:
+			if incoming_portion == "VeggieFull":
+				print("      ✅ MATCH! Placed VeggieFull! Triggering: FullCupVeggie_In_GlowVegSlot")
+				get_tree().call_group("InteractiveTutorial", "action_completed", "FullCupVeggie_In_GlowVegSlot")
+			else:
+				print("      ❌ MISMATCH! Placed portion was '", incoming_portion, "', expected 'VeggieFull'.")
+				print("      🔄 Resetting slot and showing Veggie Retry Overlay...")
+				# Call the retry visual in the tutorial script
+				get_tree().call_group("InteractiveTutorial", "trigger_veggie_retry")
+				# Reset the plate slot immediately
+				clear_slot()
+				print("=========================================================\n")
+				# Return true so the item gets removed from the player's cursor
+				return true 
+				
+		# =========================================================
+		# TUTORIAL FIX: Trigger step when Chicken goes in GrowSlot
+		# =========================================================
+		var is_grow_slot = (slot_type_lower.contains("grow") or node_name_lower.contains("grow"))
+		var is_chicken = item_name_lower.contains("chicken")
+		
+		print("   -> 🍗 Checking GrowSlot + Chicken:")
+		print("      | is_grow_slot: ", is_grow_slot, " | is_chicken: ", is_chicken)
+		
+		if is_grow_slot and is_chicken:
+			print("      ✅ MATCH! Triggering: Chicken_In_GrowSlot")
+			get_tree().call_group("InteractiveTutorial", "action_completed", "Chicken_In_GrowSlot")
+				
+		print("=========================================================\n")
+		# =========================================================
+			
 	else:
 		if rice_amount != "":
+			print("[PlateSlot] ❌ Cannot stack rice!")
 			return false
 			
 		current_quantity += 1
+		print("[PlateSlot] 🥞 Stacked item. New quantity: ", current_quantity)
 		_update_stacking_visuals()
 
 	emit_signal("slot_updated", item_resource, is_filled)
@@ -137,13 +235,13 @@ func _update_stacking_visuals():
 			1: next_texture = item_resource.get("plated_texture_half")
 			2: next_texture = item_resource.get("plated_texture_half_2")
 			3: next_texture = item_resource.get("plated_texture_half_3")
-			4: next_texture = item_resource.get("plated_texture_half_4") # Added Half 4 support
+			4: next_texture = item_resource.get("plated_texture_half_4") 
 	elif current_portion_type == "Whole":
 		match current_quantity:
 			1: next_texture = item_resource.get("plated_texture_whole")
 			2: next_texture = item_resource.get("plated_texture_whole_2")
 			3: next_texture = item_resource.get("plated_texture_whole_3")
-			4: next_texture = item_resource.get("plated_texture_whole_4") # FIXED: Corrected index from 3 to 4
+			4: next_texture = item_resource.get("plated_texture_whole_4") 
 	else:
 		match current_quantity:
 			1: next_texture = item_resource.get("texture_count_1")

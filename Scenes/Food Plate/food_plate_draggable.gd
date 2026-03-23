@@ -128,6 +128,10 @@ func _on_drop():
 		if not is_plate_truly_empty and is_instance_valid(GameData):
 			GameData.store_plate_contents(plate_contents)
 			get_tree().call_group("service_manager", "serve_plate", plate_contents)
+			
+			# ✨ INSTANT TUTORIAL TRIGGER ✨
+			get_tree().call_group("InteractiveTutorial", "action_completed", "Plate_Served")
+			
 			_animate_new_plate_arrival()
 		else:
 			is_returning = true
@@ -138,6 +142,10 @@ func _on_drop():
 			if is_instance_valid(GameData):
 				GameData.add_money(-5)
 			emit_signal("trashed")
+			
+			# (Optional) Notify tutorial if you ever add a trash step!
+			get_tree().call_group("InteractiveTutorial", "action_completed", "Plate_Trashed")
+			
 			_animate_new_plate_arrival()
 		else:
 			is_returning = true

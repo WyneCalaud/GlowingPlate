@@ -22,7 +22,7 @@ script = ExtResource("1_xqbgv")
 
 [node name="Background" type="Node2D" parent="." unique_id=1566457695]
 
-[node name="ColorRect" type="TextureRect" parent="Background" unique_id=182072785]
+[node name="Background" type="TextureRect" parent="Background" unique_id=182072785]
 offset_left = 1.0
 offset_right = 1281.0
 offset_bottom = 720.0

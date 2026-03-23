@@ -50,6 +50,20 @@ func open(dispenser: Node):
 	has_selection = false 
 	current_selection_type = ""
 	
+	# =========================================================
+	# TUTORIAL FIX: Trigger step when Chicken Dispenser is clicked
+	# =========================================================
+	if dispenser != null:
+		var d_name = dispenser.name.to_lower()
+		var data_name = ""
+		if "food_data" in dispenser and dispenser.food_data and dispenser.food_data.get("item_name"):
+			data_name = str(dispenser.food_data.item_name).to_lower()
+			
+		if d_name.contains("chicken") or data_name.contains("chicken"):
+			print("🍗 Tutorial: Chicken dispenser clicked! Triggering: Chicken_Pressed")
+			get_tree().call_group("InteractiveTutorial", "action_completed", "Chicken_Pressed")
+	# =========================================================
+	
 	if btn_half: btn_half.visible = true
 	if btn_whole: btn_whole.visible = true
 	
@@ -113,6 +127,23 @@ func _on_select(type: String):
 	elif type == "Whole":
 		if btn_whole: btn_whole.visible = true
 		if btn_half: btn_half.visible = false
+		
+		# =========================================================
+		# TUTORIAL FIX: Trigger step when Whole Chicken is selected
+		# =========================================================
+		var is_chicken = false
+		if is_instance_valid(target_dispenser):
+			var d_name = target_dispenser.name.to_lower()
+			var data_name = ""
+			if "food_data" in target_dispenser and target_dispenser.food_data and target_dispenser.food_data.get("item_name"):
+				data_name = str(target_dispenser.food_data.item_name).to_lower()
+			if d_name.contains("chicken") or data_name.contains("chicken"):
+				is_chicken = true
+				
+		if is_chicken:
+			print("🍗 Tutorial: Whole Chicken selected! Triggering: WholeChicken_Selected")
+			get_tree().call_group("InteractiveTutorial", "action_completed", "WholeChicken_Selected")
+		# =========================================================
 
 func _close_selector():
 	target_dispenser = null # Null immediately to prevent _process from calling this again

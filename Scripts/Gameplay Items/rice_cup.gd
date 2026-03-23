@@ -94,8 +94,6 @@ func _process(delta: float) -> void:
 	super._process(delta)
 	
 	# --- CRASH FIX: Distance-based closing ---
-	# To prevent the infinite physics loop caused by the cooker's hitbox shrinking and shifting away,
-	# we manually keep the cooker open based on distance while you are dragging it.
 	if is_dragging and is_instance_valid(hovered_cooker):
 		var dist = global_position.distance_to(hovered_cooker.global_position)
 		if dist > 250.0: # Safe pixel radius. Close if dragged completely away.
@@ -123,8 +121,6 @@ func _on_area_2d_area_exited(area: Area2D) -> void:
 	
 	if is_instance_valid(area):
 		var parent = area.get_parent()
-		# ONLY close via the physics exit event if we dropped the cup. 
-		# If we are dragging, _process handles the distance checking to prevent the crash loop.
 		if is_instance_valid(hovered_cooker) and parent == hovered_cooker and not is_dragging:
 			_close_current_cooker()
 			hovered_cooker = null
@@ -179,6 +175,9 @@ func reset_cup():
 
 func start_hold_mechanic():
 	print("DEBUG [RiceCup]: Starting hold mechanic.")
+	
+	get_tree().call_group("InteractiveTutorial", "action_completed", "RiceCup_Hold")
+	
 	is_dragging = false
 	z_index = 0 
 	current_hovered_area = null
@@ -214,7 +213,6 @@ func _on_mechanic_scoop_finished(amount: String):
 		rice_cup_area.input_pickable = true
 
 	# --- MAPPING FIX ---
-	# Translate the strings coming from the UI into standard game variables
 	var mapped_amount = amount
 	if amount == "Right": 
 		mapped_amount = "RightAmount"
@@ -239,17 +237,30 @@ func _on_mechanic_scoop_finished(amount: String):
 		_:
 			success = false
 
+	# =========================================================
+	# ⚠️ TUTORIAL FIX: Overlay trigger & strict "TooHigh" check
+	# =========================================================
+	var tutorial = get_tree().get_first_node_in_group("InteractiveTutorial")
+	if tutorial:
+		if mapped_amount != "TooHigh":
+			print("DEBUG [RiceCup]: Tutorial strict mode - player failed, forcing retry.")
+			success = false
+			final_texture = tex_empty # Keep cup empty for retry
+			tutorial.trigger_rice_retry() # Trigger the overlay!
+		else:
+			print("DEBUG [RiceCup]: Tutorial strict mode - player succeeded.")
+			tutorial.action_completed("RiceCup_Full")
+	# =========================================================
+
 	texture = final_texture
 	is_empty = !success
 
 	_close_current_cooker()
 	
-	# CRITICAL FIX 3: Completely sever cooker reference BEFORE flying back to start.
-	# Prevents expanded cooker hitboxes from grabbing the cup again while tweening.
 	hovered_cooker = null 
 	return_to_start()
 
-	if mapped_amount == "RightAmount":
+	if success:
 		emit_signal("rice_scoop_completed", mapped_amount)
 
 	mechanic_instance = null

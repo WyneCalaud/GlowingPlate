@@ -35,6 +35,7 @@ const PENALTY_INTERVAL: float = 1.0 # Every 1 second over 4s
 var hold_duration: float = 0.0
 var is_holding: bool = false
 var last_penalty_time: float = 4.0
+var can_interact: bool = false # ⚠️ NEW: Prevents instant-clicks when spawning
 
 # Active textures cache
 var tex_empty: Texture2D
@@ -57,9 +58,17 @@ func _ready():
 		
 	if cup_display:
 		cup_display.texture = tex_empty
+		
+	# ⚠️ FIX: Add a tiny 0.2s delay before allowing interaction.
+	# This prevents you from instantly triggering the mechanic if you are clicking through a tutorial.
+	get_tree().create_timer(0.2).timeout.connect(func(): can_interact = true)
 
 # --- CLICK OUTSIDE TO CLOSE MECHANIC (FIXED) ---
-func _input(event: InputEvent) -> void:
+# ⚠️ FIX: Changed from _input to _unhandled_input so other UI elements (like Step Images)
+# can safely consume clicks without this script thinking you clicked "outside".
+func _unhandled_input(event: InputEvent) -> void:
+	if not can_interact: return
+	
 	if visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var click_pos = event.global_position
 		
@@ -142,6 +151,7 @@ func _update_cup_texture():
 		cup_display.texture = next_tex
 
 func _on_button_down():
+	if not can_interact: return # ⚠️ FIX: Ignore clicks during safety cooldown
 	is_holding = true
 	hold_duration = 0.0
 	last_penalty_time = TIME_FULL

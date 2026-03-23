@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwuu2b1l20j14"]
+[gd_scene format=3 uid="uid://dwuu2b1l20j14"]
 
 [ext_resource type="Texture2D" uid="uid://befwmm8wymelb" path="res://Assets/Beverages/Glasses/RightWater.png" id="1_yibmr"]
 [ext_resource type="Script" uid="uid://bc4ghc4lswgq7" path="res://Assets/Beverages/filled_glass.gd" id="2_x88r1"]
@@ -8,17 +8,17 @@
 radius = 90.19438
 height = 387.4439
 
-[node name="FilledWaterGlass" type="Sprite2D"]
+[node name="FilledWaterGlass" type="Sprite2D" unique_id=1055261269 groups=["interactable"]]
 position = Vector2(2.3841858e-07, -4.7683716e-07)
 scale = Vector2(0.3215278, 0.30972224)
 texture = ExtResource("1_yibmr")
 script = ExtResource("2_x88r1")
 water_data = ExtResource("3_60ayi")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=646434340 groups=["interactable"]]
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1570381978 groups=["interactable"]]
 position = Vector2(9.330452, -25.829596)
 shape = SubResource("CapsuleShape2D_x88r1")
