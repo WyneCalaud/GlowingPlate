@@ -8,6 +8,15 @@ extends "res://Scripts/Food Data/food_item_base.gd"
 var current_liquid_amount: String = "Right" 
 var serve_trash_zone: Node2D = null # Node reference for the Serve/Trash container
 
+# --- TUTORIAL SYSTEM ---
+var is_tutorial_locked: bool = false:
+	set(value):
+		is_tutorial_locked = value
+		# Automatically disable/enable clicking when locked/unlocked
+		var area_node = get_node_or_null("Area2D")
+		if area_node:
+			area_node.input_pickable = !value
+
 func _ready():
 	# 1. Capture the texture set by the Spawner
 	var correct_level_texture = texture
@@ -26,7 +35,7 @@ func _ready():
 	# 5. Ensure Input is active
 	var area_node = get_node_or_null("Area2D")
 	if area_node:
-		area_node.input_pickable = true
+		area_node.input_pickable = !is_tutorial_locked
 
 	# 6. FIND SERVE/TRASH ZONE: Look in the main scene tree for the node
 	serve_trash_zone = get_tree().root.find_child("ServeOrTrash", true, false)
@@ -38,15 +47,55 @@ func _ready():
 		serve_trash_zone.visible = false
 		print("DEBUG: Serve/Trash zone found.")
 
-	# --- TUTORIAL NOTIFICATION ---
-	# We don't lock this or add it to the interactable group.
-	# The fact that this node spawned means the player successfully filled the glass!
+	# --- TUTORIAL NOTIFICATION (Spawned & Filled) ---
+	add_to_group("interactable")
+	name = "FilledGlass" # Force name so the Inspector easily finds it!
+	
 	var in_tutorial = get_tree().get_node_count_in_group("InteractiveTutorial") > 0
 	if in_tutorial:
-		get_tree().call_group("InteractiveTutorial", "action_completed", "FullGlass_Filled")
+		# Using call_deferred ensures the glass is 100% loaded into the scene tree 
+		# BEFORE the tutorial manager tries to scan for it and unlock it!
+		call_deferred("_notify_tutorial_filled")
+
+func _notify_tutorial_filled():
+	get_tree().call_group("InteractiveTutorial", "action_completed", "FullGlass_Filled")
+
+# =========================================================================
+# --- BULLETPROOF INPUT HANDLING (BYPASSES BLOCKING UI) ---
+# =========================================================================
+func _input(event):
+	# Ignore input if the tutorial has it locked
+	if is_tutorial_locked: return
+	
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.is_pressed():
+			# 1. Ask physics engine directly if the mouse is hovering over this glass
+			var space = get_world_2d().direct_space_state
+			var query = PhysicsPointQueryParameters2D.new()
+			query.position = get_global_mouse_position()
+			query.collide_with_areas = true
+			
+			var results = space.intersect_point(query)
+			for hit in results:
+				if hit.collider == get_node_or_null("Area2D"):
+					get_viewport().set_input_as_handled()
+					
+					# 2. Force the base script (food_item_base) to start dragging!
+					if "is_dragging" in self:
+						set("is_dragging", true)
+					start_dragging()
+					return
+		else:
+			# 3. Mouse Released - Force the base script to drop!
+			if get("is_dragging"):
+				set("is_dragging", false)
+				handle_drop()
 
 # --- OVERRIDE: Dragging Starts (Show Zones) ---
 func start_dragging():
+	if is_tutorial_locked:
+		return
+		
 	super.start_dragging() 
 	
 	# 1. Elevate Z-Index to appear above Serve/Trash zones (which are at Z=50)
@@ -142,6 +191,11 @@ func _on_area_2d_area_exited(area: Area2D) -> void:
 # --- OVERRIDE: Plate success logic ---
 func on_plate_placement_success():
 	print("ACTION: Filled glass served successfully.")
+
+	# --- TUTORIAL NOTIFICATION (Served Successfully!) ---
+	var in_tutorial = get_tree().get_node_count_in_group("InteractiveTutorial") > 0
+	if in_tutorial:
+		get_tree().call_group("InteractiveTutorial", "action_completed", "FullGlass_Served")
 
 	var gd := get_tree().get_first_node_in_group("GameData")
 	if not gd:

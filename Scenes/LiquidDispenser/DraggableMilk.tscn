@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dk18m03jpielk"]
+[gd_scene format=3 uid="uid://dk18m03jpielk"]
 
 [ext_resource type="Texture2D" uid="uid://dyylu7on32de2" path="res://Assets/UI/Milk/Milk.png" id="1_1bvcd"]
 [ext_resource type="Script" uid="uid://p0tu6obmj84b" path="res://Scenes/LiquidDispenser/MilkDraggable.gd" id="2_lsq4s"]
@@ -7,15 +7,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lv6xx"]
 size = Vector2(139, 247)
 
-[node name="DraggableMilk" type="Sprite2D"]
+[node name="DraggableMilk" type="Sprite2D" unique_id=1294235937 groups=["interactable"]]
 texture = ExtResource("1_1bvcd")
 script = ExtResource("2_lsq4s")
 milk_data = ExtResource("3_lv6xx")
 food_data = ExtResource("3_lv6xx")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1426882265]
 collision_layer = 2
 
-[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D" unique_id=634008462]
 position = Vector2(2.5, -0.5)
 shape = SubResource("RectangleShape2D_lv6xx")

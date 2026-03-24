@@ -26,6 +26,9 @@ var original_position: Vector2
 # Dynamic Scale Ratio (Inherited from Spawner)
 var target_scale_ratio: float = 0.8 # Default fallback
 
+# --- TUTORIAL SYSTEM ---
+var is_tutorial_locked: bool = false
+
 # --- NODES ---
 @onready var button: BaseButton = $HoldButton
 # We assume this UI is a child of the EmptyGlass node, so we look up the tree or siblings
@@ -42,6 +45,10 @@ var tex_right: Texture2D
 var tex_too_high: Texture2D
 
 func _ready():
+	# --- TUTORIAL INJECTION ---
+	add_to_group("interactable")
+	name = "HoldButton" # Force the node name so the Tutorial Inspector finds it!
+
 	if button:
 		button.button_down.connect(_on_button_down)
 		button.button_up.connect(_on_button_up)
@@ -171,6 +178,9 @@ func _trigger_penalty_event():
 		tween.tween_callback(func(): progress_bar.set_meta("is_flashing", false))
 
 func _on_button_down():
+	# Ignore input if the tutorial has locked this UI
+	if is_tutorial_locked: return
+	
 	is_holding = true
 	hold_duration = 0.0
 	last_penalty_time = TIME_FULL

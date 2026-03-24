@@ -28,24 +28,31 @@ var current_phase: int = 0
 var current_step: int = 0
 var is_in_retry_state: bool = false
 
+# --- SKIP BUTTON ---
+@onready var skip_tutorial = $CanvasLayer2/SkipTutorialButton
+
 func _ready():
 	add_to_group("InteractiveTutorial")
+	add_to_group("service_manager") # DEFENSIVE FIX: Allow Draggables to find this script as a service manager
 	
-	if tutorial_overlay:
+	if is_instance_valid(tutorial_overlay):
 		tutorial_overlay.pressed.connect(_on_tutorial_overlay_pressed)
 	else:
 		push_error("Tutorial Overlay not found! Check node path.")
 		
-	# --- Setup Drop Zones (Serve & Trash) ---
-	if serve_or_trash:
+	if is_instance_valid(skip_tutorial):
+		skip_tutorial.pressed.connect(_on_skip_tutorial_pressed)
+	else:
+		push_warning("SkipTutorialButton not found! Check node path.")
+		
+	if is_instance_valid(serve_or_trash):
 		serve_or_trash.visible = false
 		serve_or_trash.z_index = 50
 		drop_zones_default_position = serve_or_trash.global_position
 		
-	# --- Hook up the Plate Drag Signal ---
-	if kitchen_area:
+	if is_instance_valid(kitchen_area):
 		food_plate = kitchen_area.get_node_or_null("Plate/FoodPlate")
-		if food_plate and not food_plate.is_connected("drag_state_changed", _on_plate_drag_state_changed):
+		if is_instance_valid(food_plate) and not food_plate.is_connected("drag_state_changed", _on_plate_drag_state_changed):
 			food_plate.connect("drag_state_changed", _on_plate_drag_state_changed)
 			
 	play_step()
@@ -56,7 +63,6 @@ func _ready():
 
 func lock_all_inputs():
 	var all_interactables = get_tree().get_nodes_in_group("interactable")
-	
 	if all_interactables.is_empty():
 		push_warning("TUTORIAL WARNING: No nodes found in the 'interactable' group!")
 		
@@ -64,44 +70,39 @@ func lock_all_inputs():
 		_set_node_interactable(item, false)
 
 func unlock_item(target_node_name: String):
-	if target_node_name == "":
-		return 
+	if target_node_name == "": return 
 		
 	var all_interactables = get_tree().get_nodes_in_group("interactable")
 	var found = false
 	
 	for item in all_interactables:
-		if item.name == target_node_name:
+		if target_node_name.to_lower() in item.name.to_lower():
 			_set_node_interactable(item, true)
-			print("Tutorial: Successfully unlocked -> ", target_node_name)
+			print("Tutorial: Successfully unlocked -> ", item.name)
 			found = true
-			break 
 			
 	if not found:
-		push_warning("Tutorial Warning: Could not find node named '" + target_node_name + "'")
+		push_warning("Tutorial Warning: Could not find node containing '" + target_node_name + "'")
 
 func unlock_all_inputs():
 	var all_interactables = get_tree().get_nodes_in_group("interactable")
 	for item in all_interactables:
 		_set_node_interactable(item, true)
 
-# THE MAGIC FUNCTION: This aggressively digs through the node to disable clicks!
 func _set_node_interactable(node: Node, can_interact: bool):
-	# 1. If this node has a custom variable called "is_tutorial_locked", set it!
+	if node == skip_tutorial: return
+		
 	if "is_tutorial_locked" in node:
 		node.is_tutorial_locked = not can_interact
 
-	# 2. Disable standard Godot Collision (Area2D, StaticBody2D)
 	if "input_pickable" in node:
 		node.input_pickable = can_interact
 		
-	# 3. Disable UI Elements (Buttons, TextureRects)
 	elif node is Control:
 		node.mouse_filter = Control.MOUSE_FILTER_STOP if can_interact else Control.MOUSE_FILTER_IGNORE
 		if node is BaseButton:
 			node.disabled = not can_interact
 
-	# 4. RECURSIVELY check all children (Fixes the Node2D root problem)
 	for child in node.get_children():
 		_set_node_interactable(child, can_interact)
 
@@ -113,6 +114,11 @@ func move_zones_to_kitchen():
 	if is_instance_valid(serve_or_trash):
 		serve_or_trash.global_position = drop_zones_default_position
 
+# DEFENSIVE FIX: New method to support MilkDraggable and Beverages
+func move_zones_to_beverage(x_pos: float = 1240.0):
+	if is_instance_valid(serve_or_trash):
+		serve_or_trash.global_position = Vector2(x_pos, drop_zones_default_position.y)
+
 func show_drop_zones():
 	if is_instance_valid(serve_or_trash):
 		serve_or_trash.visible = true
@@ -123,18 +129,15 @@ func hide_drop_zones():
 		move_zones_to_kitchen()
 
 func _on_plate_drag_state_changed(is_dragging_now: bool):
-	if not is_instance_valid(serve_or_trash):
-		return
+	if not is_instance_valid(serve_or_trash): return
 
 	if is_dragging_now:
-		# Check if the plate actually has food on it before showing Serve/Trash
-		if food_plate and food_plate.has_method("get_plate_contents"):
+		if is_instance_valid(food_plate) and food_plate.has_method("get_plate_contents"):
 			var contents = food_plate.get_plate_contents()
 			if contents.size() > 0:
 				move_zones_to_kitchen()
 				show_drop_zones()
 		else:
-			# Fallback just in case get_plate_contents isn't available
 			move_zones_to_kitchen()
 			show_drop_zones()
 	else:
@@ -143,7 +146,7 @@ func _on_plate_drag_state_changed(is_dragging_now: bool):
 # =========================================================================
 
 func trigger_rice_retry():
-	if tutorial_overlay and rice_retry_texture:
+	if is_instance_valid(tutorial_overlay) and is_instance_valid(rice_retry_texture):
 		is_in_retry_state = true
 		tutorial_overlay.texture_normal = rice_retry_texture
 		tutorial_overlay.show()
@@ -151,7 +154,7 @@ func trigger_rice_retry():
 		push_error("Tutorial Error: Missing rice retry texture or overlay!")
 
 func trigger_veggie_retry(): 
-	if tutorial_overlay and veggie_retry_texture:
+	if is_instance_valid(tutorial_overlay) and is_instance_valid(veggie_retry_texture):
 		is_in_retry_state = true
 		tutorial_overlay.texture_normal = veggie_retry_texture
 		tutorial_overlay.show()
@@ -185,12 +188,13 @@ func play_step():
 		setup_interactive_step(step_data)
 
 func setup_image_step(step_data: TutorialStep):
-	tutorial_overlay.show()
-	if step_data.image != null:
-		tutorial_overlay.texture_normal = step_data.image
+	if is_instance_valid(tutorial_overlay):
+		tutorial_overlay.show()
+		if step_data.image != null:
+			tutorial_overlay.texture_normal = step_data.image
 
 func setup_interactive_step(step_data: TutorialStep):
-	tutorial_overlay.hide()
+	if is_instance_valid(tutorial_overlay): tutorial_overlay.hide()
 	
 	if step_data.node_to_unlock != "":
 		unlock_item(step_data.node_to_unlock)
@@ -201,7 +205,7 @@ func setup_interactive_step(step_data: TutorialStep):
 func _on_tutorial_overlay_pressed():
 	if is_in_retry_state:
 		is_in_retry_state = false
-		tutorial_overlay.hide()
+		if is_instance_valid(tutorial_overlay): tutorial_overlay.hide()
 		return
 		
 	if current_phase < tutorial_phases.size():
@@ -225,23 +229,25 @@ func action_completed(action: String):
 		play_step()
 
 func switch_station(station: String):
-	if kitchen_area: kitchen_area.hide()
-	if beverage_station: beverage_station.hide()
-	if lobby_canteen: lobby_canteen.hide()
+	if is_instance_valid(kitchen_area): kitchen_area.hide()
+	if is_instance_valid(beverage_station): beverage_station.hide()
+	if is_instance_valid(lobby_canteen): lobby_canteen.hide()
 	
-	# Always hide serve_or_trash when changing stations. 
-	# It will only reappear when the player picks up a plate!
-	if serve_or_trash: serve_or_trash.hide()
+	if is_instance_valid(serve_or_trash): serve_or_trash.hide()
 	
 	if station == "kitchen":
-		if kitchen_area: kitchen_area.show()
+		if is_instance_valid(kitchen_area): kitchen_area.show()
 	elif station == "beverage":
-		if beverage_station: beverage_station.show()
+		if is_instance_valid(beverage_station): beverage_station.show()
 	elif station == "lobby":
-		if lobby_canteen: lobby_canteen.show()
+		if is_instance_valid(lobby_canteen): lobby_canteen.show()
+
+func _on_skip_tutorial_pressed():
+	print("⏭️ Player chose to skip the tutorial.")
+	finish_tutorial()
 
 func finish_tutorial():
 	print("🎉 Tutorial Completely Finished!")
-	if tutorial_overlay: tutorial_overlay.hide()
+	if is_instance_valid(tutorial_overlay): tutorial_overlay.hide()
 	unlock_all_inputs()
 	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")

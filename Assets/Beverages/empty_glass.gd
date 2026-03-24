@@ -6,7 +6,6 @@ var spawner_controller: Node = null
 var active_liquid_type: String = "" 
 
 # --- CRITICAL TUTORIAL SYSTEM VARS ---
-# This MUST exist, or the Tutorial Manager will silently crash on the first image!
 var is_tutorial_locked: bool = false
 
 func _ready():
@@ -21,25 +20,36 @@ func _ready():
 	# 3. Add to interactable group for the tutorial manager
 	add_to_group("interactable")
 
-# --- INPUT HANDLING ---
-func _input_event(_viewport, event, _shape_idx):
+# --- BULLETPROOF INPUT HANDLING ---
+func _input(event):
+	# Ignore clicks if the tutorial is currently locked
+	if is_tutorial_locked: return
 	
-	# CRITICAL TUTORIAL FIX: Ignore clicks if the tutorial is currently showing an image
-	if is_tutorial_locked:
-		return
-		
-	# DEBUG: Check if the click is even registering
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-		var current_liquid = "None"
-		if spawner_controller:
-			current_liquid = spawner_controller.selected_liquid
-		print("DEBUG: EmptyGlass clicked! Current Liquid: %s" % current_liquid)
+	# Prevent double clicks while UI is open
+	if is_ui_active: return 
 
-	if is_ui_active: return # Prevent double clicks while UI is open
-	
+	# Detect left mouse click
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-		get_viewport().set_input_as_handled()
-		try_start_filling()
+		
+		# 1. Ask the physics engine directly what is under the mouse pointer
+		var space = get_world_2d().direct_space_state
+		var query = PhysicsPointQueryParameters2D.new()
+		query.position = get_global_mouse_position()
+		query.collide_with_areas = true
+		
+		var results = space.intersect_point(query)
+		
+		# 2. Check if THIS EmptyGlass was one of the objects hit by the click
+		for hit in results:
+			if hit.collider == self:
+				var current_liquid = "None"
+				if spawner_controller:
+					current_liquid = spawner_controller.selected_liquid
+				print("DEBUG: EmptyGlass clicked via Physics Check! Current Liquid: %s" % current_liquid)
+
+				get_viewport().set_input_as_handled()
+				try_start_filling()
+				return # Stop searching once we found our glass
 
 # --- LOGIC ---
 func try_start_filling():
