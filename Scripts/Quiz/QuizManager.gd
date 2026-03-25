@@ -142,7 +142,8 @@ func _ready():
 		_get_due_concept_questions()
 
 	if current_quiz_set.is_empty():
-		question_label.text = "No questions due today!"
+		if is_instance_valid(question_label):
+			question_label.text = "No questions due today!"
 		await get_tree().create_timer(2.0).timeout
 		finish_quiz()
 		return
@@ -244,10 +245,10 @@ func _get_due_concept_questions():
 	for concept in due_concepts:
 		var review_q = QuestionDatabase.get_question_by_id(concept)
 
-		if not review_q.is_empty():
+		if typeof(review_q) == TYPE_DICTIONARY and not review_q.is_empty():
 			var is_dup = false
 			for existing in review_questions:
-				if existing["id"] == review_q["id"]:
+				if existing.get("id") == review_q.get("id"):
 					is_dup = true
 					break
 			if not is_dup: review_questions.append(review_q)
@@ -258,7 +259,7 @@ func _get_due_concept_questions():
 	for q in daily_questions:
 		var is_dup = false
 		for existing in review_questions:
-			if existing["id"] == q["id"]:
+			if existing.get("id") == q.get("id"):
 				is_dup = true
 				break
 		if not is_dup: current_quiz_set.append(q)
@@ -298,41 +299,58 @@ func load_question():
 		image_display.texture = q_data.get("q_img", null)
 		image_display.visible = (image_display.texture != null)
 
+	# 🔥 ADVISOR UPDATE: Check if this is a repeated question (exposure > 0)
+	var is_repeated_question: bool = false
+	if has_node("/root/QuizSystem"):
+		var c_progress = QuizSystem.get("concept_progress")
+		if typeof(c_progress) == TYPE_DICTIONARY and c_progress.has(current_concept):
+			var c_data = c_progress[current_concept]
+			if typeof(c_data) == TYPE_DICTIONARY and c_data.has("exposure") and c_data["exposure"] > 0:
+				is_repeated_question = true
+
+	# Assemble the options
 	var options = []
-	options.append({"text": q_data.get("ans") if q_data.get("ans") != null else "", "img": q_data.get("ans_img"), "is_correct": true})
-	options.append({"text": q_data.get("wrong1") if q_data.get("wrong1") != null else "", "img": q_data.get("wrong1_img"), "is_correct": false})
-	options.append({"text": q_data.get("wrong2") if q_data.get("wrong2") != null else "", "img": q_data.get("wrong2_img"), "is_correct": false})
+	options.append({"text": q_data.get("ans", ""), "img": q_data.get("ans_img"), "is_correct": true})
+	options.append({"text": q_data.get("wrong1", ""), "img": q_data.get("wrong1_img"), "is_correct": false})
+	
+	# 🔥 ADVISOR UPDATE: Only append the second wrong answer if it's NOT a repeated question
+	if not is_repeated_question:
+		options.append({"text": q_data.get("wrong2", ""), "img": q_data.get("wrong2_img"), "is_correct": false})
+		
 	options.shuffle()
 
+	# Map options to available buttons
 	for i in range(answer_nodes.size()):
 		var nodes = answer_nodes[i]
 		var btn = nodes.button
-		var opt = options[i]
 		
-		if opt.is_correct: correct_button_index = i
+		# If we have an option for this button slot
+		if i < options.size():
+			var opt = options[i]
+			if opt.is_correct: correct_button_index = i
 
-		if is_instance_valid(btn):
-			btn.visible = true
-			btn.disabled = false
-			btn.modulate = Color.WHITE
-			btn.scale = Vector2.ONE
-			btn.rotation_degrees = 0
-			btn.pivot_offset = btn.size / 2
+			if is_instance_valid(btn):
+				btn.visible = true
+				btn.disabled = false
+				btn.modulate = Color.WHITE
+				btn.scale = Vector2.ONE
+				btn.rotation_degrees = 0
+				btn.pivot_offset = btn.size / 2
 
-		if is_instance_valid(nodes.text):
-			nodes.text.text = opt.text
-			nodes.text.visible = (opt.text != "") 
-		if is_instance_valid(nodes.image):
-			nodes.image.texture = opt.img
-			nodes.image.visible = (opt.img != null)
+			if is_instance_valid(nodes.text):
+				nodes.text.text = str(opt.text)
+				nodes.text.visible = (str(opt.text) != "") 
+			if is_instance_valid(nodes.image):
+				nodes.image.texture = opt.img
+				nodes.image.visible = (opt.img != null)
+		else:
+			# 🔥 DEFENSIVE / ADVISOR UPDATE: Hide any remaining buttons (e.g. the 3rd button if repeated)
+			if is_instance_valid(btn):
+				btn.visible = false
 
 	# 🔥 TRIGGER REPEAT POPUP BEFORE ANSWERING
-	if has_node("/root/QuizSystem"):
-		var c_progress = QuizSystem.get("concept_progress")
-		if c_progress != null and c_progress.has(current_concept):
-			var c_data = c_progress[current_concept]
-			if c_data != null and c_data.has("exposure") and c_data["exposure"] > 0:
-				_show_repeat_popup()
+	if is_repeated_question:
+		_show_repeat_popup()
 
 # ==========================================================
 # ANSWER HANDLING
@@ -367,10 +385,10 @@ func _on_answer_button_pressed(button_index: int):
 	
 	if is_instance_valid(exposure_label):
 		exposure_label.visible = true
-		exposure_label.text = feedback_dict.get("exposure", "")
+		exposure_label.text = str(feedback_dict.get("exposure", ""))
 	if is_instance_valid(mastery_label):
 		mastery_label.visible = true
-		mastery_label.text = feedback_dict.get("mastery", "")
+		mastery_label.text = str(feedback_dict.get("mastery", ""))
 
 	# --- GET YOUR CUSTOM TEXT AND SHOW THE ANIMATED BOX ---
 	var final_custom_text = _get_custom_message(is_correct, actual_response_time)
@@ -379,7 +397,7 @@ func _on_answer_button_pressed(button_index: int):
 	# --- BUTTON COLOR UPDATES ---
 	for i in range(answer_nodes.size()):
 		var btn = answer_nodes[i].button
-		if is_instance_valid(btn):
+		if is_instance_valid(btn) and btn.visible: # Only update visible buttons safely
 			btn.disabled = true
 			if i == correct_button_index:
 				btn.modulate = Color.GREEN
@@ -390,14 +408,14 @@ func _on_answer_button_pressed(button_index: int):
 	if is_correct:
 		total_correct_answers += 1
 		if is_instance_valid(result_label): 
-			result_label.text = feedback_dict.get("performance", "CORRECT!")
+			result_label.text = str(feedback_dict.get("performance", "CORRECT!"))
 			result_label.modulate = Color.GREEN
 		if is_instance_valid(exposure_label): exposure_label.modulate = Color.GREEN
 		if is_instance_valid(sfx_correct): sfx_correct.play()
 		_animate_correct_feedback(button_index)
 	else:
 		if is_instance_valid(result_label): 
-			result_label.text = feedback_dict.get("performance", "INCORRECT.")
+			result_label.text = str(feedback_dict.get("performance", "INCORRECT."))
 			result_label.modulate = Color.RED
 		if is_instance_valid(exposure_label): exposure_label.modulate = Color.RED
 		if is_instance_valid(sfx_incorrect): sfx_incorrect.play()
@@ -493,6 +511,8 @@ func _show_message_box(text: String):
 # ==========================================================
 
 func _animate_correct_feedback(idx: int):
+	# Defensive check to ensure index is valid
+	if idx < 0 or idx >= answer_nodes.size(): return
 	var btn = answer_nodes[idx].button
 	if not is_instance_valid(btn): return
 	btn.pivot_offset = btn.size / 2
@@ -501,6 +521,8 @@ func _animate_correct_feedback(idx: int):
 	tween.tween_property(btn, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 
 func _animate_incorrect_feedback(idx: int):
+	# Defensive check to ensure index is valid
+	if idx < 0 or idx >= answer_nodes.size(): return
 	var btn = answer_nodes[idx].button
 	if not is_instance_valid(btn): return
 	btn.pivot_offset = btn.size / 2
