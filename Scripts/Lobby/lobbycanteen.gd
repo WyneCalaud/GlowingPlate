@@ -738,11 +738,13 @@ func _get_detailed_mistakes() -> Array:
 
 	var required_plate: Dictionary = OrderSystem.current_customer_order.required_plate
 	var required_portions: Dictionary = OrderSystem.current_customer_order.get("required_portions", {})
-	var required_beverages: Dictionary = OrderSystem.current_customer_order.get("required_beverages", {})
+	var required_beverages: Array = OrderSystem.current_customer_order.get("required_beverage", [])
 
 	var plated_map := {}
 
-	# Build plated map
+	# ---------------------------------------------------------
+	# PLATE CHECK (UNCHANGED)
+	# ---------------------------------------------------------
 	for entry in OrderSystem.prepared_plate_contents:
 		var slot = entry.get("accepted_type")
 		if slot:
@@ -759,7 +761,6 @@ func _get_detailed_mistakes() -> Array:
 		var expected_key = required_plate[category]
 		var expected_portion = required_portions.get(category, null)
 
-		# --- Missing slot entirely ---
 		if not plated_map.has(category):
 			if expected_key == "ANY":
 				mistakes.append("Missing my %s!" % _format_any_slot_name(category))
@@ -768,13 +769,12 @@ func _get_detailed_mistakes() -> Array:
 			continue
 
 		var actual = plated_map[category]
-		# --- Wrong category placement (non-ANY too) ---
+
 		var food_res = OrderSystem.FOOD_DB.get(actual.key)
 		if food_res and food_res.food_category != category:
 			mistakes.append("Wrong %s food!" % _format_slot_name(category))
 			continue
 
-		# --- Wrong food ---
 		if expected_key != "ANY" and actual.key != expected_key:
 			mistakes.append("I asked for %s, not %s!" % [
 				_format_food_name(expected_key),
@@ -782,13 +782,11 @@ func _get_detailed_mistakes() -> Array:
 			])
 			continue
 
-		# --- ANY but wrong category placement ---
 		if expected_key == "ANY":
 			if food_res and food_res.food_category != category:
 				mistakes.append("That’s not the right %s!" % _format_any_slot_name(category))
 				continue
 
-		# --- Portion checks ---
 		match expected_key:
 
 			"CHICKEN_LEG", "FISH_FILLET", "EGG", "TOFU", "CORN", "SITAW", "CARROTS", "EGGPLANT", "PUMPKIN":
@@ -804,39 +802,50 @@ func _get_detailed_mistakes() -> Array:
 					mistakes.append("Need %s pandesal!" % str(expected_portion))
 
 	# ---------------------------------------------------------
-	# BEVERAGE CHECKS
+	# ✅ BEVERAGE CHECK (FIXED + SMART)
 	# ---------------------------------------------------------
+
 	var prepared_beverages: Dictionary = OrderSystem.prepared_beverage_data
 
-	for bev_slot in required_beverages.keys():
-		var expected_bev = required_beverages[bev_slot]
+	# 🔥 Case 1: No beverage at all
+	if prepared_beverages.size() == 0:
+		mistakes.append("Missing my drink!")
+		return mistakes
 
-		if not prepared_beverages.has(bev_slot):
-			if expected_bev == "WATER":
-				mistakes.append("Missing my water!")
-			elif expected_bev == "MILK":
-				mistakes.append("Missing my milk!")
+	for required in required_beverages:
+
+		var required_upper = str(required).to_upper()
+		var found := false
+
+		for entry in prepared_beverages.values():
+
+			var actual_type = str(entry.get("liquid_type", "")).to_upper()
+
+			# --- WATER (hot/cold allowed) ---
+			if required_upper == "WATER":
+				if actual_type == "HOT_WATER" or actual_type == "COLD_WATER":
+					found = true
+					break
+
+			# --- MILK ---
+			elif required_upper == "REGULAR_MILK":
+				if actual_type == "REGULAR_MILK":
+					found = true
+					break
+
+		if not found:
+
+			# 🔥 CLEAN PLAYER-FRIENDLY FEEDBACK
+			if required_upper == "WATER":
+				mistakes.append("I asked for water!")
+			elif required_upper == "REGULAR_MILK":
+				mistakes.append("I asked for milk!")
 			else:
-				mistakes.append("Missing my %s!" % _format_beverage_name(expected_bev))
-			continue
+				mistakes.append("Wrong drink!")
 
-		var bev_entry = prepared_beverages[bev_slot]
-		var bev_item = bev_entry.get("item")
-		var actual_bev = ""
-
-		if bev_item:
-			actual_bev = bev_item.internal_key
-
-		if actual_bev != expected_bev:
-			if expected_bev == "WATER":
-				mistakes.append("I asked for water, not %s!" % _format_beverage_name(actual_bev))
-			elif expected_bev == "MILK":
-				mistakes.append("I asked for milk, not %s!" % _format_beverage_name(actual_bev))
-			else:
-				mistakes.append("I asked for %s, not %s!" % [
-					_format_beverage_name(expected_bev),
-					_format_beverage_name(actual_bev)
-				])
+	# 🔥 Extra drink penalty
+	if prepared_beverages.size() > required_beverages.size():
+		mistakes.append("Too many drinks!")
 
 	return mistakes
 
