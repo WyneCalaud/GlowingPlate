@@ -325,7 +325,7 @@ func _on_btn_choice_1_pressed() -> void:
 			GameData.intro_completed = true
 			GameData.current_phase = GameData.GamePhase.LOBBY
 			GameData.save_game()
-			get_tree().change_scene_to_file("res://Scenes/Tutorial/KitchenTutorial.tscn")
+			get_tree().change_scene_to_file("res://Scenes/Tutorial/TutorialInteractive.tscn")
 			return
 		step = 14
 	show_step()

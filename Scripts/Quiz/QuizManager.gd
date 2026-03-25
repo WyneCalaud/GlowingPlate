@@ -6,7 +6,12 @@ extends Control
 @export var msg_correct_normal: Array[String] = ["Good job! That's correct."]
 @export var msg_correct_slow: Array[String] = ["Correct! But try to be a bit faster."]
 @export var msg_incorrect: Array[String] = ["Oops! Let's review this concept."]
-@export var msg_new_concept: Array[String] = ["\nPay close attention, this is a new concept!"]
+
+# --- REPEAT POPUP UI (ASSIGN IN INSPECTOR) ---
+@export_group("Repeat Question Popup")
+@export var repeat_popup_rect: TextureRect
+@export var repeat_texture: Texture2D
+var repeat_tween: Tween
 
 # --- AUDIO REFERENCES ---
 @onready var sfx_correct: AudioStreamPlayer2D = $SfxCorrect
@@ -82,7 +87,7 @@ const ANIM_DURATION: float = 0.3
 # CUSTOM MESSAGE LOGIC
 # ==========================================================
 
-func _get_custom_message(is_correct: bool, response_time: float, exposure_text: String) -> String:
+func _get_custom_message(is_correct: bool, response_time: float) -> String:
 	var my_message = ""
 	
 	if is_correct:
@@ -94,11 +99,6 @@ func _get_custom_message(is_correct: bool, response_time: float, exposure_text: 
 			my_message = msg_correct_slow.pick_random() if msg_correct_slow.size() > 0 else "Correct!"
 	else:
 		my_message = msg_incorrect.pick_random() if msg_incorrect.size() > 0 else "Incorrect!"
-		
-	# Add new concept warning if applicable
-	if exposure_text == "First time seeing this!":
-		var new_concept_text = msg_new_concept.pick_random() if msg_new_concept.size() > 0 else ""
-		my_message += new_concept_text
 		
 	return my_message
 
@@ -118,6 +118,11 @@ func _ready():
 		message_box_original_pos = message_box.position
 		message_box.pivot_offset = message_box.size / 2
 		message_box.visible = false
+
+	# Safe Initialization for Repeat Popup
+	if is_instance_valid(repeat_popup_rect):
+		repeat_popup_rect.visible = false
+		repeat_popup_rect.pivot_offset = repeat_popup_rect.size / 2.0
 
 	_setup_menu_buttons()
 	update_age_group_display()
@@ -318,8 +323,12 @@ func _on_answer_button_pressed(button_index: int):
 		mastery_label.text = feedback_dict.get("mastery", "")
 
 	# --- GET YOUR CUSTOM TEXT AND SHOW THE ANIMATED BOX ---
-	var final_custom_text = _get_custom_message(is_correct, actual_response_time, feedback_dict.get("exposure", ""))
+	var final_custom_text = _get_custom_message(is_correct, actual_response_time)
 	_show_message_box(final_custom_text)
+
+	# --- TRIGGER REPEAT POPUP IF NEEDED ---
+	if feedback_dict.get("is_repeat", false):
+		_show_repeat_popup()
 
 	# --- BUTTON COLOR UPDATES ---
 	for i in range(answer_nodes.size()):
@@ -362,6 +371,49 @@ func _on_answer_button_pressed(button_index: int):
 	is_mechanic_active = true
 	current_question_index += 1
 	load_question()
+
+# ==========================================================
+# REPEAT POPUP ANIMATION
+# ==========================================================
+
+func _show_repeat_popup():
+	if not is_instance_valid(repeat_popup_rect): return
+
+	# Defensive: Kill previous tween if running
+	if repeat_tween and repeat_tween.is_valid():
+		repeat_tween.kill()
+
+	# Assign custom texture if available
+	if repeat_texture != null:
+		repeat_popup_rect.texture = repeat_texture
+
+	# Reset state
+	repeat_popup_rect.visible = true
+	repeat_popup_rect.scale = Vector2.ZERO
+	repeat_popup_rect.pivot_offset = repeat_popup_rect.size / 2.0
+	
+	# Bring to front so it doesn't get covered
+	repeat_popup_rect.move_to_front()
+	repeat_popup_rect.z_index = 60
+	
+	repeat_tween = create_tween().bind_node(self)
+	
+	# 1. Pop In
+	repeat_tween.tween_property(repeat_popup_rect, "scale", Vector2(1.15, 1.15), 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	repeat_tween.tween_property(repeat_popup_rect, "scale", Vector2.ONE, 0.15).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	
+	# 2. Hold Time
+	repeat_tween.tween_interval(1.5)
+	
+	# 3. Pop Out (Expand slightly then shrink)
+	repeat_tween.tween_property(repeat_popup_rect, "scale", Vector2(1.1, 1.1), 0.1).set_ease(Tween.EASE_IN)
+	repeat_tween.tween_property(repeat_popup_rect, "scale", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	
+	# Hide entirely when done
+	repeat_tween.tween_callback(func():
+		if is_instance_valid(repeat_popup_rect):
+			repeat_popup_rect.visible = false
+	)
 
 # ==========================================================
 # MESSAGE BOX ANIMATION

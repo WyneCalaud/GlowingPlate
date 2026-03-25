@@ -145,183 +145,10 @@
 [ext_resource type="Texture2D" uid="uid://c30lmmjbrccuk" path="res://Assets/UI/TutorialSlide/IntroMilk5.png" id="80_7fiv4"]
 [ext_resource type="Texture2D" uid="uid://r3v4o7y1w2up" path="res://Assets/UI/Interface/10-12.png" id="80_hapei"]
 [ext_resource type="Texture2D" uid="uid://qopf50v74hcu" path="res://Assets/UI/TutorialSlide/IntroMilk6.png" id="81_qns8v"]
+[ext_resource type="Texture2D" uid="uid://bpotmhvqai7dm" path="res://Assets/UI/TutorialSlide/TutorialFinished.png" id="82_lxoes"]
 [ext_resource type="Texture2D" uid="uid://c0ao7xl25f74g" path="res://Assets/UI/Interface/MoneyBar.png" id="83_x8uxq"]
 [ext_resource type="Texture2D" uid="uid://cgrtxjbkvl3iv" path="res://Assets/UI/Interface/KeyBar.png" id="84_xxep4"]
 [ext_resource type="Texture2D" uid="uid://cxyudwe1o75gw" path="res://Assets/UI/TutorialSlide/SkipTutorialButton.png" id="148_t45te"]
-
-[sub_resource type="Resource" id="Resource_kstrq"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("62_kiy1c")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_edbcy"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("63_t7vkv")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_7fiv4"]
-script = ExtResource("3_t1wkr")
-step_type = 1
-action_name = "Move_Camera_To_Water_Station"
-node_to_unlock = "MainCamera"
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_iympk"]
-script = ExtResource("2_whngs")
-phase_name = "Camera Scroll To Water Station"
-steps = Array[ExtResource("3_t1wkr")]([SubResource("Resource_kstrq"), SubResource("Resource_edbcy"), SubResource("Resource_7fiv4")])
-metadata/_custom_type_script = "uid://bnagvteuqncdg"
-
-[sub_resource type="Resource" id="Resource_qns8v"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("64_8wxej")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_yvyl5"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("65_suq4t")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_11ltc"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("66_5qmdl")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_8ko1v"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("67_i7can")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_xekr7"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("68_lch1t")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_ykow8"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("69_7vbsi")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_oobv7"]
-script = ExtResource("3_t1wkr")
-step_type = 1
-action_name = "Stack_Glass_Pressed"
-node_to_unlock = "StackGlass"
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_in8y4"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("70_v8q3b")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_ulvqs"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("71_vis0x")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_87bcf"]
-script = ExtResource("3_t1wkr")
-step_type = 1
-action_name = "Cold_Water_Pressed"
-node_to_unlock = "ColdWaterClick"
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_ml8iw"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("72_nmbrm")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_fgc8t"]
-script = ExtResource("3_t1wkr")
-step_type = 1
-action_name = "EmptyGlass_Pressed"
-node_to_unlock = "EmptyGlass"
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_3nwta"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("73_nmbrm")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_rsl4k"]
-script = ExtResource("3_t1wkr")
-step_type = 1
-action_name = "FullGlass_Filled"
-node_to_unlock = "HoldButton"
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_s8p46"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("73_t45te")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_a5pxp"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("75_t45te")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_sah3b"]
-script = ExtResource("3_t1wkr")
-step_type = 1
-action_name = "FullGlass_Served"
-node_to_unlock = "FilledGlass"
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_uut5i"]
-script = ExtResource("2_whngs")
-phase_name = "Beverage"
-steps = Array[ExtResource("3_t1wkr")]([SubResource("Resource_qns8v"), SubResource("Resource_yvyl5"), SubResource("Resource_11ltc"), SubResource("Resource_8ko1v"), SubResource("Resource_xekr7"), SubResource("Resource_ykow8"), SubResource("Resource_oobv7"), SubResource("Resource_in8y4"), SubResource("Resource_ulvqs"), SubResource("Resource_87bcf"), SubResource("Resource_ml8iw"), SubResource("Resource_fgc8t"), SubResource("Resource_3nwta"), SubResource("Resource_rsl4k"), SubResource("Resource_s8p46"), SubResource("Resource_a5pxp"), SubResource("Resource_sah3b")])
-metadata/_custom_type_script = "uid://bnagvteuqncdg"
-
-[sub_resource type="Resource" id="Resource_shpq3"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("76_lxoes")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_xhct5"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("77_1w6gi")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_2ddbn"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("78_kstrq")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_bl7rq"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("79_edbcy")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_1cg7y"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("80_7fiv4")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_6mdkc"]
-script = ExtResource("3_t1wkr")
-step_type = 1
-action_name = "MilkCartons_Pressed"
-node_to_unlock = "MilkCartons"
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_h05ce"]
-script = ExtResource("3_t1wkr")
-image = ExtResource("81_qns8v")
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_1wj70"]
-script = ExtResource("3_t1wkr")
-step_type = 1
-action_name = "Milk_Served"
-node_to_unlock = "Milk"
-metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
-
-[sub_resource type="Resource" id="Resource_eeyro"]
-script = ExtResource("2_whngs")
-phase_name = "Milk Tutorial"
-steps = Array[ExtResource("3_t1wkr")]([SubResource("Resource_shpq3"), SubResource("Resource_xhct5"), SubResource("Resource_2ddbn"), SubResource("Resource_bl7rq"), SubResource("Resource_1cg7y"), SubResource("Resource_6mdkc"), SubResource("Resource_h05ce"), SubResource("Resource_1wj70")])
-metadata/_custom_type_script = "uid://bnagvteuqncdg"
 
 [sub_resource type="Resource" id="Resource_ui52l"]
 script = ExtResource("3_t1wkr")
@@ -763,6 +590,191 @@ phase_name = "Serving Tutorial"
 steps = Array[ExtResource("3_t1wkr")]([SubResource("Resource_vis0x"), SubResource("Resource_nmbrm"), SubResource("Resource_t45te"), SubResource("Resource_lxoes"), SubResource("Resource_1w6gi")])
 metadata/_custom_type_script = "uid://bnagvteuqncdg"
 
+[sub_resource type="Resource" id="Resource_kstrq"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("62_kiy1c")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_edbcy"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("63_t7vkv")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_7fiv4"]
+script = ExtResource("3_t1wkr")
+step_type = 1
+action_name = "Move_Camera_To_Water_Station"
+node_to_unlock = "MainCamera"
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_iympk"]
+script = ExtResource("2_whngs")
+phase_name = "Camera Scroll To Water Station"
+steps = Array[ExtResource("3_t1wkr")]([SubResource("Resource_kstrq"), SubResource("Resource_edbcy"), SubResource("Resource_7fiv4")])
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_qns8v"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("64_8wxej")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_yvyl5"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("65_suq4t")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_11ltc"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("66_5qmdl")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_8ko1v"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("67_i7can")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_xekr7"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("68_lch1t")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_ykow8"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("69_7vbsi")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_oobv7"]
+script = ExtResource("3_t1wkr")
+step_type = 1
+action_name = "Stack_Glass_Pressed"
+node_to_unlock = "StackGlass"
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_in8y4"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("70_v8q3b")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_ulvqs"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("71_vis0x")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_87bcf"]
+script = ExtResource("3_t1wkr")
+step_type = 1
+action_name = "Cold_Water_Pressed"
+node_to_unlock = "ColdWaterClick"
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_ml8iw"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("72_nmbrm")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_fgc8t"]
+script = ExtResource("3_t1wkr")
+step_type = 1
+action_name = "EmptyGlass_Pressed"
+node_to_unlock = "EmptyGlass"
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_3nwta"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("73_nmbrm")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_rsl4k"]
+script = ExtResource("3_t1wkr")
+step_type = 1
+action_name = "FullGlass_Filled"
+node_to_unlock = "HoldButton"
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_s8p46"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("73_t45te")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_a5pxp"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("75_t45te")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_sah3b"]
+script = ExtResource("3_t1wkr")
+step_type = 1
+action_name = "FullGlass_Served"
+node_to_unlock = "FilledGlass"
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_uut5i"]
+script = ExtResource("2_whngs")
+phase_name = "Beverage"
+steps = Array[ExtResource("3_t1wkr")]([SubResource("Resource_qns8v"), SubResource("Resource_yvyl5"), SubResource("Resource_11ltc"), SubResource("Resource_8ko1v"), SubResource("Resource_xekr7"), SubResource("Resource_ykow8"), SubResource("Resource_oobv7"), SubResource("Resource_in8y4"), SubResource("Resource_ulvqs"), SubResource("Resource_87bcf"), SubResource("Resource_ml8iw"), SubResource("Resource_fgc8t"), SubResource("Resource_3nwta"), SubResource("Resource_rsl4k"), SubResource("Resource_s8p46"), SubResource("Resource_a5pxp"), SubResource("Resource_sah3b")])
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_shpq3"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("76_lxoes")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_xhct5"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("77_1w6gi")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_2ddbn"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("78_kstrq")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_bl7rq"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("79_edbcy")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_1cg7y"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("80_7fiv4")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_6mdkc"]
+script = ExtResource("3_t1wkr")
+step_type = 1
+action_name = "MilkCartons_Pressed"
+node_to_unlock = "MilkCartons"
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_h05ce"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("81_qns8v")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_1wj70"]
+script = ExtResource("3_t1wkr")
+step_type = 1
+action_name = "Milk_Served"
+node_to_unlock = "Milk"
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_eeyro"]
+script = ExtResource("2_whngs")
+phase_name = "Milk Tutorial"
+steps = Array[ExtResource("3_t1wkr")]([SubResource("Resource_shpq3"), SubResource("Resource_xhct5"), SubResource("Resource_2ddbn"), SubResource("Resource_bl7rq"), SubResource("Resource_1cg7y"), SubResource("Resource_6mdkc"), SubResource("Resource_h05ce"), SubResource("Resource_1wj70")])
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
+[sub_resource type="Resource" id="Resource_iky1m"]
+script = ExtResource("3_t1wkr")
+image = ExtResource("82_lxoes")
+metadata/_custom_type_script = "uid://dyqrjab4hwgb7"
+
+[sub_resource type="Resource" id="Resource_7ucgx"]
+script = ExtResource("2_whngs")
+phase_name = "Congratulations"
+steps = Array[ExtResource("3_t1wkr")]([SubResource("Resource_iky1m")])
+metadata/_custom_type_script = "uid://bnagvteuqncdg"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ebsje"]
 atlas = ExtResource("14_wikwg")
 region = Rect2(167, 178, 691, 665)
@@ -798,7 +810,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_qiaj6")
-tutorial_phases = Array[ExtResource("2_whngs")]([SubResource("Resource_iympk"), SubResource("Resource_uut5i"), SubResource("Resource_eeyro"), SubResource("Resource_a3lty"), SubResource("Resource_17drw"), SubResource("Resource_syvn5"), SubResource("Resource_g7q3q"), SubResource("Resource_a8t1c"), SubResource("Resource_vawwu"), SubResource("Resource_1yuvn"), SubResource("Resource_1l5yu"), SubResource("Resource_sjhy5"), SubResource("Resource_cj0eg")])
+tutorial_phases = Array[ExtResource("2_whngs")]([SubResource("Resource_a3lty"), SubResource("Resource_17drw"), SubResource("Resource_syvn5"), SubResource("Resource_g7q3q"), SubResource("Resource_a8t1c"), SubResource("Resource_vawwu"), SubResource("Resource_1yuvn"), SubResource("Resource_1l5yu"), SubResource("Resource_sjhy5"), SubResource("Resource_cj0eg"), SubResource("Resource_iympk"), SubResource("Resource_uut5i"), SubResource("Resource_eeyro"), SubResource("Resource_7ucgx")])
 rice_retry_texture = ExtResource("34_tpcem")
 veggie_retry_texture = ExtResource("52_wcvcq")
 

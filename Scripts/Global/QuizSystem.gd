@@ -3,30 +3,39 @@ extends Node
 var concept_progress: Dictionary = {}
 
 func initialize_concepts(current_day: int) -> void:
-	if not has_node("/root/QuestionDatabase"):
+	var q_db = get_node_or_null("/root/QuestionDatabase")
+	if not q_db:
+		push_warning("QuizSystem: QuestionDatabase node not found.")
 		return
 
 	# 🔥 ALWAYS START FROM SAVED DATA
-	if GameData.quiz_concept_progress != null and GameData.quiz_concept_progress.size() > 0:
+	# Defensive: Ensure quiz_concept_progress is a valid dictionary before duplicating
+	if GameData.get("quiz_concept_progress") != null and typeof(GameData.quiz_concept_progress) == TYPE_DICTIONARY and GameData.quiz_concept_progress.size() > 0:
 		concept_progress = GameData.quiz_concept_progress.duplicate(true)
 		print("✅ Loaded saved concept progress:", concept_progress.size())
 	else:
 		concept_progress.clear()
 		print("⚠️ No saved concept progress found")
 
-	var all_questions = QuestionDatabase.get_all_questions()
+	# Defensively call the method on the actual node instance instead of the class
+	if q_db.has_method("get_all_questions"):
+		var all_questions = q_db.get_all_questions()
 
-	for q in all_questions:
-		var concept = q.get("concept", q["id"])
+		for q in all_questions:
+			# Defensive: Check if 'q' is actually a dictionary and has an 'id'
+			if typeof(q) != TYPE_DICTIONARY or not q.has("id"):
+				continue
+				
+			var concept = str(q.get("concept", q["id"]))
 
-		if not concept_progress.has(concept):
-			concept_progress[concept] = {
-				"correct": 0,
-				"incorrect": 0,
-				"exposure": 0,
-				"last_seen_day": current_day,
-				"next_review_day": current_day
-			}
+			if not concept_progress.has(concept):
+				concept_progress[concept] = {
+					"correct": 0,
+					"incorrect": 0,
+					"exposure": 0,
+					"last_seen_day": current_day,
+					"next_review_day": current_day
+				}
 
 # ==========================================================
 # GET DUE CONCEPTS
@@ -36,7 +45,7 @@ func get_due_concepts(current_day: int) -> Array:
 	var due: Array = []
 	for concept in concept_progress.keys():
 		var data = concept_progress[concept]
-		if data.next_review_day <= current_day:
+		if typeof(data) == TYPE_DICTIONARY and data.get("next_review_day", 999) <= current_day:
 			due.append(concept)
 	return due
 
@@ -44,7 +53,7 @@ func get_due_concepts(current_day: int) -> Array:
 # UPDATE (FORMULA BASED + FEEDBACK GENERATION)
 # ==========================================================
 
-# 🔥 CHANGED: Now returns a Dictionary with all the UI strings + next_day
+# 🔥 CHANGED: Now returns a Dictionary with all the UI strings + next_day + is_repeat
 func update_concept_progress(concept: String, is_correct: bool, response_time: float, current_day: int) -> Dictionary:
 	
 	if not concept_progress.has(concept):
@@ -56,11 +65,11 @@ func update_concept_progress(concept: String, is_correct: bool, response_time: f
 	var data = concept_progress[concept]
 	
 	# --- UPDATE COUNTS ---
-	data.exposure += 1
+	data.exposure = data.get("exposure", 0) + 1
 	if is_correct:
-		data.correct += 1
+		data.correct = data.get("correct", 0) + 1
 	else:
-		data.incorrect += 1
+		data.incorrect = data.get("incorrect", 0) + 1
 	
 	# --- SPEED FACTOR ---
 	var S := 0
@@ -73,7 +82,7 @@ func update_concept_progress(concept: String, is_correct: bool, response_time: f
 	
 	var C = data.correct
 	var I = data.incorrect
-	var E = max(1, data.exposure)
+	var E = max(1, data.exposure) # Defensive: Prevent division by zero
 	
 	# --- MASTERY FORMULA ---
 	var M = float((C * 2) + S - (I * 2)) / float(E)
@@ -111,9 +120,17 @@ func update_concept_progress(concept: String, is_correct: bool, response_time: f
 		performance_msg = "Let's try that again."
 		
 	var exposure_msg = ""
-	if E == 1: exposure_msg = "First time seeing this!"
-	elif E <= 3: exposure_msg = "You're getting familiar with this"
-	else: exposure_msg = "You've seen this %d times" % E
+	var is_repeat = false
+	
+	if E <= 1: 
+		exposure_msg = "First time seeing this!"
+		is_repeat = false
+	elif E <= 3: 
+		exposure_msg = "You're getting familiar with this"
+		is_repeat = true
+	else: 
+		exposure_msg = "You've seen this %d times" % E
+		is_repeat = true
 	
 	# --- DEBUG (For thesis proof) ---
 	print("📊 CONCEPT UPDATE: ", concept)
@@ -125,5 +142,6 @@ func update_concept_progress(concept: String, is_correct: bool, response_time: f
 		"next_day": next_day,
 		"performance": performance_msg,
 		"exposure": exposure_msg,
-		"mastery": mastery_msg
+		"mastery": mastery_msg,
+		"is_repeat": is_repeat
 	}

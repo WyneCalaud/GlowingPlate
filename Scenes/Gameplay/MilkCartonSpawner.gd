@@ -12,7 +12,8 @@ var is_spawning: bool = false
 var has_spawned_milk: bool = false # DEFENSIVE: Prevents multiple milk spawns
 
 func _ready():
-	pressed.connect(_on_pressed)
+	if not pressed.is_connected(_on_pressed):
+		pressed.connect(_on_pressed)
 	
 	var current_node = get_parent()
 	while is_instance_valid(current_node) and current_node.get_parent() != null:
@@ -39,15 +40,19 @@ func is_mat_available(mat: Node2D) -> bool:
 func _on_pressed():
 	# DEFENSIVE CHECK: Lock out spawner if already spawned or spawning
 	if is_spawning or has_spawned_milk: 
-		print("DEBUG [MilkCarton]: Spawning locked.")
+		print("[DEBUG MilkCarton]: Spawning locked. is_spawning:", is_spawning, " has_spawned_milk:", has_spawned_milk)
 		return
 		
-	if not is_instance_valid(milk_scene): return
+	if not is_instance_valid(milk_scene): 
+		push_error("[DEFENSIVE] Milk Scene is missing!")
+		return
 
 	var target_mat: Node2D = null
 	if is_mat_available(mat1): target_mat = mat1
 	elif is_mat_available(mat2): target_mat = mat2
-	else: return
+	else: 
+		print("[DEBUG MilkCarton]: No mats available.")
+		return
 
 	is_spawning = true
 	has_spawned_milk = true # Lock the spawner
@@ -75,6 +80,8 @@ func _on_pressed():
 		milk_instance.set_anchors_preset(Control.PRESET_TOP_LEFT, true)
 		milk_instance.pivot_offset = Vector2.ZERO
 		
+	# DEFENSIVE: Prevent invisible scale
+	if milk_scale <= Vector2.ZERO: milk_scale = Vector2(1,1)
 	milk_instance.scale = milk_scale
 	
 	var center_offset = Vector2.ZERO
@@ -105,6 +112,8 @@ func _on_pressed():
 	target_mat.add_child(milk_instance)
 	
 	var final_local_scale = milk_scale / target_mat.global_scale
+	# DEFENSIVE: Guarantee scale isn't broken during reparenting causing unclickable Area2D
+	if final_local_scale <= Vector2.ZERO: final_local_scale = Vector2(1,1) 
 	milk_instance.scale = final_local_scale
 	milk_instance.position = -final_local_scale / 2.0 + placement_offset
 	
