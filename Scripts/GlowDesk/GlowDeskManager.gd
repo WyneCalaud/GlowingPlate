@@ -59,9 +59,9 @@ signal closed
 @export var sign_group_c: Texture2D
 
 @export_group("Countdown")
-@export var tex_count_3: Texture2D
-@export var tex_count_2: Texture2D
-@export var tex_count_1: Texture2D
+var tex_count_3: Texture2D = preload("res://Assets/UI/GlowDesk/ThreeIcon.png")
+var tex_count_2: Texture2D = preload("res://Assets/UI/GlowDesk/TwoIcon.png")
+var tex_count_1: Texture2D = preload("res://Assets/UI/GlowDesk/OneIcon.png")
 
 var question_data: Dictionary = {}
 var navigation_stack: Array[Control] = []
@@ -264,22 +264,38 @@ func _start_gameplay(mode: String):
 		if is_instance_valid(lbl_timer): lbl_timer.visible = false 
 
 	_change_screen(screen_countdown)
-	
+
+	# wait for transition
+	while is_transitioning:
+		await get_tree().process_frame
+
+	await get_tree().process_frame
+
+
 	if is_instance_valid(tex_count_icon):
-		if tex_count_3: tex_count_icon.texture = tex_count_3
+
+		if tex_count_3:
+			tex_count_icon.texture = tex_count_3
+		await get_tree().process_frame
 		await get_tree().create_timer(1.0).timeout
-		if not is_inside_tree() or not screen_countdown.visible: return
-		
-		if tex_count_2: tex_count_icon.texture = tex_count_2
+
+		if tex_count_2:
+			tex_count_icon.texture = tex_count_2
+		else:
+			print("WARNING: tex_count_2 is null")
+		await get_tree().process_frame
 		await get_tree().create_timer(1.0).timeout
-		if not is_inside_tree() or not screen_countdown.visible: return
-		
-		if tex_count_1: tex_count_icon.texture = tex_count_1
+
+		if tex_count_1:
+			tex_count_icon.texture = tex_count_1
+		else:
+			print("WARNING: tex_count_1 is null")
+		await get_tree().process_frame
 		await get_tree().create_timer(1.0).timeout
+
 	else:
 		await get_tree().create_timer(3.0).timeout
-	
-	if not is_inside_tree() or not screen_countdown.visible: return
+
 		
 	if not navigation_stack.is_empty() and navigation_stack.back() == screen_countdown:
 		navigation_stack.pop_back()

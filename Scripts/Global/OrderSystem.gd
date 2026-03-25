@@ -244,8 +244,11 @@ func add_prepared_beverage(beverage_res: Resource) -> void:
 
 	var liquid_type := ""
 
+	# 🔥 FIX: Support BOTH property AND metadata
 	if "internal_key" in beverage_res:
 		liquid_type = str(beverage_res.internal_key).to_upper()
+	elif beverage_res.has_meta("internal_key"):
+		liquid_type = str(beverage_res.get_meta("internal_key")).to_upper()
 
 	if liquid_type == "":
 		push_warning("Beverage has no internal_key!")
@@ -257,7 +260,6 @@ func add_prepared_beverage(beverage_res: Resource) -> void:
 		"item": beverage_res,
 		"liquid_type": liquid_type
 	}
-
 
 # ---------------------------------------------------------
 # ORDER GENERATION

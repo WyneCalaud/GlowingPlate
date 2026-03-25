@@ -396,9 +396,6 @@ sign_endless = null
 sign_group_a = null
 sign_group_b = null
 sign_group_c = null
-tex_count_3 = null
-tex_count_2 = null
-tex_count_1 = null
 
 [node name="GameHUD" parent="OverlayCanvas" unique_id=817988902 instance=ExtResource("12_k43ou")]
 
