@@ -529,6 +529,7 @@ autowrap_mode = 3
 
 [node name="Countdown" type="Control" parent="." unique_id=1330472123]
 visible = false
+z_index = 50
 anchors_preset = 0
 offset_left = 218.0
 offset_top = 95.0

@@ -385,7 +385,9 @@ func get_character_stage(name: String) -> int:
 func store_plate_contents(contents: Array): OrderSystem.prepared_plate_contents = contents
 
 func add_prepared_beverage(beverage_res: Resource):
+	print("[GameData] Adding beverage:", beverage_res)
 	OrderSystem.add_prepared_beverage(beverage_res)
+	print("[GameData] Current beverages:", OrderSystem.prepared_beverage_data)
 
 func store_beverage_data(data: Dictionary):
 	OrderSystem.prepared_beverage_data = data

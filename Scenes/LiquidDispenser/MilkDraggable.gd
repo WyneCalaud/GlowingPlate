@@ -16,9 +16,13 @@ func _ready():
 	self.name = "Milk"
 	add_to_group("interactable")
 	
-	# DEFENSIVE: Run even if the tutorial paused the SceneTree
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
+	# 🔥 HARD FIX: Guarantee milk_data exists
+	if milk_data == null:
+		print("[MILK FIX] milk_data was NULL → loading manually")
+		milk_data = preload("res://Data/Drink/RegularMilk.tres")
+
 	if milk_data:
 		food_data = milk_data
 
@@ -202,14 +206,30 @@ func on_unique_drop_zone_check():
 func on_serve_success():
 	print("[DEBUG-MILK] Served!")
 	
-	# DEFENSIVE FIX: Directly access the GameData autoload path instead of a group to ensure it updates the Tray
 	var gd = null
 	if has_node("/root/GameData"):
 		gd = get_node("/root/GameData")
 
 	if is_instance_valid(gd) and milk_data:
-		if gd.has_method("add_prepared_beverage"):
-			gd.add_prepared_beverage(milk_data)
+
+		var key = ""
+
+		if "internal_key" in milk_data:
+			key = str(milk_data.internal_key).to_upper()
+		elif milk_data.has_meta("internal_key"):
+			key = str(milk_data.get_meta("internal_key")).to_upper()
+
+		if key == "":
+			print("[MILK FIX] Missing internal_key → forcing REGULAR_MILK")
+			milk_data.set_meta("internal_key", "REGULAR_MILK")
+			key = "REGULAR_MILK"
+
+		print("[MILK DEBUG] Registering beverage:", key)
+
+		gd.add_prepared_beverage(milk_data)
+
+	else:
+		print("[MILK ERROR] GameData or milk_data invalid")
 
 	if is_in_tutorial():
 		get_tree().call_group("InteractiveTutorial", "action_completed", "Milk_Served")
