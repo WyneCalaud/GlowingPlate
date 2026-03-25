@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://dppc0smvtwrlx"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://dppc0smvtwrlx"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_krmfl"]
 
 [resource]
 script = ExtResource("1_krmfl")
 customer_name = "Cyril"
-order_text = "Can I have brown rice, egg, carrot, and banana today?Hot water please, and no milk."
+order_text = "Can I have brown rice, egg, carrot, and banana today? Hot water please, and no milk."
 expanded_text = "Go: Brown rice Grow: Egg Glow: Carrot + Banana Drink: Hot water, no milk"
 age = 10
 needs = {

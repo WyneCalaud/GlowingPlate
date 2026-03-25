@@ -614,6 +614,15 @@ func _format_beverage_name(internal_key: String) -> String:
 		_:
 			return internal_key.to_lower()
 
+func _format_any_slot_name(slot:String) -> String:
+	match slot:
+		"Go": return "Go food"
+		"Grow": return "Grow food"
+		"GlowVeg": return "vegetable"
+		"GlowFru": return "fruit"
+		_:
+			return "food"
+
 func _get_feedback_box_size(mistakes: Array) -> String:
 	if mistakes.size() <= 1:
 		return "small"
@@ -746,7 +755,10 @@ func _get_detailed_mistakes() -> Array:
 
 		# --- Missing slot entirely ---
 		if not plated_map.has(category):
-			mistakes.append("Missing my %s!" % _format_food_name(expected_key))
+			if expected_key == "ANY":
+				mistakes.append("Missing my %s!" % _format_any_slot_name(category))
+			else:
+				mistakes.append("Missing my %s!" % _format_food_name(expected_key))
 			continue
 
 		var actual = plated_map[category]
@@ -767,7 +779,7 @@ func _get_detailed_mistakes() -> Array:
 		# --- ANY but wrong category placement ---
 		if expected_key == "ANY":
 			if food_res and food_res.food_category != category:
-				mistakes.append("Wrong %s food!" % _format_slot_name(category))
+				mistakes.append("That’s not the right %s!" % _format_any_slot_name(category))
 				continue
 
 		# --- Portion checks ---

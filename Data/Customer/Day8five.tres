@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://bppsnwdyqd7ux"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://bppsnwdyqd7ux"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_15m4c"]
 
 [resource]
 script = ExtResource("1_15m4c")
 customer_name = "Miggy"
-order_text = "I don’t really like leafy vegetables.Can I have carrots instead, with rice, fish, and watermelon?Hot water please, and milk is fine."
+order_text = "I don’t really like leafy vegetables. Can I have carrots instead, with rice, fish, and watermelon? Hot water please, and milk is fine."
 expanded_text = "Go: Rice Grow: Fish Glow: Carrot + Watermelon Drink: Hot water + milk"
 age = 9
 needs = {

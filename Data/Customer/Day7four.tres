@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://eb1xv5uisk1j"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://eb1xv5uisk1j"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_qf7e7"]
 
 [resource]
 script = ExtResource("1_qf7e7")
 customer_name = "Troy"
-order_text = "Eggs sound nice today!I want eggs for my Grow food. The rest is up to you, just keep it healthy.Cold water please, and no milk."
+order_text = "Eggs sound nice today! I want eggs for my Grow food. The rest is up to you, just keep it healthy. Cold water please, and no milk."
 expanded_text = "Grow: Egg Go: Any Glow: Any vegetable + any fruit Drink: Cold water, no milk"
 age = 10
 needs = {

@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://dig4160d1eqsf"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://dig4160d1eqsf"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_7soym"]
 
 [resource]
 script = ExtResource("1_7soym")
 customer_name = "Maya"
-order_text = "Oooh, carrots! I want that as my vegetable.The rest is up to you, just make it healthy.Cold water please, and no milk."
+order_text = "Oooh, carrots! I want that as my vegetable.The rest is up to you, just make it healthy. Cold water please, and no milk."
 expanded_text = "Vegetable: Carrot Go: Any Grow: Any Fruit: Any Drink: Cold water, no milk"
 age = 9
 needs = {

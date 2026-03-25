@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://dxlvgo3mdd0xy"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://dxlvgo3mdd0xy"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_p7kh6"]
 
 [resource]
 script = ExtResource("1_p7kh6")
 customer_name = "Milan"
-order_text = "I’ll eat anything with corn today!Just make sure it’s a complete healthy plate.Any water is okay, and no milk."
+order_text = "I’ll eat anything with corn today! Just make sure it’s a complete healthy plate. Any water is okay, and no milk."
 expanded_text = "Go: Corn Grow: Any Glow: Any vegetable + any fruit Drink: Any water, no milk"
 age = 11
 needs = {

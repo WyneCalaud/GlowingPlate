@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_yiac8")
 customer_name = "Milan"
-order_text = "Can I have fish with pumpkin, please?Also don’t forget my rice and yellow fruit.Hot water please, and no milk."
+order_text = "Can I have fish with pumpkin, please? Also don’t forget my rice and yellow fruit. Hot water please, and no milk."
 expanded_text = "Go: Rice Grow: Fish Glow: Pumpkin + Mango Drink: Hot water, no milk"
 age = 11
 needs = {

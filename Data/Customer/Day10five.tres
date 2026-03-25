@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://3amhpfkcsjun"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://3amhpfkcsjun"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_gsyiu"]
 
 [resource]
 script = ExtResource("1_gsyiu")
 customer_name = "Tina"
-order_text = "Tokwa sounds interesting!I want that as my Grow food.Add some corn, carrots, and watermelon.Hot water please, and milk is fine."
+order_text = "Tokwa sounds interesting! I want that as my Grow food. Add some corn, carrots, and watermelon.Hot water please, and milk is fine."
 expanded_text = "Go: Corn Grow: Tokwa Glow: Carrot + Watermelon Drink: Hot water + milk"
 age = 6
 needs = {

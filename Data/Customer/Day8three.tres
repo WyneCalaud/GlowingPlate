@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://bd1bwsevxuer0"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://bd1bwsevxuer0"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_lgiml"]
 
 [resource]
 script = ExtResource("1_lgiml")
 customer_name = "Pedro Pan"
-order_text = "Pan de sal, egg, carrot, and mango please!Any water is fine, and milk is okay."
+order_text = "Pan de sal, egg, carrot, and mango please! Any water is fine, and milk is okay."
 expanded_text = "Go: Pan de sal Grow: Egg Glow: Carrot + Mango Drink: Any water + milk"
 age = 9
 needs = {

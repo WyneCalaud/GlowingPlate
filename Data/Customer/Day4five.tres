@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://b02ka3ob0hcdo"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://b02ka3ob0hcdo"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_ns4s4"]
 
 [resource]
 script = ExtResource("1_ns4s4")
 customer_name = "Boba"
-order_text = "I really love chicken and pumpkin.You can choose the rest of the meal for me, as long as it’s healthy.Hot water please, and milk is fine."
+order_text = "I really love chicken and pumpkin. You can choose the rest of the meal for me, as long as it’s healthy. Hot water please, and milk is fine."
 expanded_text = "Go: Rice or Pan de sal Grow: Chicken Glow: Pumpkin + Mango Drink: Hot water + milk"
 needs = {
 "GlowFru": "MANGO",
