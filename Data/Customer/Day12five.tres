@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://sjluqkdk1i77"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://sjluqkdk1i77"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_pa0jq"]
 
 [resource]
 script = ExtResource("1_pa0jq")
 customer_name = "Miggy"
-order_text = "I don’t want sour fruits today.Can I have a banana instead?Hot water please, and milk is fine."
+order_text = "I don’t want sour fruits today. Can I have a banana instead? Hot water please, and milk is fine."
 expanded_text = "Don’t want sour fruits Fruit: Banana Go: Any Grow: Any Vegetable: Any Drink: Hot water + milk"
 age = 9
 needs = {

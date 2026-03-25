@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://3su3aneby2am"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://3su3aneby2am"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_ry44x"]
 
 [resource]
 script = ExtResource("1_ry44x")
 customer_name = "Leo"
-order_text = "Pumpkin, pumpkin, pumpkin… does that even taste good?Well, I’ll have one rice meal with fish in it.Make sure there’s a fruit, too.Any water is fine, and milk is okay."
+order_text = "Pumpkin… does that even taste good? Well, I’ll have one rice meal with fish in it. Make sure there’s a fruit, too.Any water is fine, and milk is okay."
 expanded_text = "Go: Rice Grow: Fish Glow: Pumpkin + Mango Drink: Any water + milk"
 age = 7
 needs = {

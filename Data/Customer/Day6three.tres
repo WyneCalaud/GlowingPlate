@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_onqam")
 customer_name = "Nina"
-order_text = "Can I have corn instead of rice today?I also want fish, squash, and watermelon.Any water is fine, and milk is okay."
+order_text = "Can I have corn instead of rice today? I also want fish, squash, and watermelon. Any water is fine, and milk is okay."
 expanded_text = "Go: Corn Grow: Fish Glow: Squash + Watermelon Drink: Any water + milk"
 age = 7
 needs = {

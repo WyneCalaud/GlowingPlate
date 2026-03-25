@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://cuj0p5iafso5s"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://cuj0p5iafso5s"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_i8wkw"]
 
 [resource]
 script = ExtResource("1_i8wkw")
 customer_name = "Yeeha"
-order_text = "I’ll eat whatever you give me today, as long as my meal is complete.Cold water please, and milk is fine."
+order_text = "I’ll eat whatever you give me today, as long as my meal is complete. Cold water please, and milk is fine."
 expanded_text = "Go: Any Grow: Any Glow: Any vegetable + any fruit Drink: Cold water + milk"
 age = 6
 needs = {

@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://bq5xu4y3quix0"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://bq5xu4y3quix0"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_r8rbg"]
 
 [resource]
 script = ExtResource("1_r8rbg")
 customer_name = "Leo"
-order_text = "I want a vegetable that’s orange and crunchy.Put some corn, chicken, and mango too, please!Any water is okay, and no milk."
+order_text = "I want a vegetable that’s orange and crunchy. Put some corn, chicken, and mango too, please! Any water is okay, and no milk."
 expanded_text = "Go: Corn Grow: Chicken Glow: Carrot + Mango Drink: Any water, no milk"
 age = 7
 needs = {

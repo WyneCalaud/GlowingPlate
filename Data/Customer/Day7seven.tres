@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://cco2qgkmai28a"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://cco2qgkmai28a"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_q4a4l"]
 
 [resource]
 script = ExtResource("1_q4a4l")
 customer_name = "Miggy"
-order_text = "Hi! I’m actually allergic to chicken, so I’ll have fish, rice, a vegetable, and a fruit.Any water is fine, and milk is okay."
+order_text = "Hi! I’m actually allergic to chicken, so I’ll have fish, rice, a vegetable, and a fruit. Any water is fine, and milk is okay."
 expanded_text = "Go: Rice Grow: Fish Glow: Sitaw + Mango Drink: Any water + milk"
 age = 9
 needs = {
