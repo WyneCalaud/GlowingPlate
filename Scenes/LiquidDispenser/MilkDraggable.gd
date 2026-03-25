@@ -41,6 +41,11 @@ func _ready():
 	if not is_instance_valid(kitchen_area):
 		kitchen_area = get_tree().get_first_node_in_group("InteractiveTutorial")
 
+# DEFENSIVE HELPER: Check if tutorial is actually active
+func is_in_tutorial() -> bool:
+	if not is_inside_tree(): return false
+	return get_tree().get_node_count_in_group("InteractiveTutorial") > 0
+
 # ---------------------------------------------------------
 # DEBUG & INPUT (WITH BRUTE FORCE FALLBACK)
 # ---------------------------------------------------------
@@ -67,7 +72,10 @@ func _input(event):
 func _attempt_drag(source: String):
 	print("[DEBUG-MILK] Click detected via: ", source)
 	
-	# DEFENSIVE: Check if base script has a different lock variable
+	# DEFENSIVE FIX: Prevent tutorial lock from leaking into normal gameplay
+	if not is_in_tutorial():
+		is_tutorial_locked = false
+	
 	var base_locked = false
 	if "is_locked" in self:
 		base_locked = self.get("is_locked")
@@ -103,13 +111,12 @@ func start_dragging():
 
 	var cam = get_tree().get_first_node_in_group("MainCamera")
 	if is_instance_valid(cam):
-		# DEFENSIVE FIX: Check if the property exists before assigning
 		if "is_input_blocked" in cam:
 			cam.is_input_blocked = true
 		else:
 			print("[DEBUG-MILK] Warning: Camera does not have 'is_input_blocked' property.")
 		
-	if get_tree().get_node_count_in_group("InteractiveTutorial") > 0:
+	if is_in_tutorial():
 		get_tree().call_group("InteractiveTutorial", "action_completed", "Milk_Dragged")
 
 	if is_instance_valid(kitchen_area):
@@ -132,7 +139,6 @@ func handle_drop():
 
 	var cam = get_tree().get_first_node_in_group("MainCamera")
 	if is_instance_valid(cam):
-		# DEFENSIVE FIX: Check if the property exists before assigning
 		if "is_input_blocked" in cam:
 			cam.is_input_blocked = false
 
@@ -195,13 +201,17 @@ func on_unique_drop_zone_check():
 
 func on_serve_success():
 	print("[DEBUG-MILK] Served!")
-	var gd := get_tree().get_first_node_in_group("GameData")
+	
+	# DEFENSIVE FIX: Directly access the GameData autoload path instead of a group to ensure it updates the Tray
+	var gd = null
+	if has_node("/root/GameData"):
+		gd = get_node("/root/GameData")
 
 	if is_instance_valid(gd) and milk_data:
 		if gd.has_method("add_prepared_beverage"):
 			gd.add_prepared_beverage(milk_data)
 
-	if get_tree().get_node_count_in_group("InteractiveTutorial") > 0:
+	if is_in_tutorial():
 		get_tree().call_group("InteractiveTutorial", "action_completed", "Milk_Served")
 	else:
 		get_tree().call_group("service_manager", "serve_beverage")

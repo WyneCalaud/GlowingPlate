@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://dfxebhm665sqh"]
+
+[ext_resource type="FontFile" uid="uid://b443ju2lx1p21" path="res://fonts/Comic_Neue/ComicNeue-BoldItalic.ttf" id="1_xtv76"]
+
+[resource]
+font = ExtResource("1_xtv76")
+font_size = 24

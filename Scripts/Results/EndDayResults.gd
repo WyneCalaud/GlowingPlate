@@ -1,8 +1,8 @@
 extends Control
 
 @onready var title_label: Label = $CenterContainer/Layout/Title
-@onready var money_label: Label = $CenterContainer/Layout/MoneyRow/MoneyLabel
-@onready var rep_label: Label = $CenterContainer/Layout/ReputationRow/RepLabel
+@onready var money_label: Label = $CenterContainer/Layout/MoneyRow/TextureRect/MoneyLabel
+@onready var rep_label: Label = $CenterContainer/Layout/ReputationRow/TextureRect/RepLabel
 @onready var next_button: TextureButton = $CenterContainer/Layout/EndDayButton
 
 func _ready():

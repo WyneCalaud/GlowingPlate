@@ -45,6 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://c5ui0ks2ghgqs" path="res://Assets/UI/Interface/Niger.png" id="39_o8hjd"]
 [ext_resource type="Texture2D" uid="uid://ccx1a6h1n05n0" path="res://Assets/UI/Interface/ServeButton.png" id="39_uu58y"]
 [ext_resource type="Texture2D" uid="uid://xi2raya0es68" path="res://Assets/UI/SpecialInfo/leowithstarexample.png" id="40_o8hjd"]
+[ext_resource type="Texture2D" uid="uid://b12dgepm47c08" path="res://Assets/UI/SkipDayButton.png" id="46_rlbi3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7cw4d"]
 atlas = ExtResource("2_t3xjw")
@@ -559,6 +560,15 @@ position = Vector2(17, 71)
 
 [node name="BeverageSprite2" type="Sprite2D" parent="FinalBeverageDisplay" unique_id=795704036]
 position = Vector2(78, 71)
+
+[node name="SkipDayButton" type="TextureButton" parent="." unique_id=464846066]
+visible = false
+layout_mode = 0
+offset_left = 3.0
+offset_top = 607.0
+offset_right = 262.0
+offset_bottom = 711.0
+texture_normal = ExtResource("46_rlbi3")
 
 [connection signal="pressed" from="BottomButtons/HBoxContainer/Almanac" to="." method="_on_almanac_pressed"]
 [connection signal="pressed" from="BottomButtons/HBoxContainer/GlowBoard" to="." method="_on_glow_board_pressed"]

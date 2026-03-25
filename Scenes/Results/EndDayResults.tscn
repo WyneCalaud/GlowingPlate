@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ccvy7eyr4ht8l"]
+[gd_scene format=3 uid="uid://ccvy7eyr4ht8l"]
 
 [ext_resource type="Script" uid="uid://c05tk15qol8jt" path="res://Scripts/Results/EndDayResults.gd" id="1_rhjxp"]
 [ext_resource type="Texture2D" uid="uid://dhwsu46o6vnqf" path="res://Assets/UI/GlowingMeBackground.png" id="2_1i4kd"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://bamjttl66drml" path="res://Assets/UI/KitchenUI/ConfirmationModal.png" id="5_wfqtg"]
 [ext_resource type="LabelSettings" uid="uid://dar4gad22igrx" path="res://Theme/AnswerText.tres" id="7_ykigs"]
 [ext_resource type="Texture2D" uid="uid://nnrumvef44xt" path="res://Assets/UI/LobbyUI/GotItButton.png" id="9_kcqk4"]
+[ext_resource type="Texture2D" uid="uid://bfq3ikmycnnk3" path="res://Assets/UI/DayResults/AmountBox.png" id="9_wfqtg"]
+[ext_resource type="LabelSettings" uid="uid://dfxebhm665sqh" path="res://Theme/LabelLabel.tres" id="10_ykigs"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yhygm"]
 texture = ExtResource("5_wfqtg")
@@ -25,7 +27,7 @@ thickness = 3
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2w0l1"]
 
-[node name="EndDayResult" type="Control"]
+[node name="EndDayResult" type="Control" unique_id=1268107303]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,7 +36,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rhjxp")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1376694020]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -44,7 +46,7 @@ grow_vertical = 2
 texture = ExtResource("2_1i4kd")
 expand_mode = 1
 
-[node name="DarkenLayer" type="TextureRect" parent="."]
+[node name="DarkenLayer" type="TextureRect" parent="." unique_id=1296746054]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -54,7 +56,7 @@ grow_vertical = 2
 texture = ExtResource("3_kcqk4")
 expand_mode = 1
 
-[node name="CenterContainer" type="Panel" parent="."]
+[node name="CenterContainer" type="Panel" parent="." unique_id=659235440]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -70,7 +72,7 @@ grow_vertical = 2
 theme = ExtResource("3_464tc")
 theme_override_styles/panel = SubResource("StyleBoxTexture_yhygm")
 
-[node name="Layout" type="VBoxContainer" parent="CenterContainer"]
+[node name="Layout" type="VBoxContainer" parent="CenterContainer" unique_id=611208769]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -84,7 +86,10 @@ grow_vertical = 2
 theme = SubResource("Theme_ej7a3")
 alignment = 1
 
-[node name="Title" type="Label" parent="CenterContainer/Layout"]
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/Layout" unique_id=1719112915]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/Layout" unique_id=258520646]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("3_ej7a3")
@@ -94,67 +99,94 @@ label_settings = ExtResource("7_ykigs")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="CenterContainer/Layout"]
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/Layout" unique_id=1887781268]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_c5ypx")
 
-[node name="HSeparator3" type="HSeparator" parent="CenterContainer/Layout"]
+[node name="HSeparator3" type="HSeparator" parent="CenterContainer/Layout" unique_id=295538031]
 layout_mode = 2
 theme_override_constants/separation = 30
 theme_override_styles/separator = SubResource("StyleBoxEmpty_1bm52")
 
-[node name="MoneyRow" type="HBoxContainer" parent="CenterContainer/Layout"]
+[node name="MoneyRow" type="HBoxContainer" parent="CenterContainer/Layout" unique_id=544120823]
 layout_mode = 2
 
-[node name="VSeparator" type="VSeparator" parent="CenterContainer/Layout/MoneyRow"]
+[node name="VSeparator" type="VSeparator" parent="CenterContainer/Layout/MoneyRow" unique_id=1499860715]
 layout_mode = 2
 theme_override_constants/separation = 60
 theme_override_styles/separator = SubResource("StyleBoxEmpty_qewp5")
 
-[node name="TotalEarned" type="Label" parent="CenterContainer/Layout/MoneyRow"]
+[node name="TotalEarned" type="Label" parent="CenterContainer/Layout/MoneyRow" unique_id=1730392473]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_ej7a3")
 theme_override_font_sizes/font_size = 32
 text = "Total Money Earned:"
 label_settings = ExtResource("5_1i4kd")
 
-[node name="MoneyLabel" type="Label" parent="CenterContainer/Layout/MoneyRow"]
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/Layout/MoneyRow" unique_id=257122875]
 layout_mode = 2
+texture = ExtResource("9_wfqtg")
+
+[node name="MoneyLabel" type="Label" parent="CenterContainer/Layout/MoneyRow/TextureRect" unique_id=1904210913]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 1.0
+offset_right = 193.0
+offset_bottom = 37.0
 theme_override_fonts/font = ExtResource("3_ej7a3")
 theme_override_font_sizes/font_size = 32
-label_settings = ExtResource("5_1i4kd")
+text = "100.00"
+label_settings = ExtResource("10_ykigs")
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="HSeparator2" type="HSeparator" parent="CenterContainer/Layout"]
+[node name="HSeparator2" type="HSeparator" parent="CenterContainer/Layout" unique_id=1309576285]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_2w0l1")
 
-[node name="ReputationRow" type="HBoxContainer" parent="CenterContainer/Layout"]
+[node name="ReputationRow" type="HBoxContainer" parent="CenterContainer/Layout" unique_id=114509812]
 layout_mode = 2
 
-[node name="VSeparator2" type="VSeparator" parent="CenterContainer/Layout/ReputationRow"]
+[node name="VSeparator2" type="VSeparator" parent="CenterContainer/Layout/ReputationRow" unique_id=1686892306]
 layout_mode = 2
 theme_override_constants/separation = 60
 theme_override_styles/separator = SubResource("StyleBoxEmpty_qewp5")
 
-[node name="Reputation" type="Label" parent="CenterContainer/Layout/ReputationRow"]
+[node name="Reputation" type="Label" parent="CenterContainer/Layout/ReputationRow" unique_id=818802146]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_ej7a3")
 theme_override_font_sizes/font_size = 32
 text = "Total Keys Earned:"
 label_settings = ExtResource("5_1i4kd")
 
-[node name="RepLabel" type="Label" parent="CenterContainer/Layout/ReputationRow"]
+[node name="VSeparator" type="VSeparator" parent="CenterContainer/Layout/ReputationRow" unique_id=2087560440]
 layout_mode = 2
+theme_override_constants/separation = 15
+theme_override_styles/separator = SubResource("StyleBoxEmpty_qewp5")
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/Layout/ReputationRow" unique_id=1497738546]
+layout_mode = 2
+texture = ExtResource("9_wfqtg")
+
+[node name="RepLabel" type="Label" parent="CenterContainer/Layout/ReputationRow/TextureRect" unique_id=1892085703]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 2.0
+offset_right = 192.0
+offset_bottom = 37.0
 theme_override_fonts/font = ExtResource("3_ej7a3")
 theme_override_font_sizes/font_size = 32
-label_settings = ExtResource("5_1i4kd")
+text = "50"
+label_settings = ExtResource("10_ykigs")
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="HSeparator4" type="HSeparator" parent="CenterContainer/Layout"]
+[node name="HSeparator4" type="HSeparator" parent="CenterContainer/Layout" unique_id=23391967]
 layout_mode = 2
 theme_override_constants/separation = 10
 theme_override_styles/separator = SubResource("StyleBoxEmpty_1bm52")
 
-[node name="EndDayButton" type="TextureButton" parent="CenterContainer/Layout"]
+[node name="EndDayButton" type="TextureButton" parent="CenterContainer/Layout" unique_id=1370328251]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6

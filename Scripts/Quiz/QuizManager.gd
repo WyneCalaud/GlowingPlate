@@ -143,8 +143,9 @@ func _ready():
 
 	start_quiz()
 
-	result_label.visible = false
-	result_label.pivot_offset = result_label.size / 2
+	if is_instance_valid(result_label):
+		result_label.visible = false
+		result_label.pivot_offset = result_label.size / 2
 	
 	if is_instance_valid(exposure_label): exposure_label.visible = false
 	if is_instance_valid(mastery_label): mastery_label.visible = false
@@ -208,7 +209,6 @@ func _get_due_concept_questions():
 	var due_concepts = QuizSystem.get_due_concepts(current_day)
 
 	for concept in due_concepts:
-		var data = QuizSystem.concept_progress.get(concept, {})
 		var review_q = QuestionDatabase.get_question_by_id(concept)
 
 		if not review_q.is_empty():
@@ -251,15 +251,19 @@ func load_question():
 		finish_quiz()
 		return
 
-	quiz_panel.position = original_panel_pos
+	if is_instance_valid(quiz_panel):
+		quiz_panel.position = original_panel_pos
 	question_start_time = Time.get_unix_time_from_system()
 
 	var q_data: Dictionary = current_quiz_set[current_question_index]
-	current_concept = q_data.get("concept", q_data["id"]) 
-	question_label.text = q_data["q"]
+	current_concept = q_data.get("concept", q_data.get("id", "")) 
+	
+	if is_instance_valid(question_label):
+		question_label.text = q_data.get("q", "")
 
-	image_display.texture = q_data.get("q_img", null)
-	image_display.visible = (image_display.texture != null)
+	if is_instance_valid(image_display):
+		image_display.texture = q_data.get("q_img", null)
+		image_display.visible = (image_display.texture != null)
 
 	var options = []
 	options.append({"text": q_data.get("ans") if q_data.get("ans") != null else "", "img": q_data.get("ans_img"), "is_correct": true})
@@ -282,10 +286,20 @@ func load_question():
 			btn.rotation_degrees = 0
 			btn.pivot_offset = btn.size / 2
 
-		nodes.text.text = opt.text
-		nodes.text.visible = (opt.text != "") 
-		nodes.image.texture = opt.img
-		nodes.image.visible = (opt.img != null)
+		if is_instance_valid(nodes.text):
+			nodes.text.text = opt.text
+			nodes.text.visible = (opt.text != "") 
+		if is_instance_valid(nodes.image):
+			nodes.image.texture = opt.img
+			nodes.image.visible = (opt.img != null)
+
+	# 🔥 TRIGGER REPEAT POPUP BEFORE ANSWERING
+	if has_node("/root/QuizSystem"):
+		var c_progress = QuizSystem.get("concept_progress")
+		if c_progress != null and c_progress.has(current_concept):
+			var c_data = c_progress[current_concept]
+			if c_data != null and c_data.has("exposure") and c_data["exposure"] > 0:
+				_show_repeat_popup()
 
 # ==========================================================
 # ANSWER HANDLING
@@ -295,12 +309,15 @@ func _on_answer_button_pressed(button_index: int):
 	if not is_mechanic_active: return
 	is_mechanic_active = false
 	
+	# 🔥 ANIMATE POPUP AWAY ONCE THEY CLICK AN ANSWER
+	_hide_repeat_popup()
+	
 	var actual_response_time = Time.get_unix_time_from_system() - question_start_time
 	var q_data: Dictionary = current_quiz_set[current_question_index]
 	var is_correct = (button_index == correct_button_index)
 
 	if has_node("/root/QuizProgress"):
-		QuizProgress.record_attempt(q_data["id"], is_correct, current_day)
+		QuizProgress.record_attempt(q_data.get("id", ""), is_correct, current_day)
 
 	var feedback_dict = {}
 	if has_node("/root/QuizSystem"):
@@ -325,10 +342,6 @@ func _on_answer_button_pressed(button_index: int):
 	# --- GET YOUR CUSTOM TEXT AND SHOW THE ANIMATED BOX ---
 	var final_custom_text = _get_custom_message(is_correct, actual_response_time)
 	_show_message_box(final_custom_text)
-
-	# --- TRIGGER REPEAT POPUP IF NEEDED ---
-	if feedback_dict.get("is_repeat", false):
-		_show_repeat_popup()
 
 	# --- BUTTON COLOR UPDATES ---
 	for i in range(answer_nodes.size()):
@@ -379,37 +392,33 @@ func _on_answer_button_pressed(button_index: int):
 func _show_repeat_popup():
 	if not is_instance_valid(repeat_popup_rect): return
 
-	# Defensive: Kill previous tween if running
 	if repeat_tween and repeat_tween.is_valid():
 		repeat_tween.kill()
 
-	# Assign custom texture if available
 	if repeat_texture != null:
 		repeat_popup_rect.texture = repeat_texture
 
-	# Reset state
 	repeat_popup_rect.visible = true
 	repeat_popup_rect.scale = Vector2.ZERO
 	repeat_popup_rect.pivot_offset = repeat_popup_rect.size / 2.0
 	
-	# Bring to front so it doesn't get covered
 	repeat_popup_rect.move_to_front()
 	repeat_popup_rect.z_index = 60
 	
 	repeat_tween = create_tween().bind_node(self)
-	
-	# 1. Pop In
+	# Only Pop In - No timer interval, no pop out! Stays until player answers.
 	repeat_tween.tween_property(repeat_popup_rect, "scale", Vector2(1.15, 1.15), 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	repeat_tween.tween_property(repeat_popup_rect, "scale", Vector2.ONE, 0.15).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+
+func _hide_repeat_popup():
+	if not is_instance_valid(repeat_popup_rect) or not repeat_popup_rect.visible: return
 	
-	# 2. Hold Time
-	repeat_tween.tween_interval(1.5)
-	
-	# 3. Pop Out (Expand slightly then shrink)
+	if repeat_tween and repeat_tween.is_valid():
+		repeat_tween.kill()
+		
+	repeat_tween = create_tween().bind_node(self)
 	repeat_tween.tween_property(repeat_popup_rect, "scale", Vector2(1.1, 1.1), 0.1).set_ease(Tween.EASE_IN)
 	repeat_tween.tween_property(repeat_popup_rect, "scale", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	
-	# Hide entirely when done
 	repeat_tween.tween_callback(func():
 		if is_instance_valid(repeat_popup_rect):
 			repeat_popup_rect.visible = false
@@ -420,11 +429,9 @@ func _show_repeat_popup():
 # ==========================================================
 
 func _show_message_box(text: String):
-	# Safely check if the nodes exist before animating to prevent crashes
 	if not is_instance_valid(message_box) or not is_instance_valid(message_label): 
 		return
 
-	# Force to front so it's always visible
 	message_box.move_to_front()
 	message_box.z_index = 50
 
@@ -432,18 +439,15 @@ func _show_message_box(text: String):
 	message_box.visible = true
 	message_box.modulate.a = 1.0
 	
-	# Start position: 400 pixels lower than its original position (off-screen or bottom)
 	message_box.position = message_box_original_pos + Vector2(0, 400)
 	message_box.scale = Vector2.ONE
 	
 	var tween = create_tween()
 	
-	# 1. Slide Up from the bottom
 	tween.tween_property(message_box, "position", message_box_original_pos, 0.4)\
 		 .set_trans(Tween.TRANS_QUART)\
 		 .set_ease(Tween.EASE_OUT)
 		
-	# 2. Pop Animation (Scale slightly up, then bounce back to normal)
 	tween.tween_property(message_box, "scale", Vector2(1.1, 1.1), 0.15)\
 		 .set_trans(Tween.TRANS_BACK)\
 		 .set_ease(Tween.EASE_OUT)
@@ -525,13 +529,18 @@ func finish_quiz():
 		GameData.quiz_concept_progress = QuizSystem.concept_progress
 		GameData.save_game()
 
-	if game_data:
-		game_data.add_money(reward_money)
-		game_data.daily_money_earned += reward_money
-		game_data.save_game()
+	if is_instance_valid(game_data):
+		if game_data.has_method("add_money"):
+			game_data.add_money(reward_money)
+		
+		if "daily_money_earned" in game_data:
+			game_data.daily_money_earned += reward_money
+			
+		if game_data.has_method("save_game"):
+			game_data.save_game()
 
 	call_deferred("_continue_after_quiz")
 
 func _continue_after_quiz():
-	if game_data:
+	if is_instance_valid(game_data) and game_data.has_method("start_next_day_flow"):
 		game_data.start_next_day_flow()
