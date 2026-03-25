@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://dpxrpjhmd8ce"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://dpxrpjhmd8ce"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_uwx33"]
 
 [resource]
 script = ExtResource("1_uwx33")
 customer_name = "Leo"
-order_text = "I LOVE watermelon!Also, please give me sitaw and fish with rice.Any water is fine, and milk is okay."
+order_text = "I LOVE watermelon! Also, please give me sitaw and fish with rice. Any water is fine, and milk is okay."
 expanded_text = "Go: Rice Grow: Fish Glow: Sitaw + Watermelon Drink: Any water + milk"
 age = 7
 needs = {

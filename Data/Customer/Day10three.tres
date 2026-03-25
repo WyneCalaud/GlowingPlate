@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://dytavf5afx5wx"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://dytavf5afx5wx"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_3nrqh"]
 
 [resource]
 script = ExtResource("1_3nrqh")
 customer_name = "Bree"
-order_text = "Pan de sal, tokwa, squash, and mango please!Any water is fine, and milk is okay."
+order_text = "Pan de sal, tokwa, squash, and mango please! Any water is fine, and milk is okay."
 expanded_text = "Go: Pan de sal Grow: Tokwa Glow: Squash + Mango Drink: Any water + milk"
 age = 12
 needs = {

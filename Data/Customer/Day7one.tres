@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://b6qrjes7dyieh"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://b6qrjes7dyieh"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_7cus0"]
 
 [resource]
 script = ExtResource("1_7cus0")
 customer_name = "Leo"
-order_text = "I’d like to try the rice, egg, sitaw, and mango combo today, please!Cold water please, and milk is fine."
+order_text = "I’d like to try the rice, egg, sitaw, and mango combo today, please! Cold water please, and milk is fine."
 expanded_text = "Go: Rice Grow: Egg Glow: Sitaw + Mango Drink: Cold water + milk"
 age = 7
 needs = {

@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="CustomerOrder" load_steps=2 format=3 uid="uid://df5umk574cy0k"]
+[gd_resource type="Resource" script_class="CustomerOrder" format=3 uid="uid://df5umk574cy0k"]
 
 [ext_resource type="Script" uid="uid://b6ratnvhx4aau" path="res://Scripts/Customer/customer_order.gd" id="1_vryc4"]
 
 [resource]
 script = ExtResource("1_vryc4")
 customer_name = "Nina"
-order_text = "I don’t feel like eating chicken or fish today.Can I have eggs with rice, a green vegetable, and mango instead?Hot water please, and milk is fine."
+order_text = "I don’t feel like eating chicken or fish today. Can I have eggs with rice, a green vegetable, and mango instead? Hot water please, and milk is fine."
 expanded_text = "Go: Rice Grow: Egg Glow: Sitaw + Mango Drink: Hot water + milk"
 age = 7
 needs = {
