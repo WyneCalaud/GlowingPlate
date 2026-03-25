@@ -14,6 +14,7 @@ extends Control
 
 @onready var day_number: Label = $BottomButtons/StartDayButton/Label
 
+@onready var skip_day_btn = $SkipDayButton
 @onready var bottom_buttons = $BottomButtons
 @onready var hideshowbutton = $BottomButtons/HBoxContainer/HideShowButton
 @onready var almanac_btn = $BottomButtons/HBoxContainer/Almanac
@@ -89,6 +90,11 @@ func _ready() -> void:
 	if nutridesk_btn:
 		if not nutridesk_btn.pressed.is_connected(_on_glow_desk_pressed):
 			nutridesk_btn.pressed.connect(_on_glow_desk_pressed)
+			
+	# DEFENSIVE FIX: Connect the skip button dynamically
+	if is_instance_valid(skip_day_btn):
+		if not skip_day_btn.pressed.is_connected(_on_skip_day_pressed):
+			skip_day_btn.pressed.connect(_on_skip_day_pressed)
 
 	_check_for_returned_items()
 	
@@ -1260,3 +1266,38 @@ func _show_special_key_reward():
 
 	# Force HUD to update immediately
 	get_tree().call_group("HUD", "update_keys", GD.keys + 10)
+
+
+# ---------------------------------------------------------
+# SKIP DAY BUTTON / DEV DEBUG
+# ---------------------------------------------------------
+
+# DEFENSIVE FIX: Wipes current gameplay loop and bridges right to results
+func _on_skip_day_pressed() -> void:
+	print("[DEBUG] Skip Day Button Pressed! Transitioning to EndDayResults...")
+	
+	var GD = get_node_or_null("/root/GameData")
+	if is_instance_valid(GD):
+		# Clear customer queue so logic doesn't leak into the next loop
+		if "remaining_customers" in GD:
+			GD.remaining_customers.clear()
+		if GD.has_method("clear_customer"):
+			GD.clear_customer()
+			
+		# Safely reset state tracking variables
+		if "service_state" in GD:
+			GD.service_state = GameData.ServiceState.IDLE
+		if "returning_from_kitchen" in GD:
+			GD.returning_from_kitchen = false
+		if "day_started" in GD:
+			GD.day_started = false
+
+	# Safely transition to Results (UPDATED WITH DEFENSIVE PROGRAMMING)
+	var results_path = "res://Scenes/Results/EndDayResults.tscn"
+	if has_node("/root/SceneTransition"):
+		SceneTransition.fade_to(results_path)
+	else:
+		if ResourceLoader.exists(results_path):
+			get_tree().change_scene_to_file(results_path)
+		else:
+			printerr("[LobbyCanteen] ERROR: Cannot skip day! File does not exist: ", results_path)

@@ -562,7 +562,6 @@ position = Vector2(17, 71)
 position = Vector2(78, 71)
 
 [node name="SkipDayButton" type="TextureButton" parent="." unique_id=464846066]
-visible = false
 layout_mode = 0
 offset_left = 3.0
 offset_top = 607.0

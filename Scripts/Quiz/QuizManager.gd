@@ -13,6 +13,10 @@ extends Control
 @export var repeat_texture: Texture2D
 var repeat_tween: Tween
 
+# --- EXTERNAL UI REFERENCES ---
+@export_group("External UI")
+@export var sound_control_ui: Control # Assign your SoundControl node here in the Inspector!
+
 # --- AUDIO REFERENCES ---
 @onready var sfx_correct: AudioStreamPlayer2D = $SfxCorrect
 @onready var sfx_incorrect: AudioStreamPlayer2D = $SfxIncorrect
@@ -107,6 +111,8 @@ func _get_custom_message(is_correct: bool, response_time: float) -> String:
 # ==========================================================
 
 func _ready():
+	_lower_music_volume()
+	
 	current_day = game_data.current_day - 1
 	if current_day < 1:
 		current_day = 1
@@ -159,10 +165,33 @@ func _ready():
 			btn.pressed.connect(_on_answer_button_pressed.bind(i))
 			btn.pivot_offset = btn.size / 2
 
+# This built-in function safely triggers right before the node is destroyed/scene is changed
+func _exit_tree() -> void:
+	_restore_music_volume()
+
+func _lower_music_volume() -> void:
+	if has_node("/root/BGMusic"):
+		var bg_music = get_node("/root/BGMusic")
+		if is_instance_valid(bg_music):
+			bg_music.volume_db -= 10.0
+
+func _restore_music_volume() -> void:
+	if has_node("/root/BGMusic"):
+		var bg_music = get_node("/root/BGMusic")
+		if is_instance_valid(bg_music):
+			# Safely restore based on the saved user setting if available
+			if has_node("/root/GameData") and "music_volume" in get_node("/root/GameData"):
+				bg_music.volume_db = linear_to_db(get_node("/root/GameData").music_volume)
+			else:
+				# Fallback just in case GameData is missing
+				bg_music.volume_db += 10.0
+
 func _setup_menu_buttons():
-	if menu_button: menu_button.pressed.connect(_on_menu_button_pressed)
+	if is_instance_valid(menu_button): 
+		if not menu_button.pressed.is_connected(_on_menu_button_pressed):
+			menu_button.pressed.connect(_on_menu_button_pressed)
 	
-	if settings_button:
+	if is_instance_valid(settings_button):
 		settings_button.top_level = false
 		settings_button.show_behind_parent = true
 		settings_button.z_index = 0
@@ -170,8 +199,11 @@ func _setup_menu_buttons():
 		settings_button.visible = false
 		settings_button.modulate.a = 0.0
 		settings_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		# 🔥 Connect settings button safely
+		if not settings_button.pressed.is_connected(_on_settings_button_pressed):
+			settings_button.pressed.connect(_on_settings_button_pressed)
 		
-	if home_button:
+	if is_instance_valid(home_button):
 		home_button.top_level = false
 		home_button.show_behind_parent = true
 		home_button.z_index = 0
@@ -180,7 +212,8 @@ func _setup_menu_buttons():
 		home_button.modulate.a = 0.0
 		home_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		
-	if pause_layer: pause_layer.visible = false
+	if is_instance_valid(pause_layer): 
+		pause_layer.visible = false
 
 # ==========================================================
 # AGE GROUP DISPLAY
@@ -518,6 +551,23 @@ func _on_menu_button_pressed():
 			if is_instance_valid(settings_button): settings_button.visible = false
 			if is_instance_valid(home_button): home_button.visible = false
 		)
+
+# 🔥 NEW: Defensively handle showing the sound control menu
+func _on_settings_button_pressed():
+	# Retract the dropdown menu for visual clean-up
+	if is_menu_open:
+		_on_menu_button_pressed()
+		
+	# Check the local inspector variable first
+	if is_instance_valid(sound_control_ui):
+		sound_control_ui.show()
+	# Fallback to checking if it's an Autoload named "SoundControl"
+	elif has_node("/root/SoundControl"):
+		var sc = get_node("/root/SoundControl")
+		if is_instance_valid(sc):
+			sc.show()
+	else:
+		push_warning("SoundControl node not assigned in Inspector and not found in /root!")
 
 # ==========================================================
 # FINISH

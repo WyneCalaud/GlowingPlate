@@ -22,13 +22,14 @@
 [ext_resource type="Texture2D" uid="uid://dquyayxor6rta" path="res://Assets/UI/Interface/HomeButton.png" id="21_dqs0d"]
 [ext_resource type="Texture2D" uid="uid://cs0bami0rckdl" path="res://Assets/UI/QuizUI/MessageBox.png" id="21_m5poc"]
 [ext_resource type="Texture2D" uid="uid://d1l2fxewbpo84" path="res://Assets/UI/QuizUI/RepeatQuestion.png" id="22_m5poc"]
+[ext_resource type="PackedScene" uid="uid://ccv4r1x8840d2" path="res://Scenes/GameHUD/SoundControl.tscn" id="23_4qn8t"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yo6g2"]
 font = ExtResource("10_nc0by")
 font_size = 40
 outline_size = 3
 
-[node name="QuizScene" type="Control" unique_id=1906560270 node_paths=PackedStringArray("repeat_popup_rect")]
+[node name="QuizScene" type="Control" unique_id=1906560270 node_paths=PackedStringArray("repeat_popup_rect", "sound_control_ui")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,6 +45,7 @@ msg_correct_slow = Array[String](["Taking it slowly! "])
 msg_incorrect = Array[String](["Oops! Try again later! "])
 repeat_popup_rect = NodePath("RepeatQuestionBox")
 repeat_texture = ExtResource("22_m5poc")
+sound_control_ui = NodePath("SoundControl")
 
 [node name="QuizBackground" type="Control" parent="." unique_id=1429905356]
 layout_mode = 1
@@ -346,3 +348,6 @@ offset_right = 310.0
 offset_bottom = 82.0
 texture = ExtResource("22_m5poc")
 stretch_mode = 2
+
+[node name="SoundControl" parent="." unique_id=1476271829 instance=ExtResource("23_4qn8t")]
+layout_mode = 1
