@@ -217,8 +217,9 @@ func _end_special_intro():
 	leo_special.hide()
 
 	# Resume normal dialogue
+	$OrderText.show()
 	$DialogueBox.show()
-	$DialogueBox/OrderText.text = active_order.order_text
+	$OrderText.text = active_order.order_text
 	$BtnAccept.show()
 	$BtnContinue.show()
 	$"../OverlayCanvas/GameHUD".show()
