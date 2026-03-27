@@ -12,13 +12,13 @@ extends Control
 @export var veggie_retry_texture: Texture2D 
 
 # --- UI Reference ---
-@onready var tutorial_overlay = $TutorialUI/TutorialOverlaySteps
+@onready var tutorial_overlay = get_node_or_null("TutorialUI/TutorialOverlaySteps")
 
 # --- Scene Tree References ---
-@onready var kitchen_area = $KitchenArea
-@onready var beverage_station = $BeverageStation
-@onready var lobby_canteen = $LobbyCanteen
-@onready var serve_or_trash = $ServeOrTrash
+@onready var kitchen_area = get_node_or_null("KitchenArea")
+@onready var beverage_station = get_node_or_null("BeverageStation")
+@onready var lobby_canteen = get_node_or_null("LobbyCanteen")
+@onready var serve_or_trash = get_node_or_null("ServeOrTrash")
 
 # --- Drop Zone & Plate Variables ---
 var drop_zones_default_position: Vector2
@@ -29,19 +29,21 @@ var current_step: int = 0
 var is_in_retry_state: bool = false
 
 # --- SKIP BUTTON ---
-@onready var skip_tutorial = $CanvasLayer2/SkipTutorialButton
+@onready var skip_tutorial = get_node_or_null("CanvasLayer2/SkipTutorialButton")
 
 func _ready():
 	add_to_group("InteractiveTutorial")
 	add_to_group("service_manager") # DEFENSIVE FIX: Allow Draggables to find this script as a service manager
 	
 	if is_instance_valid(tutorial_overlay):
-		tutorial_overlay.pressed.connect(_on_tutorial_overlay_pressed)
+		if not tutorial_overlay.pressed.is_connected(_on_tutorial_overlay_pressed):
+			tutorial_overlay.pressed.connect(_on_tutorial_overlay_pressed)
 	else:
 		push_error("Tutorial Overlay not found! Check node path.")
 		
 	if is_instance_valid(skip_tutorial):
-		skip_tutorial.pressed.connect(_on_skip_tutorial_pressed)
+		if not skip_tutorial.pressed.is_connected(_on_skip_tutorial_pressed):
+			skip_tutorial.pressed.connect(_on_skip_tutorial_pressed)
 	else:
 		push_warning("SkipTutorialButton not found! Check node path.")
 		
@@ -67,7 +69,8 @@ func lock_all_inputs():
 		push_warning("TUTORIAL WARNING: No nodes found in the 'interactable' group!")
 		
 	for item in all_interactables:
-		_set_node_interactable(item, false)
+		if is_instance_valid(item):
+			_set_node_interactable(item, false)
 
 func unlock_item(target_node_name: String):
 	if target_node_name == "": return 
@@ -76,7 +79,7 @@ func unlock_item(target_node_name: String):
 	var found = false
 	
 	for item in all_interactables:
-		if target_node_name.to_lower() in item.name.to_lower():
+		if is_instance_valid(item) and target_node_name.to_lower() in item.name.to_lower():
 			_set_node_interactable(item, true)
 			print("Tutorial: Successfully unlocked -> ", item.name)
 			found = true
@@ -87,10 +90,11 @@ func unlock_item(target_node_name: String):
 func unlock_all_inputs():
 	var all_interactables = get_tree().get_nodes_in_group("interactable")
 	for item in all_interactables:
-		_set_node_interactable(item, true)
+		if is_instance_valid(item):
+			_set_node_interactable(item, true)
 
 func _set_node_interactable(node: Node, can_interact: bool):
-	if node == skip_tutorial: return
+	if not is_instance_valid(node) or node == skip_tutorial: return
 		
 	if "is_tutorial_locked" in node:
 		node.is_tutorial_locked = not can_interact
@@ -114,7 +118,6 @@ func move_zones_to_kitchen():
 	if is_instance_valid(serve_or_trash):
 		serve_or_trash.global_position = drop_zones_default_position
 
-# DEFENSIVE FIX: New method to support MilkDraggable and Beverages
 func move_zones_to_beverage(x_pos: float = 1240.0):
 	if is_instance_valid(serve_or_trash):
 		serve_or_trash.global_position = Vector2(x_pos, drop_zones_default_position.y)
@@ -232,7 +235,6 @@ func switch_station(station: String):
 	if is_instance_valid(kitchen_area): kitchen_area.hide()
 	if is_instance_valid(beverage_station): beverage_station.hide()
 	if is_instance_valid(lobby_canteen): lobby_canteen.hide()
-	
 	if is_instance_valid(serve_or_trash): serve_or_trash.hide()
 	
 	if station == "kitchen":
@@ -250,4 +252,16 @@ func finish_tutorial():
 	print("🎉 Tutorial Completely Finished!")
 	if is_instance_valid(tutorial_overlay): tutorial_overlay.hide()
 	unlock_all_inputs()
+	
+	# 🔥 FLAG TO AUTOSTART THE DAY
+	if has_node("/root/GameData"):
+		var gd = get_node("/root/GameData")
+		if "auto_start_day" in gd:
+			gd.auto_start_day = true
+		if gd.has_method("start_next_day_flow"):
+			gd.start_next_day_flow()
+			return
+		else:
+			push_warning("GameData.start_next_day_flow() not found. Falling back to Lobby.")
+
 	get_tree().change_scene_to_file("res://Scenes/Lobby Canteen/lobbycanteen.tscn")

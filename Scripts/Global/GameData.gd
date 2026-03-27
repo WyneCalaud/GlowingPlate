@@ -20,14 +20,15 @@ const TOTAL_DAYS: int = 14
 var money: int = 0         
 var keys: int = 60  
 
+# 🔥 NEW: Tells the Lobby scene to immediately click "Start" when loaded
+var auto_start_day: bool = false
+
 # --- Save Logic ---
 const SAVE_PATH := "user://save_data.json"
 var shown_food_intros := {}
 
 # --- QUIZ PROGRESSION (Persistence) ---
-# Holds the SM-2 data (intervals, repetitions, ease factors)
 var quiz_concept_progress: Dictionary = {}
-# Holds the specific history of questions answered
 var quiz_question_progress: Dictionary = {}
 
 # --- GLOW BOARD PROGRESSION ---
@@ -38,7 +39,6 @@ var character_progress: Dictionary = {
 }
 
 # --- CHARACTER VISUAL STAGES ---
-# 1 = Base, 2 = Improved, 3 = Glowing
 var character_stage: Dictionary = {
 	"Leo": 1,
 	"Maya": 1,
@@ -117,7 +117,6 @@ func _apply_saved_upgrades():
 
 func add_money(amount: int) -> void:
 	money += amount
-	# Notify any UI elements (like HUD labels) to refresh
 	get_tree().call_group("HUD", "update_all_labels")
 	print("Economy Update: Money is now ", money)
 
@@ -152,7 +151,6 @@ func start_new_day():
 	daily_money_earned = 0
 	daily_keys_earned = 0
 	total_customers_served_today = 0
-	# Increase difficulty based on day
 	max_customers_today = clampi(4 + (current_day - 1), 4, 10) 
 	
 	if current_day <= TOTAL_DAYS:
@@ -168,7 +166,6 @@ func start_day_with_orders(orders: Array):
 	day_started = true
 
 func finalize_service(day_result: Dictionary) -> void:
-
 	total_customers_served_today += 1
 	customer_history.append(day_result)
 	
@@ -188,10 +185,7 @@ func finalize_service(day_result: Dictionary) -> void:
 	money += total_earned
 	daily_money_earned += total_earned
 	
-	# --- Key Rewards ---
 	var keys_won = day_result.get("earned_keys", 0)
-	
-	# ⭐ FIX: Safe string checking and strip_edges to ensure spacing doesn't cause a failure
 	var special_char: String = str(day_result.get("character_id", "")).strip_edges()
 	var is_correct: bool = day_result.get("is_correct", false)
 
@@ -202,7 +196,6 @@ func finalize_service(day_result: Dictionary) -> void:
 	keys += keys_won
 	daily_keys_earned += keys_won
 	
-	# --- Glow Board Progress ---
 	var char_id = day_result.get("character_id", "")
 	if character_progress.has(char_id):
 		var gain = day_result.get("prog_gain", 0.0)
@@ -211,24 +204,13 @@ func finalize_service(day_result: Dictionary) -> void:
 	OrderSystem.clear_prepared_data()
 	get_tree().call_group("HUD", "update_all_labels")
 
-	# ⭐ FIX: Immediately save the game state here so the keys are persistently recorded
-	# Otherwise, if the player quits to menu before the day transitions, they lose their keys!
 	save_game()
 
-	# ======================================================
-	# 🔥 LAST CUSTOMER DELAY FIX
-	# ======================================================
-
 	if remaining_customers.is_empty():
-
-		# 🔥 CRITICAL FIX
 		clear_customer()
-
 		day_started = false
 
-		# ⏳ Wait 3 seconds before ending day
 		await get_tree().create_timer(3.0).timeout
-
 		current_day += 1
 		transition_to_end_day()
 
@@ -281,7 +263,6 @@ func clear_customer():
 # ==========================================================
 
 func save_game():
-	# Sync the latest quiz data from the Autoload/Singleton nodes before writing
 	if has_node("/root/QuizProgress"):
 		quiz_question_progress = get_node("/root/QuizProgress").question_progress
 	if has_node("/root/QuizSystem"):
@@ -333,18 +314,15 @@ func load_game():
 		print("Persistence Error: Corrupted save file.")
 		return
 
-	# Progression
 	current_day = data.get("current_day", 1)
 	money = data.get("money", 900)
 	keys = data.get("keys", 60)
 	player_name = data.get("player_name", "")
 	
-	# Tutorials & Flags
 	matching_tutorial_completed = data.get("matching_tutorial_completed", false)
 	kitchen_tutorial_completed = data.get("kitchen_tutorial_completed", false)
 	intro_completed = data.get("intro_completed", false)
 	
-	# Characters & Upgrades
 	character_progress = data.get("character_progress", character_progress)
 	character_stage = data.get("character_stage", character_stage)
 	purchased_upgrades = data.get("purchased_upgrades", {})
@@ -352,12 +330,10 @@ func load_game():
 	shop_unlocked_registry = data.get("shop_unlocked_registry", {})
 	shop_equipped_registry = data.get("shop_equipped_registry", {})
 	
-	# Intros & Phases
 	shown_food_intros = data.get("shown_food_intros", {})
 	special_intro_shown = data.get("special_intro_shown", {})
 	current_phase = data.get("current_phase", GamePhase.LOBBY)
 	
-	# --- Load Quiz Data (Critical for SM-2) ---
 	quiz_question_progress = data.get("quiz_question_progress", {})
 	quiz_concept_progress = data.get("quiz_concept_progress", {})
 	saved_quiz_sets = data.get("saved_quiz_sets", {})

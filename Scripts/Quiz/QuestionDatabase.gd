@@ -1,4 +1,3 @@
-class_name QuestionDatabase
 extends Node
 
 # --- CENTRALIZED QUESTION DATA ---

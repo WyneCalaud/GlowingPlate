@@ -1,5 +1,6 @@
 extends Node
 
+# Stores concept mastery data: { "concept_name": { "correct": 0, "incorrect": 0, ... } }
 var concept_progress: Dictionary = {}
 
 func initialize_concepts(current_day: int) -> void:
@@ -9,24 +10,26 @@ func initialize_concepts(current_day: int) -> void:
 		return
 
 	# 🔥 ALWAYS START FROM SAVED DATA
-	# Defensive: Ensure quiz_concept_progress is a valid dictionary before duplicating
-	if GameData.get("quiz_concept_progress") != null and typeof(GameData.quiz_concept_progress) == TYPE_DICTIONARY and GameData.quiz_concept_progress.size() > 0:
-		concept_progress = GameData.quiz_concept_progress.duplicate(true)
-		print("✅ Loaded saved concept progress:", concept_progress.size())
+	# Using 1-argument get() for Object/Node safety in Godot 4
+	var saved_data = null
+	if is_instance_valid(GameData):
+		saved_data = GameData.get("quiz_concept_progress")
+
+	if saved_data != null and typeof(saved_data) == TYPE_DICTIONARY:
+		concept_progress = saved_data.duplicate(true)
+		print("✅ QuizSystem: Loaded %d concepts from save." % concept_progress.size())
 	else:
 		concept_progress.clear()
-		print("⚠️ No saved concept progress found")
+		print("⚠️ QuizSystem: No saved progress found, starting fresh.")
 
-	# Defensively call the method on the actual node instance instead of the class
+	# Sync with Database to ensure all concepts exist in the dictionary
 	if q_db.has_method("get_all_questions"):
 		var all_questions = q_db.get_all_questions()
-
 		for q in all_questions:
-			# Defensive: Check if 'q' is actually a dictionary and has an 'id'
-			if typeof(q) != TYPE_DICTIONARY or not q.has("id"):
+			if typeof(q) != TYPE_DICTIONARY or not (q.has("id") or q.has("concept")):
 				continue
 				
-			var concept = str(q.get("concept", q["id"]))
+			var concept = str(q.get("concept", q.get("id", "unknown")))
 
 			if not concept_progress.has(concept):
 				concept_progress[concept] = {
@@ -45,17 +48,19 @@ func get_due_concepts(current_day: int) -> Array:
 	var due: Array = []
 	for concept in concept_progress.keys():
 		var data = concept_progress[concept]
-		if typeof(data) == TYPE_DICTIONARY and data.get("next_review_day", 999) <= current_day:
-			due.append(concept)
+		# Ensure data is valid before checking date
+		if typeof(data) == TYPE_DICTIONARY:
+			var review_day = data.get("next_review_day", 0)
+			if review_day <= current_day:
+				due.append(concept)
 	return due
 
 # ==========================================================
-# UPDATE (FORMULA BASED + FEEDBACK GENERATION)
+# UPDATE (MASTERY FORMULA + FEEDBACK)
 # ==========================================================
 
-# 🔥 CHANGED: Now returns a Dictionary with all the UI strings + next_day + is_repeat
 func update_concept_progress(concept: String, is_correct: bool, response_time: float, current_day: int) -> Dictionary:
-	
+	# Ensure the concept exists in our tracking dictionary
 	if not concept_progress.has(concept):
 		concept_progress[concept] = {
 			"correct": 0, "incorrect": 0, "exposure": 0,
@@ -71,8 +76,8 @@ func update_concept_progress(concept: String, is_correct: bool, response_time: f
 	else:
 		data.incorrect = data.get("incorrect", 0) + 1
 	
-	# --- SPEED FACTOR ---
-	var S := 0
+	# --- SPEED FACTOR (S) ---
+	var S: int = 0
 	if response_time <= 1.5:
 		S = 2 # Fast
 	elif response_time <= 3.0:
@@ -82,12 +87,13 @@ func update_concept_progress(concept: String, is_correct: bool, response_time: f
 	
 	var C = data.correct
 	var I = data.incorrect
-	var E = max(1, data.exposure) # Defensive: Prevent division by zero
+	var E = max(1, data.exposure)
 	
-	# --- MASTERY FORMULA ---
+	# --- MASTERY FORMULA (M) ---
+	# Formula provided for thesis: (Correct*2 + Speed - Incorrect*2) / Exposure
 	var M = float((C * 2) + S - (I * 2)) / float(E)
 	
-	# --- SCHEDULING ---
+	# --- SCHEDULING LOGIC ---
 	var next_day: int
 	var mastery_msg = ""
 	
@@ -107,10 +113,12 @@ func update_concept_progress(concept: String, is_correct: bool, response_time: f
 	data.next_review_day = next_day
 	data.last_seen_day = current_day
 	
+	# Save back to progress and global GameData
 	concept_progress[concept] = data
-	GameData.quiz_concept_progress = concept_progress
+	if is_instance_valid(GameData):
+		GameData.quiz_concept_progress = concept_progress
 	
-	# --- GENERATE STRINGS FOR THE UI POPUP ---
+	# --- GENERATE FEEDBACK STRINGS ---
 	var performance_msg = ""
 	if is_correct:
 		if S == 2: performance_msg = "Nice! That was quick!"
@@ -132,11 +140,8 @@ func update_concept_progress(concept: String, is_correct: bool, response_time: f
 		exposure_msg = "You've seen this %d times" % E
 		is_repeat = true
 	
-	# --- DEBUG (For thesis proof) ---
-	print("📊 CONCEPT UPDATE: ", concept)
-	print("Time: ", response_time, "s | C:", C, " I:", I, " E:", E, " S:", S)
-	print("Mastery Score (M): ", M)
-	print("--------------------")
+	# Debug print for verification
+	print("📊 Concept: %s | M: %.2f | Next Day: %d" % [concept, M, next_day])
 	
 	return {
 		"next_day": next_day,

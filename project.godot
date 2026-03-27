@@ -30,6 +30,7 @@ Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
 BGMusic="*res://Scenes/Sounds/BGMusic.tscn"
 SceneTransition="*res://Scripts/scene_transition.gd"
 UiAudioManager="*uid://7c0tdrryiuor"
+QuestionDatabase="*uid://bahi4ad8kgqri"
 
 [display]
 
